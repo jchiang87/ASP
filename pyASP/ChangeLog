@@ -1,0 +1,1125 @@
+------------------------------------------------------------
+User: jchiang  Fri Nov  3 15:42:30 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	read_data.py 
+Log Message:
+improve comment handling
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:29:36 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r5
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:29:35 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r5
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:28:09 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+update versions and set BINDIR arg in scripts
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:28:08 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+update versions and set BINDIR arg in scripts
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:18 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:17 PDT 2006
+users/jchiang/pyASP/cmt/fragments
+
+Added Files:
+	generateWrappers 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:17 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:57:09 PDT 2006
+users/jchiang/pyASP/cmt/fragments
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/cmt/fragments added to the repository
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r4, operation: add
+Package: pyASP
+User: jchiang  Fri Oct 13 14:50:55 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.91
+  pyASP/cmt/requirements  1.13
+  pyASP/doc/release.notes  1.7
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/combineExpMaps.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/afterglowLivetimeCube.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.7
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.8
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/python/afterglowExpMap.py  1.3
+  pyASP/python/afterglowDiffResps.py  1.1
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.6
+  pyASP/xml/GRB_blind_search.xml  1.3
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.9
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 14:50:28 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r4
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 14:50:27 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r4
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 14:49:04 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+use import statements to ensure modules are available for streams
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 13:39:44 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+use 'new' P-II interface; account for off-by-one misfeature
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 13:39:43 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowExpMap.py 
+Log Message:
+use 'new' P-II interface; account for off-by-one misfeature
+    *
+------------------------------------------------------------
+User: jchiang  Mon Oct  9 10:06:50 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowLivetimeCube.py combineExpMaps.py 
+Log Message:
+cd to outputdir; correct expmap name
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct  6 15:02:24 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+change version
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct  6 14:58:42 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+typo
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct  5 13:47:54 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+corrections from tonyj
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 21:17:38 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowExpMap.py afterglowLivetimeCube.py combineExpMaps.py 
+	wrapperGenerator.py 
+Log Message:
+various bug fixes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 16:42:43 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+refactor afterglow exposure calculations
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 16:42:43 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Added Files:
+	afterglowDiffResps.py afterglowExpMap.py 
+	afterglowLivetimeCube.py combineExpMaps.py 
+Log Message:
+refactor afterglow exposure calculations
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r3p1, operation: add
+Package: pyASP
+User: jchiang  Tue Oct  3 15:03:31 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.78
+  pyASP/cmt/requirements  1.12
+  pyASP/doc/release.notes  1.6
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.6
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.6
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.6
+  pyASP/xml/GRB_blind_search.xml  1.3
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.4
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 15:03:08 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r3p1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 15:02:56 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r3p1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Sep 22 15:27:59 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+stream name change
+    *
+------------------------------------------------------------
+User: jchiang  Fri Sep 22 12:19:45 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+update xml def to new schema (changes from Tony J.)
+    *
+------------------------------------------------------------
+User: jchiang  Wed Sep 20 16:36:52 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+change task name
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r3, operation: add
+Package: pyASP
+User: jchiang  Tue Aug 22 08:52:48 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.72
+  pyASP/cmt/requirements  1.11
+  pyASP/doc/release.notes  1.5
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.5
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.6
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.4
+  pyASP/xml/GRB_blind_search.xml  1.2
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:52:26 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	ScData.py 
+Log Message:
+add ScData; tagging v0r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:52:23 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add ScData; tagging v0r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:52:20 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add ScData; tagging v0r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:43:21 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_blind_search.xml 
+Log Message:
+accommodate filename changes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:43:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Log Message:
+accommodate filename changes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:33:23 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	BlindSearch.py EventClusters.py 
+Removed Files:
+	blind_search.py 
+Log Message:
+some refactoring of blind search code
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:05:56 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	PsfClusters.py 
+Removed Files:
+	PsfCluster.py 
+Log Message:
+rename PsfCluster.py to PsfClusters.py
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 21:37:36 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	PsfCluster.py blind_search.py 
+Log Message:
+refactor to make clustering algorithms interchangeable
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 20:09:44 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Added Files:
+	PsfCluster.py 
+Log Message:
+add PsfCluster; refactor blind_search to enable use of Psf info for new clustering algorithm
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 12:47:10 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	refinePosition.py 
+Log Message:
+use pyIrfLoader; bug-fix
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 12:47:09 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use pyIrfLoader; bug-fix
+    *
+------------------------------------------------------------
+User: jchiang  Fri Aug 18 10:03:27 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+do not reset dn=20
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r2p1, operation: add
+Package: pyASP
+User: jchiang  Thu Aug 17 11:16:22 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.59
+  pyASP/cmt/requirements  1.9
+  pyASP/doc/release.notes  1.4
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.5
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/blind_search.py  1.7
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.12
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.5
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.4
+  pyASP/xml/GRB_blind_search.xml  1.1
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 11:15:55 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r2p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 11:15:53 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r2p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 11:10:48 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py wrapperGenerator.py 
+Removed Files:
+	Afterglow.py GBM_analysis.py GBM_refinement.py 
+Log Message:
+refactor wrapperGenerator, createGrbStreams; remove unneeded development scripts
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r2, operation: add
+Package: pyASP
+User: jchiang  Thu Aug 17 08:10:28 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.55
+  pyASP/cmt/requirements  1.8
+  pyASP/doc/release.notes  1.3
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/Afterglow.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/createGrbStreams.py  1.4
+  pyASP/python/blind_search.py  1.7
+  pyASP/python/GBM_analysis.py  1.2
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.12
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.4
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/python/GBM_refinement.py  1.2
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.4
+  pyASP/xml/GRB_blind_search.xml  1.1
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 08:10:04 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 08:10:04 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug 16 17:09:47 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	arg_string 
+Log Message:
+add SkyCone and other bits
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug 16 17:09:46 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py refinePosition.py 
+Added Files:
+	SkyCone.py 
+Log Message:
+add SkyCone and other bits
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 16:53:28 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+add blindSearchStreams function; refactor a bit
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 16:27:39 PDT 2006
+users/jchiang/pyASP/xml
+
+Added Files:
+	GRB_blind_search.xml 
+Log Message:
+add blind_search xml task definition; correct variable name error in createGrbStreams.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 16:27:37 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+add blind_search xml task definition; correct variable name error in createGrbStreams.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 15:49:43 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py blind_search.py refinePosition.py 
+Added Files:
+	createGrbStreams.py 
+Log Message:
+add createGrbStreams.py for dispatching other top-level streams
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 10:54:11 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGcnNotice.py blind_search.py 
+Log Message:
+LatGcnNotice bug fixes
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 10:08:11 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+add BlindSearch class
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 08:46:13 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+add LatGcnNotice
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 08:46:12 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	LatGcnNotice.py 
+Log Message:
+add LatGcnNotice
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug  2 21:35:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+remove extra triggerTimes code
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug  2 21:32:24 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+add localization for largest cluster
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug  2 12:05:19 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+add trigger and peak finding algorithms
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 18:20:06 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+add my version of Jay & Jerry's blind search algorithm
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 18:20:05 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	blind_search.py 
+Log Message:
+add my version of Jay & Jerry's blind search algorithm
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 15:34:33 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+use correct xml file; increase maxCPU limit
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 15:34:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowAnalysis.py 
+Log Message:
+use correct xml file; increase maxCPU limit
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 28 13:49:36 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+update maxCPU to ensure long queue
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 27 16:19:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowAnalysis.py 
+Log Message:
+write-out fitted model
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 27 16:09:19 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	arg_string 
+Added Files:
+	GRB_afterglow.xml 
+Log Message:
+add afterglow analysis scripts
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 27 16:09:19 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	Afterglow.py refinePosition.py 
+Added Files:
+	afterglowAnalysis.py afterglowData.py afterglowExposures.py 
+	parfile_parser.py 
+Log Message:
+add afterglow analysis scripts
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 15:27:03 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	Afterglow.py 
+Log Message:
+add Afterglow.py prototype
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 15:27:00 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add Afterglow.py prototype
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 11:10:48 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+use env vars explicitly set in xml definition
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 11:10:47 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py refinePosition.py 
+Log Message:
+use env vars explicitly set in xml definition
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 24 10:31:06 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Added Files:
+	arg_string 
+Log Message:
+break GBM_refinement task into constituent parts
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 24 10:31:05 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py ft1merge.py 
+	refinePosition.py wrapperGenerator.py 
+Log Message:
+break GBM_refinement task into constituent parts
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 23 13:04:21 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	extractLatData.py 
+Log Message:
+start breaking scripts into standalone parts
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 22 08:52:41 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+re-generalize PASPROOT path
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 22 08:51:05 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GBM_refinement.py extractLatData.py refinePosition.py 
+	wrapperGenerator.py 
+Log Message:
+mods to account for HEADAS FTOOLS kluge
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 17:33:27 PDT 2006
+users/jchiang/pyASP/xml
+
+Added Files:
+	GRB_refinement.xml 
+Log Message:
+add xml def for PII and GBM_refinement script
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 17:33:27 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Added Files:
+	GBM_refinement.py 
+Log Message:
+add xml def for PII and GBM_refinement script
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 17:31:43 PDT 2006
+users/jchiang/pyASP/xml
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/xml added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 12:25:28 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py ft1merge.py 
+	refinePosition.py 
+Added Files:
+	wrapperGenerator.py 
+Log Message:
+add wrapperGenerator
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul 18 09:23:05 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	ft1merge.py getL1Data.py 
+Log Message:
+add ft1merge and getL1Data modules
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul 18 09:14:40 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GBM_analysis.py 
+Log Message:
+clean up example
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 17:56:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py LatGrbSpectrum.py extractLatData.py 
+	refinePosition.py 
+Added Files:
+	GBM_analysis.py 
+Log Message:
+add example script to analyze data for GBM Notices
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 17:56:32 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add example script to analyze data for GBM Notices
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 17:56:32 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add example script to analyze data for GBM Notices
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r1, operation: add
+Package: pyASP
+User: jchiang  Mon Jul 10 15:31:00 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.13
+  pyASP/cmt/requirements  1.5
+  pyASP/doc/release.notes  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.1
+  pyASP/python/GbmNotice.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/extractLatData.py  1.4
+  pyASP/python/refinePosition.py  1.4
+  pyASP/src/pyASP.in  1.2
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:37 PDT 2006
+users/jchiang/pyASP/doc
+
+Added Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:36 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:15 PDT 2006
+users/jchiang/pyASP/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:33 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py extractLatData.py refinePosition.py 
+Added Files:
+	LatGrbSpectrum.py 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:32 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:12:15 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py errEst.py extractLatData.py refinePosition.py 
+Log Message:
+use BayesianBlocks
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:12:15 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use BayesianBlocks
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul  7 13:16:06 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	errEst.py refinePosition.py 
+Added Files:
+	FitsNTuple.py read_data.py 
+Removed Files:
+	find_Sun.py 
+Log Message:
+add local scripts
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul  7 10:27:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	extractLatData.py 
+Added Files:
+	errEst.py refinePosition.py 
+Log Message:
+add error estimator and position refinement scripts
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:53:17 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	GbmNotice.py extractLatData.py 
+Log Message:
+scripts for GRB analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:53:17 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+scripts for GRB analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:35:38 PDT 2006
+users/jchiang/pyASP
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N users/jchiang/pyASP/.cvsignore
+I users/jchiang/pyASP/.cvsignore~
+N users/jchiang/pyASP/src/pyASP.in
+N users/jchiang/pyASP/cmt/requirements
+N users/jchiang/pyASP/python/find_Sun.py
+
+No conflicts created by this import
+
+    *

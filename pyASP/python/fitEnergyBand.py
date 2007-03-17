@@ -42,6 +42,11 @@ def fitEnergyBand(emin, emax, srcModel):
     gtselect['emin'] = emin
     gtselect['emax'] = emax
     gtselect.run()
+
+    irfs = pars['rspfunc']
+    if irfs == 'DSS':
+        irfs = 'DC2'
+
     obs = UnbinnedObs(gtselect['outfile'], pars['ft2file'],
                       expMap=pars['expMap'],
                       expCube=rootpath(pars['expCube']),

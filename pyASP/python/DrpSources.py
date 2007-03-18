@@ -29,8 +29,8 @@ class DrpSources(dict):
     def select(self, ra, dec, radius):
         my_sources = []
         for source in self.keys():
-            if source.dist((ra, dec)) < radius:
-                my_sources.append(source.name)
+            if self[source].dist((ra, dec)) < radius:
+                my_sources.append(source)
         return my_sources
 
 drpSources = DrpSources(os.path.join(os.environ['PYASPROOT'], 'data',

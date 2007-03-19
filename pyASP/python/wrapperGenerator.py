@@ -15,7 +15,7 @@ _ftools_setup= "/afs/slac/g/glast/ground/PipelineConfig/ASP/headas-config-noric0
 _ST_path = "/nfs/farm/g/glast/u06/jchiang/ST"
 _ASP_path = "/nfs/farm/g/glast/u33/jchiang/ASP"
 _pyASP_version = os.environ['PYASPROOT'].split(os.path.sep)[-1]
-_pyASP_root = os.path.join(_ASP_path, "pyASP", _pyASP_version)
+_pyASP_root = os.path.join(_ASP_path, "ASP", "pyASP", _pyASP_version)
 _asp_python = "/usr/local/bin/python"
 
 def wrapperGenerator(scriptName):

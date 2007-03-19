@@ -111,5 +111,5 @@ if __name__ == '__main__':
     
     drp_list = drpSources.select(roi.ra, roi.dec, roi.radius)
 
-#    for src in drp_list:
-#        results[src].updateDbEntry()
+    for src in drp_list:
+        results[src].updateDbEntry()

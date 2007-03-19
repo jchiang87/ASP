@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="3.2" type="Data">
+<task name="DRP_monitoring" version="3.3" type="Data">
   <variables>
     <var name="sourceModelFile">${PYASPROOT}/data/DRP_SourceModel.xml</var>
     <var name="PYASPROOT">/nfs/farm/g/glast/u33/jchiang/ASP/ASP/pyASP/v1</var>
@@ -20,12 +20,13 @@
    </prerequisites>
 
    <process name="getIntervalData">
-     <job executable="${PYASPROOT}/${BINDIR}/getIntervalData.sh" maxCPU="600"/>
+     <job executable="${PYASPROOT}/${BINDIR}/getIntervalData.sh" 
+          batchOptions=" -q short" />
    </process>
 
    <process name="diffuseResponses">
      <job executable="${PYASPROOT}/${BINDIR}/diffuseResponses.sh"
-          maxCPU="20000"/>
+          batchOptions=" -q medium"/>
      <depends>
        <after process="getIntervalData" status="SUCCESS"/>
      </depends>
@@ -33,7 +34,7 @@
 
    <process name="livetimecube">
      <job executable="${PYASPROOT}/${BINDIR}/livetimecube.sh"
-          maxCPU="20000"/>
+          batchOptions=" -q medium"/>
      <depends>
        <after process="getIntervalData" status="SUCCESS"/>
      </depends>
@@ -60,7 +61,8 @@
        <variables>
          <var name="ROI_ID">${pipeline.stream}</var>
        </variables>
-       <job executable="${PYASPROOT}/${BINDIR}/getRoiData.sh" maxCPU="600"/>
+       <job executable="${PYASPROOT}/${BINDIR}/getRoiData.sh" 
+            batchOptions=" -q short"/>
      </process>
 
      <process name="exposureMap">
@@ -88,7 +90,7 @@
          <var name="ROI_ID">${pipeline.stream}</var>
        </variables>
        <job executable="${PYASPROOT}/${BINDIR}/combineDrpExpMaps.sh" 
-            maxCPU="600"/>
+            batchOptions=" -q short"/>
        <depends>
          <after process="exposureSubMap.drpExpMap" status="SUCCESS"/>
        </depends>
@@ -99,7 +101,7 @@
          <var name="ROI_ID">${pipeline.stream}</var>
        </variables>
        <job executable="${PYASPROOT}/${BINDIR}/sourceAnalysis.sh"
-            maxCPU="100000"/>
+            batchOptions=" -q xlong"/>
        <depends>
          <after process="combineExpMaps" status="SUCCESS"/>
        </depends>
@@ -135,7 +137,7 @@
            <var name="EXPMAP_ID">${pipeline.stream}</var>
          </variables>
          <job executable="${PYASPROOT}/${BINDIR}/drpExpMap.sh"
-              maxCPU="20000"/>
+              batchOptions=" -q medium"/>
        </process>
      </task> <!--exposureSubMap-->
 
@@ -147,7 +149,7 @@
        </prerequisites>
        <process name="fitEnergyBand">
          <job executable="${PYASPROOT}/${BINDIR}/fitEnergyBand.sh"
-              maxCPU="20000"/>
+              batchOptions=" -q long"/>
        </process>
      </task>
 

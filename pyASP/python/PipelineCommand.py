@@ -13,7 +13,7 @@ import time
 
 def pyASProot():
     version = os.environ['PYASPROOT'].split(os.path.sep)[-1]
-    return os.path.join('/nfs/farm/g/glast/u33/jchiang/ASP/pyASP', version)
+    return os.path.join('/nfs/farm/g/glast/u33/jchiang/ASP/ASP/pyASP', version)
 
 _pyASProot = pyASProot()
 _bindir = os.environ['BINDIR']

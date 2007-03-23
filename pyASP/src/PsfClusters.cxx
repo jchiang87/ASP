@@ -107,7 +107,9 @@ void PsfClusters::loadIrfs(const std::string & irfs) {
    irfLoader::Loader::go(irfs);
    const std::vector<std::string> & irfNames =
       irfLoader::Loader::respIds().find(irfs)->second;
+   std::cerr << "Using IRFs: " << std::endl;
    for (size_t i(0); i < irfNames.size(); i++) {
+      std::cerr << "  " << irfNames.at(i) << std::endl;
       irfInterface::Irfs * irf = 
          irfInterface::IrfsFactory::instance()->create(irfNames.at(i));
       m_psfs[irf->irfID()] = irf->psf()->clone();

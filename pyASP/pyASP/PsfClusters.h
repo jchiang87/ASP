@@ -13,8 +13,6 @@
 
 #include "pyASP/ClusterAlg.h"
 
-#include "pyASP/ScData.h"
-
 namespace irfInterface {
    class IPsf;
 }

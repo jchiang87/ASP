@@ -25,7 +25,7 @@ class DbEntry(object):
         self._subprocess("/afs/slac/g/glast/ground/bin/addTrendableMetaData",
                          self.dataId, type, value)
     def _subprocess(self, *args):
-        self._checkArgs(args)
+#        self._checkArgs(args)
         process = subprocess.Popen(args, stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
         out, err = process.communicate()

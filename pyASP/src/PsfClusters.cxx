@@ -21,13 +21,21 @@
 
 namespace pyASP {
 
-PsfClusters::PsfClusters(const std::vector<Event> & events,
+PsfClusters::PsfClusters(const std::vector< std::pair<double, double> > & gtis,
                          const ScData & scData,
                          const std::string & irfs) 
-   : EventClusters(events), m_scData(scData) {
+   : ClusterAlg(gtis), m_scData(scData) {
    loadIrfs(irfs);
+}
+
+void PsfClusters::process(const std::vector<Event> & events,
+                          double & logLike_time, double & logLike_pos,
+                          astro::SkyDir & meanDir, double bg_rate) {
+   m_events = events;
+   logLike_time = logLikeTime(bg_rate);
+
    std::map<Event, double> wts;
-   const Event & largest(findLargestCluster(m_logLikePosition));
+   const Event & largest(findLargestCluster(logLike_pos));
    computePsfWts(largest, wts);
    double xhat(0);
    double yhat(0);
@@ -43,7 +51,7 @@ PsfClusters::PsfClusters(const std::vector<Event> & events,
    xhat /= norm;
    yhat /= norm;
    zhat /= norm;
-   m_clusterDir = astro::SkyDir(CLHEP::Hep3Vector(xhat, yhat, zhat));
+   meanDir = astro::SkyDir(CLHEP::Hep3Vector(xhat, yhat, zhat));
 }
 
 PsfClusters::~PsfClusters() {
@@ -88,12 +96,10 @@ void PsfClusters::computePsfWts(const Event & evt,
    double theta(m_scData.inclination(evt.time(), evt.dir()));
    std::vector<Event>::const_iterator event(m_events.begin());
    for ( ; event != m_events.end(); ++event) {
-//      if (evt != *event) {
-         double sep(event->sep(evt));
-         double value(psf(event->eventClass()).value(sep, event->energy(),
-                                                     theta, 0));
-         wts.insert(std::make_pair(*event, value));
-//      }
+      double sep(event->sep(evt));
+      double value(psf(event->eventClass()).value(sep, event->energy(),
+                                                  theta, 0));
+      wts.insert(std::make_pair(*event, value));
    }
 }
 

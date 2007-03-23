@@ -9,18 +9,7 @@
 
 import numarray as num
 
-use_old_imp = False
-
-threshold = 112
-if use_old_imp:
-    from pyIrfLoader import SkyDir
-    from EventClusters import *
-else:
-    from pyASP import SkyDir, Event, EventClusters
-#    from pyASP import SkyDir, Event, PsfClusters, ScData
-#    scData = ScData("/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits")
-#    EventClusters = lambda x : PsfClusters(x, scData, "DC2")
-#    threshold = 19
+from pyASP import SkyDir, Event, EventClusters, PsfClusters, ScData
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -60,9 +49,15 @@ def triggerTimes(time, logLike, threshold=112, deadtime=0):
             trigger_is_set = True
     return triggers, tpeaks, ll_values
 
+def downlink_bg_rate(events, imin, imax):
+    times = events.TIME
+    offset = 0
+    localmin = max(0, imin - offset)
+    localmax = min(len(times)-1, imax + offset)
+    return (localmax - localmin)/(times[localmax] - times[localmin])
+
 class BlindSearch(object):
-    def __init__(self, events, dn=20, deadtime=1000, threshold=112,
-                 clusterAlg=EventClusters):
+    def __init__(self, events, clusterAlg, dn=20, deadtime=1000, threshold=92):
         """events is a FitsNTuple of an FT1 file(s);
         dn is the number of consecutive events (in time) to consider;
         deadtime is the time in seconds to wait for the current trigger state
@@ -80,23 +75,31 @@ class BlindSearch(object):
         logdts = []
         logdists = []
         times = []
-        bg_rate = nevts/(events.TIME[-1] - events.TIME[0])
+        ras, decs = [], []
+        ls, bs = [], []
+        mean_bg_rate = nevts/(events.TIME[-1] - events.TIME[0])
         for imin, imax in zip(indices[:-1], indices[1:]):
-            clusters = self.clusterAlg(convert(events, imin, imax))
             try:
-                if use_old_imp:
-                    logPdts, logPdists = clusters.logLike(bg_rate=bg_rate)
-                else:
-                    logPdts = clusters.logLikeTime()
-                    logPdists = clusters.logLikePosition()
+                results = clusterAlg.processEvents(convert(events, imin, imax))
+                (logPdts, logPdists), meanDir = results
+                ra, dec = meanDir.ra(), meanDir.dec()
+                l, b = meanDir.l(), meanDir.b()
                 logdts.append(logPdts)
                 logdists.append(logPdists)
                 times.append((events.TIME[imin] + events.TIME[imax-1])/2.)
+                ras.append(ra)
+                decs.append(dec)
+                ls.append(l)
+                bs.append(b)
             except ValueError:
                 pass
         self.times = num.array(times)
         self.logdts = num.array(logdts)
         self.logdists = num.array(logdists)
+        self.ras = num.array(ras)
+        self.decs = num.array(decs)
+        self.glons = num.array(ls)
+        self.glats = num.array(bs)
         logLike = self.logdts + self.logdists
         self.triggers, self.tpeaks, self.ll = triggerTimes(times, -logLike,
                                                            deadtime=deadtime,
@@ -111,20 +114,23 @@ class BlindSearch(object):
         for tpeak in self.tpeaks:
             imin = min(num.where(events.TIME > tpeak-50)[0])
             imax = max(num.where(events.TIME < tpeak+50)[0])
-            clusters = self.clusterAlg(convert(events, imin, imax))
-            if use_old_imp:
-                grb_dir = list(clusters.localize())
+            try:
+                results = self.clusterAlg.processEvents(convert(events,
+                                                                imin, imax))
+                grb_dir = [results[1]]
                 grb_dir.append(tpeak)
                 grb_dirs.append(grb_dir)
-            else:
-                try:
-                    grb_dir = [clusters.clusterDir()]
-                    grb_dir.append(tpeak)
-                    grb_dirs.append(grb_dir)
-                except:
-                    pass
+            except:
+                pass
  
         return grb_dirs
+
+def read_gtis(ft1files):
+    data = FitsNTuple(ft1files, 'GTI')
+    gtis = []
+    for start, stop in zip(data.START, data.STOP):
+        gtis.append((start, stop))
+    return gtis
 
 if __name__ == '__main__':
     import os
@@ -148,7 +154,9 @@ if __name__ == '__main__':
 
     events = FitsNTuple(downlink_file)
 
-    blindSearch = BlindSearch(events, threshold=threshold)
+    clusterAlg = EventClusters(read_gtis(downlink_file))
+
+    blindSearch = BlindSearch(events, clusterAlg)
 
     if makePlots:
         import hippoplotter as plot
@@ -165,10 +173,7 @@ if __name__ == '__main__':
 
     grbDirs = blindSearch.grbDirs()
     for item in grbDirs:
-        if use_old_imp:
-            grb_dir, ras, decs, tpeak = item
-        else:
-            grb_dir, tpeak = item
+        grb_dir, tpeak = item
         notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
         grb_output = os.path.join(grbroot_dir, notice.name)
         try:
@@ -188,4 +193,5 @@ if __name__ == '__main__':
             plot.vline(grb_dir.ra())
             plot.hline(grb_dir.dec())
         else:
-            createGrbStreams.refinementStreams(output_dir=grb_output)
+            pass
+#            createGrbStreams.refinementStreams(output_dir=grb_output)

@@ -29,10 +29,10 @@ class SourceData(object):
         self.emin, self.emax = emin, emax
         self.flux, self.fluxerr = flux, fluxerr
     def updateDbEntry(self):
-        variable = "flux_%i_%i" % (emin, emax)
+        variable = "flux_%i_%i" % (self.emin, self.emax)
         dbEntry = DbEntry(self.name, variable, pars['start_time'],
                           pars['stop_time'])
-        dbEntry.setValues(flux, fluxerr)
+        dbEntry.setValues(self.flux, self.fluxerr)
         dbEntry.setMetaData("xmlFile", self.srcModel)
 
 def fitEnergyBand(emin, emax, srcModel):

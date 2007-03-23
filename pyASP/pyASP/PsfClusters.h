@@ -11,7 +11,9 @@
 
 #include <map>
 
-#include "pyASP/EventClusters.h"
+#include "pyASP/ClusterAlg.h"
+
+#include "pyASP/ScData.h"
 
 namespace irfInterface {
    class IPsf;
@@ -25,26 +27,22 @@ class ScData;
  * @class PsfClusters
  */
 
-class PsfClusters : public EventClusters {
+class PsfClusters : public ClusterAlg {
 
 public:
 
-   PsfClusters(const std::vector<Event> & events, 
+   PsfClusters(const std::vector< std::pair<double, double> > & gtis,
                const ScData & scData,
                const std::string & irfs="DC2");
 
    virtual ~PsfClusters();
 
-   virtual double logLikePosition() const {
-      return -m_logLikePosition;
-   }
-
-   virtual astro::SkyDir clusterDir() const {
-      return m_clusterDir;
-   }
+   virtual void process(const std::vector<Event> & events,
+                        double & logLike_time, double & logLike_pos,
+                        astro::SkyDir & meanDir, double bg_rate=0);
 
 private:
-
+   
    const ScData & m_scData;
 
    double m_logLikePosition;
@@ -52,6 +50,8 @@ private:
    astro::SkyDir m_clusterDir;
 
    std::map<size_t, irfInterface::IPsf *> m_psfs;
+
+   void process();
 
    const irfInterface::IPsf & psf(size_t item) const;
 

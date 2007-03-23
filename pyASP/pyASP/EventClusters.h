@@ -9,13 +9,7 @@
 #ifndef pyASP_EventClusters_h
 #define pyASP_EventClusters_h
 
-#include <vector>
-
-#include "pyASP/Event.h"
-
-namespace astro {
-   class SkyDir;
-}
+#include "pyASP/ClusterAlg.h"
 
 namespace pyASP {
 
@@ -23,26 +17,22 @@ namespace pyASP {
  * @class EventClusters
  */
 
-class EventClusters {
+class EventClusters : public ClusterAlg {
 
 public:
 
-   EventClusters(const std::vector<Event> & events,
+   EventClusters(const std::vector< std::pair<double, double> > & gtis,
                  double radius=17);
 
    virtual ~EventClusters() {}
 
-   virtual double logLikeTime(double bg_rate=0) const;
+protected:
 
    virtual double logLikePosition() const;
 
    virtual astro::SkyDir clusterDir(double radius=5) const {
       return meanDir(findLargestCluster(radius), radius);
    }
-
-protected:
-
-   std::vector<Event> m_events;
 
 private:
 

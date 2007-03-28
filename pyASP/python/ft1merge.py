@@ -16,6 +16,7 @@ import pyfits
 from GtApp import GtApp
 
 fmerge = GtApp('fmerge')
+fchecksum = GtApp('fchecksum')
 
 def _fileList(infiles, extnum=1):
     filelist = 'ft1merge_file_list'
@@ -28,7 +29,20 @@ def _fileList(infiles, extnum=1):
     infile_list.close()
     return filelist
 
+def _getTimeKeywords(infiles, extnum=1):
+    header = pyfits.open(infiles[0])[extnum].header
+    tstart = header['TSTART']
+    tstop = header['TSTOP']
+    for item in infiles[1:]:
+        header = pyfits.open(item)[extnum].header
+        if header['TSTART'] < tstart:
+            tstart = header['TSTART']
+        if header['TSTOP'] > tstop:
+            tstop = header['TSTOP']
+    return tstart, tstop
+
 def ft1merge(infiles, outfile):
+    tstart, tstop = _getTimeKeywords(infiles)
     fmerge['infiles'] = '"@' + _fileList(infiles) + '"'
     fmerge['outfile'] = outfile
     fmerge['clobber'] = 'yes'
@@ -44,8 +58,19 @@ def ft1merge(infiles, outfile):
     foo = pyfits.open(outfile)
     gti = pyfits.open(fmerge['outfile'])
     foo.append(gti['GTI'])
+
+    foo[0].header['TSTART'] = tstart
+    foo[0].header['TSTOP'] = tstop
+    foo[1].header['TSTART'] = tstart
+    foo[1].header['TSTOP'] = tstop
+    foo[0].header['FILENAME'] = outfile
     foo.writeto(outfile, clobber=True)
 
+    fchecksum['infile'] = outfile
+    fchecksum['update'] = 'yes'
+    fchecksum['datasum'] = 'yes'
+    fchecksum.run()
+    
     try:
         os.remove(fmerge['outfile'])
     except OSError:

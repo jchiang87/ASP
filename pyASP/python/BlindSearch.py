@@ -57,7 +57,8 @@ def downlink_bg_rate(events, imin, imax):
     return (localmax - localmin)/(times[localmax] - times[localmin])
 
 class BlindSearch(object):
-    def __init__(self, events, clusterAlg, dn=20, deadtime=1000, threshold=92):
+    def __init__(self, events, clusterAlg, dn=20, deadtime=1000, threshold=92,
+                 bg_rate=0):
         """events is a FitsNTuple of an FT1 file(s);
         dn is the number of consecutive events (in time) to consider;
         deadtime is the time in seconds to wait for the current trigger state
@@ -80,7 +81,8 @@ class BlindSearch(object):
         mean_bg_rate = nevts/(events.TIME[-1] - events.TIME[0])
         for imin, imax in zip(indices[:-1], indices[1:]):
             try:
-                results = clusterAlg.processEvents(convert(events, imin, imax))
+                results = clusterAlg.processEvents(convert(events, imin, imax),
+                                                   bg_rate)
                 (logPdts, logPdists), meanDir = results
                 ra, dec = meanDir.ra(), meanDir.dec()
                 l, b = meanDir.l(), meanDir.b()

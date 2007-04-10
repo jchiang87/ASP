@@ -36,6 +36,7 @@ void PsfClusters::process(const std::vector<Event> & events,
 
    std::map<Event, double> wts;
    const Event & largest(findLargestCluster(logLike_pos));
+   logLike_pos *= -1;
    computePsfWts(largest, wts);
    double xhat(0);
    double yhat(0);

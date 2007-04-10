@@ -59,11 +59,14 @@ def ft1merge(infiles, outfile):
     gti = pyfits.open(fmerge['outfile'])
     foo.append(gti['GTI'])
 
-    foo[0].header['TSTART'] = tstart
-    foo[0].header['TSTOP'] = tstop
+    try:
+        foo[0].header['FILENAME'] = outfile
+        foo[0].header['TSTART'] = tstart
+        foo[0].header['TSTOP'] = tstop
+    except KeyError:
+        pass
     foo[1].header['TSTART'] = tstart
     foo[1].header['TSTOP'] = tstop
-    foo[0].header['FILENAME'] = outfile
     foo.writeto(outfile, clobber=True)
 
     fchecksum['infile'] = outfile
@@ -84,5 +87,5 @@ def ft1merge(infiles, outfile):
 if __name__ == '__main__':
     L1DataPath = '/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks'
     infiles = [os.path.join(L1DataPath, 'downlink_%04i.fits' % i)
-             for i in range(4)]
+               for i in range(4)]
     ft1merge(infiles, 'foo.fits')

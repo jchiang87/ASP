@@ -18,11 +18,13 @@ def pyASProot():
 _pyASProot = pyASProot()
 _bindir = os.environ['BINDIR']
 _outputDir = os.environ['OUTPUTDIR']
+_pipelineServer = os.environ['PIPELINESERVER']
 
 print "Using:\n"
 print "PYASPROOT = %s" % _pyASProot
 print "BINDIR = %s" % _bindir
 print "OUTPUTDIR = %s" % _outputDir
+print "PIPELINESERVER = %s" % _pipelineServer
 print ""
 
 class PipelineError(EnvironmentError):
@@ -33,8 +35,7 @@ class PipelineCommand(object):
         "Abstraction for a Pipeline-II command."
         if stream is None:
             stream = self.streamNumber()
-        #executable = '/afs/slac/g/glast/ground/bin/pipeline'
-        executable = '~glast/pipeline-II/prod/pipeline'
+        executable = '~glast/pipeline-II/%s/pipeline' % _pipelineServer
         self.command = ('%s createStream %s %s "%s"'
                         % (executable, taskname, stream,
                            self._argString(args)))

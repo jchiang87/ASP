@@ -1,6 +1,8 @@
 """
 @brief Make difference maps.
 
+DEPRECATED
+
 @author W. Focke <focke@slac.stanford.edu>
 """
 

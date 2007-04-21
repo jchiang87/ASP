@@ -14,6 +14,8 @@ _ftools_setup= "/afs/slac/g/glast/ground/PipelineConfig/ASP/headas-config-noric0
 #_ST_path = "/nfs/farm/g/glast/u09/builds/rh9_gcc32/ScienceTools/ScienceTools-LATEST1.1537"
 _ST_path = "/nfs/farm/g/glast/u06/jchiang/ST"
 _ASP_path = "/nfs/farm/g/glast/u33/jchiang/ASP"
+#_ASP_path = os.path.join(os.path.split(os.environ['PYASPROOT'])[:-3])
+#_ASP_path = "/nfs/slac/g/svac/focke/ASP/code"
 _pyASP_version = os.environ['PYASPROOT'].split(os.path.sep)[-1]
 _pyASP_root = os.path.join(_ASP_path, "ASP", "pyASP", _pyASP_version)
 _asp_python = "/usr/local/bin/python"
@@ -69,6 +71,11 @@ if __name__ == '__main__':
                                 'drpExpMap.py', 
                                 'combineDrpExpMaps.py',
                                 'sourceAnalysis.py',
-                                'fitEnergyBand.py')
+                                'fitEnergyBand.py',
+                                'countsMap.py',
+                                'flare_livetimecube.py',
+                                'sourceMap.py',
+                                'modelMap.py',
+                                'flareSearch.py')
             for script in standard_scripts:
                 wrapperGenerator(script)

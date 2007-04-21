@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """
 @brief Make counts maps.
 
@@ -9,8 +11,9 @@ import os
 import numarray as num
 import pyfits
 
+from getL1Data import getL1Data
 from GtApp import GtApp
-from parfile_parser import Parfile
+from parfile_new import Parfile
 
 _L1DataPath = '/nfs/farm/g/glast/u33/jchiang/ASP/testdata/downlinks'
 _ft2File = '/nfs/farm/g/glast/u33/jchiang/ASP/testdata/eg_diffuse_scData_0000.fits'
@@ -26,6 +29,8 @@ errorMapFile = 'errorMap.fits'
 energyBins = 3
 
 pixelSize = 1.0
+nRa = 90
+nDec = 90
 
 output_dir = os.environ['output_dir']
 os.chdir(output_dir)
@@ -46,26 +51,32 @@ l1fp = open(l1List, 'w')
 for ft1File in ft1:
     print >> l1fp, ft1File
     pass
+l1fp.close()
+
 gtcntsmap['evfile'] = '@' + l1List
-gtcntsmap[''] = ft2
+gtcntsmap['scfile'] = ft2
 gtcntsmap['outfile'] = countMapFile
 
-gtcntsmap['emin'] = 100.
-gtcntsmap['emax'] = 3e5
+gtcntsmap['emin'] = 30.
+gtcntsmap['emax'] = 2e5
 gtcntsmap['nenergies'] = energyBins + 1
 
-gtcntsmap['use_lb'] = True # put center of map at galactic 
+gtcntsmap['use_lb'] = 'y' # put center of map at galactic 
 gtcntsmap['glon'] = 180.0  # anti
 gtcntsmap['glat'] = 0.0    # center
 
-gtcntsmap['nra'] = 360
-gtcntsmap['ndec'] = 180
-gtcntsmap['pixel_size'] = pixelSize
+gtcntsmap['nra'] = nRa
+gtcntsmap['ndec'] = nDec
+gtcntsmap['x_pixel_size'] = pixelSize
+gtcntsmap['y_pixel_size'] = pixelSize
+
+gtcntsmap['chatter']
 
 # should probably write entire parfile in a setup TP,
 # then only read in worker TPs
-parfile_basename = os.environ['PIPELINE_TASK'] + '.txt'
-pars = Parfile(parfile_basename)
+#parfile_basename = os.environ['PIPELINE_TASK'] + '.txt'
+#pars = Parfile(parfile_basename)
+pars = Parfile()
 pars['ft1file'] = gtcntsmap['evfile']
 pars['ft2file'] = ft2    # need to generalize this for multiple FT2 files
 pars['start_time'] = start_time

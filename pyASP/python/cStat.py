@@ -6,18 +6,23 @@
 
 import numarray as num
 
-logNFactorial = []
-def getLogNFactorial(maxN):
-    logNFactorial = num.add.accumulate(num.log(num.arange(maxN)))
-    return logNFactorial
+logNFactorialArray = []
+def logNFactorial(counts):
+    global logNFactorialArray
+    maxN = num.maximum.reduce(counts.flat)
+    if maxN > len(logNFactorialArray):
+        en = num.arange(maxN+1)
+        en[0] = 1
+        logNFactorialArray = num.add.accumulate(num.log(en))
+        pass
+    return logNFactorialArray[counts]
 
 def deltaC(counts, model):
     """Calculate contribution to C-stat for each pixel.
     Not done."""
-    global logNFactorial
-    maxN = num.maximum.reduce(counts)
-    if maxN > len(logNFactorial):
-        logNFactorial = getLogNFactorial(maxN)
-        pass
-    deltaC = model * counts * num.log(model) / logNFactorial[counts]
+
+    deltaC = 2.0 * (model - counts * num.log(model) + logNFactorial(counts))
+
     return deltaC
+
+

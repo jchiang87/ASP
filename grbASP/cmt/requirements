@@ -3,6 +3,7 @@ version v0
 
 # $Id$
 
+use AspPolicy v* ASP
 use SwigPolicy v*
 use astro v*
 use irfInterface v* irfs
@@ -27,5 +28,4 @@ library grbASP $(source)
 
 apply_pattern swig_module name="grbASP"
 
-#make_fragment generateWrappers -header=generateWrappers
-#document generateWrappers wrappers
+apply_pattern wrapper_scripts

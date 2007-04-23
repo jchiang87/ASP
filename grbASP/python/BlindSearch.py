@@ -8,8 +8,8 @@
 #
 
 import numarray as num
-
-from pyASP import SkyDir, Event, EventClusters, PsfClusters, ScData
+from pyASP import SkyDir
+from grbASP import Event, EventClusters, PsfClusters, ScData
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -196,4 +196,4 @@ if __name__ == '__main__':
             plot.hline(grb_dir.dec())
         else:
             pass
-#            createGrbStreams.refinementStreams(output_dir=grb_output)
+            createGrbStreams.refinementStreams(output_dir=grb_output)

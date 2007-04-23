@@ -13,9 +13,11 @@ import time
 from PipelineCommand import PipelineCommand, _outputDir
 
 # import these to ensure they are available for the various streams
-import pyASP
+import grbASP
 import pyIrfLoader
 import BayesBlocks
+
+_grbAspRoot = '/nfs/farm/g/glast/u33/jchiang/ASP/ASP/grbASP/v0'
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None,
                        output_dir=_outputDir, debug=False):
@@ -27,8 +29,9 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None,
     if isinstance(downlinks, str):
         downlinks = (downlinks, )
     for downlink in downlinks:
-        args = {'Downlink_file': downlink,
-                'GRBROOTDIR' : grbroot_dir}
+        args = {'Downlink_file' : downlink,
+                'GRBROOTDIR' : grbroot_dir,
+                'GRBASPROOT' : _grbAspRoot}
         command = PipelineCommand('GRB_blind_search', args)
         command.run(debug=debug)
 
@@ -40,7 +43,8 @@ def refinementStreams(notices=None, output_dir=_outputDir, debug=False):
         notices = (notices, )
     for notice in notices:
         args = {'GBM_Notice' : notice,
-                'output_dir' : output_dir}
+                'output_dir' : output_dir,
+                'GRBASPROOT' : _grbAspRoot}
         command = PipelineCommand('GRB_refinement', args)
         command.run(debug=debug)
 
@@ -52,7 +56,8 @@ def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False):
         parfiles = (parfiles, )
     for parfile in parfiles:
         args = {'GRB_parfile' : parfile,
-                'output_dir' : output_dir}
+                'output_dir' : output_dir,
+                'GRBASPROOT' : _grbAspRoot}
         command = PipelineCommand('GRB_afterglow', args)
         command.run(debug=debug)
 

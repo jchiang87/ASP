@@ -19,7 +19,7 @@ grbName = Parfile(os.environ['GRBPARS'])['name']
 afterglowFiles = grbName + '_afterglow_files'
 pars = Parfile(afterglowFiles)
 
-gtdiffresp = GtApp('gtdiffresp')
+gtdiffresp = GtApp('gtdiffresp', 'Likelihood')
 gtdiffresp['evfile'] = pars['ft1File']
 gtdiffresp['scfile'] = pars['ft2File']
 gtdiffresp['source_model_file'] = pars['xmlFile']

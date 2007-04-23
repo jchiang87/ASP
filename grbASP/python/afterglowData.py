@@ -15,7 +15,7 @@ import readXml
 import xmlSrcLib
 import FuncFactory
 
-gtselect = GtApp('gtselect')
+gtselect = GtApp('gtselect', 'dataSubselector')
 
 def getData(time, ra, dec, srcName, duration=5*3600, radius=15,
             extracted=False):

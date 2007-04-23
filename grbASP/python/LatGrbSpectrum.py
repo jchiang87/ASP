@@ -14,7 +14,7 @@ import readXml
 import FuncFactory as funcFactory
 from UnbinnedAnalysis import *
 
-gtselect = GtApp('gtselect')
+gtselect = GtApp('gtselect', 'dataSubselector')
 
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
 _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
@@ -61,7 +61,7 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
 def grbCoords(gbmNotice):
     infile = open(gbmNotice.Name + '_findSrc.txt')
     lines = infile.readlines()
-    tokens = lines[-1].split()
+    tokens = lines[-3].split()
     ra = float(tokens[0])
     dec = float(tokens[1])
     return ra, dec

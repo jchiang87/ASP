@@ -20,7 +20,7 @@ grbName = Parfile(os.environ['GRBPARS'])['name']
 afterglowFiles = grbName + '_afterglow_files'
 pars = Parfile(afterglowFiles)
 
-gtlivetimecube = GtApp('gtlivetimecube')
+gtlivetimecube = GtApp('gtlivetimecube', 'Likelihood')
 gtlivetimecube['evfile'] = pars['ft1File']
 gtlivetimecube['scfile'] = pars['ft2File']
 gtlivetimecube['outfile'] = 'expCube_' + grbName + '.fits'
@@ -29,7 +29,7 @@ if debug:
 else:
     gtlivetimecube.run()
 
-gtexpmap = GtApp('gtexpmap')
+gtexpmap = GtApp('gtexpmap', 'Likelihood')
 gtexpmap['evfile'] = pars['ft1File']
 gtexpmap['scfile'] = pars['ft2File']
 gtexpmap['exposure_cube_file'] = gtlivetimecube['outfile']

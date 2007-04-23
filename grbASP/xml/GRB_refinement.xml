@@ -9,22 +9,25 @@
    <prerequisites>
       <prerequisite name="GBM_Notice" type="string"/>
       <prerequisite name="output_dir" type="string"/>
-      <prerequisite name="PYASPROOT" type="string"/>
       <prerequisite name="BINDIR" type="string"/>
+      <prerequisite name="GRBASPROOT" type="string"/>
+      <prerequisite name="PIPELINESERVER" type="string"/>
    </prerequisites>
    <process name="extractLatData">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/extractLatData.sh" maxCPU="600"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/extractLatData.sh"
+           batchOptions="-q short"/>
    </process>
    <process name="refinePosition">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/refinePosition.sh" maxCPU="600"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/refinePosition.sh"
+           batchOptions="-q short"/>
       <depends>
           <after process="extractLatData" status="SUCCESS"/>
       </depends>
@@ -33,7 +36,8 @@
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/tsMap.sh" maxCPU="10000"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/tsMap.sh" 
+           batchOptions="-q long"/>
       <depends>
           <after process="refinePosition" status="SUCCESS"/>
       </depends>
@@ -43,7 +47,8 @@
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/LatGrbSpectrum.sh" maxCPU="600"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/LatGrbSpectrum.sh"
+           batchOptions="-q short"/>
       <depends>
           <after process="refinePosition" status="SUCCESS"/>
       </depends>

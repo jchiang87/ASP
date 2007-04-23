@@ -4,6 +4,7 @@ version v0
 # $Id$
 
 use AspPolicy v* ASP
+use pyASP v* ASP
 use SwigPolicy v*
 use astro v*
 use irfInterface v* irfs
@@ -18,8 +19,8 @@ apply_pattern package_linkopts
 apply_pattern shared_library
 
 path_remove PYTHONPATH grbASP
-path_append PYTHONPATH $(PYASPROOT)/$(BINDIR)
-path_append PYTHONPATH $(PYASPROOT)/python
+path_append PYTHONPATH $(GRBASPROOT)/$(BINDIR)
+path_append PYTHONPATH $(GRBASPROOT)/python
 
 macro_append cppflags "" Linux " -I../src -DTRAP_FPE " 
 macro source *.cxx WIN32 "*.h *.cxx"

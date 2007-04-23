@@ -12,7 +12,7 @@ from GtApp import GtApp
 
 os.chdir(os.environ['OUTPUTDIR'])
 
-gttsmap = GtApp('gttsmap')
+gttsmap = GtApp('gttsmap', 'Likelihood')
 
 # Use par file written by refinePosition.py
 

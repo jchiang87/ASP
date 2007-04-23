@@ -59,7 +59,7 @@ if __name__ == '__main__':
     import os
     from parfile_parser import Parfile
     os.chdir(os.environ['OUTPUTDIR'])
-    gtexpmap = GtApp('gtexpmap')
+    gtexpmap = GtApp('gtexpmap', 'Likelihood')
     grbName = Parfile(os.environ['GRBPARS'])['name']
     outfile = 'expMap_' + grbName + '.fits'
     combineExpMaps(outfile=outfile)

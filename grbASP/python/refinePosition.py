@@ -16,7 +16,7 @@ from GtApp import GtApp
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
 _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
 
-gtfindsrc = GtApp('gtfindsrc')
+gtfindsrc = GtApp('gtfindsrc', 'Likelihood')
 
 def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
                    ft2Input=_LatFt2File, tsmap=True, duration=100,
@@ -52,13 +52,13 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
     gtfindsrc['chatter'] = 2
     gtfindsrc.run()
     results = open(gtfindsrc['outfile']).readlines()
-    fields = results[-1].split()
+    fields = results[-3].split()
     ra, dec, ts, pos_error = (float(fields[0]), float(fields[1]),
                               float(fields[2]), float(fields[3]))
     if tsmap:
         npix = 20
         mapsize = 4*pos_error
-        gttsmap = GtApp('gttsmap')
+        gttsmap = GtApp('gttsmap', 'Likelihood')
         gttsmap['evfile'] = gtfindsrc['evfile']
         gttsmap['scfile'] = gtfindsrc['scfile']
         gttsmap['rspfunc'] = gtfindsrc['rspfunc']
@@ -117,4 +117,4 @@ if __name__ == '__main__':
 
     os.system('chmod 777 *')
 
-    afterglowStreams((os.path.join(output_dir, parfile), ))
+#    afterglowStreams((os.path.join(output_dir, parfile), ))

@@ -5,20 +5,22 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="1.3" type="Data">
+<task name="GRB_blind_search" version="1.4" type="Data">
    <prerequisites>
       <prerequisite name="Downlink_file" type="string"/>
       <prerequisite name="output_dir" type="string"/>
       <prerequisite name="GRBROOTDIR" type="string"/>
-      <prerequisite name="PYASPROOT" type="string"/>
+      <prerequisite name="GRBASPROOT" type="string"/>
       <prerequisite name="BINDIR" type="string"/>
+      <prerequisite name="PIPELINESERVER" type="string"/>
    </prerequisites>
    <process name="blind_search">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="DOWNLINKFILE">${Downlink_file}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/BlindSearch.sh" maxCPU="600">
+      <job executable="${GRBASPROOT}/${BINDIR}/BlindSearch.sh"
+           batchOptions="-q short">
       </job>
    </process>
 </task>

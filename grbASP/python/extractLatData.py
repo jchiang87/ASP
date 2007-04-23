@@ -11,8 +11,8 @@ from FitsNTuple import FitsNTuple
 from BayesBlocks import BayesBlocks
 from GtApp import GtApp
 
-gtselect = GtApp('gtselect')
-gtbin = GtApp('gtbin')
+gtselect = GtApp('gtselect', 'dataSubselector')
+gtbin = GtApp('gtbin', 'evtbin')
 
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
 

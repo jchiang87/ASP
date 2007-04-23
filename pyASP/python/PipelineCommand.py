@@ -60,7 +60,8 @@ class PipelineCommand(object):
         """
         defaultDict = {'output_dir' : _outputDir,
                        'PYASPROOT' : _pyASProot,
-                       'BINDIR' : _bindir}
+                       'BINDIR' : _bindir,
+                       'PIPELINESERVER' : _pipelineServer}
         defaultDict.update(argDict)
         arg_string = ""
         for item in defaultDict:

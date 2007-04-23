@@ -26,6 +26,3 @@ macro source *.cxx WIN32 "*.h *.cxx"
 library pyASP $(source)
 
 apply_pattern swig_module name="pyASP"
-
-make_fragment generateWrappers -header=generateWrappers
-document generateWrappers wrappers

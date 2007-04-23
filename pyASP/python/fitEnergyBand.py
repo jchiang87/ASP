@@ -100,6 +100,8 @@ def fitEnergyBand(emin, emax, srcModel):
 if __name__ == '__main__':
     from DrpSources import drpSources
     
+    rootDir = os.abspath(os.curdir)
+
     roi = currentRoi()
     os.chdir(roi.name)
     
@@ -111,5 +113,9 @@ if __name__ == '__main__':
     
     drp_list = drpSources.select(roi.ra, roi.dec, roi.radius)
 
+    output = open(os.path.join(rootDir, 'fluxes_%i_%i.dat' % (emin, emax)))
     for src in drp_list:
         results[src].updateDbEntry()
+        output.write("%s  %e  %e\n" % (src, results[src].flux,
+                                       results[src].fluxerr))
+    output.close()

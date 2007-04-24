@@ -70,12 +70,12 @@ def burst_interval(lc_file, minrate=30):
 
 if __name__ == '__main__':
     import os, sys
-    from GbmNotice import GbmNotice
+    from GcnNotice import GcnNotice
     from getL1Data import getL1Data
     from ft1merge import ft1merge
     os.chdir(os.environ['OUTPUTDIR'])
     GbmFile = os.environ['GBMNOTICE']
-    gbmNotice = GbmNotice(GbmFile)
+    gbmNotice = GcnNotice(GbmFile)
     duration = 100
     ft1, ft2 = getL1Data(gbmNotice.start_time - duration,
                          gbmNotice.start_time + duration)

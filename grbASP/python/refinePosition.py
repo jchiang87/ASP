@@ -8,7 +8,7 @@
 #
 import numarray as num
 from FitsNTuple import FitsNTuple
-from GbmNotice import GbmNotice
+from GcnNotice import GcnNotice
 from extractLatData import extractLatData
 from GtApp import GtApp
 
@@ -22,7 +22,7 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
                    ft2Input=_LatFt2File, tsmap=True, duration=100,
                    radius=15):
     try:
-        notice = GbmNotice(gbm_notice)
+        notice = GcnNotice(gbm_notice)
     except TypeError:
         notice = gbm_notice
 
@@ -91,13 +91,13 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
 
 if __name__ == '__main__':
     import os, sys
-    from GbmNotice import GbmNotice
+    from GcnNotice import GcnNotice
     from parfile_parser import Parfile
     from createGrbStreams import afterglowStreams
     
     output_dir = os.environ['OUTPUTDIR']
     os.chdir(output_dir)
-    gbmNotice = GbmNotice(os.environ['GBMNOTICE'])
+    gbmNotice = GcnNotice(os.environ['GBMNOTICE'])
     infiles = open(gbmNotice.Name + '_files')
     ft1File = infiles.readline().strip()
     ft2File = infiles.readline().strip()
@@ -117,4 +117,4 @@ if __name__ == '__main__':
 
     os.system('chmod 777 *')
 
-#    afterglowStreams((os.path.join(output_dir, parfile), ))
+    afterglowStreams((os.path.join(output_dir, parfile), ))

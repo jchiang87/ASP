@@ -9,12 +9,13 @@
    <prerequisites>
       <prerequisite name="output_dir" type="string"/>
       <prerequisite name="GRB_parfile" type="string"/>
-      <prerequisite name="PYASPROOT" type="string"/>
+      <prerequisite name="GRBASPROOT" type="string"/>
       <prerequisite name="BINDIR" type="string"/>
+      <prerequisite name="PIPELINESERVER" type="string"/>
    </prerequisites>
-
+<!--
    <process name="setupCatalogQuery">
-     <job executable="${PYASPROOT}/${BINDIR}/setupCatalogQuery.sh"
+     <job executable="${GRBASPROOT}/${BINDIR}/setupCatalogQuery.sh"
           maxCPU="30"/>
    </process>
 
@@ -48,22 +49,28 @@
        <subtask>afterglowDataTask</subtask>
      </createsSubtasks>
    </process>
-
    <task name="afterglowDataTask" version="0.1" type="Data">
      <prerequisites>
        <prerequisite name="queryPath" type="string"/>
      </prerequisites>
-     <process name="afterglowData">
-      <job executable="${PYASPROOT}/${BINDIR}/afterglowData.sh" maxCPU="600"/>
-     </process>
    </task>
+-->
 
+   <process name="afterglowData">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowData.sh"
+           batchOptions="-q short"/>
+     </process>
    <process name="afterglowDiffResps">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/afterglowDiffResps.sh" maxCPU="20000"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowDiffResps.sh" 
+           batchOptions="-q long"/>
       <depends>
          <after process="afterglowData" status="SUCCESS"/>
       </depends>
@@ -74,7 +81,8 @@
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/afterglowLivetimeCube.sh" maxCPU="20000"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowLivetimeCube.sh" 
+           batchOptions="-q long"/>
       <depends>
          <after process="afterglowData" status="SUCCESS"/>
       </depends>
@@ -105,7 +113,8 @@
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/combineExpMaps.sh" maxCPU="600"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/combineExpMaps.sh" 
+           batchOptions="-q short"/>
       <depends>
           <after process="afterglowExpMap.expmaps" status="SUCCESS"/>
       </depends>
@@ -116,7 +125,8 @@
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/afterglowAnalysis.sh" maxCPU="600"/>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowAnalysis.sh" 
+           batchOptions="-q short"/>
       <depends>
           <after process="combineExpMap" status="SUCCESS"/>
           <after process="afterglowDiffResps" status="SUCCESS"/>
@@ -127,7 +137,7 @@
       <prerequisites>
          <prerequisite name="output_dir" type="string"/>
          <prerequisite name="GRB_parfile" type="string"/>
-         <prerequisite name="PYASPROOT" type="string"/>
+         <prerequisite name="GRBASPROOT" type="string"/>
       </prerequisites>
       <process name="expmaps">
          <variables>
@@ -135,7 +145,8 @@
             <var name="GRBPARS">${GRB_parfile}</var>
             <var name="EXPMAP_ID">${pipeline.stream}</var>
          </variables>
-         <job executable="${PYASPROOT}/${BINDIR}/afterglowExpMap.sh" maxCPU="20000"/>
+         <job executable="${GRBASPROOT}/${BINDIR}/afterglowExpMap.sh" 
+              batchOptions="-q long"/>
       </process>
    </task>
 

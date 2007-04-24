@@ -12,16 +12,6 @@ import time
 import celgal
 import pyASP
 
-_LAT_Notice = """GLAST LAT BURST NOTIFICATION
-**************************************
-
-BURST Name     =                         %s
-BURST Date     =                         %s
-BURST Time (Sec of Day)     =            %s
-BURST RA  (Deg)   =                      %.3f
-BURST DEC (Deg)  =                       %.3f
-BURST LOC ERR (Deg 1 sigma)  =           """
-
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
 class ConvertEpoch(object):

@@ -7,8 +7,8 @@
 -->
 <task name="DRP_monitoring" version="3.3" type="Data">
   <variables>
-    <var name="sourceModelFile">${PYASPROOT}/data/DRP_SourceModel.xml</var>
-    <var name="PYASPROOT">/nfs/farm/g/glast/u33/jchiang/ASP/ASP/pyASP/v1</var>
+    <var name="sourceModelFile">${DRPMONITORINGROOT}/data/DRP_SourceModel.xml</var>
+    <var name="DRPMONITORINGROOT">/nfs/farm/g/glast/u33/jchiang/ASP/ASP/drpMonitoring/v0</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
    <prerequisites>
@@ -20,12 +20,12 @@
    </prerequisites>
 
    <process name="getIntervalData">
-     <job executable="${PYASPROOT}/${BINDIR}/getIntervalData.sh" 
+     <job executable="${DRPMONITORINGROOT}/${BINDIR}/getIntervalData.sh" 
           batchOptions=" -q short" />
    </process>
 
    <process name="diffuseResponses">
-     <job executable="${PYASPROOT}/${BINDIR}/diffuseResponses.sh"
+     <job executable="${DRPMONITORINGROOT}/${BINDIR}/diffuseResponses.sh"
           batchOptions=" -q medium"/>
      <depends>
        <after process="getIntervalData" status="SUCCESS"/>
@@ -33,7 +33,7 @@
    </process>
 
    <process name="livetimecube">
-     <job executable="${PYASPROOT}/${BINDIR}/livetimecube.sh"
+     <job executable="${DRPMONITORINGROOT}/${BINDIR}/livetimecube.sh"
           batchOptions=" -q medium"/>
      <depends>
        <after process="getIntervalData" status="SUCCESS"/>
@@ -61,7 +61,7 @@
        <variables>
          <var name="ROI_ID">${pipeline.stream}</var>
        </variables>
-       <job executable="${PYASPROOT}/${BINDIR}/getRoiData.sh" 
+       <job executable="${DRPMONITORINGROOT}/${BINDIR}/getRoiData.sh" 
             batchOptions=" -q short"/>
      </process>
 
@@ -89,7 +89,7 @@
        <variables>
          <var name="ROI_ID">${pipeline.stream}</var>
        </variables>
-       <job executable="${PYASPROOT}/${BINDIR}/combineDrpExpMaps.sh" 
+       <job executable="${DRPMONITORINGROOT}/${BINDIR}/combineDrpExpMaps.sh" 
             batchOptions=" -q short"/>
        <depends>
          <after process="exposureSubMap.drpExpMap" status="SUCCESS"/>
@@ -100,7 +100,7 @@
        <variables>
          <var name="ROI_ID">${pipeline.stream}</var>
        </variables>
-       <job executable="${PYASPROOT}/${BINDIR}/sourceAnalysis.sh"
+       <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceAnalysis.sh"
             batchOptions=" -q xlong"/>
        <depends>
          <after process="combineExpMaps" status="SUCCESS"/>
@@ -136,7 +136,7 @@
          <variables>
            <var name="EXPMAP_ID">${pipeline.stream}</var>
          </variables>
-         <job executable="${PYASPROOT}/${BINDIR}/drpExpMap.sh"
+         <job executable="${DRPMONITORINGROOT}/${BINDIR}/drpExpMap.sh"
               batchOptions=" -q medium"/>
        </process>
      </task> <!--exposureSubMap-->
@@ -148,7 +148,7 @@
          <prerequisite name="ROI_ID" type="string"/>
        </prerequisites>
        <process name="fitEnergyBand">
-         <job executable="${PYASPROOT}/${BINDIR}/fitEnergyBand.sh"
+         <job executable="${DRPMONITORINGROOT}/${BINDIR}/fitEnergyBand.sh"
               batchOptions=" -q long"/>
        </process>
      </task>

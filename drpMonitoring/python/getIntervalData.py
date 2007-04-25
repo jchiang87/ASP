@@ -51,7 +51,7 @@ else:
     gtselect.run()
 
 parfile_basename = 'drp_pars.txt'
-#pars = Parfile(os.path.join(os.environ['PYASPROOT'], 'data', parfile_basename))
+#pars = Parfile(os.path.join(os.environ['DRPMONITORINGROOT'], 'data', parfile_basename))
 pars = Parfile(parfile_basename)
 pars['ft1file'] = gtselect['outfile']
 pars['ft2file'] = ft2[0]    # need to generalize this for multiple FT2 files

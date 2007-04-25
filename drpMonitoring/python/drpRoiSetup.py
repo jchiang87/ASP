@@ -15,7 +15,7 @@ import os
 from parfile_parser import Parfile
 from read_data import read_data
 
-_roiFile = os.path.join(os.environ['PYASPROOT'], 'data', 'rois.txt')
+_roiFile = os.path.join(os.environ['DRPMONITORINGROOT'], 'data', 'rois.txt')
 
 class RoI(object):
     def __init__(self, region, ra, dec, radius, sourcerad):

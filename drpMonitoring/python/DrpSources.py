@@ -33,5 +33,5 @@ class DrpSources(dict):
                 my_sources.append(source)
         return my_sources
 
-drpSources = DrpSources(os.path.join(os.environ['PYASPROOT'], 'data',
+drpSources = DrpSources(os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
                                      'DRP_SourceList.txt'))

@@ -17,7 +17,7 @@ import pyASP
 _startTime = 220838400.   # for DC2 data
 #_startTime = 0.            # for testdata
 
-_sourceModel = os.path.join(os.environ['PYASPROOT'], 'data',
+_sourceModel = os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
                             'DRP_SourceModel.xml')
 
 def drpStreams(daynum=1, output_dir=_outputDir, RoI_file='rois.txt',

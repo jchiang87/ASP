@@ -70,6 +70,18 @@ astro::JulianDate jd_from_MET(double met);
       data.push_back(hours);
       return data;
    }
+   double value() {
+      return *self;
+   }
+   double tjd() {
+      return *self - 2440000.5;
+   }
+   int dayOfYear() {
+      int year, month, day;
+      double hours;
+      self->getGregorianDate(year, month, day, hours);
+      return *self - astro::JulianDate(year, 1, 1, 0) + 1;
+   }
 }
 %extend pyASP::ClusterAlg {
    std::pair< std::pair<double, double>, astro::SkyDir>

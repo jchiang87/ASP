@@ -18,11 +18,7 @@
 astro::JulianDate jd_from_MET(double met) {
    return astro::JulianDate(astro::JulianDate::missionStart() + met/8.64e4);
 }
-#include "pyASP/Event.h"
-#include "pyASP/ClusterAlg.h"
-#include "pyASP/EventClusters.h"
-#include "pyASP/PsfClusters.h"
-#include "pyASP/ScData.h"
+#include "pyASP/ChiProb.h"
 %}
 %include stl.i
 %exception {
@@ -36,18 +32,12 @@ astro::JulianDate jd_from_MET(double met) {
 %template(DoublePair) std::pair<double, double>;
 %template(DoubleVector) std::vector<double>;
 %template(PairVector) std::vector< std::pair<double, double> >;
-%template(ClusterAlgResults) std::pair<std::pair<double, double>, astro::SkyDir>;
 %include $(ASTROROOT)/astro/JulianDate.h
 %include $(ASTROROOT)/astro/SkyProj.h
 %include $(ASTROROOT)/astro/SkyDir.h
 %include $(ASTROROOT)/astro/SolarSystem.h
+%include $(PYASPROOT)/pyASP/ChiProb.h
 astro::JulianDate jd_from_MET(double met);
-%include $(PYASPROOT)/pyASP/ScData.h
-%include $(PYASPROOT)/pyASP/Event.h
-%template(EventVector) std::vector<pyASP::Event>;
-%include $(PYASPROOT)/pyASP/ClusterAlg.h
-%include $(PYASPROOT)/pyASP/EventClusters.h
-%include $(PYASPROOT)/pyASP/PsfClusters.h
 %extend astro::SkyDir {
    static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
                                     const astro::SkyDir & dir2,
@@ -81,14 +71,5 @@ astro::JulianDate jd_from_MET(double met);
       double hours;
       self->getGregorianDate(year, month, day, hours);
       return *self - astro::JulianDate(year, 1, 1, 0) + 1;
-   }
-}
-%extend pyASP::ClusterAlg {
-   std::pair< std::pair<double, double>, astro::SkyDir>
-      processEvents(const std::vector<Event> & events, double bg_rate=0) {
-      double logLike_time, logLike_pos;
-      astro::SkyDir meanDir;
-      self->process(events, logLike_time, logLike_pos, meanDir, bg_rate);
-      return std::make_pair(std::make_pair(logLike_time, logLike_pos),meanDir);
    }
 }

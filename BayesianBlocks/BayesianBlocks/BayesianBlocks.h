@@ -28,9 +28,14 @@
 class BayesianBlocks {
    
 public:
+
+   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1);
   
-   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1.);
-   
+   BayesianBlocks(const std::vector<double> & cellContent,
+                  const std::vector<double> & cellBoundaries,
+                  const std::vector<double> & scaleFactors,
+                  double ncpPrior=1);
+
    ~BayesianBlocks() throw() {}
 
    void computeLightCurve(std::vector<double> & tmins,
@@ -64,7 +69,13 @@ public:
 
 private:
 
+   bool m_binned;
+
+   /// @brief event arrival times to be used for unbinned analysis
    std::vector<double> m_eventTimes;
+
+   /// @brief cell counts to be used for binned mode
+   std::vector<double> m_cellContent;
 
    double m_ncpPrior;
 

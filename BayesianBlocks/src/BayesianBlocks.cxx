@@ -14,10 +14,26 @@
 #include "BayesianBlocks/BayesianBlocks.h"
 
 BayesianBlocks::BayesianBlocks(const std::vector<double> & eventTimes, 
-                               double ncpPrior) : m_eventTimes(eventTimes),
-                                                  m_ncpPrior(ncpPrior) {
+                               double ncpPrior) 
+   : m_binned(false), m_eventTimes(eventTimes), 
+     m_cellContent(std::vector<double>(eventTimes.size(), 1)), 
+     m_ncpPrior(ncpPrior) {
    std::stable_sort(m_eventTimes.begin(), m_eventTimes.end());
    createCells();
+}
+
+BayesianBlocks::BayesianBlocks(const std::vector<double> & cellContent,
+                               const std::vector<double> & cellBoundaries,
+                               const std::vector<double> & scaleFactors,
+                               double ncpPrior=1) 
+   : m_binned(true), m_cellContent(cellContent), 
+     m_cellBoundaries(cellBoundaries), m_ncpPrior(ncpPrior) {
+   if (cellContent.size() != cellBoundaries.size() - 1 ||
+       cellContent.size() != scaleFactors.size()) {
+      throw std::runtime_error("Inconsistent numbers of cells, cell "
+                               "boundaries, and/or scale factors.");
+   }
+   setCellScaling(scaleFactors);
 }
 
 int BayesianBlocks::setCellScaling(const std::vector<double> & scaleFactors) {
@@ -111,10 +127,15 @@ void BayesianBlocks::createCells() {
 }
 
 void BayesianBlocks::renormalize() {
-   double smallest_cell(m_eventTimes.back() - m_eventTimes.front());
-   for (unsigned int i = 0; i < m_cells.size(); i++) {
-      if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
-         smallest_cell = m_cells[i];
+   double smallest_cell;
+   if (m_binned) {
+      smallest_cell = 1./highestBinDensity();
+   } else {
+      smallest_cell = m_eventTimes.back() - m_eventTimes.front();
+      for (unsigned int i = 0; i < m_cells.size(); i++) {
+         if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
+            smallest_cell = m_cells[i];
+         }
       }
    }
    std::transform(m_cells.begin(), m_cells.end(), m_cells.begin(), 
@@ -123,6 +144,12 @@ void BayesianBlocks::renormalize() {
    std::partial_sum(m_cells.begin(), m_cells.end(), 
                     m_scaledBoundaries.begin());
    m_scaledBoundaries.push_front(0);
+}
+
+void BayesianBlocks::highestBinDensity() {
+   for (size_t i(0); i < m_cellContent.size(); i++) {
+      
+   }
 }
 
 double BayesianBlocks::blockCost(unsigned int imin, unsigned int imax) const {

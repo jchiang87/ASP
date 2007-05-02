@@ -11,10 +11,10 @@ nsamp = 5000
 events = sample(func, nsamp)*2.*num.pi
 
 fine_blocks = BayesBlocks(events, 4)
-#rough_blocks = BayesBlocks(events, 4)
+rough_blocks = BayesBlocks(events, 4)
 
-fine_lc = LightCurve(fine_blocks.computeLightCurve())
-#rough_lc = LightCurve(rough_blocks.computeLightCurve())
+fine_lc = fine_blocks.lightCurve()
+#rough_lc = LightCurve(rough_blocks.lightCurve())
 
 (x, y) = fine_lc.dataPoints()
 #(xx, yy) = rough_lc.dataPoints()

@@ -77,11 +77,11 @@ private:
    /// @brief cell counts to be used for binned mode
    std::vector<double> m_cellContent;
 
-   double m_ncpPrior;
-
    std::vector<double> m_cells;
    std::vector<double> m_cellBoundaries;
    std::deque<double> m_scaledBoundaries;
+
+   double m_ncpPrior;
 
    std::deque<unsigned int> m_changePoints;
 
@@ -96,6 +96,8 @@ private:
    double blockSize(unsigned int imin, unsigned int imax) const;
 
    double blockContent(unsigned int imin, unsigned int imax) const;
+
+   double highestBinDensity() const;
 
 };
 

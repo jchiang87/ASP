@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <numeric>
+#include <stdexcept>
 
 #include "BayesianBlocks/BayesianBlocks.h"
 
@@ -25,7 +26,7 @@ BayesianBlocks::BayesianBlocks(const std::vector<double> & eventTimes,
 BayesianBlocks::BayesianBlocks(const std::vector<double> & cellContent,
                                const std::vector<double> & cellBoundaries,
                                const std::vector<double> & scaleFactors,
-                               double ncpPrior=1) 
+                               double ncpPrior) 
    : m_binned(true), m_cellContent(cellContent), 
      m_cellBoundaries(cellBoundaries), m_ncpPrior(ncpPrior) {
    if (cellContent.size() != cellBoundaries.size() - 1 ||
@@ -127,17 +128,17 @@ void BayesianBlocks::createCells() {
 }
 
 void BayesianBlocks::renormalize() {
-   double smallest_cell;
-   if (m_binned) {
-      smallest_cell = 1./highestBinDensity();
-   } else {
-      smallest_cell = m_eventTimes.back() - m_eventTimes.front();
-      for (unsigned int i = 0; i < m_cells.size(); i++) {
-         if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
-            smallest_cell = m_cells[i];
-         }
-      }
-   }
+   double smallest_cell(1./highestBinDensity());
+//    if (m_binned) {
+//       smallest_cell = 1./highestBinDensity();
+//    } else {
+//       smallest_cell = m_eventTimes.back() - m_eventTimes.front();
+//       for (unsigned int i = 0; i < m_cells.size(); i++) {
+//          if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
+//             smallest_cell = m_cells[i];
+//          }
+//       }
+//    }
    std::transform(m_cells.begin(), m_cells.end(), m_cells.begin(), 
                   std::bind2nd(std::multiplies<double>(), 2./smallest_cell));
    m_scaledBoundaries.resize(m_cells.size());
@@ -146,10 +147,17 @@ void BayesianBlocks::renormalize() {
    m_scaledBoundaries.push_front(0);
 }
 
-void BayesianBlocks::highestBinDensity() {
-   for (size_t i(0); i < m_cellContent.size(); i++) {
-      
+double BayesianBlocks::highestBinDensity() const {
+   double maxDensity(m_cellContent.front()
+                     /(m_cellBoundaries.at(1) - m_cellBoundaries.front()));
+   for (size_t i(1); i < m_cellContent.size(); i++) {
+      double density(m_cellContent.at(i)
+                     /(m_cellBoundaries.at(i+1) - m_cellBoundaries.at(i)));
+      if (density > maxDensity) {
+         maxDensity = density;
+      }
    }
+   return maxDensity;
 }
 
 double BayesianBlocks::blockCost(unsigned int imin, unsigned int imax) const {
@@ -170,6 +178,13 @@ double BayesianBlocks::blockSize(unsigned int imin, unsigned int imax) const {
 
 double BayesianBlocks::blockContent(unsigned int imin, 
                                     unsigned int imax) const {
+   if (m_binned) {
+      double content(0);
+      for (size_t i(imin); i < imax+1; i++) {
+         content += m_cellContent.at(i);
+      }
+      return content;
+   }
    return imax - imin + 1.;
 }
 

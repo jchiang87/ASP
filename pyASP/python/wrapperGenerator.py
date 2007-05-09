@@ -71,11 +71,6 @@ if __name__ == '__main__':
                                 'drpExpMap.py', 
                                 'combineDrpExpMaps.py',
                                 'sourceAnalysis.py',
-                                'fitEnergyBand.py',
-                                'countsMap.py',
-                                'flare_livetimecube.py',
-                                'sourceMap.py',
-                                'modelMap.py',
-                                'flareSearch.py')
+                                'fitEnergyBand.py',)
             for script in standard_scripts:
                 wrapperGenerator(script)

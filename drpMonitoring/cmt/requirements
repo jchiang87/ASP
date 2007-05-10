@@ -10,4 +10,8 @@ use BayesianBlocks v* ASP -no_auto_imports
 use sane v* -no_auto_imports
 use pyLikelihood v* -no_auto_imports
 
+path_remove PYTHONPATH drpMonitoring
+path_append PYTHONPATH $(DRPMONITORINGROOT)/$(BINDIR)
+path_append PYTHONPATH $(DRPMONITORINGROOT)/python
+
 apply_pattern wrapper_scripts

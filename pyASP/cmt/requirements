@@ -1,16 +1,10 @@
 package pyASP
-version v1
+version v2
 
 # $Id$
 
 use SwigPolicy v*
 use astro v*
-use irfInterface v* irfs
-use irfLoader v* irfs
-use pyIrfLoader v* irfs -no_auto_imports
-use BayesianBlocks v* ASP -no_auto_imports
-use sane v* -no_auto_imports
-use pyLikelihood v* -no_auto_imports
 
 apply_pattern shared_library
 

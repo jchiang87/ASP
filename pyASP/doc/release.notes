@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v2     10-May-07   JC   spin off grbASP, drpMonitoring, flareMonitoring
+                            packages
     v1     01-Dec-06   JC   added DRP_monitoring task and scripts;
                             refactored parfile and stream handling
     v0r5   24-Oct-06   JC   generate wrapper scripts as a document, update

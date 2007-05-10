@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
-    v0     21-Apr-06   JC   Initial import.
+    v0r1   10-May-07   JC   mv more files from pyASP, revise GCN Notice 
+                            handling templates and code
+    v0     21-Apr-07   JC   Initial import.
     @endverbatim
 */

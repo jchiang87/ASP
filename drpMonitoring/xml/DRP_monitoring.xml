@@ -8,7 +8,6 @@
 <task name="DRP_monitoring" version="3.3" type="Data">
   <variables>
     <var name="sourceModelFile">${DRPMONITORINGROOT}/data/DRP_SourceModel.xml</var>
-    <var name="DRPMONITORINGROOT">/nfs/farm/g/glast/u33/jchiang/ASP/ASP/drpMonitoring/v0</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
    <prerequisites>
@@ -17,6 +16,7 @@
       <prerequisite name="stop_time" type="string"/>
       <prerequisite name="RoI_file" type="string"/>
       <prerequisite name="num_RoIs" type="integer"/>
+      <prerequisite name="DRPMONITORINGROOT" type="string"/>
    </prerequisites>
 
    <process name="getIntervalData">

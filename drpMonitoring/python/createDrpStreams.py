@@ -34,7 +34,8 @@ def drpStreams(daynum=1, output_dir=_outputDir, RoI_file='rois.txt',
             'stop_time' : stop_time,
             'RoI_file' : RoI_file,
             'num_RoIs' : num_RoIs,
-            'sourceModelFile' : sourceModel}
+            'sourceModelFile' : sourceModel,
+            'DRPMONITORINGROOT' : os.environ['DRPMONITORINGROOT']}
     command = PipelineCommand('DRP_monitoring', args)
     command.run(debug=debug)
 

@@ -1,0 +1,13 @@
+/** @file release.notes
+    @brief package drpMonitoring
+    @brief Package coordinator: J. Chiang
+
+    $Id$
+
+    @verbatim
+    v0r1p1 10-May-07   JC   use env var to set DRPMONITORINGROOT in
+                            createDrpStreams; remove default from xml file
+    v0r1   10-May-07   JC   finish off migration from pyASP
+    v0     22-Apr-07   JC   Initial import.
+    @endverbatim
+*/

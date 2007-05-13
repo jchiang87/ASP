@@ -7,8 +7,9 @@
 -->
 <task name="DRP_monitoring" version="3.4" type="Data">
   <variables>
-    <var name="sourceModelFile">${DRPMONITORINGROOT}/data/DRP_SourceModel.xml</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v8r0p4"</var>
     <var name="BINDIR">rh9_gcc32</var>
+    <var name="sourceModelFile">${DRPMONITORINGROOT}/data/DRP_SourceModel.xml</var>
   </variables>
    <prerequisites>
       <prerequisite name="output_dir" type="string"/>
@@ -16,6 +17,7 @@
       <prerequisite name="stop_time" type="string"/>
       <prerequisite name="RoI_file" type="string"/>
       <prerequisite name="num_RoIs" type="integer"/>
+      <prerequisite name="ASP_PATH" type="string"/>
       <prerequisite name="DRPMONITORINGROOT" type="string"/>
    </prerequisites>
 

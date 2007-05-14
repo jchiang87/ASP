@@ -15,7 +15,7 @@ from PipelineCommand import PipelineCommand, _outputDir, _asp_path
 import pyASP
 
 _version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
-_drpRoot = os.path.join(_asp_path, 'drpMonitoring', _version)
+_drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
 
 _startTime = 220838400.   # for DC2 data
 #_startTime = 0.            # for testdata

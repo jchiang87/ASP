@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v2r1   13-May-07   JC   use ST_INST and ASP_PATH in PipelineCommand.py
     v2r0p1 10-May-07   JC   remove hardwired path to PYASPROOT in 
                             PipelineCommand.py
     v2     10-May-07   JC   spin off grbASP, drpMonitoring, flareMonitoring

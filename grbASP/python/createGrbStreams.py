@@ -18,7 +18,7 @@ import pyIrfLoader
 import BayesBlocks
 
 _version = os.path.split(os.environ['GRBASPROOT'])[-1]
-_grbAspRoot = os.path.join(_asp_path, 'grbASP', _version)
+_grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None,
                        output_dir=_outputDir, debug=False):

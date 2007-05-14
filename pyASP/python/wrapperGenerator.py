@@ -11,14 +11,16 @@ running the pyASP Python scripts.
 import os
 
 _ftools_setup= "/afs/slac/g/glast/ground/PipelineConfig/ASP/headas-config-noric024835.sh"
-#_ST_path = "/nfs/farm/g/glast/u09/builds/rh9_gcc32/ScienceTools/ScienceTools-LATEST1.1537"
-_ST_path = "/nfs/farm/g/glast/u06/jchiang/ST"
-_ASP_path = "/nfs/farm/g/glast/u33/jchiang/ASP"
-#_ASP_path = os.path.join(os.path.split(os.environ['PYASPROOT'])[:-3])
-#_ASP_path = "/nfs/slac/g/svac/focke/ASP/code"
-_pyASP_version = os.environ['PYASPROOT'].split(os.path.sep)[-1]
-_pyASP_root = os.path.join(_ASP_path, "ASP", "pyASP", _pyASP_version)
-_asp_python = "/usr/local/bin/python"
+_ST_path = "${ST_INST}"
+_ASP_path = "${ASP_PATH}"
+#
+# We need to build _ASP_root this way, rather than using
+# os.environ['ASPROOT'] directly, since nfs mount points are not
+# persistent from process to process
+#
+_ASP_version = os.environ['ASPROOT'].split(os.path.sep)[-1]
+_ASP_root = os.path.join(_ASP_path, "ASP", _ASP_version)
+_asp_python = "/usr/bin/env python"
 
 def wrapperGenerator(scriptName):
     prefix = scriptName.split(".py")[0]
@@ -38,7 +40,7 @@ def wrapperGenerator(scriptName):
     output.write("source %s\n" % _ftools_setup)
     output.write("GLAST_EXT=/afs/slac/g/glast/ground/GLAST_EXT/rh9_gcc32; export GLAST_EXT\n")
     output.write("PATH=%s:${PATH}; export PATH\n" % os.path.join(_ST_path, 'bin'))
-    output.write("source %s\n" % os.path.join(_pyASP_root, 'cmt', 'setup.sh'))
+    output.write("source %s\n" % os.path.join(_ASP_root, 'cmt', 'setup.sh'))
     output.write('exec %s %s\n' % (_asp_python, pyScript))
     output.close()
     os.system('chmod +x %s' % outfile)
@@ -50,27 +52,4 @@ if __name__ == '__main__':
         print "usage: %s [<Python script name>]" % sys.argv[0]
         sys.exit(1)
     except ValueError:
-        if sys.argv[1:]:
-            wrapperGenerator(sys.argv[1])
-        else:
-            standard_scripts = ('BlindSearch.py',
-                                'extractLatData.py',
-                                'refinePosition.py',
-                                'tsMap.py',
-                                'LatGrbSpectrum.py',
-                                'afterglowData.py',
-                                'afterglowLivetimeCube.py',
-                                'afterglowDiffResps.py',
-                                'afterglowExpMap.py', 
-                                'combineExpMaps.py',
-                                'afterglowAnalysis.py',
-                                'getIntervalData.py',
-                                'diffuseResponses.py',
-                                'livetimecube.py',
-                                'getRoiData.py',
-                                'drpExpMap.py', 
-                                'combineDrpExpMaps.py',
-                                'sourceAnalysis.py',
-                                'fitEnergyBand.py',)
-            for script in standard_scripts:
-                wrapperGenerator(script)
+        wrapperGenerator(sys.argv[1])

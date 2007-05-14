@@ -11,21 +11,18 @@ various ASP tasks
 import os
 import time
 
-def pyASProot():
-    return os.environ['PYASPROOT']
-#    version = os.environ['PYASPROOT'].split(os.path.sep)[-1]
-#    return os.path.join('/nfs/farm/g/glast/u33/jchiang/ASP/ASP/pyASP', version)
-
-_pyASProot = pyASProot()
 _bindir = os.environ['BINDIR']
-_outputDir = os.environ['OUTPUTDIR']
+_st_inst = os.environ['ST_INST']
+_asp_path = os.environ['ASP_PATH']
 _pipelineServer = os.environ['PIPELINESERVER']
+_outputDir = os.environ['OUTPUTDIR']
 
 print "Using:\n"
-print "PYASPROOT = %s" % _pyASProot
 print "BINDIR = %s" % _bindir
-print "OUTPUTDIR = %s" % _outputDir
+print "ST_INST = %s" % _st_inst
+print "ASP_PATH = %s" % _asp_path
 print "PIPELINESERVER = %s" % _pipelineServer
+print "OUTPUTDIR = %s" % _outputDir
 print ""
 
 class PipelineError(EnvironmentError):
@@ -59,10 +56,11 @@ class PipelineCommand(object):
         the default dictionary can be over-ridden by key-value pairs in
         the argDict.
         """
-        defaultDict = {'output_dir' : _outputDir,
-                       'PYASPROOT' : _pyASProot,
-                       'BINDIR' : _bindir,
-                       'PIPELINESERVER' : _pipelineServer}
+        defaultDict = {'BINDIR' : _bindir,
+                       'ST_INST' : _st_inst,
+                       'ASP_PATH' : _asp_path,
+                       'PIPELINESERVER' : _pipelineServer,
+                       'output_dir' : _outputDir}
         defaultDict.update(argDict)
         arg_string = ""
         for item in defaultDict:

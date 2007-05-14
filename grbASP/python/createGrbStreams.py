@@ -10,14 +10,15 @@
 import os
 import glob
 import time
-from PipelineCommand import PipelineCommand, _outputDir
+from PipelineCommand import PipelineCommand, _outputDir, _asp_path
 
 # import these to ensure they are available for the various streams
 import grbASP
 import pyIrfLoader
 import BayesBlocks
 
-_grbAspRoot = '/nfs/farm/g/glast/u33/jchiang/ASP/ASP/grbASP/v0'
+_version = os.path.split(os.environ['GRBASPROOT'])[-1]
+_grbAspRoot = os.path.join(_asp_path, 'grbASP', _version)
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None,
                        output_dir=_outputDir, debug=False):

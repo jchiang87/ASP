@@ -83,7 +83,7 @@ private:
 
    double m_ncpPrior;
 
-   std::deque<unsigned int> m_changePoints;
+   std::deque<size_t> m_changePoints;
 
    void createCells();
 
@@ -91,11 +91,11 @@ private:
 
    void renormalize();
 
-   double blockCost(unsigned int imin, unsigned int imax) const;
+   double blockCost(size_t imin, size_t imax) const;
 
-   double blockSize(unsigned int imin, unsigned int imax) const;
+   double blockSize(size_t imin, size_t imax) const;
 
-   double blockContent(unsigned int imin, unsigned int imax) const;
+   double blockContent(size_t imin, size_t imax) const;
 
    double highestBinDensity() const;
 

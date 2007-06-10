@@ -182,14 +182,17 @@ double BayesianBlocks::blockSize(size_t imin, size_t imax) const {
 }
 
 double BayesianBlocks::blockContent(size_t imin, size_t imax) const {
+   double content(0);
    if (m_binned) {
-      double content(0);
       for (size_t i(imin); i < imax+1; i++) {
-         content += m_cellContent.at(i);
+         if (i < m_cellContent.size()) {
+            content += m_cellContent.at(i);
+         }
       }
-      return content;
+   } else {
+      content = imax - imin + 1.;
    }
-   return imax - imin + 1.;
+   return content;
 }
 
 double BayesianBlocks::gammln(double xx) {

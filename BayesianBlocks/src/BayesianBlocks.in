@@ -28,11 +28,21 @@
       std::vector<double> tmins;
       std::vector<double> tmaxs;
       std::vector<double> numEvents;
-      self->computeLightCurve(tmins, tmaxs, numEvents);
+      std::vector<double> exposures;
+      self->computeLightCurve(tmins, tmaxs, numEvents, exposures);
+
+      std::vector<double> xx;
+      std::vector<double> yy;
+      for (size_t i(0); i < tmins.size(); i++) {
+         xx.push_back(tmins.at(i));
+         xx.push_back(tmaxs.at(i));
+         yy.push_back(numEvents.at(i)/exposures.at(i));
+         yy.push_back(numEvents.at(i)/exposures.at(i));
+      }
+
       std::vector< std::vector<double> > output;
-      output.push_back(tmins);
-      output.push_back(tmaxs);
-      output.push_back(numEvents);
+      output.push_back(xx);
+      output.push_back(yy);
       return output;
    }
 }

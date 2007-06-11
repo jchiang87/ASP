@@ -1,4 +1,5 @@
 import numarray as num
+from BayesianBlocks import *
 from BayesBlocks import BayesBlocks, LightCurve
 
 from distributions import sample
@@ -11,13 +12,9 @@ nsamp = 5000
 events = sample(func, nsamp)*2.*num.pi
 
 fine_blocks = BayesBlocks(events, 4)
-rough_blocks = BayesBlocks(events, 4)
-
 fine_lc = fine_blocks.lightCurve()
-#rough_lc = LightCurve(rough_blocks.lightCurve())
 
-(x, y) = fine_lc.dataPoints()
-#(xx, yy) = rough_lc.dataPoints()
+x, y = fine_lc.dataPoints()
 
 import hippoplotter as plot
 hist = plot.histogram(events, 'phi')
@@ -25,5 +22,6 @@ reps = hist.getDataReps()
 reps[0].setErrorDisplay('y', 1)
 plot.scatter(x, y, pointRep='Line', oplot=1, color='red')
 
-#plot.scatter(xx, yy, pointRep='Line', oplot=1, lineStyle='Dash')
-
+foo = BayesianBlocks(events, 4)
+xx, yy = foo.lightCurve()
+plot.scatter(xx, yy, pointRep='Line', oplot=1, color='green')

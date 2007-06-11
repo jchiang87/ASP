@@ -33,14 +33,15 @@ public:
   
    BayesianBlocks(const std::vector<double> & cellContent,
                   const std::vector<double> & cellBoundaries,
-                  const std::vector<double> & scaleFactors,
+                  const std::vector<double> & efficiencies,
                   double ncpPrior=1);
 
    ~BayesianBlocks() throw() {}
 
    void computeLightCurve(std::vector<double> & tmins,
                           std::vector<double> & tmaxs,
-                          std::vector<double> & numEvents);
+                          std::vector<double> & numEvents,
+                          std::vector<double> & exposures);
 
    int setCellScaling(const std::vector<double> & scaleFactors);
 
@@ -80,6 +81,7 @@ private:
    std::vector<double> m_cells;
    std::vector<double> m_cellBoundaries;
    std::deque<double> m_scaledBoundaries;
+   std::vector<double> m_cellExposures;
 
    double m_ncpPrior;
 

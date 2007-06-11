@@ -8,12 +8,15 @@ class BayesBlocks(BayesianBlocks):
     def setCellScaling(self, scaleFactors):
         BayesianBlocks.setCellScaling(self, scaleFactors)
     def lightCurve(self):
-        return LightCurve(BayesianBlocks.lightCurve(self))
+#        return LightCurve(BayesianBlocks.lightCurve(self))
+        return LightCurve(self._computeLightCurve())
     def _computeLightCurve(self):
         tmins = DoubleVector()
         tmaxs = DoubleVector()
         numEvents = DoubleVector()
-        BayesianBlocks.computeLightCurve(self, tmins, tmaxs, numEvents)
+        exposures = DoubleVector()
+        BayesianBlocks.computeLightCurve(self, tmins, tmaxs, numEvents,
+                                         exposures)
         return num.array(tmins), num.array(tmaxs), num.array(numEvents)
     def cells(self):
         my_cells = DoubleVector()

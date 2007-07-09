@@ -25,16 +25,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="176.509"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-61.2285"/>
     </spatialModel>
-  </source><source name="BM_4C21_35" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="186.227"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="21.380"/>
-   </spatialModel>
-</source><source Npred="686.034" TS_value="390.81200" name="MRF0312_v2" type="PointSource">
+  </source>
+  <source Npred="686.034" TS_value="390.81200" name="MRF0312_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0212577" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.276902"/>
       <parameter error="0.0739721" free="1" max="0" min="-5" name="Index" scale="1" value="-2.75938"/>
@@ -298,16 +290,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="350.226"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="61.4652"/>
     </spatialModel>
-  </source><source name="BM_PKS1510m08" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="228.211"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-9.100"/>
-   </spatialModel>
-</source><source Npred="154.461" TS_value="120.75700" name="MRF0450_v2" type="PointSource">
+  </source>
+  <source Npred="154.461" TS_value="120.75700" name="MRF0450_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0119751" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.0482192"/>
       <parameter error="0.130471" free="1" max="0" min="-5" name="Index" scale="1" value="-1.98942"/>
@@ -362,25 +346,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="192.102"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-6.5393"/>
     </spatialModel>
-  </source><source name="BM_S50836p71" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="130.352"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="70.895"/>
-   </spatialModel>
-</source><source name="BM_PKS1725p044" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="262.104"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="4.451"/>
-   </spatialModel>
-</source><source Npred="18.4466" TS_value="29.77210" name="MRF0166_v2" type="PointSource">
+  </source>
+  <source Npred="18.4466" TS_value="29.77210" name="MRF0166_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0164017" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.00341745"/>
       <parameter error="2.90244" free="1" max="0" min="-5" name="Index" scale="1" value="-1.12903"/>
@@ -754,16 +721,7 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="83.3038"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-5.6339"/>
     </spatialModel>
-  </source><source name="BM_PKS1313m333" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="199.033"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-33.650"/>
-   </spatialModel>
-</source><source name="1ES 2344+514" type="PointSource">
+  </source><source name="1ES 2344+514" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter free="1" max="1000.0" min="1e-05" name="Integral" scale="1e-06" value="1.159"/>
       <parameter free="1" max="0.0" min="-5.0" name="Index" scale="1.0" value="-2.35"/>
@@ -972,16 +930,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="333.499"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="37.6927"/>
     </spatialModel>
-  </source><source name="BM_4C28_07" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="39.468"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="28.802"/>
-   </spatialModel>
-</source><source Npred="480.499" TS_value="126.23800" name="MRF0509_v2" type="PointSource">
+  </source>
+  <source Npred="480.499" TS_value="126.23800" name="MRF0509_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0304698" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.243045"/>
       <parameter error="0.139274" free="1" max="0" min="-5" name="Index" scale="1" value="-2.96205"/>
@@ -1421,16 +1371,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="342.805"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-13.7316"/>
     </spatialModel>
-  </source><source name="BM_4C10_45" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="242.193"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="10.485"/>
-   </spatialModel>
-</source><source Npred="3382.82" TS_value="1033.05000" name="MRF0066_v2" type="PointSource">
+  </source>
+  <source Npred="3382.82" TS_value="1033.05000" name="MRF0066_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0505009" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="1.19469"/>
       <parameter error="0.0225237" free="1" max="0" min="-5" name="Index" scale="1" value="-2.18733"/>
@@ -1496,16 +1438,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="312.691"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="31.4008"/>
     </spatialModel>
-  </source><source name="BM_PKS0336m01" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="54.879"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-1.777"/>
-   </spatialModel>
-</source><source Npred="545.125" TS_value="247.68500" name="MRF0530_v2" type="PointSource">
+  </source>
+  <source Npred="545.125" TS_value="247.68500" name="MRF0530_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0194665" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.237451"/>
       <parameter error="0.0980953" free="1" max="0" min="-5" name="Index" scale="1" value="-2.99412"/>
@@ -1714,16 +1648,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="305.295"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="37.2735"/>
     </spatialModel>
-  </source><source name="BM_CTA102" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="338.152"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="11.731"/>
-   </spatialModel>
-</source><source Npred="156.39" TS_value="27.46450" name="MRF0492_v2" type="PointSource">
+  </source>
+  <source Npred="156.39" TS_value="27.46450" name="MRF0492_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0255731" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.0669382"/>
       <parameter error="0.361257" free="1" max="0" min="-5" name="Index" scale="1" value="-2.8183"/>
@@ -1789,16 +1715,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="343.291"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="19.6654"/>
     </spatialModel>
-  </source><source name="BM_TON599" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="179.883"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="29.246"/>
-   </spatialModel>
-</source><source Npred="619.191" TS_value="72.28330" name="MRF0231_v2" type="PointSource">
+  </source>
+  <source Npred="619.191" TS_value="72.28330" name="MRF0231_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0202479" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.320172"/>
       <parameter error="0.0504499" free="1" max="0" min="-5" name="Index" scale="1" value="-3.00193"/>
@@ -2271,16 +2189,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="120.437"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-34.222"/>
     </spatialModel>
-  </source><source name="BM_PKS0048m09" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="12.672"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-9.485"/>
-   </spatialModel>
-</source><source Npred="2153.59" TS_value="3776.93000" name="MRF0275_v2" type="PointSource">
+  </source>
+  <source Npred="2153.59" TS_value="3776.93000" name="MRF0275_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.026832" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.843444"/>
       <parameter error="0.0261631" free="1" max="0" min="-5" name="Index" scale="1" value="-2.29406"/>
@@ -2302,16 +2212,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="209.203"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="26.2711"/>
     </spatialModel>
-  </source><source name="BM_S41739p52" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="265.154"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="52.195"/>
-   </spatialModel>
-</source><source Npred="1065.94" TS_value="310.22700" name="MRF0417_v2" type="PointSource">
+  </source>
+  <source Npred="1065.94" TS_value="310.22700" name="MRF0417_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0338183" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.438682"/>
       <parameter error="0.0709192" free="1" max="0" min="-5" name="Index" scale="1" value="-2.85605"/>
@@ -2355,16 +2257,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="136.076"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-50.1387"/>
     </spatialModel>
-  </source><source name="BM_OS319" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="243.421"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="34.213"/>
-   </spatialModel>
-</source><source Npred="1056.84" TS_value="197.87100" name="MRF0044_v2" type="PointSource">
+  </source>
+  <source Npred="1056.84" TS_value="197.87100" name="MRF0044_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.056837" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.408245"/>
       <parameter error="0.083463" free="1" max="0" min="-5" name="Index" scale="1" value="-2.42808"/>
@@ -2419,16 +2313,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="271.432"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-5.3848"/>
     </spatialModel>
-  </source><source name="BM_PKS0537m441" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="84.710"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-44.086"/>
-   </spatialModel>
-</source><source Npred="338.267" TS_value="38.50260" name="MRF0548_v2" type="PointSource">
+  </source>
+  <source Npred="338.267" TS_value="38.50260" name="MRF0548_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0206915" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.153867"/>
       <parameter error="0.104154" free="1" max="0" min="-5" name="Index" scale="1" value="-3.28123"/>
@@ -2692,16 +2578,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="143.394"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-19.1346"/>
     </spatialModel>
-  </source><source name="BM_PKS0420m01" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="65.816"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-1.343"/>
-   </spatialModel>
-</source><source Npred="171.332" TS_value="47.76260" name="MRF0238_v2" type="PointSource">
+  </source>
+  <source Npred="171.332" TS_value="47.76260" name="MRF0238_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.200511" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.0652864"/>
       <parameter error="1.36747" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0757"/>
@@ -2767,16 +2645,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="109.454"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-12.5939"/>
     </spatialModel>
-  </source><source name="BM_PKS1424m41" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="216.985"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-42.105"/>
-   </spatialModel>
-</source><source Npred="7931.59" TS_value="18643.70000" name="MRF0249_v2" type="PointSource">
+  </source>
+  <source Npred="7931.59" TS_value="18643.70000" name="MRF0249_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0381173" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="2.61888"/>
       <parameter error="0.0105696" free="1" max="0" min="-5" name="Index" scale="1" value="-2.14079"/>
@@ -2798,16 +2668,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="204.378"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="50.4989"/>
     </spatialModel>
-  </source><source name="BM_CenA" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="201.365"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-43.019"/>
-   </spatialModel>
-</source><source Npred="64.7405" TS_value="58.72530" name="MRF0100_v2" type="PointSource">
+  </source>
+  <source Npred="64.7405" TS_value="58.72530" name="MRF0100_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.00261819" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.0164277"/>
       <parameter error="0.0572614" free="1" max="0" min="-5" name="Index" scale="1" value="-1.62278"/>
@@ -3236,16 +3098,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="278.413"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-21.0692"/>
     </spatialModel>
-  </source><source name="BM_PKS0735p17" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="114.531"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="17.705"/>
-   </spatialModel>
-</source><source Npred="494.801" TS_value="48.18620" name="MRF0377_v2" type="PointSource">
+  </source>
+  <source Npred="494.801" TS_value="48.18620" name="MRF0377_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0527129" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.195347"/>
       <parameter error="0.194459" free="1" max="0" min="-5" name="Index" scale="1" value="-2.62874"/>
@@ -3476,16 +3330,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="296.506"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="24.4361"/>
     </spatialModel>
-  </source><source name="BM_3C66A" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="35.665"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="43.035"/>
-   </spatialModel>
-</source><source Npred="769.896" TS_value="368.71700" name="MRF0545_v2" type="PointSource">
+  </source>
+  <source Npred="769.896" TS_value="368.71700" name="MRF0545_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0242741" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.350847"/>
       <parameter error="0.122086" free="1" max="0" min="-5" name="Index" scale="1" value="-3.58926"/>
@@ -3540,16 +3386,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="266.258"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-9.8825"/>
     </spatialModel>
-  </source><source name="BM_S40954p65" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="149.697"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="65.565"/>
-   </spatialModel>
-</source><source Npred="32.2009" TS_value="62.49260" name="MRF0024_v2" type="PointSource">
+  </source>
+  <source Npred="32.2009" TS_value="62.49260" name="MRF0024_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.00291021" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.00654387"/>
       <parameter error="0.173986" free="1" max="0" min="-5" name="Index" scale="1" value="-1.34692"/>
@@ -3560,16 +3398,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="335.261"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="36.4058"/>
     </spatialModel>
-  </source><source name="BM_OJ287" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="133.704"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="20.109"/>
-   </spatialModel>
-</source><source Npred="72.0578" TS_value="163.39500" name="MRF0311_v2" type="PointSource">
+  </source>
+  <source Npred="72.0578" TS_value="163.39500" name="MRF0311_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.00390615" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.0150636"/>
       <parameter error="0.0990516" free="1" max="0" min="-5" name="Index" scale="1" value="-1.39322"/>
@@ -3712,16 +3542,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="185.598"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="23.2893"/>
     </spatialModel>
-  </source><source name="BM_OJ49" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="127.954"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="4.494"/>
-   </spatialModel>
-</source><source Npred="1218.65" TS_value="1136.44000" name="MRF0127_v2" type="PointSource">
+  </source>
+  <source Npred="1218.65" TS_value="1136.44000" name="MRF0127_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0246274" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.485663"/>
       <parameter error="0.0517773" free="1" max="0" min="-5" name="Index" scale="1" value="-2.72695"/>
@@ -3776,16 +3598,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="87.8962"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-9.6244"/>
     </spatialModel>
-  </source><source name="BM_PKS0440m00" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="70.661"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="-0.295"/>
-   </spatialModel>
-</source><source Npred="147.26" TS_value="32.29050" name="MRF0043_v2" type="PointSource">
+  </source>
+  <source Npred="147.26" TS_value="32.29050" name="MRF0043_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.180893" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.0522775"/>
       <parameter error="1.86856" free="1" max="0" min="-5" name="Index" scale="1" value="-2.26937"/>
@@ -3884,25 +3698,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="313.767"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="42.3369"/>
     </spatialModel>
-  </source><source name="BM_Mkn180" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="174.110"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="70.158"/>
-   </spatialModel>
-</source><source name="BM_PKS2356p196" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="359.692"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="19.922"/>
-   </spatialModel>
-</source><source Npred="1511.4" TS_value="1637.60000" name="MRF0244_v2" type="PointSource">
+  </source>
+  <source Npred="1511.4" TS_value="1637.60000" name="MRF0244_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.0278764" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.509572"/>
       <parameter error="0.0286425" free="1" max="0" min="-5" name="Index" scale="1" value="-1.94744"/>
@@ -3913,16 +3710,8 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="265.346"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-39.4633"/>
     </spatialModel>
-  </source><source name="BM_TXS0529p483" type="PointSource">
-   <spectrum type="PowerLaw">
-      <parameter free="1" max="100.0" min="1e-05" name="Prefactor" scale="1e-06" value="1.0"/>
-      <parameter free="1" max="-1.0" min="-3.5" name="Index" scale="1.0" value="-2.2"/>
-      <parameter free="0" max="200.0" min="50.0" name="Scale" scale="1.0" value="100.0"/>
-   </spectrum><spatialModel type="SkyDirFunction">
-      <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="83.316"/>
-      <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="48.381"/>
-   </spatialModel>
-</source><source Npred="1429.98" TS_value="1038.15000" name="MRF0124_v2" type="PointSource">
+  </source>
+  <source Npred="1429.98" TS_value="1038.15000" name="MRF0124_v2" type="PointSource">
     <spectrum type="PowerLaw2">
       <parameter error="0.00928896" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.53946"/>
       <parameter error="0.0143155" free="1" max="0" min="-5" name="Index" scale="1" value="-2.62408"/>
@@ -4142,4 +3931,317 @@ $Header$
       <parameter free="0" max="360" min="-360" name="RA" scale="1" value="93.2847"/>
       <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="3.8595"/>
     </spatialModel>
-  </source></source_library>
+  </source>
+  <source name="BM_4C21_35" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="186.227"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="21.38"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS1510m08" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="228.211"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-9.1"/>
+    </spatialModel>
+  </source>
+  <source name="BM_S50836p71" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="130.352"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="70.895"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS1725p044" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="262.104"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="4.451"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS1313m333" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="199.033"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-33.65"/>
+    </spatialModel>
+  </source>
+  <source name="BM_4C28_07" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="39.468"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="28.802"/>
+    </spatialModel>
+  </source>
+  <source name="BM_4C10_45" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="242.193"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="10.485"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS0336m01" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="54.879"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-1.777"/>
+    </spatialModel>
+  </source>
+  <source name="BM_CTA102" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="338.152"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="11.731"/>
+    </spatialModel>
+  </source>
+  <source name="BM_TON599" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="179.883"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="29.246"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS0048m09" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="12.672"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-9.485"/>
+    </spatialModel>
+  </source>
+  <source name="BM_S41739p52" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="265.154"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="52.195"/>
+    </spatialModel>
+  </source>
+  <source name="BM_OS319" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="243.421"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="34.213"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS0537m441" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="84.71"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-44.086"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS0420m01" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="65.816"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-1.343"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS1424m41" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="216.985"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-42.105"/>
+    </spatialModel>
+  </source>
+  <source name="BM_CenA" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="201.365"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-43.019"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS0735p17" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="114.531"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="17.705"/>
+    </spatialModel>
+  </source>
+  <source name="BM_3C66A" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="35.665"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="43.035"/>
+    </spatialModel>
+  </source>
+  <source name="BM_S40954p65" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="149.697"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="65.565"/>
+    </spatialModel>
+  </source>
+  <source name="BM_OJ287" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="133.704"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="20.109"/>
+    </spatialModel>
+  </source>
+  <source name="BM_OJ49" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="127.954"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="4.494"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS0440m00" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="70.661"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="-0.295"/>
+    </spatialModel>
+  </source>
+  <source name="BM_Mkn180" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="174.11"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="70.158"/>
+    </spatialModel>
+  </source>
+  <source name="BM_PKS2356p196" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="359.692"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="19.922"/>
+    </spatialModel>
+  </source>
+  <source name="BM_TXS0529p483" type="PointSource">
+    <spectrum type="PowerLaw2">
+      <parameter error="0.00" free="1" max="1000" min="1e-05" name="Integral" scale="1e-06" value="0.01"/>
+      <parameter error="0.00" free="1" max="0" min="-5" name="Index" scale="1" value="-2.0"/>
+      <parameter free="0" max="3e5" min="20" name="LowerLimit" scale="1" value="100"/>
+      <parameter free="0" max="3e5" min="20" name="UpperLimit" scale="1" value="200000"/>
+    </spectrum>
+    <spatialModel type="SkyDirFunction">
+      <parameter free="0" max="360" min="-360" name="RA" scale="1" value="83.316"/>
+      <parameter free="0" max="90" min="-90" name="DEC" scale="1" value="48.381"/>
+    </spatialModel>
+  </source> 
+</source_library>

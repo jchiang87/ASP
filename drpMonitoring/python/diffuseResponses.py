@@ -32,7 +32,7 @@ srcModel['Extragalactic Diffuse'].spectrum.Prefactor.free = 1
 srcModel.filename = 'diffuse_model.xml'
 srcModel.writeTo()
 
-gtdiffresp = GtApp('gtdiffresp')
+gtdiffresp = GtApp('gtdiffrsp')
 gtdiffresp['evfile'] = pars['ft1file']
 gtdiffresp['scfile'] = pars['ft2file']
 gtdiffresp['rspfunc'] = pars['rspfunc']

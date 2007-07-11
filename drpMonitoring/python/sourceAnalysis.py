@@ -29,7 +29,7 @@ else:
 # run gtdiffresp locally for each region until the full sky
 # diffuseResponses process is parallelized
 #
-    gtdiffresp = GtApp('gtdiffresp')
+    gtdiffresp = GtApp('gtdiffrsp')
     gtdiffresp['evfile'] = ft1file
     gtdiffresp['scfile'] = pars['ft2file']
     gtdiffresp['rspfunc'] = pars['rspfunc']

@@ -1,0 +1,14 @@
+/** @file release.notes
+    @brief package grbASP
+    @brief Package coordinator: J. Chiang
+
+    $Id$
+
+    @verbatim
+    v0r3   13-Jul-07   JC   use new gt app names
+    v0r2   13-May-07   JC   use ST_INST and ASP_PATH
+    v0r1   10-May-07   JC   mv more files from pyASP, revise GCN Notice 
+                            handling templates and code
+    v0     21-Apr-07   JC   Initial import.
+    @endverbatim
+*/

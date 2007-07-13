@@ -1,0 +1,15 @@
+/** @file release.notes
+    @brief package drpMonitoring
+    @brief Package coordinator: J. Chiang
+
+    $Id$
+
+    @verbatim
+    v0r3   13-Jul-07   JC   switch to new gt app names
+    v0r2   13-May-07   JC   use ASP_PATH and ST_INST
+    v0r1p1 10-May-07   JC   use env var to set DRPMONITORINGROOT in
+                            createDrpStreams; remove default from xml file
+    v0r1   10-May-07   JC   finish off migration from pyASP
+    v0     22-Apr-07   JC   Initial import.
+    @endverbatim
+*/

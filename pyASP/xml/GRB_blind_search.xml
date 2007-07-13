@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+   xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/pipeline/schemas/2.0/pipeline.xsd">
+<!-- $Header$
+-->
+<task>
+   <name>GRB_blind_search</name>
+   <version>
+      <major>1</major>
+      <minor>1</minor>
+   </version>
+   <type>Data</type>
+   <notation> </notation>
+   <prerequisites>
+      <prerequisite name="Downlink_file" type="string"/>
+      <prerequisite name="output_dir" type="string"/>
+      <prerequisite name="PYASPROOT" type="string"/>
+   </prerequisites>
+   <process name="blind_search" type="batch">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="DOWNLINKFILE">${Downlink_file}</var>
+      </variables>
+      <job executable="${PYASPROOT}/python/BlindSearch.sh" maxCPU="600">
+      </job>
+   </process>
+</task>
+</pipeline>

@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v0r2   13-Jul-07   JC   enable analysis of binned data for flaring source   
+                            detection
     v0r1   10-Jul-06   JC   Tag for use with pyASP package
     v0     11-May-04   JC   Initial import.
     @endverbatim

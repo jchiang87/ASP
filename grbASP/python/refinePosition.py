@@ -44,10 +44,10 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
     gtfindsrc['evfile'] = ft1_file
     gtfindsrc['scfile'] = ft2Input
     gtfindsrc['outfile'] = notice.Name + '_findSrc.txt'
-    gtfindsrc['rspfunc'] = 'DSS'
-    gtfindsrc['use_lb'] = 'no'
-    gtfindsrc['lon0'] = notice.RA
-    gtfindsrc['lat0'] = notice.DEC
+    gtfindsrc['irfs'] = 'DSS'
+    gtfindsrc['coordsys'] = 'CEL'
+    gtfindsrc['ra'] = notice.RA
+    gtfindsrc['dec'] = notice.DEC
     gtfindsrc['optimizer'] = 'DRMNGB'
     gtfindsrc['chatter'] = 2
     gtfindsrc.run()
@@ -61,16 +61,16 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
         gttsmap = GtApp('gttsmap', 'Likelihood')
         gttsmap['evfile'] = gtfindsrc['evfile']
         gttsmap['scfile'] = gtfindsrc['scfile']
-        gttsmap['rspfunc'] = gtfindsrc['rspfunc']
-        gttsmap['source_model_file'] = 'none'
+        gttsmap['irfs'] = gtfindsrc['irfs']
+        gttsmap['srcmdl'] = 'none'
         gttsmap['outfile'] = notice.Name + '_tsmap.fits'
-        gttsmap['use_lb'] = 'no'
-        gttsmap['ra_min'] = ra - mapsize
-        gttsmap['ra_max'] = ra + mapsize
-        gttsmap['nra'] = npix
-        gttsmap['dec_min'] = dec - mapsize
-        gttsmap['dec_max'] = dec + mapsize
-        gttsmap['ndec'] = npix
+        gttsmap['coordsys'] = 'CEL'
+        gttsmap['xref_min'] = ra - mapsize
+        gttsmap['xref_max'] = ra + mapsize
+        gttsmap['nx'] = npix
+        gttsmap['yref_min'] = dec - mapsize
+        gttsmap['yref_max'] = dec + mapsize
+        gttsmap['ny'] = npix
         print gttsmap.command()
         outfile = os.path.join(os.environ['OUTPUTDIR'], 'gttsmap.par')
         print "writing " + outfile

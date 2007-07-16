@@ -22,8 +22,8 @@ pars = Parfile(afterglowFiles)
 gtdiffresp = GtApp('gtdiffrsp', 'Likelihood')
 gtdiffresp['evfile'] = pars['ft1File']
 gtdiffresp['scfile'] = pars['ft2File']
-gtdiffresp['source_model_file'] = pars['xmlFile']
-gtdiffresp['rspfunc'] = 'DSS'
+gtdiffresp['srcmdl'] = pars['xmlFile']
+gtdiffresp['irfs'] = 'DSS'
 if debug:
     print gtdiffresp.command()
 else:

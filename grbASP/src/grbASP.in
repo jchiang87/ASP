@@ -11,13 +11,13 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-// #include "astro/JulianDate.h"
-// #include "astro/SkyDir.h"
-// #include "astro/SkyProj.h"
-// #include "astro/SolarSystem.h"
-// astro::JulianDate jd_from_MET(double met) {
-//    return astro::JulianDate(astro::JulianDate::missionStart() + met/8.64e4);
-// }
+#include "astro/JulianDate.h"
+#include "astro/SkyDir.h"
+#include "astro/SkyProj.h"
+#include "astro/SolarSystem.h"
+astro::JulianDate jd_from_MET(double met) {
+   return astro::JulianDate(astro::JulianDate::missionStart() + met/8.64e4);
+}
 #include "grbASP/Event.h"
 #include "grbASP/ClusterAlg.h"
 #include "grbASP/EventClusters.h"
@@ -37,40 +37,40 @@
 %template(DoubleVector) std::vector<double>;
 %template(PairVector) std::vector< std::pair<double, double> >;
 %template(ClusterAlgResults) std::pair<std::pair<double, double>, astro::SkyDir>;
-// %include $(ASTROROOT)/astro/JulianDate.h
-// %include $(ASTROROOT)/astro/SkyProj.h
-// %include $(ASTROROOT)/astro/SkyDir.h
-// %include $(ASTROROOT)/astro/SolarSystem.h
-// astro::JulianDate jd_from_MET(double met);
+%include $(ASTROROOT)/astro/JulianDate.h
+%include $(ASTROROOT)/astro/SkyProj.h
+%include $(ASTROROOT)/astro/SkyDir.h
+%include $(ASTROROOT)/astro/SolarSystem.h
+astro::JulianDate jd_from_MET(double met);
 %include $(GRBASPROOT)/grbASP/ScData.h
 %include $(GRBASPROOT)/grbASP/Event.h
 %template(EventVector) std::vector<grbASP::Event>;
 %include $(GRBASPROOT)/grbASP/ClusterAlg.h
 %include $(GRBASPROOT)/grbASP/EventClusters.h
 %include $(GRBASPROOT)/grbASP/PsfClusters.h
-// %extend astro::SkyDir {
-//    static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
-//                                     const astro::SkyDir & dir2,
-//                                     double t1, double t2, double tt) {
-//       return astro::SkyDir((tt - t1)/(t2 - t1)*(dir2() - dir1()) + dir1());
-//    }
-//    astro::SkyDir operator+(const astro::SkyDir & other) {
-//       return astro::SkyDir(self->operator()() + other());
-//    }
-// }
-// %extend astro::JulianDate {
-//    std::vector<double> gregorianDate() {
-//       int year, month, day;
-//       double hours;
-//       self->getGregorianDate(year, month, day, hours);
-//       std::vector<double> data;
-//       data.push_back(year);
-//       data.push_back(month);
-//       data.push_back(day);
-//       data.push_back(hours);
-//       return data;
-//    }
-// }
+%extend astro::SkyDir {
+   static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
+                                    const astro::SkyDir & dir2,
+                                    double t1, double t2, double tt) {
+      return astro::SkyDir((tt - t1)/(t2 - t1)*(dir2() - dir1()) + dir1());
+   }
+   astro::SkyDir operator+(const astro::SkyDir & other) {
+      return astro::SkyDir(self->operator()() + other());
+   }
+}
+%extend astro::JulianDate {
+   std::vector<double> gregorianDate() {
+      int year, month, day;
+      double hours;
+      self->getGregorianDate(year, month, day, hours);
+      std::vector<double> data;
+      data.push_back(year);
+      data.push_back(month);
+      data.push_back(day);
+      data.push_back(hours);
+      return data;
+   }
+}
 %extend grbASP::ClusterAlg {
    std::pair< std::pair<double, double>, astro::SkyDir>
       processEvents(const std::vector<Event> & events, double bg_rate=0) {

@@ -13,8 +13,10 @@ from GtApp import GtApp
 import readXml
 import FuncFactory as funcFactory
 from UnbinnedAnalysis import *
+import sys, os
 
 gtselect = GtApp('gtselect', 'dataSubselector')
+gtlike = GtApp('gtlike', 'Likelihood')
 
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
 _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
@@ -41,6 +43,9 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     gtselect.run()
 
     src = funcFactory.PtSrc()
+    src.spectrum.Integral.min = 0
+    src.spectrum.Integral.max = 1e7
+    src.spectrum.setAttributes()
     src.spatialModel.RA.value = ra
     src.spatialModel.DEC.value = dec
     src.spatialModel.setAttributes()
@@ -49,14 +54,35 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     srcModelFile = name + '_model.xml'
     srcModel.writeTo(srcModelFile)
 
-    obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
-                      expCube=None, irfs='DC2')
-    like = UnbinnedAnalysis(obs, srcModelFile, 'Minuit')
-    like[0].setBounds(0, 1e7)
-    like.fit()
-    like.writeXml()
-    like.writeCountsSpectra(name + '_prompt_spectra.fits')
-    return like
+    gtlike['irfs'] = 'DSS'
+    gtlike['srcmdl'] = srcModelFile
+    gtlike['sfile'] = srcModelFile
+    gtlike['optimizer'] = 'MINUIT'
+    gtlike['evfile'] = gtselect['outfile']
+    gtlike['scfile'] = ft2File
+    gtlike.run()
+    os.rename('counts_spectra.fits', name + '_prompt_spectra.fits')
+
+#    print "creating UnbinnedObs object"
+#    sys.stdout.flush()
+#    obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
+#                      expCube=None, irfs='DC2')
+#    print "creating UnbinnedAnalysis object"
+#    sys.stdout.flush()
+#    like = UnbinnedAnalysis(obs, srcModelFile, 'Minuit')
+#    print like.state()
+#    sys.stdout.flush()
+#    like[0].setBounds(0, 1e7)
+#    print "running like.fit()"
+#    sys.stdout.flush()
+#    like.fit()
+#    print "running like.writeXml()"
+#    sys.stdout.flush()
+#    like.writeXml()
+#    print "like.WriteCountsSpectra()"
+#    sys.stdout.flush()
+#    like.writeCountsSpectra(name + '_prompt_spectra.fits')
+#    return like
 
 def grbCoords(gbmNotice):
     infile = open(gbmNotice.Name + '_findSrc.txt')

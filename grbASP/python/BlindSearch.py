@@ -8,8 +8,8 @@
 #
 
 import numarray as num
-from pyASP import SkyDir
-from grbASP import Event, EventClusters, PsfClusters, ScData
+#from pyASP import SkyDir
+from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 
 def convert(events, imin=0, imax=None):
     if imax is None:

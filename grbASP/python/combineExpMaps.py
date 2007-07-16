@@ -20,8 +20,8 @@ def pixbounds(npts, nx):
     return x
 
 def writeExpMapBounds(gtexpmap, nx=2, ny=2, textfile=_defaultTextFile):
-    xvals = pixbounds(gtexpmap["number_of_longitude_points"], nx)
-    yvals = pixbounds(gtexpmap["number_of_latitude_points"], ny)
+    xvals = pixbounds(gtexpmap["nlong"], nx)
+    yvals = pixbounds(gtexpmap["nlat"], ny)
     output = open(textfile, "w")
     i = 0
     outfile_root = gtexpmap["outfile"].split(".fits")[0]

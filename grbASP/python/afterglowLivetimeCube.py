@@ -32,10 +32,10 @@ else:
 gtexpmap = GtApp('gtexpmap', 'Likelihood')
 gtexpmap['evfile'] = pars['ft1File']
 gtexpmap['scfile'] = pars['ft2File']
-gtexpmap['exposure_cube_file'] = gtlivetimecube['outfile']
+gtexpmap['expcube'] = gtlivetimecube['outfile']
 gtexpmap['outfile'] = 'expMap_' + grbName + '.fits'
-gtexpmap['source_region_radius'] = 25
-gtexpmap['rspfunc'] = 'DSS'
+gtexpmap['srcrad'] = 25
+gtexpmap['irfs'] = 'DSS'
 gtexpmap.pars.write(os.path.join(os.environ['OUTPUTDIR'], 'gtexpmap.par'))
 writeExpMapBounds(gtexpmap)
 

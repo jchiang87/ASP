@@ -95,11 +95,13 @@ class LatGcnNotice(object):
         foo['GRB_INTEN3'] = '%i [1.0 < cnts < 10. (GeV)]' % counts[2]
         foo['GRB_INTEN4'] = '%i [10. < cnts (GeV)]' % counts[3]
     def setTriggerNum(self, triggerNum):
-        self.notice['TRIGGER_NUM'] = '%6i,   Sequence_Num: 0' % triggerNum
+        self.notice['TRIGGER_NUM'] = '%i,   Sequence_Num: 0' % triggerNum
     def setDuration(self, duration):
         foo = self.notice
         foo['TRIGGER_DUR'] = ('%.3f [sec] (interval, Tlast-Tfirst photons)'
                               % duration)
+    def addComment(self, comment):
+        self.notice['COMMENT'] = `comment`
     def _setCoords(self, ra, dec):
         converter = ConvertEpoch()
         b1950 = converter.B1950(ra, dec)

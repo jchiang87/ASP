@@ -10,6 +10,7 @@
 import numarray as num
 #from pyASP import SkyDir
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
+from FitsNTuple import FitsNTuple
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -19,6 +20,8 @@ def convert(events, imin=0, imax=None):
                          events.TIME[imin:imax], events.ENERGY[imin:imax],
                          events.EVENT_CLASS[imin:imax]):
         my_events.append(Event(*evt_tuple))
+    if len(my_events) == 0:
+        raise RuntimeError, "zero events in tuple"
     return my_events
 
 def triggerTimes(time, logLike, threshold=112, deadtime=0):
@@ -57,7 +60,7 @@ def downlink_bg_rate(events, imin, imax):
     return (localmax - localmin)/(times[localmax] - times[localmin])
 
 class BlindSearch(object):
-    def __init__(self, events, clusterAlg, dn=20, deadtime=1000, threshold=92,
+    def __init__(self, events, clusterAlg, dn=30, deadtime=1000, threshold=110,
                  bg_rate=0):
         """events is a FitsNTuple of an FT1 file(s);
         dn is the number of consecutive events (in time) to consider;
@@ -106,7 +109,6 @@ class BlindSearch(object):
         self.triggers, self.tpeaks, self.ll = triggerTimes(times, -logLike,
                                                            deadtime=deadtime,
                                                            threshold=threshold)
-
     def grbDirs(self, radius=5):
         """Go through the list of candidate bursts, and return a list
         of SkyDirs, event (ras, decs), and peak times.
@@ -116,6 +118,7 @@ class BlindSearch(object):
         for tpeak in self.tpeaks:
             imin = min(num.where(events.TIME > tpeak-50)[0])
             imax = max(num.where(events.TIME < tpeak+50)[0])
+            imin, imax = self._temper(imin, imax)
             try:
                 results = self.clusterAlg.processEvents(convert(events,
                                                                 imin, imax))
@@ -124,8 +127,13 @@ class BlindSearch(object):
                 grb_dirs.append(grb_dir)
             except:
                 pass
- 
         return grb_dirs
+    def _temper(self, imin, imax, limit=100):
+        if imax - imin > limit:
+            midpoint = (imin + imax)/2
+            return midpoint - limit/2, midpoint + limit/2
+        else:
+            return imin, imax
 
 def read_gtis(ft1files):
     data = FitsNTuple(ft1files, 'GTI')
@@ -137,7 +145,6 @@ def read_gtis(ft1files):
 if __name__ == '__main__':
     import os
     import sys
-    from FitsNTuple import FitsNTuple
     from LatGcnNotice import LatGcnNotice
     import createGrbStreams
 
@@ -158,7 +165,7 @@ if __name__ == '__main__':
 
     clusterAlg = EventClusters(read_gtis(downlink_file))
 
-    blindSearch = BlindSearch(events, clusterAlg)
+    blindSearch = BlindSearch(events, clusterAlg, threshold=134)
 
     if makePlots:
         import hippoplotter as plot
@@ -187,6 +194,8 @@ if __name__ == '__main__':
             else:
                 raise OSError, "Error creating directory: " + grb_output
         outfile = os.path.join(grb_output, notice.name + '_Notice.txt')
+        notice.setTriggerNum(tpeak)
+        notice.addComment(downlink_file)
         notice.write(outfile)
         os.chmod(outfile, 0666)
         print grb_dir.ra(), grb_dir.dec(), tpeak
@@ -196,4 +205,4 @@ if __name__ == '__main__':
             plot.hline(grb_dir.dec())
         else:
             pass
-            createGrbStreams.refinementStreams(output_dir=grb_output)
+#            createGrbStreams.refinementStreams(output_dir=grb_output)

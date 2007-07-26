@@ -205,4 +205,4 @@ if __name__ == '__main__':
             plot.hline(grb_dir.dec())
         else:
             pass
-#            createGrbStreams.refinementStreams(output_dir=grb_output)
+            createGrbStreams.refinementStreams(output_dir=grb_output)

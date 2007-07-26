@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v0r4p1 26-Jul-07   JC   set ft2 file override in GcnNotice.py
     v0r4   25-Jul-07   JC   set TRIGGER_NUM equal to MET and COMMENT to 
                             downlink_file in LatGcnNotice.py and 
                             BlindSearch.py; set threshold to 134 based 

@@ -29,7 +29,7 @@ class GcnNotice(object):
                 self._dict[key] = line.strip()
     def _readcoord(self, key):
         line = self._dict[key]
-        return float(line.split(':')[1].split('d')[0])
+        return float(line.split(':')[1].split('d')[0].strip("+"))
     def _readfloat(self, key):
         line = self._dict[key]
         return float(line.split(':')[1].split()[0])

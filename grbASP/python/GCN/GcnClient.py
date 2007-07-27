@@ -53,7 +53,7 @@ class GcnClient(object):
             print message[1]
             self.sock.close()
     def _send_packets(self):
-        files = glob.glob('*.txt')
+        files = glob.glob('*.dat')
         for item in files:
             self.send(build_packet(item), 0)
             os.rename(item, item + '_sent')

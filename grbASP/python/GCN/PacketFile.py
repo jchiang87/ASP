@@ -23,7 +23,7 @@ _JD_missionStart_seconds = 211845067200
 class PacketFile(dict):
     def __init__(self):
         [self.__setitem__(key, 0) for key in _keys]
-        self['type'] = 10
+        self['type'] = 9
         self['serialNum'] = 100001
         self['hopCount'] = 1
     def setCoord(self, ra, dec):
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     foo = PacketFile()
     foo.setCoord(269.959, -29.084)
     foo.setBurstTime(252659970)
-    foo.write('my_packet.txt')
+    foo.write('my_packet.dat')
     

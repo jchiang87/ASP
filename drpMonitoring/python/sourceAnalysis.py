@@ -32,8 +32,8 @@ else:
     gtdiffresp = GtApp('gtdiffrsp')
     gtdiffresp['evfile'] = ft1file
     gtdiffresp['scfile'] = pars['ft2file']
-    gtdiffresp['rspfunc'] = pars['rspfunc']
-    gtdiffresp['source_model_file'] = rootpath('diffuse_model.xml')
+    gtdiffresp['irfs'] = pars['rspfunc']
+    gtdiffresp['srcmdl'] = rootpath('diffuse_model.xml')
     gtdiffresp.run()
 
     irfs = pars['rspfunc']

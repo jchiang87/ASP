@@ -35,8 +35,8 @@ srcModel.writeTo()
 gtdiffresp = GtApp('gtdiffrsp')
 gtdiffresp['evfile'] = pars['ft1file']
 gtdiffresp['scfile'] = pars['ft2file']
-gtdiffresp['rspfunc'] = pars['rspfunc']
-gtdiffresp['source_model_file'] = srcModel.filename
+gtdiffresp['irfs'] = pars['rspfunc']
+gtdiffresp['srcmdl'] = srcModel.filename
 
 if debug:
     print gtdiffresp.command()

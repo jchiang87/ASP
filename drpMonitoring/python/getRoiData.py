@@ -75,10 +75,10 @@ srcModel.writeTo()
 gtexpmap = GtApp('gtexpmap')
 gtexpmap['evfile'] = gtselect['outfile']
 gtexpmap['scfile'] = pars['ft2file']
-gtexpmap['exposure_cube_file'] = rootpath(pars['expCube'])
+gtexpmap['expcube'] = rootpath(pars['expCube'])
 gtexpmap['outfile'] = 'expMap_' + name + '.fits'
-gtexpmap['source_region_radius'] = sourcerad
-gtexpmap['rspfunc'] = pars['rspfunc']
+gtexpmap['srcrad'] = sourcerad
+gtexpmap['irfs'] = pars['rspfunc']
 gtexpmap.pars.write('gtexpmap.par')
 
 writeExpMapBounds(gtexpmap)

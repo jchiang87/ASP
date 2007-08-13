@@ -81,6 +81,14 @@ gtexpmap['srcrad'] = sourcerad
 gtexpmap['irfs'] = pars['rspfunc']
 gtexpmap.pars.write('gtexpmap.par')
 
-writeExpMapBounds(gtexpmap)
+#
+# Break the exposure map calculation into four quadrants:
+#
+#writeExpMapBounds(gtexpmap)
+
+#
+# Just do a monolithic map:
+#
+writeExpMapBounds(gtexpmap, nx=1, ny=1)
 
 os.system('chmod 777 *')

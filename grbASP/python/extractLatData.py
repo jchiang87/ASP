@@ -29,10 +29,10 @@ def extractLatData(gbmNotice, ft1File=_LatFt1File, duration=100, radius=15):
     gtbin['evfile'] = gtselect['outfile']
     gtbin['outfile'] = gbmNotice.Name + '_LAT_lc.fits'
     gtbin['algorithm'] = 'LC'
-    gtbin['timebinalg'] = 'LIN'
+    gtbin['tbinalg'] = 'LIN'
     gtbin['tstart'] = gbmNotice.start_time - duration
     gtbin['tstop'] = gbmNotice.start_time + duration
-    gtbin['deltatime'] = 0.1
+    gtbin['dtime'] = 0.1
     gtbin.run()
     
     events = FitsNTuple(gtselect['outfile'], 'EVENTS')

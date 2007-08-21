@@ -184,6 +184,7 @@ if __name__ == '__main__':
     for item in grbDirs:
         grb_dir, tpeak = item
         notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
+        notice.registerWithDatabase()
         grb_output = os.path.join(grbroot_dir, notice.name)
         try:
             os.mkdir(grb_output)
@@ -204,5 +205,5 @@ if __name__ == '__main__':
             plot.vline(grb_dir.ra())
             plot.hline(grb_dir.dec())
         else:
-            pass
             createGrbStreams.refinementStreams(output_dir=grb_output)
+            pass

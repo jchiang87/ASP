@@ -8,9 +8,12 @@
 #
 
 import os
+import copy
 import time
+import array
 import celgal
 import pyASP
+from dbAccess import insertGrb, insertGcnNotice, current_date
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
@@ -83,6 +86,10 @@ class LatGcnNotice(object):
     def __init__(self, burstTime, ra, dec):
         self.notice = LatGcnTemplate()
         self.notice['NOTICE_DATE'] = time.asctime()
+        self._packet = array.array("l", 40*(0,))
+        self.met = burstTime
+        self.ra = ra
+        self.dec = dec
         self._setTime(burstTime)
         self._setCoords(ra, dec)
     def setLocErr(self, error):
@@ -96,6 +103,7 @@ class LatGcnNotice(object):
         foo['GRB_INTEN4'] = '%i [10. < cnts (GeV)]' % counts[3]
     def setTriggerNum(self, triggerNum):
         self.notice['TRIGGER_NUM'] = '%i,   Sequence_Num: 0' % triggerNum
+        self._packet[4] = int(triggerNum)
     def setDuration(self, duration):
         foo = self.notice
         foo['TRIGGER_DUR'] = ('%.3f [sec] (interval, Tlast-Tfirst photons)'
@@ -113,6 +121,8 @@ class LatGcnNotice(object):
         foo['GRB_DEC'] = ('%s (J2000),\n%16s%s (B1950)'
                           % (dec_string(dec, dec2000), ' ',
                              dec_string(b1950[1], dec1950)))
+        self._packet[7] = int(self.ra*1e4)
+        self._packet[8] = int(self.dec*1e4)
     def _setTime(self, burstTime):
         jd = pyASP.jd_from_MET(burstTime)
         year, month, day, hours = jd.gregorianDate()
@@ -122,10 +132,30 @@ class LatGcnNotice(object):
         foo['GRB_TIME'] = time_string(hours*3600)
         self.name = ('GRB%02i%02i%02i%03i' %
                      (year % 100, month, day, hours/24.*1000))
+        JD_missionStart_seconds = 211845067200
+        jd = (self.met + JD_missionStart_seconds)/8.64e4
+        tjd = jd - 2440000.5
+        sod = (tjd % 1)*8.64e4
+        self._packet[5] = int(tjd)
+        self._packet[6] = int(sod)
     def write(self, outfile):
         output = open(outfile, 'w')
         output.write(str(self.notice))
         output.close()
+    def GcnPacket(self):
+        packet = copy.copy(self._packet)
+        packet.byteswap()
+        return packet
+    def registerWithDatabase(self, grb_id=None):
+        if grb_id is None:
+            grb_id = self.met
+        try:
+            insertGrb(grb_id)
+        except cx_Oracle.DatabaseError, message:
+            # GRB_ID is already in GRB table
+            print message
+            pass
+        insertGcnNotice(grb_id, self.GcnPacket(), current_date(), self.met)
 
 if __name__ == '__main__':
     notice = LatGcnNotice(222535575.0, 305.723, -67.0446)

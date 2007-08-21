@@ -29,6 +29,7 @@ _items = ['type', 'serialNum', 'hopCount', 'packetSOD', 'triggerNum',
           'posError', 'SC_Az', 'SC_El', 'SC_x_RA', 'SC_x_Dec',
           'SC_z_RA', 'SC_z_Dec', 'trigger_id', 'misc',
           'Earth_SC_Az', 'Earth_SC_El', 'SC_radius', 't_peak']
+
 def build_packet(infile):
     buffer = array.array("l", 40*(0,))
     for line in open(infile):

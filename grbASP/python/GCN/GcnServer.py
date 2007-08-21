@@ -15,6 +15,7 @@ import array
 import sys
 import select
 
+from dbAccess import insertGrb, insertGcnNotice, current_date
 from createGrbStreams import refinementStreams
 
 try:
@@ -58,6 +59,7 @@ class Packet(object):
         self.__dict__['Dec'] /= 100.
         self.MET = ((self.TJD + 2440000.5)*8.64e4 + self.SOD 
                     - self._JD_missionStart_seconds)
+        self.buffer.byteswap()   # restore buffer
     def __repr__(self):
         summary = ""
         for item in self._items[:9]:
@@ -93,6 +95,11 @@ class GcnServer(object):
         self.sock.listen(5)
 #        self.oldexitfunc = getattr(sys, 'exitfunc', None)
 #        sys.exitfunc = self.cleanup
+    def registerWithDatabase(self, packet):
+        grb_id = packet.MET
+        insertGrb(grb_id)
+        insertGcnNotice(grb_id, packet.buffer, current_date(), packet.MET)
+        return grb_id
     def cleanup(self):
         print "Program exit"
         self.sock.close()
@@ -127,12 +134,13 @@ class GcnServer(object):
                         last_imalive = packet.arrTime
                     else:
                         emailNotice(packet, self.recipients)
-                        # instead of creating a text version of the Notice
+                        # Instead of creating a text version of the Notice
                         # this should instead create an entry in the GRB
                         # database table and then launch the refinement
                         # task.
+                        grb_id = self.registerWithDatabase(packet)
                         notice_file = noticeGenerator(packet)
-                        refinementStreams(notice_file, _outputDir)
+                        refinementStreams(notice_file, _outputDir, debug=True)
                         print "Packet of type %i received" % packet.type
                 newSocket.close()
         except socket.error, message:

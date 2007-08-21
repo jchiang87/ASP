@@ -95,6 +95,23 @@ def readGrb(grb_id):
     cursor.close()
     my_connection.close()
 
+def getGrbIds():
+    my_connection = cx_Oracle.connect(*_connect_args)
+    cursor = my_connection.cursor()
+    sql = "select * from GRB"
+    grb_ids = []
+    try:
+        cursor.execute(sql)
+        for item in cursor:
+            grb_ids.append(item[0])
+    except cx_Oracle.DatabaseError, message:
+        cursor.close()
+        my_connection.close()
+        raise cx_Oracle.DatabaseError, message
+    cursor.close()
+    my_connection.close()
+    return grb_ids    
+
 def current_date():
     data = time.gmtime()
     months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 

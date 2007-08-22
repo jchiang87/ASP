@@ -13,7 +13,7 @@ import time
 import array
 import celgal
 import pyASP
-from dbAccess import insertGrb, insertGcnNotice, current_date
+import dbAccess
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
@@ -150,12 +150,14 @@ class LatGcnNotice(object):
         if grb_id is None:
             grb_id = self.met
         try:
-            insertGrb(grb_id)
-        except cx_Oracle.DatabaseError, message:
+            dbAccess.insertGrb(grb_id)
+        except dbAccess.cx_Oracle.DatabaseError, message:
             # GRB_ID is already in GRB table
             print message
             pass
-        insertGcnNotice(grb_id, self.GcnPacket(), current_date(), self.met)
+        dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % self.name)
+        dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
+                                 dbAccess.current_date(), self.met)
 
 if __name__ == '__main__':
     notice = LatGcnNotice(222535575.0, 305.723, -67.0446)

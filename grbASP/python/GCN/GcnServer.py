@@ -15,7 +15,8 @@ import array
 import sys
 import select
 
-from dbAccess import insertGrb, insertGcnNotice, current_date
+from GcnPacket import GcnPacket
+from dbAccess import insertGrb, insertGcnNotice, current_date, updateGrb
 from createGrbStreams import refinementStreams
 
 try:
@@ -34,37 +35,6 @@ def emailNotice(packet, recipients, fromadr="jchiang@slac.stanford.edu"):
         message = "%s%s" % (hdr, packet)
         mail.sendmail(fromadr, address, message)
     mail.quit()
-
-class Packet(object):
-    _items = ('type', 'serialNum', 'hopCount', 'packetSOD', 'triggerNum',
-              'TJD', 'SOD', 'RA', 'Dec', 'intensity', 'peakIntensity',
-              'posError', 'SC_Az', 'SC_El', 'SC_x_RA', 'SC_x_Dec',
-              'SC_z_RA', 'SC_z_Dec', 'trigger_id', 'misc',
-              'Earth_SC_Az', 'Earth_SC_El', 'SC_radius', 't_peak')
-    _floats = ('packetSOD', 'SOD', 'RA', 'Dec', 'SC_Az', 'SC_El',
-               'SC_x_RA', 'SC_x_Dec', 'SC_z_RA', 'SC_z_Dec', 't_peak')
-    _JD_missionStart_seconds = 211845067200
-    def __init__(self, buffer):
-        self.arrTime = time.time()
-        self.buffer = array.array('l', buffer)
-        self.buffer.byteswap()
-        # just process the most common items for now
-        for i, item in enumerate(self._items[:9]):
-            self.__dict__[item] = self.buffer[i]
-        for item in self._floats[:4]:
-            self.__dict__[item] /= 100.
-        # RA and Dec have an additional factor of 100 scaling for the
-        # Notices we receive (i.e., from Integral and Swift)
-        self.__dict__['RA'] /= 100.
-        self.__dict__['Dec'] /= 100.
-        self.MET = ((self.TJD + 2440000.5)*8.64e4 + self.SOD 
-                    - self._JD_missionStart_seconds)
-        self.buffer.byteswap()   # restore buffer
-    def __repr__(self):
-        summary = ""
-        for item in self._items[:9]:
-            summary += "%s : %s\n" % (item, self.__dict__[item])
-        return summary
 
 def noticeGenerator(packet, outfile=None):
     if outfile is None:
@@ -93,20 +63,16 @@ class GcnServer(object):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind(("", self.port))
         self.sock.listen(5)
-#        self.oldexitfunc = getattr(sys, 'exitfunc', None)
-#        sys.exitfunc = self.cleanup
     def registerWithDatabase(self, packet):
         grb_id = packet.MET
-        insertGrb(grb_id)
+        try:
+            insertGrb(grb_id)
+        except cx_Oracle.DatabaseError, message:
+            print message
+            pass
+        updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName())
         insertGcnNotice(grb_id, packet.buffer, current_date(), packet.MET)
         return grb_id
-    def cleanup(self):
-        print "Program exit"
-        self.sock.close()
-        try: 
-            self.oldexitfunc(self)
-        except: 
-            pass
     def run(self):
         self._listen()
         last_imalive = 0
@@ -121,7 +87,7 @@ class GcnServer(object):
                         print "Timeout waiting for data.  Reopening socket."
                         break
                     receivedData = newSocket.recv(self.bufsize)
-                    packet = Packet(receivedData)
+                    packet = GcnPacket(receivedData)
                     if packet.type == self._KILL_SOCKET:
                         print "KILL_SOCKET packet received.  Reopening socket."
                         break

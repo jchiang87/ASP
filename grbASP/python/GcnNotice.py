@@ -1,11 +1,39 @@
+"""
+@brief Abstraction for text versions of GCN Notices.
+
+@author J. Chiang <jchiang@slac.stanford.edu>
+"""
+#
+# $Header$
+#
+
 import os
 import numarray as num
 import pyASP
+from GcnPacket import GcnPacket
+from dbAccess import readGcnNotices, readGrb, cx_Oracle
 
 _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
 
 class GcnNotice(object):
-    def __init__(self, infile):
+    def __init__(self, grb_id):
+        try:
+            self._accessDb(grb_id)
+        except (cx_Oracle.DatabaseError, TypeError):
+            # Assume grb_id a text file Notice
+            self._parseTextFile(grb_id)
+        self.ft2 = None
+    def _accessDb(self, grb_id):
+        #
+        # for now, just assume the first one returned is the one to use
+        #
+        notice = GcnPacket(readGcnNotices(grb_id)[0].tostring())
+        self.RA = notice['RA']
+        self.DEC = notice['Dec']
+        self.LOC_ERR = notice['posError']
+        self.start_time = self.MET
+        self.Name = readGrb(grb_id)[1]
+    def _parseTextFile(self, infile):
         self._create_dict(infile)
         self.RA = self._readcoord('GRB_RA')
         self.DEC = self._readcoord('GRB_DEC')

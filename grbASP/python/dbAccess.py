@@ -17,49 +17,10 @@ def simple_packet(type):
 
 def convert_clob(clob):
     foo = array.array('l', clob.read())
-    foo.byteswap()
+#    foo.byteswap()
     return foo
 
 _connect_args = ("glastgen", "glast06", "GLASTP")
-
-def modify(sql):
-    my_connection = cx_Oracle.connect(*_connect_args)
-    cursor = my_connection.cursor()
-    try:
-        cursor.execute(sql)
-    except cx_Oracle.DatabaseError, message:
-        cursor.close()
-        my_connection.close()
-        raise cx_Oracle.DatabaseError, message
-    cursor.close()
-    my_connection.commit()
-    my_connection.close()
-
-def deleteNotice(grb_id):
-    sql = "delete from GCNNOTICES where GRB_ID = %i" % grb_id
-    modify(sql)
-
-def deleteGrb(grb_id):
-    deleteNotice(grb_id)
-    sql = "delete from GRB where GRB_ID = %i" % grb_id
-    modify(sql)
-
-def insertGrb(grb_id):
-    sql = ("insert into GRB (GRB_ID) values (%i)" % grb_id)
-    modify(sql)
-
-def insertGcnNotice(grb_id, gcn_notice, notice_date, met):
-    sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, NOTICEMET)"
-           + "  values (%i, '%s', '%s', %i)"
-           % (grb_id, gcn_notice.tostring(), notice_date, met))
-    modify(sql)
-
-def updateGrb(grb_id, **kwds):
-    sql_template = ("update GRB set %s = %s where GRB_ID = %i" 
-                    % ('%s', '%s', grb_id))
-    for key in kwds:
-        sql = sql_template % (key, kwds[key])
-        modify(sql)
 
 def readGcnNotices(grb_id):
     my_connection = cx_Oracle.connect(*_connect_args)
@@ -112,6 +73,51 @@ def getGrbIds():
     my_connection.close()
     return grb_ids    
 
+def modify(sql):
+    my_connection = cx_Oracle.connect(*_connect_args)
+    cursor = my_connection.cursor()
+    try:
+        cursor.execute(sql)
+    except cx_Oracle.DatabaseError, message:
+        cursor.close()
+        my_connection.close()
+        raise cx_Oracle.DatabaseError, message
+    cursor.close()
+    my_connection.commit()
+    my_connection.close()
+
+def deleteNotice(grb_id):
+    sql = "delete from GCNNOTICES where GRB_ID = %i" % grb_id
+    modify(sql)
+
+def deleteGrb(grb_id):
+    deleteNotice(grb_id)
+    sql = "delete from GRB where GRB_ID = %i" % grb_id
+    modify(sql)
+
+def insertGrb(grb_id):
+    sql = ("insert into GRB (GRB_ID) values (%i)" % grb_id)
+    modify(sql)
+
+def insertGcnNotice(grb_id, gcn_notice, notice_date, met):
+    notices = readGcnNotices(grb_id)
+    for notice in notices:
+        if notice == gcn_notice:
+            # This GCN Notice associated with this grb_id is already
+            # in the database table.
+            return
+    sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, NOTICEMET)"
+           + "  values (%i, '%s', '%s', %i)"
+           % (grb_id, gcn_notice.tostring(), notice_date, met))
+    modify(sql)
+
+def updateGrb(grb_id, **kwds):
+    sql_template = ("update GRB set %s = %s where GRB_ID = %i" 
+                    % ('%s', '%s', grb_id))
+    for key in kwds:
+        sql = sql_template % (key, kwds[key])
+        modify(sql)
+
 def current_date():
     data = time.gmtime()
     months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
@@ -134,9 +140,13 @@ if __name__ == '__main__':
 
     notices = readGcnNotices(grb_id)
     for notice in notices:
+        notice[1].byteswap()
         print notice
 
     print readGrb(grb_id)
 
-    updateGrb(grb_id, LAT_GRB_ID=111, LAT_RA=121.3, GBM_CAT_ID="'foo'")
+    updateGrb(grb_id, LAT_GRB_ID=111, LAT_RA=121.3, GBM_CAT_ID="'foo'",
+              GCN_NAME="'GRB07010100'")
     print readGrb(grb_id)
+    print readGrb(grb_id)[1]
+

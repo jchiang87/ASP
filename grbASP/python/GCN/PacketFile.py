@@ -46,7 +46,7 @@ class PacketFile(dict):
 if __name__ == '__main__':
     import random
     foo = PacketFile()
-    foo.setCoord(269.959, -29.084)
-    foo.setBurstTime(252659970 + random.randint(1, int(1e5)))
+    foo.setCoord(57, 16)
+    foo.setBurstTime(221142010)
     foo.write('my_packet.dat')
     

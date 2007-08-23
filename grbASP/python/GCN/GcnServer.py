@@ -15,14 +15,22 @@ import array
 import sys
 import select
 
+from LatGcnNotice import LatGcnNotice
 from GcnPacket import GcnPacket
-from dbAccess import insertGrb, insertGcnNotice, current_date, updateGrb
+from dbAccess import insertGrb, insertGcnNotice, current_date, updateGrb, cx_Oracle
 from createGrbStreams import refinementStreams
 
-try:
-    _outputDir = os.environ['OUTPUTDIR']
-except:
-    _outputDir = os.path.join('GRBASPROOT', 'python', 'GCN', 'output')
+def _outputDir(grb_id):
+    dirname = os.path.join(os.environ['OUTPUTDIR'], '%i' % grb_id)
+    try:
+        os.mkdir(dirname)
+        os.chmod(dirname, 0777)
+    except OSError:
+        if os.path.isdir(dirname):
+            os.chmod(dirname, 0777)
+        else:
+            raise OSError, "Error creating directory: " + dirname
+    return dirname
 
 def emailNotice(packet, recipients, fromadr="jchiang@slac.stanford.edu"):
     import smtplib
@@ -38,17 +46,21 @@ def emailNotice(packet, recipients, fromadr="jchiang@slac.stanford.edu"):
 
 def noticeGenerator(packet, outfile=None):
     if outfile is None:
-        outfile = os.path.join(_outputDir, "GRB%i_Notice.txt" % packet.MET)
-    output = open(outfile, "w")
-    output.write("TITLE:          GCN NOTICE\n")
-    output.write("NOTICE_DATE:    %s\n" % time.asctime())
-    output.write("TRIGGER_NUM:    %s\n" % packet.triggerNum)
-    output.write("GRB_RA:         %7.3fd (J2000)\n" % packet.RA)
-    output.write("GRB_DEC:        %7.3fd (J2000)\n" % packet.Dec)
-    output.write("GRB_ERROR:      10.00 [arcmin] \n")
-    output.write("GRB_DATE:       %i TJD; \n" % packet.TJD)
-    output.write("GRB_TIME:       %.2f SOD \n" % packet.SOD)
-    output.close()
+        outfile = os.path.join(_outputDir(packet.MET), 
+                               "GRB%i_Notice.txt" % packet.MET)
+#    output = open(outfile, "w")
+#    output.write("TITLE:          GCN NOTICE\n")
+#    output.write("NOTICE_DATE:    %s\n" % time.asctime())
+#    output.write("TRIGGER_NUM:    %s\n" % packet.triggerNum)
+#    output.write("GRB_RA:         %7.3fd (J2000)\n" % packet.RA)
+#    output.write("GRB_DEC:        %7.3fd (J2000)\n" % packet.Dec)
+#    output.write("GRB_ERROR:      10.00 [arcmin] \n")
+#    output.write("GRB_DATE:       %i TJD; \n" % packet.TJD)
+#    output.write("GRB_TIME:       %.2f SOD \n" % packet.SOD)
+#    output.close()
+    my_notice = LatGcnNotice(packet.MET, packet.RA, packet.Dec)
+    my_notice.setTriggerNum(packet.triggerNum)
+    my_notice.write(outfile)
     return outfile
 
 class GcnServer(object):
@@ -64,7 +76,7 @@ class GcnServer(object):
         self.sock.bind(("", self.port))
         self.sock.listen(5)
     def registerWithDatabase(self, packet):
-        grb_id = packet.MET
+        grb_id = int(packet.MET)
         try:
             insertGrb(grb_id)
         except cx_Oracle.DatabaseError, message:
@@ -106,7 +118,7 @@ class GcnServer(object):
                         # task.
                         grb_id = self.registerWithDatabase(packet)
                         notice_file = noticeGenerator(packet)
-                        refinementStreams(notice_file, _outputDir, debug=True)
+                        refinementStreams((grb_id,), _outputDir(grb_id))
                         print "Packet of type %i received" % packet.type
                 newSocket.close()
         except socket.error, message:

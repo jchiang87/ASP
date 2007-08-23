@@ -136,4 +136,3 @@ if __name__ == '__main__':
     print readGrb(grb_id)[1]
 
     print getGrbIds()
-

@@ -5,13 +5,14 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="2.0" type="Data">
+<task name="GRB_refinement" version="2.1" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v8r0p4"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r1p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
    <prerequisites>
-      <prerequisite name="GBM_Notice" type="string"/>
+      <prerequisite name="GCN_NOTICE" type="string"/>
+      <prerequisite name="GRB_ID" type="integer"/>
       <prerequisite name="output_dir" type="string"/>
       <prerequisite name="ASP_PATH" type="string"/>
       <prerequisite name="GRBASPROOT" type="string"/>
@@ -20,7 +21,6 @@
    <process name="extractLatData">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
-         <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/extractLatData.sh"
            batchOptions="-q short"/>
@@ -28,7 +28,6 @@
    <process name="refinePosition">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
-         <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/refinePosition.sh"
            batchOptions="-q short"/>
@@ -49,7 +48,6 @@
    <process name="LatGrbSpectrum">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
-         <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/LatGrbSpectrum.sh"
            batchOptions="-q short"/>

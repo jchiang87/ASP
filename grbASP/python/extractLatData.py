@@ -1,5 +1,5 @@
 """
-@brief Extract LAT data based on a GBM notice
+@brief Extract LAT data based on a GCN notice
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
 #
@@ -16,22 +16,22 @@ gtbin = GtApp('gtbin', 'evtbin')
 
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
 
-def extractLatData(gbmNotice, ft1File=_LatFt1File, duration=100, radius=15):
+def extractLatData(gcnNotice, ft1File=_LatFt1File, duration=100, radius=15):
     gtselect['infile'] = ft1File
-    gtselect['outfile'] = gbmNotice.Name + '_LAT.fits'
-    gtselect['ra'] = gbmNotice.RA
-    gtselect['dec'] = gbmNotice.DEC
+    gtselect['outfile'] = gcnNotice.Name + '_LAT.fits'
+    gtselect['ra'] = gcnNotice.RA
+    gtselect['dec'] = gcnNotice.DEC
     gtselect['rad'] = radius
-    gtselect['tmin'] = gbmNotice.start_time - duration
-    gtselect['tmax'] = gbmNotice.start_time + duration
+    gtselect['tmin'] = gcnNotice.start_time - duration
+    gtselect['tmax'] = gcnNotice.start_time + duration
     gtselect.run()
 
     gtbin['evfile'] = gtselect['outfile']
-    gtbin['outfile'] = gbmNotice.Name + '_LAT_lc.fits'
+    gtbin['outfile'] = gcnNotice.Name + '_LAT_lc.fits'
     gtbin['algorithm'] = 'LC'
     gtbin['tbinalg'] = 'LIN'
-    gtbin['tstart'] = gbmNotice.start_time - duration
-    gtbin['tstop'] = gbmNotice.start_time + duration
+    gtbin['tstart'] = gcnNotice.start_time - duration
+    gtbin['tstop'] = gcnNotice.start_time + duration
     gtbin['dtime'] = 0.1
     gtbin.run()
     
@@ -46,12 +46,12 @@ def extractLatData(gbmNotice, ft1File=_LatFt1File, duration=100, radius=15):
         else:
             tmin, tmax = x[1], x[-2]
         gtselect['infile'] = gtselect['outfile']
-        gtselect['outfile'] = gbmNotice.Name + '_LAT_2.fits'
+        gtselect['outfile'] = gcnNotice.Name + '_LAT_2.fits'
         gtselect['tmin'] = tmin
         gtselect['tmax'] = tmax
         gtselect.run()
         gtbin['evfile'] = gtselect['outfile']
-        gtbin['outfile'] = gbmNotice.Name + '_LAT_lc_2.fits'
+        gtbin['outfile'] = gcnNotice.Name + '_LAT_lc_2.fits'
         gtbin['tstart'] = tmin
         gtbin['tstop'] = tmax
         gtbin.run()
@@ -74,16 +74,16 @@ if __name__ == '__main__':
     from getL1Data import getL1Data
     from ft1merge import ft1merge
     os.chdir(os.environ['OUTPUTDIR'])
-    GbmFile = os.environ['GBMNOTICE']
-    gbmNotice = GcnNotice(GbmFile)
+#    gcnNotice = GcnNotice(os.environ['GCN_NOTICE'])
+    gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
     duration = 100
-    ft1, ft2 = getL1Data(gbmNotice.start_time - duration,
-                         gbmNotice.start_time + duration)
+    ft1, ft2 = getL1Data(gcnNotice.start_time - duration,
+                         gcnNotice.start_time + duration)
     ft1Merged = 'FT1_merged.fits'
     ft1merge(ft1, ft1Merged)
-    ft1_extracted, lcFile = extractLatData(gbmNotice, ft1Merged, 
+    ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, 
                                            duration=duration, radius=15)
-    outfile = open('%s_files' % gbmNotice.Name, 'w')
+    outfile = open('%s_files' % gcnNotice.Name, 'w')
     outfile.write('%s\n%s\n' % (ft1_extracted, ft2[0]))
     outfile.close()
 

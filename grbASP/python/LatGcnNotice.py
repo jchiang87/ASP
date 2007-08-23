@@ -88,6 +88,7 @@ class LatGcnNotice(object):
         self.notice['NOTICE_DATE'] = time.asctime()
         self._packet = array.array("l", 40*(0,))
         self.met = burstTime
+        self.grb_id = int(self.met)
         self.ra = ra
         self.dec = dec
         self._setTime(burstTime)
@@ -137,7 +138,7 @@ class LatGcnNotice(object):
         tjd = jd - 2440000.5
         sod = (tjd % 1)*8.64e4
         self._packet[5] = int(tjd)
-        self._packet[6] = int(sod)
+        self._packet[6] = int(sod*100)
     def write(self, outfile):
         output = open(outfile, 'w')
         output.write(str(self.notice))
@@ -148,7 +149,7 @@ class LatGcnNotice(object):
         return packet
     def registerWithDatabase(self, grb_id=None):
         if grb_id is None:
-            grb_id = self.met
+            grb_id = self.grb_id
         try:
             dbAccess.insertGrb(grb_id)
         except dbAccess.cx_Oracle.DatabaseError, message:

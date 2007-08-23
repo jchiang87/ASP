@@ -6,9 +6,11 @@
 #
 # $Header$
 #
+import datetime
 import time
 import array
 import cx_Oracle
+import base64
 
 def simple_packet(type):
     my_packet = array.array("l", (type,) + 39*(0,))
@@ -16,8 +18,7 @@ def simple_packet(type):
     return my_packet
 
 def convert_clob(clob):
-    foo = array.array('l', clob.read())
-#    foo.byteswap()
+    foo = array.array('l', base64.decodestring(clob.read()))
     return foo
 
 _connect_args = ("glastgen", "glast06", "GLASTP")
@@ -108,7 +109,8 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met):
             return
     sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, NOTICEMET)"
            + "  values (%i, '%s', '%s', %i)"
-           % (grb_id, gcn_notice.tostring(), notice_date, met))
+           % (grb_id, base64.encodestring(gcn_notice.tostring()), 
+              notice_date, met))
     modify(sql)
 
 def updateGrb(grb_id, **kwds):
@@ -126,6 +128,7 @@ def current_date():
     month = data[1] - 1
     day = data[2]
     return "%02i %s %i" % (day, months[month], year)
+#    return `datetime.datetime(*data[:6])`
 
 if __name__ == '__main__':
     grb_id = 1234

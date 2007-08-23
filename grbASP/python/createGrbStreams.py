@@ -36,14 +36,24 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None,
         command = PipelineCommand('GRB_blind_search', args)
         command.run(debug=debug)
 
-def refinementStreams(notices=None, output_dir=_outputDir, debug=False):
+#def refinementStreams(notices=None, output_dir=_outputDir, debug=False):
+#    os.chdir(output_dir)
+#    if notices is None:
+#        notices = glob.glob('GRB*_Notice.txt')
+#    if isinstance(notices, str):
+#        grb_ids = (notices, )
+#    for notice in notices:
+#        args = {'GCN_NOTICE' : notice,
+#                'output_dir' : output_dir,
+#                'GRBASPROOT' : _grbAspRoot}
+#        command = PipelineCommand('GRB_refinement', args)
+#        command.run(debug=debug)
+
+def refinementStreams(grb_ids=(), output_dir=_outputDir, debug=False):
     os.chdir(output_dir)
-    if notices is None:
-        notices = glob.glob('GRB*_Notice.txt')
-    if isinstance(notices, str):
-        notices = (notices, )
-    for notice in notices:
-        args = {'GBM_Notice' : notice,
+    for grb_id in grb_ids:
+        args = {'GCN_NOTICE' : 'None',
+                'GRB_ID' : grb_id, 
                 'output_dir' : output_dir,
                 'GRBASPROOT' : _grbAspRoot}
         command = PipelineCommand('GRB_refinement', args)
@@ -64,5 +74,5 @@ def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False):
 
 if __name__ == '__main__':
     blindSearchStreams('downlink_file', 'grbroot_dir', debug=True)
-    refinementStreams('GBM_Notice', debug=True)
+    refinementStreams((1391,), debug=True)
     afterglowStreams('GRB_parfile', debug=True)

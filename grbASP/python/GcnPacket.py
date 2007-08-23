@@ -36,7 +36,7 @@ class GcnPacket(object):
         self.__dict__['RA'] /= 100.
         self.__dict__['Dec'] /= 100.
         self.__dict__['posError'] /= 100.
-        self.MET = ((self.TJD + 2440000.5)*8.64e4 + self.SOD 
+        self.MET = ((self.TJD + 2440000.5)*8.64e4 + self.SOD
                     - self._JD_missionStart_seconds)
         self.buffer.byteswap()   # restore buffer
     def candidateName(self):

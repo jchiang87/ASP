@@ -1,11 +1,12 @@
 """
-@brief Use gtfindsrc to refine the burst position based on a GBM Notice
+@brief Use gtfindsrc to refine the burst position based on a GCN Notice
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
 #
 # $Header$
 #
+import os
 import numarray as num
 from FitsNTuple import FitsNTuple
 from GcnNotice import GcnNotice
@@ -27,7 +28,7 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
         notice = gbm_notice
 
     if notice.offAxisAngle(ft2Input) > 60:
-        raise ValueError, ("Burst off-axis angle (from GBM position) "
+        raise ValueError, ("Burst off-axis angle (from GCN position) "
                            + "> 60 degrees and so lies outside the "
                            + "nominal LAT FOV.")
 
@@ -75,7 +76,6 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
         outfile = os.path.join(os.environ['OUTPUTDIR'], 'gttsmap.par')
         print "writing " + outfile
         gttsmap.pars.write(outfile)
-        #gttsmap.run()
 
     gtis = FitsNTuple(gtfindsrc['evfile'], 'GTI')
     tmin = gtis.START[0]
@@ -89,30 +89,43 @@ def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
     notice.ts = ts
     return notice
 
+def absFilePath(filename):
+    abspath = os.path.abspath(filename)
+    return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
+
 if __name__ == '__main__':
-    import os, sys
+    import sys
     from GcnNotice import GcnNotice
     from parfile_parser import Parfile
+    import dbAccess
     from createGrbStreams import afterglowStreams
     
     output_dir = os.environ['OUTPUTDIR']
     os.chdir(output_dir)
-    gbmNotice = GcnNotice(os.environ['GBMNOTICE'])
-    infiles = open(gbmNotice.Name + '_files')
+#    gcnNotice = GcnNotice(os.environ['GCN_NOTICE'])
+    grb_id = int(os.environ['GRB_ID'])
+    gcnNotice = GcnNotice(grb_id)
+    infiles = open(gcnNotice.Name + '_files')
     ft1File = infiles.readline().strip()
     ft2File = infiles.readline().strip()
     infiles.close()
-    gbmNotice = refinePosition(gbmNotice, extracted=True, ft1Input=ft1File,
+    gcnNotice = refinePosition(gcnNotice, extracted=True, ft1Input=ft1File,
                                ft2Input=ft2File, tsmap=True, duration=100,
                                radius=15)
-    parfile = '%s_pars.txt' % gbmNotice.Name
+
+    dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
+                       LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
+                       ERROR_RADIUS=gcnNotice.pos_error,
+                       FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
+                                                     '_LAT_2.fits'))
+    parfile = '%s_pars.txt' % gcnNotice.Name
     pars = Parfile(parfile, fixed_keys=False)
-    pars['name'] = gbmNotice.Name
-    pars['ra'] = gbmNotice.ra
-    pars['dec'] = gbmNotice.dec
-    pars['loc_err'] = gbmNotice.pos_error
-    pars['tstart'] = gbmNotice.tmin
-    pars['tstop'] = gbmNotice.tmax
+    pars['name'] = gcnNotice.Name
+    pars['ra'] = gcnNotice.ra
+    pars['dec'] = gcnNotice.dec
+    pars['loc_err'] = gcnNotice.pos_error
+    pars['tstart'] = gcnNotice.tmin
+    pars['tstop'] = gcnNotice.tmax
     pars.write()
 
     os.system('chmod 777 *')

@@ -1,5 +1,5 @@
 """
-@brief Abstraction for text versions of GCN Notices.
+@brief Abstraction for both text and db versions of GCN Notices.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -17,21 +17,23 @@ _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
 
 class GcnNotice(object):
     def __init__(self, grb_id):
-        try:
-            self._accessDb(grb_id)
-        except (cx_Oracle.DatabaseError, TypeError):
-            # Assume grb_id a text file Notice
-            self._parseTextFile(grb_id)
+        self._accessDb(grb_id)
+#        try:
+#            self._accessDb(grb_id)
+#        except (cx_Oracle.DatabaseError, TypeError):
+#            # Assume grb_id a text file Notice
+#            self._parseTextFile(grb_id)
         self.ft2 = None
     def _accessDb(self, grb_id):
         #
         # for now, just assume the first one returned is the one to use
         #
-        notice = GcnPacket(readGcnNotices(grb_id)[0].tostring())
-        self.RA = notice['RA']
-        self.DEC = notice['Dec']
-        self.LOC_ERR = notice['posError']
-        self.start_time = self.MET
+        notice = GcnPacket(readGcnNotices(grb_id)[0][1].tostring())
+        self.packet = notice
+        self.RA = notice.RA
+        self.DEC = notice.Dec
+        self.LOC_ERR = notice.posError
+        self.start_time = notice.MET
         self.Name = readGrb(grb_id)[1]
     def _parseTextFile(self, infile):
         self._create_dict(infile)
@@ -69,8 +71,7 @@ class GcnNotice(object):
         dir2 = pyASP.SkyDir(self.ft2.RA_SCZ[ii], self.ft2.DEC_SCZ[ii])
         t1 = self.ft2.START[ii-1]
         t2 = self.ft2.START[ii]
-        my_dir = pyASP.SkyDir_interpolate(dir1, dir2, t1, t2,
-                                          self.start_time)
+        my_dir = pyASP.SkyDir_interpolate(dir1, dir2, t1, t2, self.start_time)
         return my_dir.difference(pyASP.SkyDir(self.RA, self.DEC))*180./num.pi
     def inSAA(self, ft2File =_LatFt2File):
         self._getFt2(ft2File)
@@ -85,14 +86,7 @@ class GcnNotice(object):
         return self.Name
 
 if __name__ == '__main__':
-    from GbmNotice import GbmNotice
-    
     notice_path = '/nfs/farm/g/glast/u33/jchiang/ASP/GRB/Notices'
     notice = GcnNotice(os.path.join(notice_path, 'GBM_Notice_080101283.txt'))
-
-    old_notice = GbmNotice(os.path.join(notice_path,
-                                        'GLG_NOTICE_080101283.TXT'))
     print notice.RA, notice.DEC, notice.LOC_ERR, notice.start_time, \
           notice.Name
-    print old_notice.RA, old_notice.DEC, old_notice.LOC_ERR, \
-          old_notice.start_time, old_notice.Name

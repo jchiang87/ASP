@@ -9,12 +9,13 @@ an XML model file.
 # $Header$
 #
 
+import sys, os
+import numarray as num
 from GtApp import GtApp
 import readXml
 import FuncFactory as funcFactory
-from UnbinnedAnalysis import *
-import sys, os
 from refinePosition import absFilePath
+from UnbinnedAnalysis import *
 import dbAccess
 
 gtselect = GtApp('gtselect', 'dataSubselector')
@@ -22,6 +23,23 @@ gtlike = GtApp('gtlike', 'Likelihood')
 
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
 _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
+
+def pl_integral(emin, emax, gamma):
+    if gamma == 1:
+        return num.log(emax/emin)
+    else:
+        return (emax**(1.-gamma) - emin**(1.-gamma))/(1. - gamma)
+
+def pl_energy_flux(like, emin, emax, srcname="point source 0"):
+    """compute energy flux (ergs/s/cm^2) over the desired energy
+    range for a power-law source.
+    """
+    ergperMeV = 1.602e-6
+    spec = like[srcname].src.spectrum()
+    gamma = -spec.getParam('Index').getTrueValue()
+    flux = (pl_integral(emin, emax, gamma-1)/pl_integral(emin, emax, gamma)
+            *like[srcname].flux(emin, emax)*ergperMeV)
+    return flux
 
 def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
                    ft1File=_LatFt1File, ft2File=_LatFt2File):
@@ -56,41 +74,26 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     srcModelFile = name + '_model.xml'
     srcModel.writeTo(srcModelFile)
 
-    gtlike['irfs'] = 'DSS'
-    gtlike['srcmdl'] = srcModelFile
-    gtlike['sfile'] = srcModelFile
-    gtlike['optimizer'] = 'MINUIT'
-    gtlike['evfile'] = gtselect['outfile']
-    gtlike['scfile'] = ft2File
-    gtlike.run()
     spectrumFile = name + '_prompt_spectra.fits'
-    os.rename('counts_spectra.fits', spectrumFile)
+
+    obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
+                      expCube=None, irfs='DC2')
+    like = UnbinnedAnalysis(obs, srcModelFile, 'Minuit')
+    like[0].setBounds(0, 1e7)
+    like.fit()
+    like.writeXml()
+    like.writeCountsSpectra(name + '_prompt_spectra.fits')
 
     grb_id = int(os.environ['GRB_ID'])
 
+    fluence_30 = pl_energy_flux(like, 30, 3e5)*(tmax - tmin)
+    fluence_100 = pl_energy_flux(like, 100, 3e5)*(tmax - tmin)
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
-                       XML_FILE="'%s'" % absFilePath(srcModelFile))
-
-#    print "creating UnbinnedObs object"
-#    sys.stdout.flush()
-#    obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
-#                      expCube=None, irfs='DC2')
-#    print "creating UnbinnedAnalysis object"
-#    sys.stdout.flush()
-#    like = UnbinnedAnalysis(obs, srcModelFile, 'Minuit')
-#    print like.state()
-#    sys.stdout.flush()
-#    like[0].setBounds(0, 1e7)
-#    print "running like.fit()"
-#    sys.stdout.flush()
-#    like.fit()
-#    print "running like.writeXml()"
-#    sys.stdout.flush()
-#    like.writeXml()
-#    print "like.WriteCountsSpectra()"
-#    sys.stdout.flush()
-#    like.writeCountsSpectra(name + '_prompt_spectra.fits')
-#    return like
+                       XML_FILE="'%s'" % absFilePath(srcModelFile),
+                       PHOTON_INDEX=like[1].getTrueValue(),
+                       PHOTON_INDEX_ERROR=like[1].error(),
+                       FLUENCE_30=fluence_30, FLUENCE_100=fluence_100)
+    return like
 
 def grbCoords(gcnNotice):
     infile = open(gcnNotice.Name + '_findSrc.txt')

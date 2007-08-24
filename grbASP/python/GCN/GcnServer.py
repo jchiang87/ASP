@@ -15,10 +15,10 @@ import array
 import sys
 import select
 
-from LatGcnNotice import LatGcnNotice
-from GcnPacket import GcnPacket
-from dbAccess import insertGrb, insertGcnNotice, current_date, updateGrb, cx_Oracle
 from createGrbStreams import refinementStreams
+from GcnPacket import GcnPacket
+import dbAccess
+from LatGcnNotice import LatGcnNotice
 
 def _outputDir(grb_id):
     dirname = os.path.join(os.environ['OUTPUTDIR'], '%i' % grb_id)
@@ -48,16 +48,6 @@ def noticeGenerator(packet, outfile=None):
     if outfile is None:
         outfile = os.path.join(_outputDir(packet.MET), 
                                "GRB%i_Notice.txt" % packet.MET)
-#    output = open(outfile, "w")
-#    output.write("TITLE:          GCN NOTICE\n")
-#    output.write("NOTICE_DATE:    %s\n" % time.asctime())
-#    output.write("TRIGGER_NUM:    %s\n" % packet.triggerNum)
-#    output.write("GRB_RA:         %7.3fd (J2000)\n" % packet.RA)
-#    output.write("GRB_DEC:        %7.3fd (J2000)\n" % packet.Dec)
-#    output.write("GRB_ERROR:      10.00 [arcmin] \n")
-#    output.write("GRB_DATE:       %i TJD; \n" % packet.TJD)
-#    output.write("GRB_TIME:       %.2f SOD \n" % packet.SOD)
-#    output.close()
     my_notice = LatGcnNotice(packet.MET, packet.RA, packet.Dec)
     my_notice.setTriggerNum(packet.triggerNum)
     my_notice.write(outfile)
@@ -78,12 +68,13 @@ class GcnServer(object):
     def registerWithDatabase(self, packet):
         grb_id = int(packet.MET)
         try:
-            insertGrb(grb_id)
-        except cx_Oracle.DatabaseError, message:
+            dbAccess.insertGrb(grb_id)
+        except dbAccess.cx_Oracle.DatabaseError, message:
             print message
             pass
-        updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName())
-        insertGcnNotice(grb_id, packet.buffer, current_date(), packet.MET)
+        dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName())
+        dbAccess.insertGcnNotice(grb_id, packet.buffer, 
+                                 dbAccess.current_date(), packet.MET)
         return grb_id
     def run(self):
         self._listen()
@@ -112,12 +103,8 @@ class GcnServer(object):
                         last_imalive = packet.arrTime
                     else:
                         emailNotice(packet, self.recipients)
-                        # Instead of creating a text version of the Notice
-                        # this should instead create an entry in the GRB
-                        # database table and then launch the refinement
-                        # task.
-                        grb_id = self.registerWithDatabase(packet)
                         notice_file = noticeGenerator(packet)
+                        grb_id = self.registerWithDatabase(packet)
                         refinementStreams((grb_id,), _outputDir(grb_id))
                         print "Packet of type %i received" % packet.type
                 newSocket.close()

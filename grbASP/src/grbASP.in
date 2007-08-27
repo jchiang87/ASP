@@ -80,3 +80,10 @@ astro::JulianDate jd_from_MET(double met);
       return std::make_pair(std::make_pair(logLike_time, logLike_pos),meanDir);
    }
 }
+%extend astro::SolarSystem {
+   static astro::SkyDir sunDirection(double met) {
+      astro::JulianDate jd(astro::JulianDate::missionStart() + met/8.64e4);
+      astro::SolarSystem sun;
+      return sun.direction(jd);
+   }
+}

@@ -56,10 +56,11 @@ def noticeGenerator(packet, outfile=None):
 class GcnServer(object):
     _IM_ALIVE = 3
     _KILL_SOCKET = 4
-    def __init__(self, port=5263, bufsize=4*40):
+    def __init__(self, port=5263, bufsize=4*40, dt_alive=60):
         self.port = port
         self.bufsize = bufsize
         self.recipients = ["jchiang@slac.stanford.edu"]
+        self.dt_alive = dt_alive
     def _listen(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -85,7 +86,8 @@ class GcnServer(object):
                 print "Connected from", address
                 newSocket.setblocking(0)
                 while True:
-                    inp, outp, exc = select.select([newSocket], [], [], 15)
+                    inp, outp, exc = select.select([newSocket], [], [], 
+                                                   3*self.dt_alive)
                     if len(inp) == 0:
                         print "Timeout waiting for data.  Reopening socket."
                         break
@@ -98,7 +100,8 @@ class GcnServer(object):
                     if packet.type == self._IM_ALIVE:
                         dt = packet.arrTime - last_imalive
                         print "IM_ALIVE packet received at", packet.arrTime
-                        if last_imalive and not 8 < dt < 12:
+                        if (last_imalive and 
+                            not self.dt_alive - 2 < dt < self.dt_alive + 2):
                             print "Time between last two packets: %i" % dt
                         last_imalive = packet.arrTime
                     else:
@@ -116,7 +119,7 @@ class GcnServer(object):
         self.sock.close()
 
 if __name__ == '__main__':
-    gcnServer = GcnServer(port=5264)
+    gcnServer = GcnServer(port=5264, dt_alive=10)
 #    gcnServer = GcnServer()
     while True:
         gcnServer.run()

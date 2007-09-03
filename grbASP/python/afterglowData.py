@@ -21,6 +21,9 @@ def getData(time, ra, dec, srcName, duration=5*3600, radius=15,
             extracted=False):
     ft1Merged = 'FT1_merged.fits'
     ft1, ft2 = getL1Data(time, time + duration)
+    ft1 = []
+    for line in open('Ft1FileList'):
+        ft1.append(line.strip())
     if not extracted:
         ft1merge(ft1, ft1Merged)
     
@@ -58,8 +61,10 @@ def afterglow_pars(infile):
     return pars['name'], pars['ra'], pars['dec'], pars['tstart'], pars['tstop']
 
 if __name__ == '__main__':
-    import os, sys
-    os.chdir(os.environ['OUTPUTDIR'])
+    import os, sys, shutil
+    outputDir = os.environ['OUTPUTDIR']
+    shutil.copy('Ft1FileList', os.path.join(outputDir, 'Ft1FileList'))
+    os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
 
     srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName)

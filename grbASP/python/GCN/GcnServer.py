@@ -73,7 +73,9 @@ class GcnServer(object):
         except dbAccess.cx_Oracle.DatabaseError, message:
             print message
             pass
-        dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName())
+        dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName(),
+                           INITIAL_RA=packet.RA, INITIAL_DEC=packet.Dec,
+                           INITIAL_ERROR_RADIUS=packet.posError)
         dbAccess.insertGcnNotice(grb_id, packet.buffer, 
                                  dbAccess.current_date(), packet.MET)
         return grb_id

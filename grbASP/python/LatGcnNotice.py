@@ -156,7 +156,10 @@ class LatGcnNotice(object):
             # GRB_ID is already in GRB table
             print message
             pass
-        dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % self.name)
+        # need to implement error radius estimate
+        dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % self.name,
+                           INITIAL_RA=self.ra, INITIAL_DEC=self.dec,
+                           INITIAL_ERROR_RADIUS=1)
         dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
                                  dbAccess.current_date(), self.met)
 

@@ -10,6 +10,7 @@
 import os
 import glob
 import time
+from parfile_parser import Parfile
 from PipelineCommand import PipelineCommand, _outputDir, _asp_path
 
 # import these to ensure they are available for the various streams
@@ -66,7 +67,12 @@ def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False):
     if isinstance(parfiles, str):
         parfiles = (parfiles, )
     for parfile in parfiles:
-        args = {'GRB_parfile' : parfile,
+        params = Parfile(parfile)
+        tstart = params['tstop']
+        tstop = tstart + 5*3600
+        args = {'TSTART' : tstart,
+                'TSTOP' : tstop,
+                'GRB_parfile' : parfile,
                 'output_dir' : output_dir,
                 'GRBASPROOT' : _grbAspRoot}
         command = PipelineCommand('GRB_afterglow', args)

@@ -19,11 +19,17 @@ pars = Parfile(afterglowFiles)
 obs = UnbinnedObs(pars['ft1File'], pars['ft2File'], expMap=pars['expmap'],
                   expCube=pars['expcube'], irfs='DC2')
 
-like = UnbinnedAnalysis(obs, grbName + '_afterglow_model.xml', 'Minuit')
+like = UnbinnedAnalysis(obs, grbName + '_afterglow_model.xml', 'Drmnfb')
 
 like.thaw(6)
 
-like.fit()
+try:
+    like.fit()
+except:
+    try:
+        like.fit()
+    except:
+        pass
 
 print like.model
 print 'TS value: ', like.Ts(grbName)

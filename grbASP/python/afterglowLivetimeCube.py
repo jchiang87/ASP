@@ -37,7 +37,8 @@ gtexpmap['outfile'] = 'expMap_' + grbName + '.fits'
 gtexpmap['srcrad'] = 25
 gtexpmap['irfs'] = 'DSS'
 gtexpmap.pars.write(os.path.join(os.environ['OUTPUTDIR'], 'gtexpmap.par'))
-writeExpMapBounds(gtexpmap)
+
+writeExpMapBounds(gtexpmap, nx=1, ny=1)
 
 output = open(afterglowFiles, 'a')
 output.write('expcube = %s\n' % gtlivetimecube['outfile'])

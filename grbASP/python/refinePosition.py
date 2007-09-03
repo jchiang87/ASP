@@ -19,13 +19,13 @@ _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
 
 gtfindsrc = GtApp('gtfindsrc', 'Likelihood')
 
-def refinePosition(gbm_notice, extracted=False, ft1Input=_LatFt1File,
+def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
                    ft2Input=_LatFt2File, tsmap=True, duration=100,
                    radius=15):
     try:
-        notice = GcnNotice(gbm_notice)
+        notice = GcnNotice(gcn_notice)
     except TypeError:
-        notice = gbm_notice
+        notice = gcn_notice
 
     if notice.offAxisAngle(ft2Input) > 60:
         raise ValueError, ("Burst off-axis angle (from GCN position) "
@@ -116,6 +116,8 @@ if __name__ == '__main__':
     dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
                        LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
                        ERROR_RADIUS=gcnNotice.pos_error,
+                       INITIAL_RA=gcnNotice.RA, INITIAL_DEC=gcnNotice.DEC,
+                       INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
                        FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
                                                      '_LAT_2.fits'))
     parfile = '%s_pars.txt' % gcnNotice.Name

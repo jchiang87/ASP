@@ -11,6 +11,5 @@ ft2file =
 start_time = 
 stop_time = 
 rspfunc = DC2
-RoI_file = 
 expCube = 
 expMap = expMap_sum.fits

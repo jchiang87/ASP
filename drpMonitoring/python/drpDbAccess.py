@@ -18,23 +18,26 @@ def dircos(ra, dec):
     nz = num.sin(dec*num.pi/180.)
     return num.array((nx, ny, nz))
 
-def insertRoi(id, ra, dec, radius):
-    sql = ("insert into SOURCEMONITORINGROI (ROI, RA, DEC, RADIUS) "
-           + "values (%i, %.3f, %.3f, %i)" % (id, ra, dec, radius))
+def insertRoi(id, ra, dec, radius, sr_rad):
+    sql = ("insert into SOURCEMONITORINGROI (ROI, RA, DEC, RADIUS, SR_RADIUS) "
+           + "values (%i, %.3f, %.3f, %i, %i)" % (id, ra, dec, radius, sr_rad))
     apply(sql)
 
-def findRois(ra_val, dec_val):
-    nhat = dircos(ra_val, dec_val)
+def updateRoi(id, **kwds):
+    sql_template = ("update SOURCEMONITORINGROI set %s = %s where ROI = %i"
+                    % ('%s', '%s', id))
+    for key in kwds:
+        sql = sql_template % (key, kwds[key])
+        apply(sql)
+
+def readRois(outfile='rois.txt'):
+    output = open(outfile, 'w')
     sql = "select * from SOURCEMONITORINGROI"
     def cursorFunc(cursor):
-        rois = {}
         for entry in cursor:
-            id, ra, dec, radius = [x for x in entry]
-            roi_nhat = dircos(ra, dec)
-            mu = sum(roi_nhat*nhat)
-            if mu > num.cos(radius*num.pi/180.):
-                rois[id] = num.arccos(mu)*180./num.pi
-        return rois
+            pars = tuple([x for x in entry])
+            output.write("%i  %7.3f  %7.3f  %i  %i\n" % pars)
+        output.close()
     return apply(sql, cursorFunc)
 
 def findPointSources(ra, dec, radius, srctype=None):
@@ -89,7 +92,7 @@ def buildXmlModel(ra, dec, radius, outfile):
 if __name__ == "__main__":
 #    from read_data import read_data
 #    for items in zip(*read_data('rois_gino.txt')):
-#        insertRoi(*items[:-1])
-    print findRois(193.98, -5.82)
+#        id = items[0]
+#        sr_radius = items[-1]
+#        updateRoi(id, SR_RADIUS=sr_radius)
     buildXmlModel(193.98, -5.82, 20, 'my_model.xml')
-

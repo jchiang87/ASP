@@ -14,6 +14,7 @@ from GtApp import GtApp
 from getL1Data import getL1Data
 from ft1merge import ft1merge
 from parfile_parser import Parfile
+import drpDbAccess
 
 debug = False
 
@@ -56,7 +57,8 @@ pars['ft1file'] = gtselect['outfile']
 pars['ft2file'] = ft2[0]    # need to generalize this for multiple FT2 files
 pars['start_time'] = start_time
 pars['stop_time'] = stop_time
-pars['RoI_file'] = os.environ['RoI_file']
 pars.write()
+
+drpDbAccess.readRois()
 
 os.system('chmod 777 *')

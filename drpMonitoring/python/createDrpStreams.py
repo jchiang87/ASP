@@ -33,8 +33,8 @@ def drpStreams(daynum=1, output_dir=_outputDir, RoI_file='rois.txt',
     if num_RoIs is None:
         num_RoIs = len(foo[0])
     args = {'output_dir' : output_dir,
-            'start_time' : start_time,
-            'stop_time' : stop_time,
+            'TSTART' : start_time,
+            'TSTOP' : stop_time,
             'RoI_file' : RoI_file,
             'num_RoIs' : num_RoIs,
             'sourceModelFile' : sourceModel,

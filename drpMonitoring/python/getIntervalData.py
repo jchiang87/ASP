@@ -1,6 +1,6 @@
 """
-@brief Extract FT1 data for a specified time range given by start_time and
-stop_time environment variables.
+@brief Extract FT1 data for a specified time range given by TSTART and
+TSTOP environment variables.
 
 @author J. Carson <carson@slac.stanford.edu>
 @author J. Chiang <jchiang@slac.stanford.edu>
@@ -9,32 +9,31 @@ stop_time environment variables.
 # $Header$
 #
 
-import os
+import os, shutil
 from GtApp import GtApp
 from getL1Data import getL1Data
 from ft1merge import ft1merge
 from parfile_parser import Parfile
 
-#_L1DataPath = '/nfs/farm/g/glast/u33/jchiang/ASP/testdata/downlinks'
-#_ft2File = '/nfs/farm/g/glast/u33/jchiang/ASP/testdata/eg_diffuse_scData_0000.fits'
-#_startTime = 0
-#_L1DataPath = '/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks'
-#_ft2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
-#_startTime = 220838400
-
 debug = False
 
 output_dir = os.environ['output_dir']
+
+ft1_list = 'Ft1FileList'
+shutil.copy(ft1_list, os.path.join(output_dir, ft1_list))
 os.chdir(output_dir)
 
-start_time = float(os.environ['start_time'])
-stop_time = float(os.environ['stop_time'])
+start_time = float(os.environ['TSTART'])
+stop_time = float(os.environ['TSTOP'])
 
 gtselect = GtApp('gtselect')
 
-#ft1, ft2 = getL1Data(start_time, stop_time, l1DataPath=_L1DataPath,
-#                     ft2File=_ft2File, startTime=_startTime)
 ft1, ft2 = getL1Data(start_time, stop_time)
+
+ft1 = []
+for line in open(ft1_list):
+    ft1.append(line.strip())
+
 print "Using downlink files: ", ft1
 
 ft1Merged = 'FT1_merged.fits'
@@ -52,7 +51,6 @@ else:
     gtselect.run()
 
 parfile_basename = 'drp_pars.txt'
-#pars = Parfile(os.path.join(os.environ['DRPMONITORINGROOT'], 'data', parfile_basename))
 pars = Parfile(parfile_basename)
 pars['ft1file'] = gtselect['outfile']
 pars['ft2file'] = ft2[0]    # need to generalize this for multiple FT2 files

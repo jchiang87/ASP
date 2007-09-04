@@ -33,7 +33,8 @@ class SourceData(object):
         dbEntry = DbEntry(self.name, variable, pars['start_time'],
                           pars['stop_time'])
         dbEntry.setValues(self.flux, self.fluxerr)
-        dbEntry.setMetaData("xmlFile", self.srcModel)
+        dbEntry.setXmlFile(self.srcModel)
+        dbEntry.write()
         print "Writing database entry for %s." % self.name
         print "%s = %e +/- %e" % (variable, self.flux, self.fluxerr)
         print "time period: %s to %s" % (pars['start_time'], pars['stop_time'])

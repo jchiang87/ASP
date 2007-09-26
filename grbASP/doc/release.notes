@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1     04-Sep-07   JC   implement GRB db table access; make connections
+                            to GCN Client; implement DataCatalog access
     v0r4p1 26-Jul-07   JC   set ft2 file override in GcnNotice.py
     v0r4   25-Jul-07   JC   set TRIGGER_NUM equal to MET and COMMENT to 
                             downlink_file in LatGcnNotice.py and 

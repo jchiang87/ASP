@@ -5,12 +5,13 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-  <task name="GRB_afterglow" version="4.0" type="Data">
+  <task name="GRB_afterglow" version="4.1" type="Data">
     <variables>
       <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r1p1"</var>
       <var name="BINDIR">rh9_gcc32</var>
     </variables>
     <prerequisites>
+      <prerequisite name="logicalPath" type="string"/>
       <prerequisite name="TSTART" type="integer"/>
       <prerequisite name="TSTOP" type="integer"/>
       <prerequisite name="output_dir" type="string"/>
@@ -22,7 +23,6 @@
     <process name="catalogQuery">
       <script><![CDATA[
         outfile = pipeline.createFile("Ft1FileList")
-        logicalPath = "/DC2/Downlinks"
         opt1 = '(%(TSTART)i <= nTStart && nTStop <= %(TSTOP)i)' % locals()
         opt2 = '(nTStart <= %(TSTART)i && %(TSTART)i <= nTStop)' % locals()
         opt3 = '(nTStart <= %(TSTOP)i && %(TSTOP)i <= nTStop)' % locals()

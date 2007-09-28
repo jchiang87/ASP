@@ -50,17 +50,24 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None,
 #        command = PipelineCommand('GRB_refinement', args)
 #        command.run(debug=debug)
 
-def refinementStreams(grb_ids=(), output_dir=_outputDir, debug=False):
+def refinementStreams(tstart, tstop, logicalPath=None,
+                      grb_ids=(), output_dir=_outputDir, debug=False):
     os.chdir(output_dir)
     for grb_id in grb_ids:
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id, 
                 'output_dir' : output_dir,
-                'GRBASPROOT' : _grbAspRoot}
+                'GRBASPROOT' : _grbAspRoot,
+                'TSTART' : tstart,
+                'TSTOP' : tstop,
+                'logicalPath' : '/DC2/Downlinks'}
+        if logicalPath is not None:
+            args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_refinement', args)
         command.run(debug=debug)
 
-def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False):
+def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False,
+                     logicalPath=None):
     os.chdir(output_dir)
     if parfiles is None:
         parfiles = glob.glob('GRB*_pars.txt')
@@ -74,7 +81,10 @@ def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False):
                 'TSTOP' : tstop,
                 'GRB_parfile' : parfile,
                 'output_dir' : output_dir,
-                'GRBASPROOT' : _grbAspRoot}
+                'GRBASPROOT' : _grbAspRoot,
+                'logicalPath' : '/DC2/Downlinks'}
+        if logicalPath is not None:
+            args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_afterglow', args)
         command.run(debug=debug)
 

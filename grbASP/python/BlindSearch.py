@@ -205,6 +205,11 @@ if __name__ == '__main__':
             plot.vline(grb_dir.ra())
             plot.hline(grb_dir.dec())
         else:
-            createGrbStreams.refinementStreams(grb_ids=(notice.grb_id,),
-                                               output_dir=grb_output) 
+            duration = 100
+            logicalPath = os.environ['logicalPath']
+            createGrbStreams.refinementStreams(notice.met - duration,
+                                               notice.met + duration, 
+                                               logicalPath=logicalPath,
+                                               grb_ids=(notice.grb_id,),
+                                               output_dir=grb_output)
             pass

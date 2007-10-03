@@ -8,7 +8,8 @@
 
 import os, sys
 from GtApp import GtApp
-from getL1Data import getL1Data
+#from getL1Data import getL1Data
+from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
 import readXml
@@ -20,10 +21,7 @@ gtselect = GtApp('gtselect', 'dataSubselector')
 def getData(time, ra, dec, srcName, duration=5*3600, radius=15,
             extracted=False):
     ft1Merged = 'FT1_merged.fits'
-    ft1, ft2 = getL1Data(time, time + duration)
-    ft1 = []
-    for line in open('Ft1FileList'):
-        ft1.append(line.strip())
+    ft1, ft2 = getFitsData()
     if not extracted:
         ft1merge(ft1, ft1Merged)
     

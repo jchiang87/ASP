@@ -5,9 +5,9 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-  <task name="GRB_afterglow" version="4.1" type="Data">
+  <task name="GRB_afterglow" version="4.2" type="Data">
     <variables>
-      <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r1p1"</var>
+      <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2"</var>
       <var name="BINDIR">rh9_gcc32</var>
     </variables>
     <prerequisites>
@@ -22,15 +22,18 @@
     </prerequisites>
     <process name="catalogQuery">
       <script><![CDATA[
-        outfile = pipeline.createFile("Ft1FileList")
-        opt1 = '(%(TSTART)i <= nTStart && nTStop <= %(TSTOP)i)' % locals()
-        opt2 = '(nTStart <= %(TSTART)i && %(TSTART)i <= nTStop)' % locals()
-        opt3 = '(nTStart <= %(TSTOP)i && %(TSTOP)i <= nTStop)' % locals()
-        query = ('DataType == \"FITS\" && (%s || %s || %s)' 
-                 % (opt1, opt2, opt3))
-        datasetList = datacatalog.getDatasets(logicalPath, query)
-        datasetList.writeToFile(outfile, 1)
-        pipeline.writeFile(outfile)
+        def query(outfile, path):
+            output = pipeline.createFile(outfile)
+            opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
+            opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
+            opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
+            query = ('DataType == \"FITS\" && (%s || %s || %s)' 
+                     % (opt1, opt2, opt3))
+            datasetList = datacatalog.getDatasets(logicalPath+'/'+path, query)
+            datasetList.writeToFile(output, 1)
+            pipeline.writeFile(output)
+        query("Ft1FileList", "FT1")
+        query("Ft2FileList", "FT2")
         ]]></script>
     </process>
     <process name="afterglowData">

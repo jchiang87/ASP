@@ -66,7 +66,6 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met):
     sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, NOTICEMET)"
            + "  values (%i, '%s', '%s', %i)"
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
-              notice_date, met))
     apply(sql)
 
 def updateGrb(grb_id, **kwds):

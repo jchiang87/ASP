@@ -21,7 +21,7 @@ import BayesBlocks
 _version = os.path.split(os.environ['GRBASPROOT'])[-1]
 _grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
 
-def blindSearchStreams(downlinks=None, grbroot_dir=None,
+def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                        output_dir=_outputDir, debug=False):
     os.chdir(output_dir)
     if downlinks is None:
@@ -33,7 +33,10 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None,
     for downlink in downlinks:
         args = {'Downlink_file' : downlink,
                 'GRBROOTDIR' : grbroot_dir,
-                'GRBASPROOT' : _grbAspRoot}
+                'GRBASPROOT' : _grbAspRoot,
+                'logicalPath' : '/DC2/Downlinks'}
+        if logicalPath is not None:
+            args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_blind_search', args)
         command.run(debug=debug)
 

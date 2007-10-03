@@ -80,10 +80,21 @@ if __name__ == '__main__':
 
     ft1Merged = 'FT1_merged.fits'
     ft1merge(ft1, ft1Merged)
+
+    fmerge = GtApp('fmerge')
+    fmerge['infiles'] = '@Ft2FileList'
+    fmerge['outfile'] = 'FT2_merged.fits'
+    fmerge['clobber'] = 'yes'
+    fmerge['columns'] = '" "'
+    fmerge['mextname'] = '" "'
+    fmerge['lastkey'] = '" "'
+    fmerge.run()
+
+    duration = 100   # this should be read from the GRB_ASP_CONFIG db table
     ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, 
                                            duration=duration, radius=15)
     outfile = open('%s_files' % gcnNotice.Name, 'w')
-    outfile.write('%s\n%s\n' % (ft1_extracted, ft2[0]))
+    outfile.write('%s\n%s\n' % (ft1_extracted, fmerge['outfile']))
     outfile.close()
 
     os.system('chmod 777 *')

@@ -74,7 +74,7 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     srcModelFile = name + '_model.xml'
     srcModel.writeTo(srcModelFile)
 
-    spectrumFile = name + '_prompt_spectra.fits'
+    spectrumFile = name + '_grb_spec.fits'
 
     obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
                       expCube=None, irfs='DC2')
@@ -82,7 +82,7 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     like[0].setBounds(0, 1e7)
     like.fit()
     like.writeXml()
-    like.writeCountsSpectra(name + '_prompt_spectra.fits')
+    like.writeCountsSpectra(spectrumFile)
 
     grb_id = int(os.environ['GRB_ID'])
 

@@ -13,7 +13,7 @@ def getFileList(filelist):
     output_dir = os.environ['OUTPUTDIR']
     shutil.copy(filelist, os.path.join(output_dir, filelist))
     fitsfiles = []
-    for line in open(listfile):
+    for line in open(filelist):
         fitsfiles.append(line.strip())
     return fitsfiles
 

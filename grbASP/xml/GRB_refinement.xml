@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="2.4" type="Data">
+<task name="GRB_refinement" version="2.5" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -23,7 +23,7 @@
    </prerequisites>
    <process name="catalogQuery">
      <script><![CDATA[
-       def query(outfile, path):
+       def query(outfile, path, TSTART, TSTOP):
            output = pipeline.createFile(outfile)
            opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
            opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
@@ -33,8 +33,8 @@
            datasetList = datacatalog.getDatasets(logicalPath+'/'+path, query)
            datasetList.writeToFile(output, 1)
            pipeline.writeFile(output)
-       query("Ft1FileList", "FT1")
-       query("Ft2FileList", "FT2")
+       query("Ft1FileList", "FT1", TSTART, TSTOP)
+       query("Ft2FileList", "FT2", TSTART, TSTOP)
        ]]></script>
    </process>
    <process name="extractLatData">

@@ -17,11 +17,11 @@ import xmlSrcLib
 import FuncFactory
 
 gtselect = GtApp('gtselect', 'dataSubselector')
+fmerge = GtApp('fmerge')
 
-def getData(time, ra, dec, srcName, duration=5*3600, radius=15,
+def getData(time, ra, dec, srcName, ft1, duration=5*3600, radius=15,
             extracted=False):
     ft1Merged = 'FT1_merged.fits'
-    ft1, ft2 = getFitsData()
     if not extracted:
         ft1merge(ft1, ft1Merged)
     
@@ -52,7 +52,16 @@ def getData(time, ra, dec, srcName, duration=5*3600, radius=15,
     srcModel[srcName].spatialModel.setAttributes()
     srcModel.filename = srcName + '_afterglow_model.xml'
     srcModel.writeTo()
-    return srcModel, gtselect['outfile'], ft2[0]
+
+    fmerge['infiles'] = '@Ft2FileList'
+    fmerge['outfile'] = 'FT2_merged.fits'
+    fmerge['clobber'] = 'yes'
+    fmerge['columns'] = '" "'
+    fmerge['mextname'] = '" "'
+    fmerge['lastkey'] = '" "'
+    fmerge.run()
+
+    return srcModel, gtselect['outfile'], fmerge['outfile']
 
 def afterglow_pars(infile):
     pars = Parfile(infile)
@@ -60,12 +69,12 @@ def afterglow_pars(infile):
 
 if __name__ == '__main__':
     import os, sys, shutil
+    ft1, ft2 = getFitsData()
     outputDir = os.environ['OUTPUTDIR']
-    shutil.copy('Ft1FileList', os.path.join(outputDir, 'Ft1FileList'))
     os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
 
-    srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName)
+    srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName, ft1)
     outfile = open('%s_afterglow_files' % grbName, 'w')
     outfile.write('ft1File = %s\n' % ft1)
     outfile.write('ft2File = %s\n' % ft2)

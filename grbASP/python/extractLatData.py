@@ -69,23 +69,15 @@ def burst_interval(lc_file, minrate=30):
     return times[0] - dts[0], times[-1] + dts[-1]
 
 if __name__ == '__main__':
-    import os, sys, shutil
+    import os, shutil
     from GcnNotice import GcnNotice
-    from getL1Data import getL1Data
+    from getFitsData import getFitsData
     from ft1merge import ft1merge
 
-    ft1_list = 'Ft1FileList'
-    output_dir = os.environ['OUTPUTDIR']
-    shutil.copy(ft1_list, os.path.join(output_dir, ft1_list))
-    os.chdir(output_dir)
-#    gcnNotice = GcnNotice(os.environ['GCN_NOTICE'])
+    ft1, ft2 = getFitsData()
+    os.chdir(os.environ['OUTPUTDIR'])
     gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
-    duration = 100
-    ft1, ft2 = getL1Data(gcnNotice.start_time - duration,
-                         gcnNotice.start_time + duration)
-    ft1 = []
-    for line in open(ft1_list):
-        ft1.append(line.strip())
+
     ft1Merged = 'FT1_merged.fits'
     ft1merge(ft1, ft1Merged)
     ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, 

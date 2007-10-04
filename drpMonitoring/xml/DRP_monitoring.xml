@@ -5,14 +5,14 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="4.3" type="Data">
+<task name="DRP_monitoring" version="4.4" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r1p1"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <prerequisites>
-    <prerequisite name="output_dir" type="string"/>
+    <prerequisite name="OUTPUTDIR" type="string"/>
     <prerequisite name="logicalPath" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>

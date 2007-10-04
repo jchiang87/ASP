@@ -11,17 +11,17 @@ TSTOP environment variables.
 
 import os, shutil
 from GtApp import GtApp
-from getL1Data import getL1Data
+#from getL1Data import getL1Data
+from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
 import drpDbAccess
 
 debug = False
 
-output_dir = os.environ['output_dir']
+ft1, ft2 = getFitsData()
 
-ft1_list = 'Ft1FileList'
-shutil.copy(ft1_list, os.path.join(output_dir, ft1_list))
+output_dir = os.environ['output_dir']
 os.chdir(output_dir)
 
 start_time = float(os.environ['TSTART'])
@@ -29,16 +29,19 @@ stop_time = float(os.environ['TSTOP'])
 
 gtselect = GtApp('gtselect')
 
-ft1, ft2 = getL1Data(start_time, stop_time)
-
-ft1 = []
-for line in open(ft1_list):
-    ft1.append(line.strip())
-
 print "Using downlink files: ", ft1
 
 ft1Merged = 'FT1_merged.fits'
 ft1merge(ft1, ft1Merged)
+
+fmerge = GtApp('fmerge')
+fmerge['infiles'] = '@Ft2FileList'
+fmerge['outfile'] = 'FT2_merged.fits'
+fmerge['clobber'] = 'yes'
+fmerge['columns'] = '" "'
+fmerge['mextname'] = '" "'
+fmerge['lastkey'] = '" "'
+fmerge.run()
 
 gtselect['infile'] = ft1Merged
 gtselect['outfile'] = 'time_filtered_events.fits'
@@ -54,7 +57,7 @@ else:
 parfile_basename = 'drp_pars.txt'
 pars = Parfile(parfile_basename)
 pars['ft1file'] = gtselect['outfile']
-pars['ft2file'] = ft2[0]    # need to generalize this for multiple FT2 files
+pars['ft2file'] = fmerge['outfile']
 pars['start_time'] = start_time
 pars['stop_time'] = stop_time
 pars.write()

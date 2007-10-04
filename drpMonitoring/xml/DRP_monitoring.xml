@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="4.1" type="Data">
+<task name="DRP_monitoring" version="4.3" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r1p1"</var>
@@ -13,6 +13,7 @@
   </variables>
   <prerequisites>
     <prerequisite name="output_dir" type="string"/>
+    <prerequisite name="logicalPath" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>
     <prerequisite name="num_RoIs" type="integer"/>
@@ -21,18 +22,19 @@
   </prerequisites>
 
   <process name="catalogQuery">
-    <script>
-      <![CDATA[
-        outfile = pipeline.createFile("Ft1FileList")
-        logicalPath = "/DC2/Downlinks"
-        opt1 = '(%(TSTART)i <= nTStart && nTStop <= %(TSTOP)i)' % locals()
-        opt2 = '(nTStart <= %(TSTART)i && %(TSTART)i <= nTStop)' % locals()
-        opt3 = '(nTStart <= %(TSTOP)i && %(TSTOP)i <= nTStop)' % locals()
-        query = ('DataType == \"FITS\" && (%s || %s || %s)' 
-                 % (opt1, opt2, opt3))
-        datasetList = datacatalog.getDatasets(logicalPath, query)
-        datasetList.writeToFile(outfile, 1)
-        pipeline.writeFile(outfile)
+    <script><![CDATA[
+      def query(outfile, path, TSTART, TSTOP):
+          output = pipeline.createFile(outfile)
+          opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
+          opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
+          opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
+          query = ('DataType == \"FITS\" && (%s || %s || %s)' 
+                   % (opt1, opt2, opt3))
+          datasetList = datacatalog.getDatasets(logicalPath+'/'+path, query)
+          datasetList.writeToFile(output, 1)
+          pipeline.writeFile(output)
+      query("Ft1FileList", "FT1", TSTART, TSTOP)
+      query("Ft2FileList", "FT2", TSTART, TSTOP)
       ]]>
     </script>
   </process>

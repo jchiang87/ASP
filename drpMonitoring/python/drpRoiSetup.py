@@ -1,7 +1,7 @@
 """
 @brief Common setup for DRP region-of-interest analyses starting from
-the directory given in the output_dir environment variable.  Importing
-this at the top of a script will set the cwd to the output_dir and
+the directory given in the OUTPUTDIR environment variable.  Importing
+this at the top of a script will set the cwd to the OUTPUTDIR and
 make available the parameters in drp_pars.txt and rois.txt
 after the getIntervalData.py script has been run.
 
@@ -29,7 +29,7 @@ class RoiList(list):
         for reg, ra, dec, radius, sourcerad in zip(*read_data(roiFile)):
             self.append(RoI(reg, ra, dec, radius, sourcerad))
 
-output_dir = os.environ['output_dir']
+output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)
 
 rootpath = lambda x : os.path.join(output_dir, x)

@@ -21,7 +21,7 @@ debug = False
 
 ft1, ft2 = getFitsData()
 
-output_dir = os.environ['output_dir']
+output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)
 
 start_time = float(os.environ['TSTART'])

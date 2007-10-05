@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r1   04-Oct-07   JC   use GRB_ASP_CONFIG for setting analysis 
+                            parameters, irfs, etc.
     v1     04-Sep-07   JC   implement GRB db table access; make connections
                             to GCN Client; implement DataCatalog access
     v0r4p1 26-Jul-07   JC   set ft2 file override in GcnNotice.py

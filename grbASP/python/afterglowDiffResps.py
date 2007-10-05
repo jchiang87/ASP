@@ -10,12 +10,17 @@
 import os
 from GtApp import GtApp
 from parfile_parser import Parfile
+from GrbAspConfig import grbAspConfig
 
 debug = False
 
 os.chdir(os.environ['OUTPUTDIR'])
-grbName = Parfile(os.environ['GRBPARS'])['name']
+grbpars = Parfile(os.environ['GRBPARS'])
 
+config = grbAspConfig.find(grbpars['tstart'])
+print config
+
+grbName = grbpars['name']
 afterglowFiles = grbName + '_afterglow_files'
 pars = Parfile(afterglowFiles)
 
@@ -23,7 +28,7 @@ gtdiffresp = GtApp('gtdiffrsp', 'Likelihood')
 gtdiffresp['evfile'] = pars['ft1File']
 gtdiffresp['scfile'] = pars['ft2File']
 gtdiffresp['srcmdl'] = pars['xmlFile']
-gtdiffresp['irfs'] = 'DSS'
+gtdiffresp['irfs'] = config.IRFS
 if debug:
     print gtdiffresp.command()
 else:

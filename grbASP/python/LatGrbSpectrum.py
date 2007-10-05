@@ -42,7 +42,8 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
     return flux
 
 def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
-                   ft1File=_LatFt1File, ft2File=_LatFt2File):
+                   ft1File=_LatFt1File, ft2File=_LatFt2File, irfs='DC2',
+                   optimizer='Minuit'):
     try:
         gcnNotice = ra
         ra = gcnNotice.ra
@@ -76,9 +77,11 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
 
     spectrumFile = name + '_grb_spec.fits'
 
+    if irfs == 'DSS':
+        irfs = 'DC2'
     obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
-                      expCube=None, irfs='DC2')
-    like = UnbinnedAnalysis(obs, srcModelFile, 'Minuit')
+                      expCube=None, irfs=irfs)
+    like = UnbinnedAnalysis(obs, srcModelFile, optimizer)
     like[0].setBounds(0, 1e7)
     like.fit()
     like.writeXml()
@@ -116,13 +119,21 @@ def grbFiles(gcnNotice):
 if __name__ == '__main__':
     import os
     from GcnNotice import GcnNotice
+    from GrbAspConfig import grbAspConfig
+
     os.chdir(os.environ['OUTPUTDIR'])
-#    gcnNotice = GcnNotice(os.environ['GCN_NOTICE'])
     gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
+    
+    config = grbAspConfig.find(gcnNotice.start_time)
+    print config
+
     ra, dec = grbCoords(gcnNotice)
     tmin, tmax = grbTiming(gcnNotice)
     ft1File, ft2File = grbFiles(gcnNotice)
     like = LatGrbSpectrum(ra, dec, tmin, tmax, gcnNotice.Name,
-                          radius=15, ft1File=ft1File, ft2File=ft2File)
+                          ft1File=ft1File, ft2File=ft2File,
+                          radius=config.RADIUS, 
+                          irfs=config.IRFS,
+                          optimizer=config.OPTIMIZER)
 
     os.system('chmod 777 *')

@@ -21,7 +21,7 @@ gtfindsrc = GtApp('gtfindsrc', 'Likelihood')
 
 def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
                    ft2Input=_LatFt2File, tsmap=True, duration=100,
-                   radius=15):
+                   radius=15, irfs='DSS', optimizer='DRMNFB'):
     try:
         notice = GcnNotice(gcn_notice)
     except TypeError:
@@ -45,11 +45,11 @@ def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
     gtfindsrc['evfile'] = ft1_file
     gtfindsrc['scfile'] = ft2Input
     gtfindsrc['outfile'] = notice.Name + '_findSrc.txt'
-    gtfindsrc['irfs'] = 'DSS'
+    gtfindsrc['irfs'] = irfs
     gtfindsrc['coordsys'] = 'CEL'
     gtfindsrc['ra'] = notice.RA
     gtfindsrc['dec'] = notice.DEC
-    gtfindsrc['optimizer'] = 'DRMNGB'
+    gtfindsrc['optimizer'] = optimizer
     gtfindsrc['chatter'] = 2
     gtfindsrc.run()
     results = open(gtfindsrc['outfile']).readlines()
@@ -99,19 +99,27 @@ if __name__ == '__main__':
     from parfile_parser import Parfile
     import dbAccess
     from createGrbStreams import afterglowStreams
-    
+    from GrbAspConfig import grbAspConfig
+
     output_dir = os.environ['OUTPUTDIR']
     os.chdir(output_dir)
-#    gcnNotice = GcnNotice(os.environ['GCN_NOTICE'])
+
     grb_id = int(os.environ['GRB_ID'])
     gcnNotice = GcnNotice(grb_id)
     infiles = open(gcnNotice.Name + '_files')
     ft1File = infiles.readline().strip()
     ft2File = infiles.readline().strip()
     infiles.close()
+
+    config = grbAspConfig.find(gcnNotice.start_time)
+    print config
+
     gcnNotice = refinePosition(gcnNotice, extracted=True, ft1Input=ft1File,
-                               ft2Input=ft2File, tsmap=True, duration=100,
-                               radius=15)
+                               ft2Input=ft2File, tsmap=True, 
+                               duration=config.TIMEWINDOW,
+                               radius=config.RADIUS,
+                               irfs=config.IRFS,
+                               optimizer=config.OPTIMIZER)
 
     dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
                        LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,

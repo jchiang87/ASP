@@ -8,7 +8,6 @@
 
 import os, sys
 from GtApp import GtApp
-#from getL1Data import getL1Data
 from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
@@ -69,12 +68,19 @@ def afterglow_pars(infile):
 
 if __name__ == '__main__':
     import os, sys, shutil
+    from GrbAspConfig import grbAspConfig
+
     ft1, ft2 = getFitsData()
     outputDir = os.environ['OUTPUTDIR']
     os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
 
-    srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName, ft1)
+    config = grbAspConfig.find(tstart)
+    print config
+
+    srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName, ft1,
+                                 duration=config.AGTIMESCALE,
+                                 radius=config.AGRADIUS)
     outfile = open('%s_afterglow_files' % grbName, 'w')
     outfile.write('ft1File = %s\n' % ft1)
     outfile.write('ft2File = %s\n' % ft2)

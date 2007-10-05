@@ -8,7 +8,6 @@
 #
 
 import numarray as num
-#from pyASP import SkyDir
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
 
@@ -147,6 +146,7 @@ if __name__ == '__main__':
     import sys
     from LatGcnNotice import LatGcnNotice
     import createGrbStreams
+    from GrbAspConfig import grbAspConfig
 
     try:
         sys.argv[1:].index('-p')
@@ -163,9 +163,14 @@ if __name__ == '__main__':
 
     events = FitsNTuple(downlink_file)
 
+    grbConfig = grbAspConfig.find(min(events.TIME))
+
     clusterAlg = EventClusters(read_gtis(downlink_file))
 
-    blindSearch = BlindSearch(events, clusterAlg, threshold=134)
+    blindSearch = BlindSearch(events, clusterAlg, 
+                              dn=grbConfig.PARTITIONSIZE,
+                              deadtime=grbConfig.DEADTIME, 
+                              threshold=grbConfig.THRESHOLD)
 
     if makePlots:
         import hippoplotter as plot
@@ -205,7 +210,7 @@ if __name__ == '__main__':
             plot.vline(grb_dir.ra())
             plot.hline(grb_dir.dec())
         else:
-            duration = 100
+            duration = grbConfig.TIMEWINDOW
             logicalPath = os.environ['logicalPath']
             createGrbStreams.refinementStreams(notice.met - duration,
                                                notice.met + duration, 

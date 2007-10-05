@@ -9,17 +9,26 @@
 import os
 from parfile_parser import Parfile
 from UnbinnedAnalysis import *
+from GrbAspConfig import grbAspConfig
 
 os.chdir(os.environ['OUTPUTDIR'])
-grbName = Parfile(os.environ['GRBPARS'])['name']
+grbpars = Parfile(os.environ['GRBPARS'])
 
+config = grbAspConfig.find(grbpars['tstart'])
+print config
+
+irfs = config.IRFS
+if irfs == 'DSS':
+    irfs = 'DC2'
+
+grbName = grbpars['name']
 afterglowFiles = grbName + '_afterglow_files'
 pars = Parfile(afterglowFiles)
 
 obs = UnbinnedObs(pars['ft1File'], pars['ft2File'], expMap=pars['expmap'],
-                  expCube=pars['expcube'], irfs='DC2')
+                  expCube=pars['expcube'], irfs=irfs)
 
-like = UnbinnedAnalysis(obs, grbName + '_afterglow_model.xml', 'Drmnfb')
+like = UnbinnedAnalysis(obs, grbName + '_afterglow_model.xml', config.OPTIMIZER)
 
 like.thaw(6)
 

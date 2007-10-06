@@ -76,10 +76,12 @@ def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False,
         parfiles = glob.glob('GRB*_pars.txt')
     if isinstance(parfiles, str):
         parfiles = (parfiles, )
+    from GrbAspConfig import grbAspConfig
     for parfile in parfiles:
         params = Parfile(parfile)
         tstart = params['tstop']
-        tstop = tstart + 5*3600
+        config = grbAspConfig.find(tstart)
+        tstop = tstart + config.AGTIMESCALE
         args = {'TSTART' : tstart,
                 'TSTOP' : tstop,
                 'GRB_parfile' : parfile,

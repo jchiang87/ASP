@@ -140,5 +140,5 @@ if __name__ == '__main__':
 
     os.system('chmod 777 *')
 
-    afterglowStreams((os.path.join(output_dir, parfile), ),
-                     logicalPath=os.environ['logicalPath'])
+#    afterglowStreams((os.path.join(output_dir, parfile), ),
+#                     logicalPath=os.environ['logicalPath'])

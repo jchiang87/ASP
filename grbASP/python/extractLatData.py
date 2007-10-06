@@ -10,6 +10,7 @@ import numarray as num
 from FitsNTuple import FitsNTuple
 from BayesBlocks import BayesBlocks
 from GtApp import GtApp
+import dbAccess
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtbin = GtApp('gtbin', 'evtbin')
@@ -58,6 +59,7 @@ def extractLatData(gcnNotice, ft1File=_LatFt1File, duration=100, radius=15):
     except:
         pass
 
+    dbAccess.updateGrb(int(os.environ['GRB_ID']), LAT_DURATION=int(tmax-tmin))
     return gtselect['outfile'], gtbin['outfile']
 
 def burst_interval(lc_file, minrate=30):
@@ -73,6 +75,7 @@ if __name__ == '__main__':
     from GcnNotice import GcnNotice
     from getFitsData import getFitsData
     from ft1merge import ft1merge
+    from GrbAspConfig import grbAspConfig
 
     ft1, ft2 = getFitsData()
     os.chdir(os.environ['OUTPUTDIR'])
@@ -90,7 +93,8 @@ if __name__ == '__main__':
     fmerge['lastkey'] = '" "'
     fmerge.run()
 
-    duration = 100   # this should be read from the GRB_ASP_CONFIG db table
+    config = grbAspConfig.find(gcnNotice.start_time)
+    duration = config.TIMEWINDOW
     ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, 
                                            duration=duration, radius=15)
     outfile = open('%s_files' % gcnNotice.Name, 'w')

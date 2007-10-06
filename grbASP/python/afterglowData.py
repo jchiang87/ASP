@@ -14,6 +14,7 @@ from parfile_parser import Parfile
 import readXml
 import xmlSrcLib
 import FuncFactory
+import dbAccess
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 fmerge = GtApp('fmerge')
@@ -66,6 +67,14 @@ def afterglow_pars(infile):
     pars = Parfile(infile)
     return pars['name'], pars['ra'], pars['dec'], pars['tstart'], pars['tstop']
 
+def updateAnalysisVersion(name):
+    sql = "select * from GRB where GCN_NAME = '%s'" % name
+    def cursorFunc(cursor):
+        for item in cursor:
+            return item[0]
+    grb_id = dbAccess.apply(sql, cursorFunc)
+    dbAccess.updateGrb(grb_id, ANALYSIS_VERSION=1)
+
 if __name__ == '__main__':
     import os, sys, shutil
     from GrbAspConfig import grbAspConfig
@@ -74,6 +83,7 @@ if __name__ == '__main__':
     outputDir = os.environ['OUTPUTDIR']
     os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
+    updateAnalysisVersion(grbName)
 
     config = grbAspConfig.find(tstart)
     print config

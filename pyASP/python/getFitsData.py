@@ -15,6 +15,7 @@ def getFileList(filelist):
     fitsfiles = []
     for line in open(filelist):
         fitsfiles.append(line.strip())
+    fitsfiles.sort()   # assume this establishes time ordering
     return fitsfiles
 
 def getFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList'):

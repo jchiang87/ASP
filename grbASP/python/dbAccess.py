@@ -56,17 +56,18 @@ def insertGrb(grb_id):
     sql = ("insert into GRB (GRB_ID) values (%i)" % grb_id)
     apply(sql)
 
-def insertGcnNotice(grb_id, gcn_notice, notice_date, met):
+def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, isUpdate=0):
     notices = readGcnNotices(grb_id)
     for notice in notices:
         if notice == gcn_notice:
             # This GCN Notice associated with this grb_id is already
             # in the database table.
             return
-    sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, NOTICEMET)"
-           + "  values (%i, '%s', '%s', %i)"
+    sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
+           + "NOTICEMET, RA, DEC, ISUPDATE) values "
+           + "(%i, '%s', '%s', %i, %.5f %.5f %i)"
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
-              notice_date, met))
+              notice_date, met, ra, dec, isUpdate))
     apply(sql)
 
 def updateGrb(grb_id, **kwds):
@@ -100,7 +101,7 @@ if __name__ == '__main__':
         pass
 
     insertGrb(grb_id)
-    insertGcnNotice(grb_id, simple_packet(6), current_date(), 0)
+    insertGcnNotice(grb_id, simple_packet(6), current_date(), 0, 193.98, -5.82)
 
     notices = readGcnNotices(grb_id)
     for notice in notices:

@@ -147,7 +147,7 @@ class LatGcnNotice(object):
         packet = copy.copy(self._packet)
         packet.byteswap()
         return packet
-    def registerWithDatabase(self, grb_id=None):
+    def registerWithDatabase(self, grb_id=None, isUpdate=False):
         if grb_id is None:
             grb_id = self.grb_id
         try:
@@ -161,7 +161,8 @@ class LatGcnNotice(object):
                            INITIAL_RA=self.ra, INITIAL_DEC=self.dec,
                            INITIAL_ERROR_RADIUS=1)
         dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
-                                 dbAccess.current_date(), self.met)
+                                 dbAccess.current_date(), self.met, 
+                                 self.ra, self.dec, int(isUpdate))
 
 if __name__ == '__main__':
     notice = LatGcnNotice(222535575.0, 305.723, -67.0446)

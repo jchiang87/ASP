@@ -10,6 +10,7 @@
 import numarray as num
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
+import dbAccess
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -147,12 +148,7 @@ if __name__ == '__main__':
     from LatGcnNotice import LatGcnNotice
     import createGrbStreams
     from GrbAspConfig import grbAspConfig
-
-    try:
-        sys.argv[1:].index('-p')
-        makePlots = True
-    except ValueError:
-        makePlots = False
+    import grb_followup
     
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
@@ -172,24 +168,18 @@ if __name__ == '__main__':
                               deadtime=grbConfig.DEADTIME, 
                               threshold=grbConfig.THRESHOLD)
 
-    if makePlots:
-        import hippoplotter as plot
-        plot.scatter(blindSearch.times, blindSearch.logdts, pointRep='Line')
-        plot.scatter(blindSearch.times, blindSearch.logdists, pointRep='Line')
-        logLike = blindSearch.logdts + blindSearch.logdists
-        plot.scatter(blindSearch.times, logLike, pointRep='Line')
-        
-        for item in blindSearch.tpeaks:
-            plot.vline(item, color='red')
-
-        hist = plot.histogram(events.TIME)
-        hist.setBinWidth('x', 5)
-
     grbDirs = blindSearch.grbDirs()
     for item in grbDirs:
         grb_dir, tpeak = item
         notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
-        notice.registerWithDatabase()
+        #
+        # Need better logic to check if this burst already has a
+        # Notice from a different mission/instrument. Here we just
+        # check that the grb_id (int(MET of burst)) hasn't already
+        # been used by an entry in the GRB database table.
+        #
+        isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
+        notice.registerWithDatabase(isUpdate=isUpdate)
         grb_output = os.path.join(grbroot_dir, notice.name)
         try:
             os.mkdir(grb_output)
@@ -206,15 +196,13 @@ if __name__ == '__main__':
         os.chmod(outfile, 0666)
         print grb_dir.ra(), grb_dir.dec(), tpeak
         
-        if makePlots:
-            plot.vline(grb_dir.ra())
-            plot.hline(grb_dir.dec())
-        else:
-            duration = grbConfig.TIMEWINDOW
-            logicalPath = os.environ['logicalPath']
-            createGrbStreams.refinementStreams(notice.met - duration,
-                                               notice.met + duration, 
-                                               logicalPath=logicalPath,
-                                               grb_ids=(notice.grb_id,),
-                                               output_dir=grb_output)
-            pass
+        duration = grbConfig.TIMEWINDOW
+        logicalPath = os.environ['logicalPath']
+#        createGrbStreams.refinementStreams(notice.met - duration,
+#                                           notice.met + duration, 
+#                                           logicalPath=logicalPath,
+#                                           grb_ids=(notice.grb_id,),
+#                                           output_dir=grb_output)
+        
+    grb_followup.handle_unprocessed_events()
+

@@ -64,3 +64,10 @@ def launch_afterglow_streams(notices):
                 'GRBASPROOT' : os.environ['GRBASPROOT']}
         command = PipelineCommand('GRB_afterglow_launcher', args)
         command.run()
+
+def handle_unprocessed_events():
+    prompt_notices = promptGrbs()
+    launch_refinement_streams(prompt_notices)
+
+    afterglow_events = afterglows()
+    launch_afterglow_streams(afterglow_events)

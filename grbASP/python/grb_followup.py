@@ -14,6 +14,12 @@ from GcnNotice import GcnNotice
 from databaseAccess import *
 from GrbAspConfig import grbAspConfig
 
+#
+# kludge since CMT setup returns nfs mount point instead of physical path
+#
+grbasproot = ("/nfs/farm/g/glast/u33/jchiang" + 
+              os.environ['GRBASPROOT'].split('jchiang')[1])
+
 def promptGrbs():
     sql = "select * from GRB where L1_DATA_AVAILABLE = 0"
     def cursorFunc(cursor):
@@ -35,7 +41,8 @@ def afterglows():
         return notices
     return apply(sql, cursorFunc)
             
-def launch_refinement_streams(notices):
+def launch_refinement_streams(output_dir):
+    notices = promptGrbs()
     for grb_id in notices:
         grb_met = notices[grb_id].start_time
         grb_name = notices[grb_id].Name
@@ -43,15 +50,17 @@ def launch_refinement_streams(notices):
         dt = config.TIMEWINDOW
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id,
-                'OUTPUTDIR' : os.path.join(os.environ['OUTPUTDIR'], grb_name),
-                'GRBASPROOT' : os.environ['GRBASPROOT'],
+#                'OUTPUTDIR' : os.path.join(output_dir, grb_name),
+                'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),
+                'GRBASPROOT' : grbasproot,
                 'TSTART' : grb_met - dt,
                 'TSTOP' : grb_met + dt,
                 'logicalPath' : os.environ['logicalPath']}
         command = PipelineCommand('GRB_refinement_launcher', args)
         command.run()
 
-def launch_afterglow_streams(notices):
+def launch_afterglow_streams(output_dir):
+    notices = afterglows()
     for grb_id in notices:
         ag_time = notices[grb_id].ag_time
         grb_name = notices[grb_id].Name
@@ -60,14 +69,12 @@ def launch_afterglow_streams(notices):
         args = {'logicalPath' : os.environ['logicalPath'],
                 'TSTART' : int(ag_time),
                 'TSTOP' : int(ag_time + dt),
-                'OUTPUTDIR' : os.path.join(os.environ['OUTPUTDIR'], grb_name),
-                'GRBASPROOT' : os.environ['GRBASPROOT']}
+#                'OUTPUTDIR' : os.path.join(output_dir, grb_name),
+                'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),
+                'GRBASPROOT' : grbasproot}
         command = PipelineCommand('GRB_afterglow_launcher', args)
         command.run()
 
-def handle_unprocessed_events():
-    prompt_notices = promptGrbs()
-    launch_refinement_streams(prompt_notices)
-
-    afterglow_events = afterglows()
-    launch_afterglow_streams(afterglow_events)
+def handle_unprocessed_events(output_dir):
+    launch_refinement_streams(output_dir)
+    launch_afterglow_streams(output_dir)

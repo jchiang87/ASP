@@ -26,9 +26,10 @@ class PacketFile(dict):
         self['type'] = 7
         self['serialNum'] = 100001
         self['hopCount'] = 1
-    def setCoord(self, ra, dec):
+    def setCoord(self, ra, dec, error=1):
         self['RA'] = int(ra*1e4)
         self['Dec'] = int(dec*1e4)
+        self['posError'] = int(error*1e4)
     def setTriggerNum(self, triggerNum):
         self['triggerNum'] = triggerNum
     def setBurstTime(self, MET):

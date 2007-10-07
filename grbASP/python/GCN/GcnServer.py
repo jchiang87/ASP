@@ -47,6 +47,7 @@ def emailNotice(packet, recipients, fromadr="jchiang@slac.stanford.edu"):
     subj = packet_type
 #    mail = smtplib.SMTP('smtpunix.slac.stanford.edu')
     for address in recipients:
+        print "sending GCN Notice to %s" % address
 #        hdr = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" 
 #               % (fromadr, address, subj))
 #        message = "%s%s" % (hdr, packet)
@@ -85,9 +86,11 @@ class GcnServer(object):
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName(),
                            INITIAL_RA=packet.RA, INITIAL_DEC=packet.Dec,
                            INITIAL_ERROR_RADIUS=packet.posError, 
-                           L1_DATA_AVAILABLE=0)
+                           L1_DATA_AVAILABLE=0, ANALYSIS_VERSION=0)
         dbAccess.insertGcnNotice(grb_id, packet.buffer, 
-                                 dbAccess.current_date(), packet.MET)
+                                 dbAccess.current_date(), 
+                                 packet.MET, packet.RA, packet.Dec,
+                                 packet.posError)
         return grb_id
     def run(self):
         self._listen()

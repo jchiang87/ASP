@@ -146,7 +146,7 @@ if __name__ == '__main__':
     import os
     import sys
     from LatGcnNotice import LatGcnNotice
-    import createGrbStreams
+#    import createGrbStreams
     from GrbAspConfig import grbAspConfig
     import grb_followup
     
@@ -180,7 +180,8 @@ if __name__ == '__main__':
         #
         isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
         notice.registerWithDatabase(isUpdate=isUpdate)
-        grb_output = os.path.join(grbroot_dir, notice.name)
+#        grb_output = os.path.join(grbroot_dir, notice.name)
+        grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
         try:
             os.mkdir(grb_output)
             os.chmod(grb_output, 0777)
@@ -196,13 +197,12 @@ if __name__ == '__main__':
         os.chmod(outfile, 0666)
         print grb_dir.ra(), grb_dir.dec(), tpeak
         
-        duration = grbConfig.TIMEWINDOW
-        logicalPath = os.environ['logicalPath']
+#        duration = grbConfig.TIMEWINDOW
+#        logicalPath = os.environ['logicalPath']
 #        createGrbStreams.refinementStreams(notice.met - duration,
 #                                           notice.met + duration, 
 #                                           logicalPath=logicalPath,
 #                                           grb_ids=(notice.grb_id,),
 #                                           output_dir=grb_output)
         
-    grb_followup.handle_unprocessed_events()
-
+    grb_followup.handle_unprocessed_events(output_dir)

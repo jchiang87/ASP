@@ -21,6 +21,7 @@ def readGrb(grb_id):
     def cursorFunc(cursor):
         for item in cursor:
             return item
+        return []
     return apply(sql, cursorFunc)
 
 def getGrbIds():
@@ -56,7 +57,8 @@ def insertGrb(grb_id):
     sql = ("insert into GRB (GRB_ID) values (%i)" % grb_id)
     apply(sql)
 
-def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, isUpdate=0):
+def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
+                    isUpdate=0):
     notices = readGcnNotices(grb_id)
     for notice in notices:
         if notice == gcn_notice:
@@ -64,10 +66,10 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, isUpdate=0):
             # in the database table.
             return
     sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
-           + "NOTICEMET, RA, DEC, ISUPDATE) values "
-           + "(%i, '%s', '%s', %i, %.5f %.5f %i)"
+           + "NOTICEMET, RA, DEC, ERROR, ISUPDATE) values "
+           + "(%i, '%s', SYSDATE, %i, %.5f, %.5f, %.5f, %i)"
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
-              notice_date, met, ra, dec, isUpdate))
+              met, ra, dec, error, isUpdate))
     apply(sql)
 
 def updateGrb(grb_id, **kwds):
@@ -84,7 +86,10 @@ def current_date():
     year = data[0]
     month = data[1] - 1
     day = data[2]
-    return "%02i %s %i" % (day, months[month], year)
+    date = "%4i-%s-%02i 10:11:00" % (year, months[month], day)
+    print date
+    return date
+#    return "%02i %s %i" % (day, months[month], year)
 #    return `datetime.datetime(*data[:6])`
 
 if __name__ == '__main__':
@@ -101,7 +106,8 @@ if __name__ == '__main__':
         pass
 
     insertGrb(grb_id)
-    insertGcnNotice(grb_id, simple_packet(6), current_date(), 0, 193.98, -5.82)
+    insertGcnNotice(grb_id, simple_packet(6), current_date(), 0, 
+                    193.98, -5.82, 1)
 
     notices = readGcnNotices(grb_id)
     for notice in notices:

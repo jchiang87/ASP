@@ -25,7 +25,7 @@ class GcnPacket(object):
         self.buffer = array.array('l', buffer)
         self.buffer.byteswap()
         # just process the most common items for now, i.e., from 'type'
-        # to 'posErr'
+        # to 'posError'
         for i, item in enumerate(self._items[:12]):
             self.__dict__[item] = self.buffer[i]
         for item in self._floats[:5]:

@@ -12,6 +12,7 @@ from FitsNTuple import FitsNTuple
 from GcnNotice import GcnNotice
 from extractLatData import extractLatData
 from GtApp import GtApp
+import celgal
 
 # defaults for DC2 data
 _LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
@@ -56,6 +57,8 @@ def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
     fields = results[-3].split()
     ra, dec, ts, pos_error = (float(fields[0]), float(fields[1]),
                               float(fields[2]), float(fields[3]))
+    if pos_error == 0:
+        pos_error = celgal.dist((ra, dec), (notice.RA, notice.DEC))
     if tsmap:
         npix = 20
         mapsize = 4*pos_error
@@ -98,8 +101,9 @@ if __name__ == '__main__':
     from GcnNotice import GcnNotice
     from parfile_parser import Parfile
     import dbAccess
-    from createGrbStreams import afterglowStreams
+#    from createGrbStreams import afterglowStreams
     from GrbAspConfig import grbAspConfig
+    import grb_followup
 
     output_dir = os.environ['OUTPUTDIR']
     os.chdir(output_dir)
@@ -140,5 +144,8 @@ if __name__ == '__main__':
 
     os.system('chmod 777 *')
 
+#    dirs = output_dir.split('/')[:-1]
+#    output_dir = '/' + os.path.join(*dirs)
+#    grb_followup.launch_afterglow_streams(output_dir)
 #    afterglowStreams((os.path.join(output_dir, parfile), ),
 #                     logicalPath=os.environ['logicalPath'])

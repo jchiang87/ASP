@@ -59,7 +59,7 @@ def extractLatData(gcnNotice, ft1File=_LatFt1File, duration=100, radius=15):
     except:
         pass
 
-    dbAccess.updateGrb(int(os.environ['GRB_ID']), LAT_DURATION=int(tmax-tmin))
+    dbAccess.updateGrb(int(os.environ['GRB_ID']), LAT_DURATION=tmax-tmin)
     return gtselect['outfile'], gtbin['outfile']
 
 def burst_interval(lc_file, minrate=30):

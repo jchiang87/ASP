@@ -22,7 +22,7 @@ _version = os.path.split(os.environ['GRBASPROOT'])[-1]
 _grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
-                       output_dir=_outputDir, debug=False):
+                       output_dir=_outputDir, debug=False, streamId=None):
     os.chdir(output_dir)
     if downlinks is None:
         raise ValueError, "No downlink files specified"
@@ -37,7 +37,7 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                 'logicalPath' : '/DC2/Downlinks'}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
-        command = PipelineCommand('GRB_blind_search', args)
+        command = PipelineCommand('GRB_blind_search', args, stream=streamId)
         command.run(debug=debug)
 
 #def refinementStreams(notices=None, output_dir=_outputDir, debug=False):

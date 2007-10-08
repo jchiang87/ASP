@@ -5,20 +5,29 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="1.6" type="Data">
+<task name="GRB_blind_search" version="1.7" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
    <prerequisites>
       <prerequisite name="logicalPath" type="string"/>
-      <prerequisite name="Downlink_file" type="string"/>
+      <prerequisite name="DownlinkId" type="integer"/>
       <prerequisite name="output_dir" type="string"/>
       <prerequisite name="ASP_PATH" type="string"/>
       <prerequisite name="GRBROOTDIR" type="string"/>
       <prerequisite name="GRBASPROOT" type="string"/>
       <prerequisite name="PIPELINESERVER" type="string"/>
    </prerequisites>
+   <process name="catalogQuery">
+     <script><![CDATA[
+       query = 'DataType == \"FITS\" && nDownlink == %i' % DownlinkId
+       datasetList = datacatalog.getDatasets(logicalPath + "/FT1", query)
+       output = pipeline.createFile('Ft1FileList')
+       datasetList.writeToFile(output)
+       pipeline.writeFile(output)
+     ]]></script>
+   </process>
    <process name="blind_search">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
@@ -27,6 +36,9 @@
       <job executable="${GRBASPROOT}/${BINDIR}/BlindSearch.sh"
            batchOptions="-q short">
       </job>
+      <depends>
+        <after process="catalogQuery" status="SUCCESS"/>
+      </depends>
    </process>
 </task>
 </pipeline>

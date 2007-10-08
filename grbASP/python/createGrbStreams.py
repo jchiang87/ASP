@@ -25,13 +25,13 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                        output_dir=_outputDir, debug=False, streamId=None):
     os.chdir(output_dir)
     if downlinks is None:
-        raise ValueError, "No downlink files specified"
+        raise ValueError, "No downlink IDs specified"
     if grbroot_dir is None:
         grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
-    if isinstance(downlinks, str):
+    if isinstance(downlinks, int):
         downlinks = (downlinks, )
     for downlink in downlinks:
-        args = {'Downlink_file' : downlink,
+        args = {'DownlinkId' : downlink,
                 'GRBROOTDIR' : grbroot_dir,
                 'GRBASPROOT' : _grbAspRoot,
                 'logicalPath' : '/DC2/Downlinks'}

@@ -143,16 +143,17 @@ def read_gtis(ft1files):
     return gtis
 
 if __name__ == '__main__':
-    import os
+    import os, shutil
     import sys
     from LatGcnNotice import LatGcnNotice
-#    import createGrbStreams
     from GrbAspConfig import grbAspConfig
     import grb_followup
     
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
-    downlink_file = os.path.abspath(os.environ['DOWNLINKFILE'])
+    #downlink_file = os.path.abspath(os.environ['DOWNLINKFILE'])
+
+    downlink_file = open('Ft1FileList').readlines()[0].strip()
 
     os.chdir(grbroot_dir)  # test to see if this directory exists
     os.chdir(output_dir)   # move to the working directory
@@ -180,6 +181,7 @@ if __name__ == '__main__':
         #
         isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
         notice.registerWithDatabase(isUpdate=isUpdate)
+        notice.email_notification()
 #        grb_output = os.path.join(grbroot_dir, notice.name)
         grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
         try:

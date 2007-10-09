@@ -122,6 +122,7 @@ if __name__ == '__main__':
     drp_list.extend(blazars.select(roi.ra, roi.dec, roi.radius))
 
     for src in drp_list:
+        print src
         results[src].updateDbEntry()
 
     

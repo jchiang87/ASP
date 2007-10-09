@@ -57,7 +57,7 @@ else:
 parfile_basename = 'drp_pars.txt'
 pars = Parfile(parfile_basename)
 pars['ft1file'] = gtselect['outfile']
-pars['ft2file'] = fmerge['outfile']
+pars['ft2file'] = os.path.abspath(fmerge['outfile'])
 pars['start_time'] = start_time
 pars['stop_time'] = stop_time
 pars.write()

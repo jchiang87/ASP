@@ -67,7 +67,8 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
             return
     sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
            + "NOTICEMET, RA, DEC, ERROR, ISUPDATE) values "
-           + "(%i, '%s', SYSDATE, %i, %.5f, %.5f, %.5f, %i)"
+#           + "(%i, '%s', SYSDATE, %i, %.5f, %.5f, %.5f, %i)"
+           + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, %.5f, %.5f, %.5f, %i)"
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
               met, ra, dec, error, isUpdate))
     apply(sql)
@@ -92,12 +93,12 @@ def current_date():
 #    return "%02i %s %i" % (day, months[month], year)
 #    return `datetime.datetime(*data[:6])`
 
-if __name__ == '__main__':
-    def simple_packet(type):
-        my_packet = array.array("l", (type,) + 39*(0,))
-        my_packet.byteswap()
-        return my_packet
+def simple_packet(type):
+    my_packet = array.array("l", (type,) + 39*(0,))
+    my_packet.byteswap()
+    return my_packet
 
+if __name__ == '__main__':
     grb_id = 1234
 
     try:

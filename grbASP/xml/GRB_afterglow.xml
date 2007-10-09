@@ -5,9 +5,9 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-  <task name="GRB_afterglow" version="4.3" type="Data">
+  <task name="GRB_afterglow" version="4.5" type="Data">
     <variables>
-      <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2"</var>
+      <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2p1"</var>
       <var name="BINDIR">rh9_gcc32</var>
     </variables>
     <prerequisites>
@@ -27,8 +27,8 @@
             opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
             opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
             opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
-            query = ('DataType == \"FITS\" && (%s || %s || %s)' 
-                     % (opt1, opt2, opt3))
+            query = ('DataType == \"%s\" && (%s || %s || %s)' 
+                     % (path, opt1, opt2, opt3))
             datasetList = datacatalog.getDatasets(logicalPath+'/'+path, query)
             datasetList.writeToFile(output)
             pipeline.writeFile(output)
@@ -53,7 +53,7 @@
         <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/afterglowDiffResps.sh" 
-           batchOptions="-q long"/>
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       <depends>
         <after process="afterglowData" status="SUCCESS"/>
       </depends>
@@ -65,7 +65,7 @@
         <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/afterglowLivetimeCube.sh" 
-           batchOptions="-q long"/>
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       <depends>
         <after process="afterglowData" status="SUCCESS"/>
       </depends>
@@ -77,7 +77,7 @@
         <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/afterglowExpMap.sh" 
-           batchOptions="-q medium"/>
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       <depends>
         <after process="afterglowLivetimeCube" status="SUCCESS"/>
       </depends>
@@ -89,7 +89,7 @@
         <var name="GRBPARS">${GRB_parfile}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/afterglowAnalysis.sh" 
-           batchOptions="-q short"/>
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       <depends>
         <after process="afterglowExpMap" status="SUCCESS"/>
         <after process="afterglowDiffResps" status="SUCCESS"/>

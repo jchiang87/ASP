@@ -166,12 +166,13 @@ class LatGcnNotice(object):
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate))
     def email_notification(self):
         import smtplib
-        sql = "select * from GRB_EMAIL_LIST"
+        sql = "select * from GRB_EMAIL_LIST where ROLE = 'Advocate'"
         def cursorFunc(cursor):
             return [item[1] for item in cursor]
         recipients = dbAccess.apply(sql, cursorFunc)
+        recipients.extend(['shiftslist@glast.stanford.edu', 
+                           'GRBslist@glast.stanford.edu'])
         print recipients
-        recipients = ['jchiang@slac.stanford.edu']
         fromadr = "solist@glast.stanford.edu"
         subj = "ASP blind search GRB candidate"
         mail = smtplib.SMTP('smtpunix.slac.stanford.edu')

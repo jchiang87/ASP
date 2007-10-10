@@ -54,7 +54,8 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
 #        command.run(debug=debug)
 
 def refinementStreams(tstart, tstop, logicalPath=None,
-                      grb_ids=(), output_dir=_outputDir, debug=False):
+                      grb_ids=(), output_dir=_outputDir, debug=False,
+                      streamId=None):
     os.chdir(output_dir)
     for grb_id in grb_ids:
         args = {'GCN_NOTICE' : 'None',
@@ -66,7 +67,7 @@ def refinementStreams(tstart, tstop, logicalPath=None,
                 'logicalPath' : '/DC2/Downlinks'}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
-        command = PipelineCommand('GRB_refinement', args)
+        command = PipelineCommand('GRB_refinement', args, stream=streamId)
         command.run(debug=debug)
 
 def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False,

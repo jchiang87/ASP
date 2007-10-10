@@ -37,7 +37,11 @@ def afterglows():
         for item in cursor:
             grb_id = item[0]
             notices[grb_id] = GcnNotice(grb_id)
-            notices[grb_id].ag_time = item[6] + item[-3]
+            try:
+                notices[grb_id].ag_time = item[6] + item[-3]
+            except TypeError:
+                # kluge. refinement task has not successfully run for this burst
+                del notices[grb_id]
         return notices
     return apply(sql, cursorFunc)
             

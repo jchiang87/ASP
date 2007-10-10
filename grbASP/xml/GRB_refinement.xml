@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="2.8" type="Data">
+<task name="GRB_refinement" version="2.9" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -82,11 +82,10 @@
      dataType = 'PNG'
      files = ('countsMap.png', 'countsSpectra.png', 'lightCurve.png',
               'positionErrorContours.png')
-     for item in files:
-         outfile = "r%i_%s" % (GRB_ID, item)
-         logicalPath = '/ASP/GRB_refinement/%s' % outfile
+     for outfile in files:
+         attributes = ''
+         logicalPath = '/ASP/GRB_refinement/%i/%s' % (GRB_ID, outfile)
          filePath = '%s/%i/%s' % (output_dir, GRB_ID, outfile)
-         attributes = 'nGrb_id = %i' % GRB_ID
          datacatalog.registerDataset(dataType, logicalPath, filePath, 
                                      attributes)
       ]]></script>

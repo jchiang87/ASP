@@ -8,7 +8,7 @@
 #
 # $Header$
 #
-
+import os
 from xml.dom import minidom
 from read_data import read_data
 from GtApp import GtApp
@@ -18,6 +18,8 @@ from drpDbAccess import apply, findPointSources
 from celgal import celgal, dist
 
 converter = celgal()
+
+os.chdir(os.environ['OUTPUTDIR'])
 
 gtbin = GtApp('gtbin')
 gtbin['evfile'] = 'time_filtered_events.fits'

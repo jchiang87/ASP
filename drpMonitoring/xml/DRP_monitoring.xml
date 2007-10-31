@@ -5,10 +5,10 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="4.5" type="Data">
+<task name="DRP_monitoring" version="4.9" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r2p1"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r3p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <prerequisites>
@@ -28,10 +28,10 @@
           opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
           opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
           opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
-          query = ('DataType == \"FITS\" && (%s || %s || %s)' 
-                   % (opt1, opt2, opt3))
+          query = ('DataType == \"%s\" && (%s || %s || %s)' 
+                   % (path, opt1, opt2, opt3))
           datasetList = datacatalog.getDatasets(logicalPath+'/'+path, query)
-          datasetList.writeToFile(output, 1)
+          datasetList.writeToFile(output)
           pipeline.writeFile(output)
       query("Ft1FileList", "FT1", TSTART, TSTOP)
       query("Ft2FileList", "FT2", TSTART, TSTOP)
@@ -41,7 +41,7 @@
 
   <process name="getIntervalData">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/getIntervalData.sh" 
-         batchOptions=" -q express " allocationGroup="glastdata" />
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>
     </depends>
@@ -63,6 +63,14 @@
     </depends>
   </process>
 
+  <process name="sourceSelection">
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceSelection.sh"
+         batchOptions=" -q medium " allocationGroup="glastdata" />
+    <depends>
+      <after process="getIntervalData" status="SUCCESS"/>
+    </depends>
+  </process>
+
   <process name="launchRoiAnalyses">
     <script language="python">
       <![CDATA[
@@ -73,6 +81,7 @@
     <depends>
       <after process="diffuseResponses" status="SUCCESS"/>
       <after process="livetimecube" status="SUCCESS"/>
+      <after process="sourceSelection" status="SUCCESS"/>
     </depends>
     <createsSubtasks>
       <subtask>roiAnalysis</subtask>
@@ -85,7 +94,7 @@
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
       <job executable="${DRPMONITORINGROOT}/${BINDIR}/getRoiData.sh" 
-           batchOptions=" -q express " allocationGroup="glastdata" />
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     </process>
 
     <process name="exposureMap">

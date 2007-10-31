@@ -78,7 +78,7 @@ def buildXmlModel(ra, dec, radius, outfile):
         doc = minidom.parseString(xmlModel)
         lib = doc.getElementsByTagName('source_library')[0]
         for entry in cursor:
-            if entry[0] in sourceNames:
+            if entry[0] in sourceNames and entry[0].find('l b') != 0:
                 xmldef = entry[3].read()
                 source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
                 lib.appendChild(source)

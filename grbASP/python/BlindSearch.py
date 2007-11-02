@@ -153,16 +153,16 @@ if __name__ == '__main__':
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
     #downlink_file = os.path.abspath(os.environ['DOWNLINKFILE'])
 
-    downlink_file = open('Ft1FileList').readlines()[0].strip()
+    downlink_files = [x.strip() for x in open('Ft1FileList')]
 
     os.chdir(grbroot_dir)  # test to see if this directory exists
     os.chdir(output_dir)   # move to the working directory
 
-    events = FitsNTuple(downlink_file)
+    events = FitsNTuple(downlink_files)
 
     grbConfig = grbAspConfig.find(min(events.TIME))
 
-    clusterAlg = EventClusters(read_gtis(downlink_file))
+    clusterAlg = EventClusters(read_gtis(downlink_files))
 
     blindSearch = BlindSearch(events, clusterAlg, 
                               dn=grbConfig.PARTITIONSIZE,
@@ -194,7 +194,7 @@ if __name__ == '__main__':
                 raise OSError, "Error creating directory: " + grb_output
         outfile = os.path.join(grb_output, notice.name + '_Notice.txt')
         notice.setTriggerNum(tpeak)
-        notice.addComment(downlink_file)
+        notice.addComment(', '.join(downlink_files))
         notice.write(outfile)
         os.chmod(outfile, 0666)
         print grb_dir.ra(), grb_dir.dec(), tpeak

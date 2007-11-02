@@ -31,9 +31,9 @@ def wrapperGenerator(scriptName):
     output = open(outfile, "w")
     output.write("#!/usr/local/bin/bash\n")
     output.write("CMTSITE=SLAC_UNIX; export CMTSITE\n")
-    output.write("CMTVERSION=v1r16p20040701; export CMTVERSION\n")
+    output.write("CMTVERSION=v1r18p20061003; export CMTVERSION\n")
     output.write("CMTBASE=/afs/slac.stanford.edu/g/glast/applications/CMT; export CMTBASE\n")
-    output.write("CMTROOT=/afs/slac.stanford.edu/g/glast/applications/CMT/v1r16p20040701; export CMTROOT\n")
+    output.write("CMTROOT=/afs/slac.stanford.edu/g/glast/applications/CMT/v1r18p20061003; export CMTROOT\n")
     output.write("CMTBIN=Linux; export CMTBIN\n")
     output.write("CMTCONFIG=rh9_gcc32; export CMTCONFIG\n")
     output.write("CMTPATH=%s; export CMTPATH\n" %

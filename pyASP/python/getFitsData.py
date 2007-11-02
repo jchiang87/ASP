@@ -14,7 +14,9 @@ def getFileList(filelist):
     shutil.copy(filelist, os.path.join(output_dir, filelist))
     fitsfiles = []
     for line in open(filelist):
-        fitsfiles.append(line.strip())
+        # test if file exists
+        if os.path.isfile(line.strip()):
+            fitsfiles.append(line.strip())
     fitsfiles.sort()   # assume this establishes time ordering
     return fitsfiles
 

@@ -71,6 +71,13 @@ if debug:
 else:
     gtmktime.run()
 
+#
+# Because of custom GTI cuts, need to run gtltcube
+#
+gtltcube = GtApp('gtltcube')
+gtltcube.run(evfile=gtmktime['outfile'], scfile=pars['ft2file'],
+             outfile=pars['expCube'])
+
 ##
 ## Access the SourceMonitoring db tables to build the source model for this ROI
 ##
@@ -102,7 +109,7 @@ srcModel.writeTo()
 gtexpmap = GtApp('gtexpmap')
 gtexpmap['evfile'] = gtmktime['outfile']
 gtexpmap['scfile'] = pars['ft2file']
-gtexpmap['expcube'] = rootpath(pars['expCube'])
+gtexpmap['expcube'] = pars['expCube']
 gtexpmap['outfile'] = 'expMap_' + name + '.fits'
 gtexpmap['srcrad'] = sourcerad
 gtexpmap['irfs'] = pars['rspfunc']

@@ -40,9 +40,9 @@ else:
     if irfs == 'DSS':
         irfs = 'DC2'
     obs = UnbinnedObs(ft1file, pars['ft2file'], expMap=pars['expMap'],
-                      expCube=rootpath(pars['expCube']), irfs=irfs)
-#    like = UnbinnedAnalysis(obs, srcModel, 'Minuit')
-    like = UnbinnedAnalysis(obs, srcModel, 'Drmnfb')
+                      expCube=pars['expCube'], irfs=irfs)
+    like = UnbinnedAnalysis(obs, srcModel, 'Minuit')
+#    like = UnbinnedAnalysis(obs, srcModel, 'Drmnfb')
 
     try:
         like.fit()
@@ -51,6 +51,8 @@ else:
             like.fit()
         except RuntimeError:
             pass
+
+    print like.model
     outputModel = name + '_model_out.xml'
     like.writeXml(outputModel)
     

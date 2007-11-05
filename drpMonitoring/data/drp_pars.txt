@@ -13,3 +13,5 @@ stop_time =
 rspfunc = DC2
 expCube = 
 expMap = expMap_sum.fits
+ft1_filter = CTBCLASSLEVEL>1
+zenmax = 100

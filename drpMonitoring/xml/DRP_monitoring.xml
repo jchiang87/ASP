@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="4.9" type="Data">
+<task name="DRP_monitoring" version="5.0" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r3p1"</var>
@@ -55,14 +55,6 @@
     </depends>
   </process>
 
-  <process name="livetimecube">
-    <job executable="${DRPMONITORINGROOT}/${BINDIR}/livetimecube.sh"
-         batchOptions=" -q medium " allocationGroup="glastdata" />
-    <depends>
-      <after process="getIntervalData" status="SUCCESS"/>
-    </depends>
-  </process>
-
   <process name="sourceSelection">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceSelection.sh"
          batchOptions=" -q medium " allocationGroup="glastdata" />
@@ -80,7 +72,6 @@
     </script>
     <depends>
       <after process="diffuseResponses" status="SUCCESS"/>
-      <after process="livetimecube" status="SUCCESS"/>
       <after process="sourceSelection" status="SUCCESS"/>
     </depends>
     <createsSubtasks>

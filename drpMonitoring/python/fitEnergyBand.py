@@ -23,21 +23,49 @@ def currentRoi():
     return rois[id]
 
 class SourceData(object):
-    def __init__(self, name, srcModel, emin, emax, flux, fluxerr):
+    def __init__(self, name, srcModel, emin, emax, flux, fluxerr, isUL=False):
         self.name = name
         self.srcModel = srcModel
         self.emin, self.emax = emin, emax
         self.flux, self.fluxerr = flux, fluxerr
+        self.isUL = isUL
     def updateDbEntry(self):
         variable = "flux_%i_%i" % (self.emin, self.emax)
         dbEntry = DbEntry(self.name, variable, pars['start_time'],
                           pars['stop_time'])
-        dbEntry.setValues(self.flux, self.fluxerr)
+        dbEntry.setValues(self.flux, self.fluxerr, isUpperLimit=self.isUL)
         dbEntry.setXmlFile(self.srcModel)
         dbEntry.write()
         print "Writing database entry for %s." % self.name
         print "%s = %e +/- %e" % (variable, self.flux, self.fluxerr)
         print "time period: %s to %s" % (pars['start_time'], pars['stop_time'])
+
+
+def upperLimit(like, source, parname='Integral', delta=2.71/2.,
+               tmpfile='temp_model.xml'):
+    like.writeXml(tmpfile)
+    par = like[source].funcs['Spectrum'].getParam(parname)
+    logLike0 = like()
+    x0 = par.value()
+    dx = par.error()
+    xvals, dlogLike = [], []
+    par.setFree(0)
+    for x in num.arange(x0, x0 + 3*dx, 3*dx/30):
+        xvals.append(x)
+        par.setValue(x)
+        like.logLike.syncSrcParams(source)
+        like.fit(0)
+        dlogLike.append(like()-logLike0)
+        if dlogLike[-1] > delta:
+            break
+    like.logLike.reReadXml(tmpfile)
+    try:
+        os.remove(tmpfile)
+    except OSError:
+        pass
+    xx = ((delta - dlogLike[-2])/(dlogLike[-1] - dlogLike[-2])
+          *(xvals[-1] - xvals[-2]) + xvals[-2])
+    return xx*par.getScale()
 
 def fitEnergyBand(emin, emax, srcModel):
     gtselect['infile'] = currentRoi().name + '_events.fits'
@@ -53,10 +81,9 @@ def fitEnergyBand(emin, emax, srcModel):
 
     obs = UnbinnedObs(gtselect['outfile'], pars['ft2file'],
                       expMap=pars['expMap'],
-                      expCube=rootpath(pars['expCube']),
+                      expCube=pars['expCube'],
                       irfs=irfs)
-    like = UnbinnedAnalysis(obs, srcModel, 'Drmnfb')
-
+    like = UnbinnedAnalysis(obs, srcModel, 'Minuit')
     like.state(open("analysis_%i_%i.py" % (emin, emax), "w"))
     
     ptsrcs = []
@@ -66,18 +93,12 @@ def fitEnergyBand(emin, emax, srcModel):
 
     for srcname in ptsrcs:
         src = like.model[srcname]
-#            flux_est = src.flux(emin, emax)
-#            integral = src.funcs['Spectrum'].getParam('Integral')
-#            integral.parameter.setTrueValue(flux_est)
         lowerLimit = src.funcs['Spectrum'].getParam('LowerLimit')
         lowerLimit.parameter.setBounds(10, 5e5)
         lowerLimit.parameter.setValue(emin)
         upperLimit = src.funcs['Spectrum'].getParam('UpperLimit')
         upperLimit.parameter.setBounds(10, 5e5)
         upperLimit.parameter.setValue(emax)
-
-#    print like.model
-#    sys.stdout.flush()
 
     try:
         like.fit()
@@ -102,8 +123,12 @@ def fitEnergyBand(emin, emax, srcModel):
         integral = spec.getParam('Integral')
         flux = integral.getTrueValue()
         fluxerr = integral.error()*integral.getScale()
+        isUL = False
+        if like.Ts(srcname) < 25:
+            flux = upperLimit(like, srcname)
+            isUL = True
         results[srcname] = SourceData(srcname, outputModel, emin, emax,
-                                      flux, fluxerr)
+                                      flux, fluxerr, isUL)
     return results
 
 if __name__ == '__main__':

@@ -7,7 +7,8 @@
 #
 # $Header$
 #
-from databaseAccess import apply, cx_Oracle
+import sys
+from databaseAccess import apply, cx_Oracle, getDbObjects
 import numarray as num
 from xml.dom import minidom
 from cleanXml import cleanXml
@@ -54,6 +55,20 @@ def findPointSources(ra, dec, radius, srctype=None):
                 srcs[entry[0]] = entry[2], entry[3]
         return srcs
     return apply(sql, cursorFunc)
+
+def inspectRois():
+    rois = getDbObjects('SOURCEMONITORINGROI')
+# repackage by primary key
+    roi_data = {}
+    for roi in rois:
+        roi_data[roi['ROI']] = roi
+    for id in roi_data:
+        ptsrcs = findPointSources(roi_data[id]['RA'], roi_data[id]['DEC'],
+                                  roi_data[id]['RADIUS'])
+        sys.stdout.write("ROI %i:\n" % id)
+        for ptsrc in ptsrcs:
+            sys.stdout.write("   %-30s  %.3f  %.3f\n" %
+                             (ptsrc, ptsrcs[ptsrc][0], ptsrcs[ptsrc][1]))
 
 def findDiffuseSources():
     sql = "select * from SOURCEMONITORINGDIFFUSESOURCE"

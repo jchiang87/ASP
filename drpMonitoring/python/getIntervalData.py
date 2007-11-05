@@ -11,7 +11,6 @@ TSTOP environment variables.
 
 import os, shutil
 from GtApp import GtApp
-#from getL1Data import getL1Data
 from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
@@ -23,6 +22,9 @@ ft1, ft2 = getFitsData()
 
 output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)
+
+parfile_basename = 'drp_pars.txt'
+pars = Parfile(parfile_basename)
 
 start_time = float(os.environ['TSTART'])
 stop_time = float(os.environ['TSTOP'])
@@ -53,7 +55,7 @@ gtselect['outfile'] = 'temp_filtered.fits'
 gtselect['tmin'] = start_time
 gtselect['tmax'] = stop_time
 gtselect['rad'] = 180.
-gtselect['zmax'] = 100 # need to read this from database.
+gtselect['zmax'] = pars['zenmax']
 
 if debug:
     print gtselect.command()
@@ -61,18 +63,21 @@ else:
     gtselect.run()
 
 #
-# apply fcopy to filter on CTBCLASSLEVEL>1 for P5_v0_source class
+# use fcopy to apply ft1_filter from par file
 #
 fcopy = GtApp('fcopy')
-fcopy['infile'] = '"%s[EVENTS][CTBCLASSLEVEL>1]"' % gtselect['outfile']
+fcopy['infile'] = '"%s[EVENTS][%s]"' % (gtselect['outfile'],pars['ft1_filter'])
 fcopy['outfile'] = 'time_filtered_events.fits'
+try:
+    os.remove(fcopy['outfile'])
+except OSError:
+    pass
+
 if debug:
     print fcopy.command()
 else:
     fcopy.run()
 
-parfile_basename = 'drp_pars.txt'
-pars = Parfile(parfile_basename)
 pars['ft1file'] = fcopy['outfile']
 pars['ft2file'] = os.path.abspath(fmerge['outfile'])
 pars['start_time'] = start_time

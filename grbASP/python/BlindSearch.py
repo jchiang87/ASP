@@ -76,6 +76,9 @@ class BlindSearch(object):
         nevts = len(events.RA)
         indices = range(0, nevts, dn)
         indices.append(nevts)
+        if indices[-1]-1 == indices[-2]: # handle orphan event
+            indices.pop()
+            indices[-1] = nevts
         logdts = []
         logdists = []
         times = []
@@ -142,6 +145,33 @@ def read_gtis(ft1files):
         gtis.append((start, stop))
     return gtis
 
+def gti_bounds(events, gtis):
+    imins, imaxs = [], []
+    for tmin, tmax in gtis:
+        imins.append(num.where(events.TIME >= tmin)[0][0])
+        imaxs.append(num.where(events.TIME <= tmax)[0][-1])
+    return imins, imaxs
+
+def zenmax_filter(tup, zmax=100):
+    indx = num.where(tup.ZENITH_ANGLE < zmax)
+    for name in tup.names:
+        tup.__dict__[name] = num.array(tup.__dict__[name])
+        tup.__dict__[name] = tup.__dict__[name][indx]
+    return tup
+
+class Foo(object):
+    def __init__(self):
+        pass
+
+class PackagedEvents(object):
+    def __init__(self, events):
+        self.events = events
+    def __call__(self, imin, imax):
+        foo = Foo()
+        for name in self.events.names:
+            foo.__dict__[name] = self.events.__dict__[name][imin:imax]
+        return foo
+
 if __name__ == '__main__':
     import os, shutil
     import sys
@@ -158,53 +188,52 @@ if __name__ == '__main__':
     os.chdir(grbroot_dir)  # test to see if this directory exists
     os.chdir(output_dir)   # move to the working directory
 
-    events = FitsNTuple(downlink_files)
+    raw_events = FitsNTuple(downlink_files)
+    raw_events = zenmax_filter(raw_events)
 
-    grbConfig = grbAspConfig.find(min(events.TIME))
+    gtis = read_gtis(downlink_files)
+    clusterAlg = EventClusters(gtis)
 
-    clusterAlg = EventClusters(read_gtis(downlink_files))
+    imins, imaxs = gti_bounds(raw_events, gtis)
 
-    blindSearch = BlindSearch(events, clusterAlg, 
-                              dn=grbConfig.PARTITIONSIZE,
-                              deadtime=grbConfig.DEADTIME, 
-                              threshold=grbConfig.THRESHOLD)
+    package = PackagedEvents(raw_events)
 
-    grbDirs = blindSearch.grbDirs()
-    for item in grbDirs:
-        grb_dir, tpeak = item
-        notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
-        #
-        # Need better logic to check if this burst already has a
-        # Notice from a different mission/instrument. Here we just
-        # check that the grb_id (int(MET of burst)) hasn't already
-        # been used by an entry in the GRB database table.
-        #
-        isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
-        notice.registerWithDatabase(isUpdate=isUpdate)
-        notice.email_notification()
-#        grb_output = os.path.join(grbroot_dir, notice.name)
-        grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
-        try:
-            os.mkdir(grb_output)
-            os.chmod(grb_output, 0777)
-        except OSError:
-            if os.path.isdir(grb_output):
+    for imin, imax in zip(imins, imaxs):
+        events = package(imin, imax)
+        grbConfig = grbAspConfig.find(min(events.TIME))
+
+        blindSearch = BlindSearch(events, clusterAlg, 
+                                  dn=grbConfig.PARTITIONSIZE,
+                                  deadtime=grbConfig.DEADTIME, 
+                                  threshold=grbConfig.THRESHOLD)
+
+        grbDirs = blindSearch.grbDirs()
+        for item in grbDirs:
+            grb_dir, tpeak = item
+            notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
+            #
+            # Need better logic to check if this burst already has a
+            # Notice from a different mission/instrument. Here we just
+            # check that the grb_id (int(MET of burst)) hasn't already
+            # been used by an entry in the GRB database table.
+            #
+            isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
+            notice.registerWithDatabase(isUpdate=isUpdate)
+#            notice.email_notification()
+            grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
+            try:
+                os.mkdir(grb_output)
                 os.chmod(grb_output, 0777)
-            else:
-                raise OSError, "Error creating directory: " + grb_output
-        outfile = os.path.join(grb_output, notice.name + '_Notice.txt')
-        notice.setTriggerNum(tpeak)
-        notice.addComment(', '.join(downlink_files))
-        notice.write(outfile)
-        os.chmod(outfile, 0666)
-        print grb_dir.ra(), grb_dir.dec(), tpeak
+            except OSError:
+                if os.path.isdir(grb_output):
+                    os.chmod(grb_output, 0777)
+                else:
+                    raise OSError, "Error creating directory: " + grb_output
+            outfile = os.path.join(grb_output, notice.name + '_Notice.txt')
+            notice.setTriggerNum(tpeak)
+            notice.addComment(', '.join(downlink_files))
+            notice.write(outfile)
+            os.chmod(outfile, 0666)
+            print grb_dir.ra(), grb_dir.dec(), tpeak
         
-#        duration = grbConfig.TIMEWINDOW
-#        logicalPath = os.environ['logicalPath']
-#        createGrbStreams.refinementStreams(notice.met - duration,
-#                                           notice.met + duration, 
-#                                           logicalPath=logicalPath,
-#                                           grb_ids=(notice.grb_id,),
-#                                           output_dir=grb_output)
-        
-    grb_followup.handle_unprocessed_events(output_dir)
+#    grb_followup.handle_unprocessed_events(output_dir)

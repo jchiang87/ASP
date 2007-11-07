@@ -169,10 +169,11 @@ class LatGcnNotice(object):
         sql = "select * from GRB_EMAIL_LIST where ROLE = 'Advocate'"
         def cursorFunc(cursor):
             return [item[1] for item in cursor]
-        recipients = dbAccess.apply(sql, cursorFunc)
-        recipients.extend(['shiftslist@glast.stanford.edu', 
-                           'GRBslist@glast.stanford.edu'])
-        print recipients
+#        recipients = dbAccess.apply(sql, cursorFunc)
+#        recipients.extend(['shiftslist@glast.stanford.edu', 
+#                           'GRBslist@glast.stanford.edu'])
+#        print recipients
+        recipients = ['jchiang@slac.stanford.edu']
         fromadr = "solist@glast.stanford.edu"
         subj = "ASP blind search GRB candidate"
         mail = smtplib.SMTP('smtpunix.slac.stanford.edu')

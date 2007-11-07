@@ -28,9 +28,9 @@ def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
     except TypeError:
         notice = gcn_notice
 
-    if notice.offAxisAngle(ft2Input) > 60:
+    if notice.offAxisAngle(ft2Input) > 70:
         raise ValueError, ("Burst off-axis angle (from GCN position) "
-                           + "> 60 degrees and so lies outside the "
+                           + "> 70 degrees and so lies outside the "
                            + "nominal LAT FOV.")
 
     if notice.inSAA():

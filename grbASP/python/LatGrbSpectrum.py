@@ -61,6 +61,7 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     gtselect['rad'] = radius
     gtselect['tmin'] = tmin
     gtselect['tmax'] = tmax
+    gtselect['zmax'] = 100
     gtselect.run()
 
     src = funcFactory.PtSrc()

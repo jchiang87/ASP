@@ -8,6 +8,7 @@
  */
 %module grbASP
 %{
+#include <fenv.h>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -48,6 +49,11 @@ astro::JulianDate jd_from_MET(double met);
 %include $(GRBASPROOT)/grbASP/ClusterAlg.h
 %include $(GRBASPROOT)/grbASP/EventClusters.h
 %include $(GRBASPROOT)/grbASP/PsfClusters.h
+%extend grbASP::Event {
+   static void enableFPE() {
+      feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW);
+   }
+}
 %extend astro::SkyDir {
    static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
                                     const astro::SkyDir & dir2,

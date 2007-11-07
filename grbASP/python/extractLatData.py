@@ -25,6 +25,7 @@ def extractLatData(gcnNotice, ft1File=_LatFt1File, duration=100, radius=15):
     gtselect['rad'] = radius
     gtselect['tmin'] = gcnNotice.start_time - duration
     gtselect['tmax'] = gcnNotice.start_time + duration
+    gtselect['zmax'] = 100 # need to retrieve this from db table
     gtselect.run()
 
     gtbin['evfile'] = gtselect['outfile']

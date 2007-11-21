@@ -28,3 +28,14 @@ def apply(sql, cursorFunc=nullFunc):
         my_connection.commit()
     my_connection.close()
     return results
+
+def getDbObjects(tablename):
+    """Return a list of entries for the specified db table"""
+    sql = "SELECT * from %s" % tablename
+    def cursorFunc(cursor):
+        cols = [column[0] for column in cursor.description]
+        entries = []
+        for item in cursor:
+            entries.append(dict(zip(cols, item)))
+        return entries
+    return apply(sql, cursorFunc)

@@ -39,7 +39,6 @@ class FitsNTuple:
         # Add these columns to the internal dictionary.
         #
         self.__dict__.update(columnData)
-        
     def makeNTuple(self, name=None, useNumArray=1):
         import hippo, sys, numarray
         if useNumArray:

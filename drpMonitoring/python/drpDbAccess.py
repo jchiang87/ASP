@@ -46,7 +46,7 @@ def findPointSources(ra, dec, radius, srctype=None):
     mincos = num.cos(radius*num.pi/180.)
     sql = "select * from SOURCEMONITORINGPOINTSOURCE"
     if srctype:
-        sql += " where SOURCETYPE = %s" % srctype
+        sql += " where SOURCETYPE = '%s'" % srctype
     def cursorFunc(cursor):
         srcs = {}
         for entry in cursor:

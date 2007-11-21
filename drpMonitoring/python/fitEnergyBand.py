@@ -40,29 +40,35 @@ class SourceData(object):
         print "%s = %e +/- %e" % (variable, self.flux, self.fluxerr)
         print "time period: %s to %s" % (pars['start_time'], pars['stop_time'])
 
-
-def upperLimit(like, source, parname='Integral', delta=2.71/2.,
-               tmpfile='temp_model.xml'):
-    like.writeXml(tmpfile)
+def computeUpperLimit(like, source, parname='Integral', delta=2.71/2.,
+                      tmpfile='temp_model.xml'):
+    saved_pars = [par.value() for par in like.model.params]
     par = like[source].funcs['Spectrum'].getParam(parname)
     logLike0 = like()
     x0 = par.value()
     dx = par.error()
+    if dx == 0:
+        dx = x0
     xvals, dlogLike = [], []
     par.setFree(0)
     for x in num.arange(x0, x0 + 3*dx, 3*dx/30):
         xvals.append(x)
         par.setValue(x)
         like.logLike.syncSrcParams(source)
-        like.fit(0)
+        try:
+            like.fit(0)
+        except RuntimeError:
+            try:
+                like.fit(0)
+            except RuntimeError:
+                like.logLike.restoreBestFit()
+                pass
         dlogLike.append(like()-logLike0)
         if dlogLike[-1] > delta:
             break
-    like.logLike.reReadXml(tmpfile)
-    try:
-        os.remove(tmpfile)
-    except OSError:
-        pass
+    par.setFree(1)
+    for value, param in zip(saved_pars, like.model.params):
+        param.setValue(value)
     xx = ((delta - dlogLike[-2])/(dlogLike[-1] - dlogLike[-2])
           *(xvals[-1] - xvals[-2]) + xvals[-2])
     return xx*par.getScale()
@@ -125,7 +131,7 @@ def fitEnergyBand(emin, emax, srcModel):
         fluxerr = integral.error()*integral.getScale()
         isUL = False
         if like.Ts(srcname) < 25:
-            flux = upperLimit(like, srcname)
+            flux = computeUpperLimit(like, srcname)
             isUL = True
         results[srcname] = SourceData(srcname, outputModel, emin, emax,
                                       flux, fluxerr, isUL)

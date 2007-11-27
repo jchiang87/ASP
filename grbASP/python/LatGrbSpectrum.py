@@ -39,7 +39,9 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
     gamma = -spec.getParam('Index').getTrueValue()
     flux = (pl_integral(emin, emax, gamma-1)/pl_integral(emin, emax, gamma)
             *like[srcname].flux(emin, emax)*ergperMeV)
-    return flux
+    fractionalError = (spec.getParam('Integral').error()
+                       /spec.getParam('Integral').getValue())
+    return num.array((flux, flux*fractionalError))
 
 def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
                    ft1File=_LatFt1File, ft2File=_LatFt2File, irfs='DC2',
@@ -90,13 +92,14 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
 
     grb_id = int(os.environ['GRB_ID'])
 
-    fluence_30 = pl_energy_flux(like, 30, 3e5)*(tmax - tmin)
-    fluence_100 = pl_energy_flux(like, 100, 3e5)*(tmax - tmin)
+    fluence_30, f30_error = tuple(pl_energy_flux(like, 30, 3e5)*(tmax - tmin))
+    fluence_100, f100_error = tuple(pl_energy_flux(like, 100, 3e5)*(tmax-tmin))
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
                        XML_FILE="'%s'" % absFilePath(srcModelFile),
                        PHOTON_INDEX=like[1].getTrueValue(),
                        PHOTON_INDEX_ERROR=like[1].error(),
-                       FLUENCE_30=fluence_30, FLUENCE_100=fluence_100)
+                       FLUENCE_30=fluence_30, FLUENCE_30_ERROR=f30_error,
+                       FLUENCE_100=fluence_100, FLUENCE_100_ERROR=f100_error)
     return like
 
 def grbCoords(gcnNotice):

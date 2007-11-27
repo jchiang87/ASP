@@ -236,4 +236,4 @@ if __name__ == '__main__':
             os.chmod(outfile, 0666)
             print grb_dir.ra(), grb_dir.dec(), tpeak
         
-#    grb_followup.handle_unprocessed_events(output_dir)
+    grb_followup.handle_unprocessed_events(output_dir)

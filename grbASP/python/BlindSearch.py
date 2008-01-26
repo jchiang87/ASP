@@ -183,12 +183,14 @@ if __name__ == '__main__':
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
     #downlink_file = os.path.abspath(os.environ['DOWNLINKFILE'])
 
-    downlink_files = [x.strip() for x in open('Ft1FileList')]
+    downlink_files = [x.strip().strip('+') for x in open('Ft1FileList')]
 
     os.chdir(grbroot_dir)  # test to see if this directory exists
     os.chdir(output_dir)   # move to the working directory
 
     raw_events = FitsNTuple(downlink_files)
+    print "Number of events read: ", len(raw_events.TIME)
+    print "from FT1 files: ", downlink_files
     raw_events = zenmax_filter(raw_events)
 
     gtis = read_gtis(downlink_files)

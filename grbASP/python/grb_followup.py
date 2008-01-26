@@ -38,7 +38,7 @@ def afterglows():
             grb_id = item[0]
             notices[grb_id] = GcnNotice(grb_id)
             try:
-                notices[grb_id].ag_time = item[6] + item[-3]
+                notices[grb_id].ag_time = item[6] + item[-4]
             except TypeError:
                 # kluge. refinement task has not successfully run for this burst
                 del notices[grb_id]

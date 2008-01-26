@@ -51,6 +51,8 @@ def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
     gtfindsrc['ra'] = notice.RA
     gtfindsrc['dec'] = notice.DEC
     gtfindsrc['optimizer'] = optimizer
+    gtfindsrc['ftol'] = 1e-10
+    gtfindsrc['atol'] = 1e-5
     gtfindsrc['chatter'] = 2
     gtfindsrc.run()
     results = open(gtfindsrc['outfile']).readlines()

@@ -32,7 +32,8 @@ def getData(time, ra, dec, srcName, ft1, duration=5*3600, radius=15,
     gtselect['rad'] = radius
     gtselect['tmin'] = time
     gtselect['tmax'] = time + duration
-    gtselect['emin'] = 30
+#    gtselect['emin'] = 30
+    gtselect['emin'] = 100
     gtselect['emax'] = 2e5
     gtselect['eventClass'] = -1
     gtselect['zmax'] = 100

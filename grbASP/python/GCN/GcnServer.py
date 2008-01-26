@@ -15,7 +15,7 @@ import array
 import sys
 import select
 
-from createGrbStreams import refinementStreams
+#from createGrbStreams import refinementStreams
 from GcnPacket import GcnPacket
 import dbAccess
 from LatGcnNotice import LatGcnNotice
@@ -120,11 +120,12 @@ class GcnServer(object):
                             print "Time between last two packets: %i" % dt
                         last_imalive = packet.arrTime
                     else:
-                        distribution = self.recipients + read_email_db_table()
+                        #distribution = self.recipients + read_email_db_table()
+                        distribution = self.recipients
                         emailNotice(packet, distribution)
                         notice_file = noticeGenerator(packet)
-                        grb_id = self.registerWithDatabase(packet)
-                        refinementStreams((grb_id,), _outputDir(grb_id))
+                        #grb_id = self.registerWithDatabase(packet)
+                        #refinementStreams((grb_id,), _outputDir(grb_id))
                         print "Packet of type %i received" % packet.type
                 newSocket.close()
         except socket.error, message:

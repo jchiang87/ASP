@@ -24,19 +24,18 @@ class RootNTupleBase {
 public:
    
    RootNTupleBase(const std::string & rootFile,
-                  const std::string & treeName,
-                  const std::vector<std::string> & 
-                  leafNames=std::vector<std::string>(0));
+                  const std::string & treeName);
 
-//   const std::vector<double> & operator[](const std::string & leafName) const;
+   const std::vector<double> & operator[](const std::string & leafName) const;
 
    const std::vector<std::string> & leafNames() const {
       return m_leafNames;
    }
 
-   const std::vector<std::string> & leafTypes() const {
-      return m_leafTypes;
-   }
+   const std::string & leafType(const std::string & name) const;
+
+   void readTree(const std::vector<std::string> & colNames,
+                 const std::string & filterString);
 
 private:
 
@@ -46,11 +45,10 @@ private:
    std::map<std::string, std::vector<double> > m_columns;
 
    std::vector<std::string> m_leafNames;
-   std::vector<std::string> m_leafTypes;
+   std::map<std::string, std::string> m_leafTypes;
    
    void readLeafTypes();
    void readLeafNames();
-
 };
 
 } // namespace grbASP

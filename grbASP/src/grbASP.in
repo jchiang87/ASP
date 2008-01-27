@@ -96,3 +96,8 @@ astro::JulianDate jd_from_MET(double met);
       return sun.direction(jd);
    }
 }
+%extend grbASP::RootNTupleBase {
+   const std::vector<double> & __getitem__(const std::string & name) const {
+      return self->operator[](name);
+   }
+}

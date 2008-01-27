@@ -7,7 +7,10 @@
  * $Header$
  */
 
+#include <climits>
+
 #include <iostream>
+#include <stdexcept>
 
 #include "TFile.h"
 #include "TTree.h"
@@ -21,12 +24,31 @@
 namespace grbASP {
 
 RootNTupleBase::RootNTupleBase(const std::string & rootFile,
-                               const std::string & treeName,
-                               const std::vector<std::string> & leafNames)
+                               const std::string & treeName)
    : m_rootFile(TFile::Open(rootFile.c_str())), 
      m_tree((TTree *)(m_rootFile->Get(treeName.c_str()))) {
    readLeafNames();
    readLeafTypes();
+}
+
+const std::vector<double> & 
+RootNTupleBase::operator[](const std::string & leafName) const {
+   std::map<std::string, std::vector<double> >::const_iterator item
+      = m_columns.find(leafName);
+   if (item == m_columns.end()) {
+      throw std::runtime_error("leaf named " + leafName + " not found.");
+   }
+   return item->second;      
+}
+
+const std::string & RootNTupleBase::leafType(const std::string & name) const {
+   std::map<std::string, std::string>::const_iterator item 
+      = m_leafTypes.find(name);
+   
+   if (item == m_leafTypes.end()) {
+      throw std::runtime_error("leaf named " + name + " not found.");
+   }
+   return item->second;      
 }
 
 void RootNTupleBase::readLeafNames() {
@@ -50,8 +72,9 @@ void RootNTupleBase::readLeafTypes() {
    UInt_t numLeaves(leaves->GetEntries());
 
    for (UInt_t iLeaf(0); iLeaf < numLeaves; iLeaf++) {
-      m_leafTypes.push_back( 
-         std::string(((TLeaf*)leaves->At(iLeaf))->GetTypeName()) );
+      std::string name(m_leafNames.at(iLeaf));
+      m_leafTypes[name] = 
+         std::string(((TLeaf*)leaves->At(iLeaf))->GetTypeName());
    }
 }
 
@@ -60,16 +83,52 @@ void RootNTupleBase::readTree(const std::vector<std::string> & colNames,
    
 // Allocate space for row data.  Double_t should be sufficent.
    size_t ncols(colNames.size());
-   void * values;
-   values = new Double_t[ncols];
+   Double_t * values(new Double_t[ncols]);
    
 // Set branch addresses for each column name.
-   size_t i(0);
-   std::vector<std::string>::const_iterator name(colNames.begin());
-   std::vector<std::string>
-   for ( ; name != colNames.end(); name++
+   for (size_t i(0) ; i < ncols; i++) {
+      std::string name(colNames.at(i));
+      if (m_leafTypes[name] == "Float_t") {
+         Float_t * address = reinterpret_cast<Float_t *>(values + i);
+         m_tree->SetBranchAddress(name.c_str(), address);
+      } else if (m_leafTypes[name] == "Double_t") {
+         Double_t * address = values + i;
+         m_tree->SetBranchAddress(name.c_str(), address);
+      } else if (m_leafTypes[name] == "UInt_t") {
+         UInt_t * address = reinterpret_cast<UInt_t *>(values + i);
+         m_tree->SetBranchAddress(name.c_str(), address);
+      } else if (m_leafTypes[name] == "Int_t") {
+         Int_t * address = reinterpret_cast<Int_t *>(values + i);
+         m_tree->SetBranchAddress(name.c_str(), address);
+      }
+      m_columns[name] = std::vector<double>(0);
+   }
 
-
+// Apply the filterString cut.
+   m_tree->Draw(">>eventList", filterString.c_str(), "", INT_MAX, 0);
+   TEventList * eventList = (TEventList *)(gDirectory->Get("eventList"));
+   size_t nrows(eventList->GetN());
+   for (size_t j(0); j < nrows; j++) {
+      m_tree->GetEntry(eventList->GetEntry(j));
+      for (size_t i(0); i < ncols; i++) {
+         std::string name(colNames.at(i));
+         if (m_leafTypes[name] == "Float_t") {
+            Float_t * value = reinterpret_cast<Float_t *>(values + i);
+            m_columns[name].push_back(*value);
+         } else if (m_leafTypes[name] == "Double_t") {
+            Double_t * value = values + i;
+            m_columns[name].push_back(*value);
+         } else if (m_leafTypes[name] == "UInt_t") {
+            UInt_t * value = reinterpret_cast<UInt_t *>(values + i);
+            m_columns[name].push_back(*value);
+         } else if (m_leafTypes[name] == "Int_t") {
+            Int_t * value = reinterpret_cast<Int_t *>(values + i);
+            m_columns[name].push_back(*value);
+         }
+      }
+   }
+   delete eventList;
+   delete [] values;
 }
 
 } // namespace grbASP

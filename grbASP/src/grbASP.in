@@ -40,6 +40,7 @@ astro::JulianDate jd_from_MET(double met) {
 %template(PairVector) std::vector< std::pair<double, double> >;
 %template(StringVector) std::vector<std::string>;
 %template(ClusterAlgResults) std::pair<std::pair<double, double>, astro::SkyDir>;
+%feature("autodoc", "1");
 %include $(ASTROROOT)/astro/JulianDate.h
 %include $(ASTROROOT)/astro/SkyProj.h
 %include $(ASTROROOT)/astro/SkyDir.h

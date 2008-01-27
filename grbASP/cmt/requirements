@@ -23,6 +23,8 @@ path_append PYTHONPATH $(GRBASPROOT)/python
 macro_append cppflags "" Linux " -I../src -DTRAP_FPE " 
 macro source *.cxx WIN32 "*.h *.cxx"
 
+macro_append grbASP_linkopts "-L$(ROOT_PATH)/lib -lNetx "
+
 library grbASP $(source)
 
 apply_pattern swig_module name="grbASP"

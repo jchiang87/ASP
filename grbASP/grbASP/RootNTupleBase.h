@@ -1,6 +1,6 @@
 /**
  * @file RootNTupleBase.h
- * @brief Provide fast vector access to columns in a ROOT ntuple.
+ * @brief Provide vector access to columns in a ROOT ntuple.
  *
  * @author J. Chiang
  *
@@ -19,12 +19,17 @@ class TTree;
 
 namespace grbASP {
 
+/**
+ * @class RootNTupleBase
+ *
+ */
+
 class RootNTupleBase {
 
 public:
    
-   RootNTupleBase(const std::string & rootFile,
-                  const std::string & treeName);
+   RootNTupleBase(const std::string & fileName,
+                  const std::string & treeName="MeritTuple");
 
    const std::vector<double> & operator[](const std::string & leafName) const;
 
@@ -35,10 +40,12 @@ public:
    const std::string & leafType(const std::string & name) const;
 
    void readTree(const std::vector<std::string> & colNames,
-                 const std::string & filterString);
+                 const std::string & filterString="1",
+                 bool verbose=false);
 
 private:
 
+   std::string m_fileName;
    TFile * m_rootFile;
    TTree * m_tree;
 

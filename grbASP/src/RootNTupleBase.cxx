@@ -31,6 +31,11 @@ RootNTupleBase::RootNTupleBase(const std::string & fileName,
    readLeafTypes();
 }
 
+RootNTupleBase::~RootNTupleBase() {
+   delete m_rootFile;
+//   delete m_tree;
+}
+
 const std::vector<double> & 
 RootNTupleBase::operator[](const std::string & leafName) const {
    std::map<std::string, std::vector<double> >::const_iterator item

@@ -31,6 +31,8 @@ public:
    RootNTupleBase(const std::string & fileName,
                   const std::string & treeName="MeritTuple");
 
+   ~RootNTupleBase();
+
    const std::vector<double> & operator[](const std::string & leafName) const;
 
    const std::vector<std::string> & leafNames() const {

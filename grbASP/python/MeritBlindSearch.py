@@ -37,8 +37,10 @@ _grbConfig = {'PARTITIONSIZE' : 20,
 
 def process_file(merit_file, cuts=_pass5_cuts, grbConfig=_grbConfig,
                  t0=252460800, logLikeFile='loglike.dat', 
-                 output=sys.stdout, verbose=False):
-    raw_events = RootNTuple(merit_file, cuts, verbose=verbose)
+                 output=sys.stdout, columns=_defaultColumns,
+                 verbose=False):
+    raw_events = RootNTuple(merit_file, cuts, columns=_defaultColumns,
+                            verbose=verbose)
     gtis = [(min(raw_events.TIME), max(raw_events.TIME))]
     raw_events = zenmax_filter(raw_events)
 

@@ -10,7 +10,6 @@
 import numarray as num
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
-import dbAccess
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -179,6 +178,7 @@ if __name__ == '__main__':
     from LatGcnNotice import LatGcnNotice
     from GrbAspConfig import grbAspConfig
     import grb_followup
+    import dbAccess
     
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])

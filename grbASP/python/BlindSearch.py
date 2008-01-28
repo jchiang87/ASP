@@ -118,7 +118,7 @@ class BlindSearch(object):
         """
         events = self.events
         grb_dirs = []
-        for tpeak in self.tpeaks:
+        for tpeak, ll in zip(self.tpeaks, self.ll):
             imin = min(num.where(events.TIME > tpeak-50)[0])
             imax = max(num.where(events.TIME < tpeak+50)[0])
             imin, imax = self._temper(imin, imax)
@@ -127,6 +127,7 @@ class BlindSearch(object):
                                                                 imin, imax))
                 grb_dir = [results[1]]
                 grb_dir.append(tpeak)
+                grb_dir.append(ll)
                 grb_dirs.append(grb_dir)
             except:
                 pass
@@ -211,7 +212,7 @@ if __name__ == '__main__':
 
         grbDirs = blindSearch.grbDirs()
         for item in grbDirs:
-            grb_dir, tpeak = item
+            grb_dir, tpeak, ll = item
             notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
             #
             # Need better logic to check if this burst already has a

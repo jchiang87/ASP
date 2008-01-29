@@ -15,8 +15,8 @@ def getFileList(filelist):
     fitsfiles = []
     for line in open(filelist):
         # test if file exists
-        if os.path.isfile(line.strip()):
-            fitsfiles.append(line.strip())
+        if os.path.isfile(line.strip().strip('+')):
+            fitsfiles.append(line.strip().strip('+'))
     fitsfiles.sort()   # assume this establishes time ordering
     return fitsfiles
 

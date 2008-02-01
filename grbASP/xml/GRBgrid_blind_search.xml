@@ -43,12 +43,12 @@
      </createsSubtasks>
    </process>
    <task name="BlindSearch" version="0.1" type="Data">
-     <prerequisites>
-       <prerequisite name="MERIT_FILE" type="string"/>
-     </prerequisites>
      <variables>
        <var name="FILE_NUM">${pipeline.stream}</var>
      </variables>
+     <prerequisites>
+       <prerequisite name="MERIT_FILE" type="string"/>
+     </prerequisites>
      <process name="MeritBlindSearch">
        <job executable="${GRBASPROOT}/${BINDIR}/MeritBlindSearch.sh"
             batchOptions="-q glastdataq " allocationGroup="glastdata"/>

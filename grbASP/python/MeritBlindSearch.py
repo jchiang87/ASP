@@ -72,6 +72,21 @@ def process_file(merit_file, cuts=_pass5_cuts, grbConfig=_grbConfig,
         ll_output.close()
 
 if __name__ == '__main__':
-    files = [line.strip() for line in open('filelist.txt')]
-    for merit_file in files[93:]:
-        process_file(merit_file)
+    import os
+    from FileStager import FileStager
+
+    merit_file = os.environ["MERIT_FILE"]
+    file_num = "%05i" % int(os.environ["FILE_NUM"])
+    
+    fileStager = FileStager("GRBgrid_blind_search/%s" % file_num)
+    outdir = os.path.join(os.environ["output_dir"], file_num)
+    os.mkdir(outdir)
+    outpath = lambda x : os.path.join(outdir, x)
+
+    logLikeFile = fileStager.output(outpath("logLike.dat"))
+    candidateBurstFile = fileStager.output(outpath("candidateBursts.dat"))
+
+    results = open(candidateBurstFile, "w")
+    
+    process_file(merit_file, logLikeFile=logLikeFile, output=results,
+                 verbose=True)

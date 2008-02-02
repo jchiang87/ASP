@@ -89,7 +89,7 @@ if __name__ == '__main__':
     from FileStager import FileStager
 
     merit_file = os.environ["MERIT_FILE"]
-    ds_name = os.environ["DS_NAME"]
+    ds_name = "%05i" % int(os.environ["DS_NAME"])
 
     try:
         grbConfig = Parfile(os.environ["GRBCONFIG_FILE"])

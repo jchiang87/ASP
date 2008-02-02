@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRBgrid_blind_search" version="0.7" type="Data">
+<task name="GRBgrid_blind_search" version="1.1" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r3p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -18,6 +18,9 @@
       <prerequisite name="GRBASPROOT" type="string"/>
       <prerequisite name="ASP_PATH" type="string"/>
       <prerequisite name="PIPELINESERVER" type="string"/>
+      <prerequisite name="GRBCONFIG_FILE" type="string"/>
+      <prerequisite name="COLUMN_FILE" type="string"/>
+      <prerequisite name="TCUT_FILE" type="string"/>
    </prerequisites>
    <process name="catalogQuery">
      <script><![CDATA[
@@ -32,8 +35,10 @@
        while it.hasNext():
            dataset = it.next()
            meritFile = dataset.getFirstOKLocation().getPath()
+           ds_name = dataset.getName()
            pipeline.createSubstream("BlindSearch", istream,
-                                    "MERIT_FILE=%s" % meritFile)
+                                    "MERIT_FILE=%s, DS_NAME=%s" 
+                                    % (meritFile, ds_name))
            istream += 1
        output = pipeline.createFile('MeritFileList')
        datasetList.writeToFile(output, 1)
@@ -49,10 +54,11 @@
      </variables>
      <prerequisites>
        <prerequisite name="MERIT_FILE" type="string"/>
+       <prerequisite name="DS_NAME" type="string"/>
      </prerequisites>
      <process name="MeritBlindSearch">
        <job executable="${GRBASPROOT}/${BINDIR}/MeritBlindSearch.sh"
-            batchOptions="-q glastdataq " allocationGroup="glastdata"/>
+            batchOptions="-q short "/>
      </process>
    </task> <!--BlindSearch-->
 </task> <!--GRBgrid_blind_search-->

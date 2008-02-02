@@ -39,6 +39,11 @@ def process_file(merit_file, cuts=_pass5_cuts, grbConfig=_grbConfig,
                  t0=252460800, logLikeFile='loglike.dat', 
                  output=sys.stdout, columns=_defaultColumns,
                  verbose=False):
+    if verbose:
+        print "using grbConfig:"
+        print grbConfig, "\n"
+        print "using merit columns:"
+        print columns, "\n"
     raw_events = RootNTuple(merit_file, cuts, columns=_defaultColumns,
                             verbose=verbose)
     gtis = [(min(raw_events.TIME), max(raw_events.TIME))]
@@ -71,16 +76,42 @@ def process_file(merit_file, cuts=_pass5_cuts, grbConfig=_grbConfig,
             pass
         ll_output.close()
 
+def get_TCut(infile):
+    for line in open(infile):
+        tcut = ""
+        if line.find("#") != 0:
+            tcut += line.strip()
+    return tcut
+
 if __name__ == '__main__':
     import os
+    from parfile_parser import Parfile
     from FileStager import FileStager
 
     merit_file = os.environ["MERIT_FILE"]
-    file_num = "%05i" % int(os.environ["FILE_NUM"])
+    ds_name = os.environ["DS_NAME"]
+
+    try:
+        grbConfig = Parfile(os.environ["GRBCONFIG_FILE"])
+    except KeyError:
+        grbConfig = _grbConfig
+
+    try:
+        columns = Parfile(os.environ["COLUMN_FILE"])
+    except KeyError:
+        columns = _defaultColumns
+
+    try:
+        cuts = get_TCut(os.environ["TCUT_FILE"])
+    except KeyError:
+        cuts = _pass5_cuts
     
-    fileStager = FileStager("GRBgrid_blind_search/%s" % file_num)
-    outdir = os.path.join(os.environ["output_dir"], file_num)
-    os.mkdir(outdir)
+    fileStager = FileStager("GRBgrid_blind_search/%s" % ds_name)
+    outdir = os.path.join(os.environ["output_dir"], ds_name)
+    try:
+        os.mkdir(outdir)
+    except OSError:
+        pass
     outpath = lambda x : os.path.join(outdir, x)
 
     logLikeFile = fileStager.output(outpath("logLike.dat"))
@@ -89,4 +120,5 @@ if __name__ == '__main__':
     results = open(candidateBurstFile, "w")
     
     process_file(merit_file, logLikeFile=logLikeFile, output=results,
+                 cuts=cuts, grbConfig=grbConfig, columns=columns, 
                  verbose=True)

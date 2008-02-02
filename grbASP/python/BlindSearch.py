@@ -73,6 +73,9 @@ class BlindSearch(object):
         self.clusterAlg = clusterAlg 
         self.events = events
         nevts = len(events.RA)
+        dnevts = int(dn)
+        if dnevts <= 0:
+            raise ValueError, "Cannot have partition size <= 0"
         indices = range(0, nevts, dn)
         indices.append(nevts)
         if indices[-1]-1 == indices[-2]: # handle orphan event

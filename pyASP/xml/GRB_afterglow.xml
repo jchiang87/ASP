@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+   xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+<!-- $Header$
+-->
+<task name="GRB_afterglow" version="2.5" type="Data">
+   <prerequisites>
+      <prerequisite name="output_dir" type="string"/>
+      <prerequisite name="GRB_parfile" type="string"/>
+      <prerequisite name="PYASPROOT" type="string"/>
+      <prerequisite name="BINDIR" type="string"/>
+   </prerequisites>
+
+   <process name="setupCatalogQuery">
+     <job executable="${PYASPROOT}/${BINDIR}/setupCatalogQuery.sh"
+          maxCPU="30"/>
+   </process>
+
+   <process name="catalogQuery">
+     <script language="python">
+       <![CDATA[
+         from java.util import HashMap
+         setup = pipeline.getProcessInstance("setupCatalogQuery")
+         tstart = setup.getVariable("tstart")
+         tstop = setup.getVariable("tstop")
+         dataType = "MC"
+         logicalFolder = "/DC2/FT1:"
+         queryString = "%s < TIME && TIME < %s" % (tstart, tstop)
+         dataSetList = datacatalog.findDatasets(dataType, logicalFolder,
+                                                queryString)
+         # repackage the list of files to pass as the content of ft1Files
+         filePaths = [dataSetList.get(i).getLocation() for i in 
+                      range(dataSetList.size())]
+         fileContent = "\n".join(filePaths) + "\n"
+         fileList = HashMap()
+         fileList.put("fT1Files", fileContent)
+         args = HashMap()
+         args.put("queryPath", ${PIPELINE_SUMMARY})
+         pipeline.createSubstream("afterglowDataTask", 0, args, fileList)
+       ]]>
+     </script>
+     <depends>
+       <after process="setupCatalogQuery" status="SUCCESS"/>
+     </depends>
+     <createsSubtasks>
+       <subtask>afterglowDataTask</subtask>
+     </createsSubtasks>
+   </process>
+
+   <task name="afterglowDataTask" version="0.1" type="Data">
+     <prerequisites>
+       <prerequisite name="queryPath" type="string"/>
+     </prerequisites>
+     <process name="afterglowData">
+      <job executable="${PYASPROOT}/${BINDIR}/afterglowData.sh" maxCPU="600"/>
+     </process>
+   </task>
+
+   <process name="afterglowDiffResps">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/${BINDIR}/afterglowDiffResps.sh" maxCPU="20000"/>
+      <depends>
+         <after process="afterglowData" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <process name="afterglowLivetimeCube">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/${BINDIR}/afterglowLivetimeCube.sh" maxCPU="20000"/>
+      <depends>
+         <after process="afterglowData" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <process name="afterglowExposures">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <script language="python">
+      <![CDATA[
+      submaps = 4
+      for i in range(submaps):
+          pipeline.createSubstream("afterglowExpMap", i+1)
+      ]]>
+      </script>
+      <depends>
+          <after process="afterglowLivetimeCube" status="SUCCESS"/>
+      </depends>
+      <createsSubtasks>
+          <subtask>afterglowExpMap</subtask>
+      </createsSubtasks>
+   </process>
+
+   <process name="combineExpMap">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/${BINDIR}/combineExpMaps.sh" maxCPU="600"/>
+      <depends>
+          <after process="afterglowExpMap.expmaps" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <process name="afterglowAnalysis">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/${BINDIR}/afterglowAnalysis.sh" maxCPU="600"/>
+      <depends>
+          <after process="combineExpMap" status="SUCCESS"/>
+          <after process="afterglowDiffResps" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <task name="afterglowExpMap" version="1.1" type="Data">
+      <prerequisites>
+         <prerequisite name="output_dir" type="string"/>
+         <prerequisite name="GRB_parfile" type="string"/>
+         <prerequisite name="PYASPROOT" type="string"/>
+      </prerequisites>
+      <process name="expmaps">
+         <variables>
+            <var name="OUTPUTDIR">${output_dir}</var>
+            <var name="GRBPARS">${GRB_parfile}</var>
+            <var name="EXPMAP_ID">${pipeline.stream}</var>
+         </variables>
+         <job executable="${PYASPROOT}/${BINDIR}/afterglowExpMap.sh" maxCPU="20000"/>
+      </process>
+   </task>
+
+</task>
+</pipeline>

@@ -5,6 +5,11 @@
     $Id$
 
     @verbatim
+    v2     07-Feb-08   JC   add launcher tasks; use db tables;
+                            added MeritBlindSearch, RootNTupleBase,
+                            GRBgrid_blind_search task; 
+                            patches to remove duplicate event times;
+                            apply zenith angle cuts;
     v1r1   04-Oct-07   JC   use GRB_ASP_CONFIG for setting analysis 
                             parameters, irfs, etc.
     v1     04-Sep-07   JC   implement GRB db table access; make connections

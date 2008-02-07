@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include "astro/JulianDate.h"
+#include "astro/PointingTransform.h"
 #include "astro/SkyDir.h"
 #include "astro/SkyProj.h"
 #include "astro/SolarSystem.h"
@@ -46,6 +47,20 @@ astro::JulianDate jd_from_MET(double met);
    }
    astro::SkyDir operator+(const astro::SkyDir & other) {
       return astro::SkyDir(self->operator()() + other());
+   }
+}
+%extend astro::SkyDir {
+   static astro::SkyDir rotateToCelestial(const astro::SkyDir & scZAxis,
+                                          const astro::SkyDir & scXAxis,
+                                          double theta, double phi) {
+      theta *= M_PI/180.;
+      phi *= M_PI/180.;
+      astro::PointingTransform transform(scZAxis, scXAxis);
+      HepRotation rotation(transform.localToCelestial());
+      return astro::SkyDir(rotation(Hep3Vector(std::sin(theta)*std::cos(phi),
+                                               std::sin(theta)*std::sin(phi),
+                                               std::cos(theta))),
+                           astro::SkyDir::EQUATORIAL);
    }
 }
 %extend astro::JulianDate {

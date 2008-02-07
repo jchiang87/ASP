@@ -21,6 +21,9 @@ import GPL
 import logging
 log = logging.getLogger("gplLong")
 
+class FileStagerError(IOError):
+    "Unknown error occurred in GPL.stageFiles.finish(...)"
+
 class FileStager(object):
     def __init__(self, stagingArea, messageLevel="CRITICAL"):
         level = eval("logging." + messageLevel)
@@ -35,4 +38,7 @@ class FileStager(object):
     def output(self, outfile):
         return self.stager.stageOut(outfile)
     def __del__(self):
-        self.stager.finish("alldone")
+        rc = self.stager.finish("alldone")
+        if rc != 0:
+            message = "Unknown error occurred in GPL.stageFiles.finish(...)"
+            raise FileStagerError, message

@@ -51,8 +51,9 @@ def findPointSources(ra, dec, radius, srctype=None):
         srcs = {}
         for entry in cursor:
             src_nhat = num.array(entry[4:7])
-            if sum(src_nhat*nhat) > mincos:
-                srcs[entry[0]] = entry[2], entry[3]
+            cos_sep = sum(src_nhat*nhat)
+            if cos_sep > mincos:
+                srcs[entry[0]] = entry[2], entry[3], num.arccos(cos_sep)
         return srcs
     return apply(sql, cursorFunc)
 
@@ -67,8 +68,10 @@ def inspectRois():
                                   roi_data[id]['RADIUS'])
         sys.stdout.write("ROI %i:\n" % id)
         for ptsrc in ptsrcs:
-            sys.stdout.write("   %-30s  %.3f  %.3f\n" %
-                             (ptsrc, ptsrcs[ptsrc][0], ptsrcs[ptsrc][1]))
+            if ptsrc.find("HP") != 0:
+                sys.stdout.write("   %-30s  %.3f  %.3f  %.3e\n" %
+                                 (ptsrc, ptsrcs[ptsrc][0], ptsrcs[ptsrc][1],
+                                  ptsrcs[ptsrc][2]))
 
 def findDiffuseSources():
     sql = "select * from SOURCEMONITORINGDIFFUSESOURCE"

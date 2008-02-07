@@ -15,6 +15,7 @@ from GtApp import GtApp
 from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
 from DbEntry import DbEntry
+from FitsNTuple import FitsNTuple
 
 gtselect = GtApp('gtselect')
 
@@ -47,31 +48,32 @@ def computeUpperLimit(like, source, parname='Integral', delta=2.71/2.,
     logLike0 = like()
     x0 = par.value()
     dx = par.error()
-    if dx == 0:
-        dx = x0
-    xvals, dlogLike = [], []
-    par.setFree(0)
-    for x in num.arange(x0, x0 + 3*dx, 3*dx/30):
-        xvals.append(x)
-        par.setValue(x)
-        like.logLike.syncSrcParams(source)
-        try:
-            like.fit(0)
-        except RuntimeError:
-            try:
-                like.fit(0)
-            except RuntimeError:
-                like.logLike.restoreBestFit()
-                pass
-        dlogLike.append(like()-logLike0)
-        if dlogLike[-1] > delta:
-            break
-    par.setFree(1)
-    for value, param in zip(saved_pars, like.model.params):
-        param.setValue(value)
-    xx = ((delta - dlogLike[-2])/(dlogLike[-1] - dlogLike[-2])
-          *(xvals[-1] - xvals[-2]) + xvals[-2])
-    return xx*par.getScale()
+    return x0 + 2*dx  # kluge for now
+#    if dx == 0:
+#        dx = x0
+#    xvals, dlogLike = [], []
+#    par.setFree(0)
+#    for x in num.arange(x0, x0 + 3*dx, 3*dx/30):
+#        xvals.append(x)
+#        par.setValue(x)
+#        like.logLike.syncSrcParams(source)
+#        try:
+#            like.fit(0)
+#        except RuntimeError:
+#            try:
+#                like.fit(0)
+#            except RuntimeError:
+#                like.logLike.restoreBestFit()
+#                pass
+#        dlogLike.append(like()-logLike0)
+#        if dlogLike[-1] > delta:
+#            break
+#    par.setFree(1)
+#    for value, param in zip(saved_pars, like.model.params):
+#        param.setValue(value)
+#    xx = ((delta - dlogLike[-2])/(dlogLike[-1] - dlogLike[-2])
+#          *(xvals[-1] - xvals[-2]) + xvals[-2])
+#    return xx*par.getScale()
 
 def fitEnergyBand(emin, emax, srcModel):
     gtselect['infile'] = currentRoi().name + '_events.fits'
@@ -80,6 +82,11 @@ def fitEnergyBand(emin, emax, srcModel):
     gtselect['emin'] = emin
     gtselect['emax'] = emax
     gtselect.run()
+
+    foo = FitsNTuple(gtselect['outfile'])
+    if len(foo.TIME) == 0:
+        print "no events in this energy band, (%e, %e)" % (emin, emax)
+        return None
 
     irfs = pars['rspfunc']
     if irfs == 'DSS':
@@ -149,11 +156,11 @@ if __name__ == '__main__':
 
     results = fitEnergyBand(emin, emax, srcModel)
     
-    drp_list = drpSources.select(roi.ra, roi.dec, roi.radius)
-    drp_list.extend(blazars.select(roi.ra, roi.dec, roi.radius))
+    if results is not None:
+        drp_list = drpSources.select(roi.ra, roi.dec, roi.radius)
+        drp_list.extend(blazars.select(roi.ra, roi.dec, roi.radius))
 
-    for src in drp_list:
-        print src
-        results[src].updateDbEntry()
-
+        for src in drp_list:
+            print src
+            results[src].updateDbEntry()
     

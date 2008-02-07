@@ -59,7 +59,7 @@ def cursorFunc(cursor):
     doc = minidom.parseString(xmlModel)
     lib = doc.getElementsByTagName('source_library')[0]
     for entry in cursor:
-        if (entry[0] in ptsrcs.keys() and entry[0].find('l b') != 0
+        if (entry[0] in ptsrcs.keys() and entry[0].find('HP') != 0
             and entry[0].find('_3EG') !=0):
             xmldef = entry[3].read()
             source = minidom.parseString(xmldef).getElementsByTagName('source')[0]

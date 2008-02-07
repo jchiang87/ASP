@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+   xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+<!-- $Header$
+-->
+<task name="GRB_afterglow" version="2.3" type="Data">
+   <prerequisites>
+      <prerequisite name="output_dir" type="string"/>
+      <prerequisite name="GRB_parfile" type="string"/>
+      <prerequisite name="PYASPROOT" type="string"/>
+   </prerequisites>
+   <process name="afterglowData">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/python/afterglowData.sh" maxCPU="600"/>
+   </process>
+
+   <process name="afterglowLivetimeCube">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/python/afterglowLivetimeCube.sh" maxCPU="20000"/>
+      <depends>
+         <after process="afterglowData" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <process name="afterglowExposures">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <script language="python">
+      <![CDATA[
+      submaps = 4
+      for i in range(submaps):
+          pipeline.createSubstream("afterglowExpMap", i+1)
+      pipeline.createSubstream("afterglowDiffResps", submaps+2)
+      ]]>
+      </script>
+      <depends>
+          <after process="afterglowLivetimeCube" status="SUCCESS"/>
+      </depends>
+      <createsSubtasks>
+          <subtask>afterglowExpMap</subtask>
+          <subtask>afterglowDiffResps</subtask>
+      </createsSubtasks>
+   </process>
+
+   <process name="combineExpMap">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/python/combineExpMaps.sh" maxCPU="600"/>
+      <depends>
+          <after process="afterglowExpMap.expmaps" status="SUCCESS"/>
+          <after process="afterglowDiffResps.diffresps" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <process name="afterglowAnalysis">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+         <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${PYASPROOT}/python/afterglowAnalysis.sh" maxCPU="600"/>
+      <depends>
+          <after process="combineExpMap" status="SUCCESS"/>
+      </depends>
+   </process>
+
+   <task name="afterglowExpMap" version="1.1" type="Data">
+      <prerequisites>
+         <prerequisite name="output_dir" type="string"/>
+         <prerequisite name="GRB_parfile" type="string"/>
+         <prerequisite name="PYASPROOT" type="string"/>
+      </prerequisites>
+      <process name="expmaps">
+         <variables>
+            <var name="OUTPUTDIR">${output_dir}</var>
+            <var name="GRBPARS">${GRB_parfile}</var>
+            <var name="EXPMAP_ID">${pipeline.stream}</var>
+         </variables>
+         <job executable="${PYASPROOT}/python/afterglowExpMap.sh" maxCPU="20000"/>
+      </process>
+   </task>
+
+   <task name="afterglowDiffResps" version="1.0" type="Data">
+      <prerequisites>
+         <prerequisite name="output_dir" type="string"/>
+         <prerequisite name="GRB_parfile" type="string"/>
+         <prerequisite name="PYASPROOT" type="string"/>
+      </prerequisites>
+      <process name="diffresps">
+         <variables>
+            <var name="OUTPUTDIR">${output_dir}</var>
+            <var name="GRBPARS">${GRB_parfile}</var>
+         </variables>
+         <job executable="${PYASPROOT}/python/afterglowDiffResps.sh" maxCPU="20000"/>
+      </process>
+   </task>
+
+</task>
+</pipeline>

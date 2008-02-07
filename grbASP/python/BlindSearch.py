@@ -76,7 +76,7 @@ class BlindSearch(object):
         dnevts = int(dn)
         if dnevts <= 0:
             raise ValueError, "Cannot have partition size <= 0"
-        indices = range(0, nevts, dn)
+        indices = range(0, nevts, dnevts)
         indices.append(nevts)
         if indices[-1]-1 == indices[-2]: # handle orphan event
             indices.pop()

@@ -47,7 +47,16 @@ def process_file(merit_file, cuts=_pass5_cuts, grbConfig=_grbConfig,
     raw_events = RootNTuple(merit_file, cuts, columns=_defaultColumns,
                             verbose=verbose)
     gtis = [(min(raw_events.TIME), max(raw_events.TIME))]
-    raw_events = zenmax_filter(raw_events)
+    try:
+        zmax = grbConfig['ZENMAX']
+    except:
+        zmax = 100
+    if verbose:
+        print "using ZENMAX = ", zmax
+    raw_events = zenmax_filter(raw_events, zmax)
+
+    if verbose:
+        print "considering ", len(raw_events.RA), " events"
 
     clusterAlg = EventClusters(gtis)
     imins, imaxs = gti_bounds(raw_events, gtis)
@@ -110,7 +119,8 @@ if __name__ == '__main__':
     outdir = os.path.join(os.environ["output_dir"], ds_name)
     try:
         os.mkdir(outdir)
-    except OSError:
+    except OSError, message:
+        print message
         pass
     outpath = lambda x : os.path.join(outdir, x)
 

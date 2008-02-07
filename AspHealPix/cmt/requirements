@@ -1,0 +1,29 @@
+package AspHealPix
+version v0
+
+author James Chiang <jchiang@slac.stanford.edu>
+
+# $Id$
+
+use SwigPolicy v*
+use astro v*
+use healpix v*
+use irfInterface v* irfs
+use irfLoader v* irfs
+use map_tools v*
+use pyASP v* ASP
+
+apply_pattern package_include
+apply_pattern package_linkopts
+apply_pattern shared_library
+
+macro_append cppflags "" Linux " -I../src -DTRAP_FPE " 
+macro source *.cxx WIN32 "*.h *.cxx"
+
+library AspHealPix $(source)
+
+path_remove PYTHONPATH AspHealPix
+path_append PYTHONPATH $(HEALPIXROOT)/$(BINDIR)
+path_append PYTHONPATH $(HEALPIXROOT)/python
+
+apply_pattern swig_module name="AspHealPix"

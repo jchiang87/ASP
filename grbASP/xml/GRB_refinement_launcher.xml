@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement_launcher" version="0.4" type="Data">
+<task name="GRB_refinement_launcher" version="0.5" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r3p1"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <prerequisites>

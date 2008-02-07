@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v2r4   07-Feb-08   JC   added FileStager class, getFitsData.py
     v2r3   04-Sep-07   JC   use Max's new SourceMonitoring database scripts;
                             add databaseAccess.py for drpMonitoring and grbASP
     v2r2   13-Jul-07   JC   restore exposureSubMap.py

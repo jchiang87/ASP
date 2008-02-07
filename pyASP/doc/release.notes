@@ -5,13 +5,6 @@
     $Id$
 
     @verbatim
-    v2r4   07-Feb-08   JC   added FileStager class, getFitsData.py
-    v2r3   04-Sep-07   JC   use Max's new SourceMonitoring database scripts;
-                            add databaseAccess.py for drpMonitoring and grbASP
-    v2r2   13-Jul-07   JC   restore exposureSubMap.py
-    v2r1   13-May-07   JC   use ST_INST and ASP_PATH in PipelineCommand.py
-    v2r0p1 10-May-07   JC   remove hardwired path to PYASPROOT in 
-                            PipelineCommand.py
     v2     10-May-07   JC   spin off grbASP, drpMonitoring, flareMonitoring
                             packages
     v1     01-Dec-06   JC   added DRP_monitoring task and scripts;

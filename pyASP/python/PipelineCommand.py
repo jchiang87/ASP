@@ -11,18 +11,20 @@ various ASP tasks
 import os
 import time
 
+def pyASProot():
+    version = os.environ['PYASPROOT'].split(os.path.sep)[-1]
+    return os.path.join('/nfs/farm/g/glast/u33/jchiang/ASP/ASP/pyASP', version)
+
+_pyASProot = pyASProot()
 _bindir = os.environ['BINDIR']
-_st_inst = os.environ['ST_INST']
-_asp_path = os.environ['ASP_PATH']
-_pipelineServer = os.environ['PIPELINESERVER']
 _outputDir = os.environ['OUTPUTDIR']
+_pipelineServer = os.environ['PIPELINESERVER']
 
 print "Using:\n"
+print "PYASPROOT = %s" % _pyASProot
 print "BINDIR = %s" % _bindir
-print "ST_INST = %s" % _st_inst
-print "ASP_PATH = %s" % _asp_path
-print "PIPELINESERVER = %s" % _pipelineServer
 print "OUTPUTDIR = %s" % _outputDir
+print "PIPELINESERVER = %s" % _pipelineServer
 print ""
 
 class PipelineError(EnvironmentError):
@@ -32,8 +34,7 @@ class PipelineCommand(object):
     def __init__(self, taskname, args, stream=None):
         "Abstraction for a Pipeline-II command."
         if stream is None:
-#            stream = self.streamNumber()
-            stream = -1
+            stream = self.streamNumber()
         executable = '/afs/slac/g/glast/ground/bin/pipeline'
         self.command = ('%s -m %s createStream -S %s -D "%s" %s'
                         % (executable, _pipelineServer, stream, 
@@ -57,11 +58,10 @@ class PipelineCommand(object):
         the default dictionary can be over-ridden by key-value pairs in
         the argDict.
         """
-        defaultDict = {'BINDIR' : _bindir,
-                       'ST_INST' : _st_inst,
-                       'ASP_PATH' : _asp_path,
-                       'PIPELINESERVER' : _pipelineServer,
-                       'output_dir' : _outputDir}
+        defaultDict = {'output_dir' : _outputDir,
+                       'PYASPROOT' : _pyASProot,
+                       'BINDIR' : _bindir,
+                       'PIPELINESERVER' : _pipelineServer}
         defaultDict.update(argDict)
         arg_string = ""
         for item in defaultDict:

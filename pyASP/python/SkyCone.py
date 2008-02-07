@@ -119,11 +119,7 @@ def plotCone(disp, pos=(0, 0), radius=20, color='red', connect=0,
              oplot=1):
     ras, decs = makeCone(pos[0], pos[1], radius)
     plot.canvas.selectDisplay(disp)
-    if connect:
-        return plot.scatter(ras, decs, pointRep='Line', color=color,
-                            oplot=oplot)
-    else:
-        return plot.scatter(ras, decs, color=color, oplot=oplot)
+    return plot.scatter(ras, decs, pointRep='Line', color=color, oplot=oplot)
 
 if __name__ == "__main__":
     import hippoplotter as plot

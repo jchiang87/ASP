@@ -67,8 +67,6 @@ def ft1merge(infiles, outfile):
         pass
     foo[1].header['TSTART'] = tstart
     foo[1].header['TSTOP'] = tstop
-    foo[2].header['TSTART'] = tstart
-    foo[2].header['TSTOP'] = tstop
     foo.writeto(outfile, clobber=True)
 
     fchecksum['infile'] = outfile

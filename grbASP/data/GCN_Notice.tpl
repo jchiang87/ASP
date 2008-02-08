@@ -1,3 +1,7 @@
+# Template file for LAT GCN Notices.
+# 
+# $Header$
+#
 TITLE:          GCN/GLAST NOTICE   
 NOTICE_DATE:    Tue 01 Jan 08 13:15:20 UT 
 NOTICE_TYPE:    GLAST-LAT GRB Trigger 

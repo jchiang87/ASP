@@ -15,10 +15,9 @@ from databaseAccess import *
 from GrbAspConfig import grbAspConfig
 
 #
-# kludge since CMT setup returns nfs mount point instead of physical path
+# Upstream tasks (e.g., GRB_blind_search) must set this explicitly
 #
-grbasproot = ("/nfs/farm/g/glast/u33/jchiang" + 
-              os.environ['GRBASPROOT'].split('jchiang')[1])
+grbasproot = os.environ['GRBASPROOT']
 
 def promptGrbs():
     sql = "select * from GRB where L1_DATA_AVAILABLE = 0"
@@ -54,7 +53,6 @@ def launch_refinement_streams(output_dir):
         dt = config.TIMEWINDOW
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id,
-#                'OUTPUTDIR' : os.path.join(output_dir, grb_name),
                 'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),
                 'GRBASPROOT' : grbasproot,
                 'TSTART' : grb_met - dt,
@@ -73,7 +71,6 @@ def launch_afterglow_streams(output_dir):
         args = {'logicalPath' : os.environ['logicalPath'],
                 'TSTART' : int(ag_time),
                 'TSTOP' : int(ag_time + dt),
-#                'OUTPUTDIR' : os.path.join(output_dir, grb_name),
                 'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),
                 'GRBASPROOT' : grbasproot}
         command = PipelineCommand('GRB_afterglow_launcher', args)

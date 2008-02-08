@@ -33,9 +33,9 @@ class LatGcnTemplate(dict):
         self.ordered_keys = []
         for line in open(template):
             if line.find("#") == 0:   # skip this line
-                break
+                continue
             if line.find('COMMENTS') == 0:
-                break
+                continue
             if line.find(':') > 0:
                 data = line.split(':')
                 key, value = data[0], (':'.join(data[1:])).strip()

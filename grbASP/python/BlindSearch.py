@@ -180,7 +180,7 @@ if __name__ == '__main__':
     import sys
     from LatGcnNotice import LatGcnNotice
     from GrbAspConfig import grbAspConfig
-#    import grb_followup
+    import grb_followup
     import dbAccess
     
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
@@ -242,4 +242,4 @@ if __name__ == '__main__':
             os.chmod(outfile, 0666)
             print grb_dir.ra(), grb_dir.dec(), tpeak
         
-#    grb_followup.handle_unprocessed_events(output_dir)
+    grb_followup.handle_unprocessed_events(output_dir)

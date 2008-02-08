@@ -32,6 +32,8 @@ class LatGcnTemplate(dict):
     def __init__(self, template=os.path.join(_dataDir, 'GCN_Notice.tpl')):
         self.ordered_keys = []
         for line in open(template):
+            if line.find("#") == 0:   # skip this line
+                break
             if line.find('COMMENTS') == 0:
                 break
             if line.find(':') > 0:

@@ -15,9 +15,12 @@ from databaseAccess import *
 from GrbAspConfig import grbAspConfig
 
 #
-# Upstream tasks (e.g., GRB_blind_search) must set this explicitly
+# For nfs mounted disks, <package>ROOT is resolved to the
+# process-dependent mount point, so we must rebuild the path using
+# ASP_PATH
 #
-grbasproot = os.environ['GRBASPROOT']
+grbasproot = os.path.join(os.environ['ASP_PATH'], 'ASP', 'grbASP',
+                          os.path.split(os.environ['GRBASPROOT'])[-1])
 
 def promptGrbs():
     sql = "select * from GRB where L1_DATA_AVAILABLE = 0"

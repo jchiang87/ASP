@@ -40,19 +40,6 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
         command = PipelineCommand('GRB_blind_search', args, stream=streamId)
         command.run(debug=debug)
 
-#def refinementStreams(notices=None, output_dir=_outputDir, debug=False):
-#    os.chdir(output_dir)
-#    if notices is None:
-#        notices = glob.glob('GRB*_Notice.txt')
-#    if isinstance(notices, str):
-#        grb_ids = (notices, )
-#    for notice in notices:
-#        args = {'GCN_NOTICE' : notice,
-#                'output_dir' : output_dir,
-#                'GRBASPROOT' : _grbAspRoot}
-#        command = PipelineCommand('GRB_refinement', args)
-#        command.run(debug=debug)
-
 def refinementStreams(tstart, tstop, logicalPath=None,
                       grb_ids=(), output_dir=_outputDir, debug=False,
                       streamId=None):

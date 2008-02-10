@@ -43,15 +43,15 @@ def _getTimeKeywords(infiles, extnum=1):
 
 def ft1merge(infiles, outfile):
     tstart, tstop = _getTimeKeywords(infiles)
-    fmerge['infiles'] = '"@' + _fileList(infiles) + '"'
+    fmerge['infiles'] = '@' + _fileList(infiles)
     fmerge['outfile'] = outfile
     fmerge['clobber'] = 'yes'
-    fmerge['columns'] = '" "'
-    fmerge['mextname'] = '" "'
-    fmerge['lastkey'] = '" "'
+    fmerge['columns'] = ' '
+    fmerge['mextname'] = ' '
+    fmerge['lastkey'] = ' '
     fmerge.run()
 
-    fmerge['infiles'] = '"@' + _fileList(infiles, 'GTI') + '"'
+    fmerge['infiles'] = '@' + _fileList(infiles, 'GTI')
     fmerge['outfile'] = 'ft1merge_gti.fits'
     fmerge.run()
 

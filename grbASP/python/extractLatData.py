@@ -89,9 +89,9 @@ if __name__ == '__main__':
     fmerge['infiles'] = '@Ft2FileList'
     fmerge['outfile'] = 'FT2_merged.fits'
     fmerge['clobber'] = 'yes'
-    fmerge['columns'] = '" "'
-    fmerge['mextname'] = '" "'
-    fmerge['lastkey'] = '" "'
+    fmerge['columns'] = ' '
+    fmerge['mextname'] = ' '
+    fmerge['lastkey'] = ' '
     fmerge.run()
 
     config = grbAspConfig.find(gcnNotice.start_time)

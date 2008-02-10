@@ -56,7 +56,7 @@ def ft1merge(infiles, outfile):
     fmerge.run()
 
     foo = pyfits.open(outfile)
-    gti = pyfits.open(fmerge['outfile'])
+    gti = pyfits.open(fmerge['outfile'].strip('"'))
     foo.append(gti['GTI'])
 
     try:
@@ -77,7 +77,7 @@ def ft1merge(infiles, outfile):
     fchecksum.run()
     
     try:
-        os.remove(fmerge['outfile'])
+        os.remove(fmerge['outfile'].strip('"')
     except OSError:
         pass
     try:

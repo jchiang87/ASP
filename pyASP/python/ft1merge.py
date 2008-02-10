@@ -77,7 +77,7 @@ def ft1merge(infiles, outfile):
     fchecksum.run()
     
     try:
-        os.remove(fmerge['outfile'].strip('"')
+        os.remove(fmerge['outfile'].strip('"'))
     except OSError:
         pass
     try:

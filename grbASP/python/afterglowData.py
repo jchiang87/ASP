@@ -58,9 +58,9 @@ def getData(time, ra, dec, srcName, ft1, duration=5*3600, radius=15,
     fmerge['infiles'] = '@Ft2FileList'
     fmerge['outfile'] = 'FT2_merged.fits'
     fmerge['clobber'] = 'yes'
-    fmerge['columns'] = '" "'
-    fmerge['mextname'] = '" "'
-    fmerge['lastkey'] = '" "'
+    fmerge['columns'] = ' '
+    fmerge['mextname'] = ' '
+    fmerge['lastkey'] = ' '
     fmerge.run()
 
     return srcModel, gtselect['outfile'], fmerge['outfile']

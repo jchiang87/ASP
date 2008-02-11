@@ -34,7 +34,8 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
         args = {'DownlinkId' : downlink,
                 'GRBROOTDIR' : grbroot_dir,
                 'GRBASPROOT' : _grbAspRoot,
-                'logicalPath' : '/DC2/Downlinks'}
+                'logicalPath' : '/DC2/Downlinks',
+                'ST_INST' : os.environ['ST_INST']}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_blind_search', args, stream=streamId)
@@ -51,7 +52,8 @@ def refinementStreams(tstart, tstop, logicalPath=None,
                 'GRBASPROOT' : _grbAspRoot,
                 'TSTART' : tstart,
                 'TSTOP' : tstop,
-                'logicalPath' : '/DC2/Downlinks'}
+                'logicalPath' : '/DC2/Downlinks',
+                'ST_INST' : os.environ['ST_INST']}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_refinement', args, stream=streamId)
@@ -75,7 +77,8 @@ def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False,
                 'GRB_parfile' : parfile,
                 'output_dir' : output_dir,
                 'GRBASPROOT' : _grbAspRoot,
-                'logicalPath' : '/DC2/Downlinks'}
+                'logicalPath' : '/DC2/Downlinks',
+                'ST_INST' : os.environ['ST_INST']}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_afterglow', args)

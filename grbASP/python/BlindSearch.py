@@ -7,7 +7,11 @@
 # $Header$
 #
 
-import numarray as num
+try:
+    import numarray as num
+except ImportError:
+    import numpy as num
+    
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
 

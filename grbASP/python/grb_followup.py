@@ -60,7 +60,8 @@ def launch_refinement_streams(output_dir):
                 'GRBASPROOT' : grbasproot,
                 'TSTART' : grb_met - dt,
                 'TSTOP' : grb_met + dt,
-                'logicalPath' : os.environ['logicalPath']}
+                'logicalPath' : os.environ['logicalPath'],
+                'ST_INST' : os.environ['ST_INST']}
         command = PipelineCommand('GRB_refinement_launcher', args)
         command.run()
 
@@ -75,7 +76,8 @@ def launch_afterglow_streams(output_dir):
                 'TSTART' : int(ag_time),
                 'TSTOP' : int(ag_time + dt),
                 'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),
-                'GRBASPROOT' : grbasproot}
+                'GRBASPROOT' : grbasproot,
+                'ST_INST' : os.environ['ST_INST']}
         command = PipelineCommand('GRB_afterglow_launcher', args)
         command.run()
 

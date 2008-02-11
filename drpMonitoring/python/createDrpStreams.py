@@ -12,10 +12,7 @@ from read_data import read_data
 from PipelineCommand import PipelineCommand, _outputDir, _asp_path
 
 # import this to ensure it is available for the various streams
-print "Inside createDrpStreams. Printing PYTHONPATH:"
-for item in sys.path:
-    print item
-#import pyASP
+import pyASP
 
 _version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
 _drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)

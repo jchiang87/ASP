@@ -45,9 +45,9 @@ fmerge = GtApp('fmerge')
 fmerge['infiles'] = '@Ft2FileList'
 fmerge['outfile'] = 'FT2_merged.fits'
 fmerge['clobber'] = 'yes'
-fmerge['columns'] = '" "'
-fmerge['mextname'] = '" "'
-fmerge['lastkey'] = '" "'
+fmerge['columns'] = ' '
+fmerge['mextname'] = ' '
+fmerge['lastkey'] = ' '
 fmerge.run()
 
 gtselect['infile'] = ft1Merged
@@ -66,7 +66,7 @@ else:
 # use fcopy to apply ft1_filter from par file
 #
 fcopy = GtApp('fcopy')
-fcopy['infile'] = '"%s[EVENTS][%s]"' % (gtselect['outfile'],pars['ft1_filter'])
+fcopy['infile'] = '%s[EVENTS][%s]' % (gtselect['outfile'],pars['ft1_filter'])
 fcopy['outfile'] = 'time_filtered_events.fits'
 try:
     os.remove(fcopy['outfile'])

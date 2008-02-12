@@ -63,9 +63,9 @@ gtmktime = GtApp('gtmktime')
 gtmktime['evfile'] = gtselect['outfile']
 gtmktime['outfile'] = name + '_events.fits'
 gtmktime['scfile'] = pars['ft2file']
-gtmktime['filter'] = '"angsep(RA_ZENITH,DEC_ZENITH,%f,%f)+%f<%i"' % (ra, dec, 
-                                                                     radius, 
-                                                                     zenmax)
+gtmktime['filter'] = 'angsep(RA_ZENITH,DEC_ZENITH,%f,%f)+%f<%i' % (ra, dec, 
+                                                                   radius, 
+                                                                   zenmax)
 if debug:
     print gtmktime.command()
 else:

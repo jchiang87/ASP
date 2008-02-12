@@ -115,7 +115,7 @@ if __name__ == '__main__':
     except KeyError:
         cuts = _pass5_cuts
     
-    fileStager = FileStager("GRBgrid_blind_search/%s" % ds_name)
+    fileStager = FileStager("GRBgrid_blind_search/%s" % ds_name, "INFO")
     outdir = os.path.join(os.environ["output_dir"], ds_name)
     try:
         os.mkdir(outdir)

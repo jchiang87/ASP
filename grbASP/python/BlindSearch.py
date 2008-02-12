@@ -189,7 +189,6 @@ if __name__ == '__main__':
     
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
-    #downlink_file = os.path.abspath(os.environ['DOWNLINKFILE'])
 
     downlink_files = [x.strip().strip('+') for x in open('Ft1FileList')]
 

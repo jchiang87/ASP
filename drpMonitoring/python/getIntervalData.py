@@ -11,6 +11,7 @@ TSTOP environment variables.
 
 import os, shutil
 from GtApp import GtApp
+from FitsNTuple import FitsNTuple
 from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
@@ -63,10 +64,22 @@ else:
     gtselect.run()
 
 #
-# use fcopy to apply ft1_filter from par file
+# Check to see if any events were selected by the time filter.
+#
+foo = FitsNTuple(gtselect['outfile'])
+if len(foo.TIME) == 0:
+    ft1_input = FitsNTuple(ft1Merged)
+    message = ("Zero events selected by the time filter.\n" +
+               "Input data time range: %i to %i\n" % (ft1_input.TIME[0], 
+                                                      ft1_input.TIME[-1]) +
+               "Time selection range: %i to %i\n" % (start_time, stop_time))
+    raise RuntimeError, message
+
+#
+# Use fcopy to apply ft1_filter from par file
 #
 fcopy = GtApp('fcopy')
-fcopy['infile'] = '%s[EVENTS][%s]' % (gtselect['outfile'],pars['ft1_filter'])
+fcopy['infile'] = '%s[EVENTS][%s]' % (gtselect['outfile'], pars['ft1_filter'])
 fcopy['outfile'] = 'time_filtered_events.fits'
 try:
     os.remove(fcopy['outfile'])

@@ -43,20 +43,20 @@ def _getTimeKeywords(infiles, extnum=1):
 
 def ft1merge(infiles, outfile):
     tstart, tstop = _getTimeKeywords(infiles)
-    fmerge['infiles'] = '@' + _fileList(infiles)
+    fmerge['infiles'] = '"@' + _fileList(infiles) + '"'
     fmerge['outfile'] = outfile
     fmerge['clobber'] = 'yes'
-    fmerge['columns'] = ' '
-    fmerge['mextname'] = ' '
-    fmerge['lastkey'] = ' '
+    fmerge['columns'] = '" "'
+    fmerge['mextname'] = '" "'
+    fmerge['lastkey'] = '" "'
     fmerge.run()
 
-    fmerge['infiles'] = '@' + _fileList(infiles, 'GTI')
+    fmerge['infiles'] = '"@' + _fileList(infiles, 'GTI') + '"'
     fmerge['outfile'] = 'ft1merge_gti.fits'
     fmerge.run()
 
     foo = pyfits.open(outfile)
-    gti = pyfits.open(fmerge['outfile'].strip('"'))
+    gti = pyfits.open(fmerge['outfile'])
     foo.append(gti['GTI'])
 
     try:
@@ -67,8 +67,6 @@ def ft1merge(infiles, outfile):
         pass
     foo[1].header['TSTART'] = tstart
     foo[1].header['TSTOP'] = tstop
-    foo[2].header['TSTART'] = tstart
-    foo[2].header['TSTOP'] = tstop
     foo.writeto(outfile, clobber=True)
 
     fchecksum['infile'] = outfile
@@ -77,7 +75,7 @@ def ft1merge(infiles, outfile):
     fchecksum.run()
     
     try:
-        os.remove(fmerge['outfile'].strip('"'))
+        os.remove(fmerge['outfile'])
     except OSError:
         pass
     try:

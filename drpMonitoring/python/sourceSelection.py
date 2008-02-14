@@ -87,7 +87,8 @@ class PgwaveSource(object):
         dec = xmlsrc.spatialModel.DEC.value
         return dist((self.ra, self.dec), (ra, dec))
 
-pg_srcs = [PgwaveSource(line) for line in open('cmap.list') if line.find("#")==-1]
+pg_srcs = [PgwaveSource(line) for line in open('cmap.list') 
+           if line.find("#")==-1]
 
 for src in pg_srcs:
     add = True
@@ -96,7 +97,7 @@ for src in pg_srcs:
             add = False
     if add:
         name = "pgw_%04i" % src.id
-        xmldef = minidom.parseString(_xml_template % (name, src.ra, src.dec)).getElementsByTagName('source')[0]
+        xmldef = minidom.parseString(_xml_template % (name, src.ra, src.dec)).getElementsByTagName('source')[0]                                     
         foo[name] = Source(xmldef)
 
 foo.writeTo('point_sources.xml')

@@ -10,6 +10,7 @@
 import os
 from xml.dom import minidom
 import celgal
+import drpDbAccess
 
 class MonitoredSource(object):
     def __init__(self, node):
@@ -52,20 +53,33 @@ class DrpSource(object):
         return "%s  %.3f  %.3f" % (self.name, self.radec[0], self.radec[1])
 
 class DrpSources(dict):
-    def __init__(self, infile):
+    def __init__(self, infile=None):
         dict.__init__(self)
-        for line in open(infile):
-            if line.find("#") != 0:
-                name, coord = line[1:].split('"')
-                ra, dec = coord.strip().split()
-                ra, dec = float(ra), float(dec)
-                self[name] = DrpSource(name, ra, dec)
+        if infile is not None:
+            for line in open(infile):
+                if line.find("#") != 0:
+                    name, coord = line[1:].split('"')
+                    ra, dec = coord.strip().split()
+                    ra, dec = float(ra), float(dec)
+                    self[name] = DrpSource(name, ra, dec)
     def select(self, ra, dec, radius):
         my_sources = []
         for source in self.keys():
             if self[source].dist((ra, dec)) < radius:
                 my_sources.append(source)
         return my_sources
+
+class MonitoredSourceFactory(object):
+    def __init__(self, srcTypes=('DRP', 'Blazar')):
+        self.ptsrcs = {}
+        for type in srcTypes:
+            self.ptsrcs[type] = drpDbAccess.findPointSources(0, 0, 180, type)
+    def create(self, srcType):
+        sourceList = DrpSources()
+        for item in self.ptsrcs[srcType]:
+            ra, dec, sep = self.ptsrcs[srcType][item]
+            sourceList[item] = DrpSource(item, ra, dec)
+        return sourceList        
 
 drpSources = DrpSources(os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
                                      'DRP_SourceList.txt'))

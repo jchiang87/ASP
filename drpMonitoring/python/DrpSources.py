@@ -81,7 +81,12 @@ class MonitoredSourceFactory(object):
             sourceList[item] = DrpSource(item, ra, dec)
         return sourceList        
 
-drpSources = DrpSources(os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
-                                     'DRP_SourceList.txt'))
-blazars = MonitoredSources(os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
-                                        'BM_only.xml'))
+#drpSources = DrpSources(os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
+#                                     'DRP_SourceList.txt'))
+#blazars = MonitoredSources(os.path.join(os.environ['DRPMONITORINGROOT'], 'data',
+#                                        'BM_only.xml'))
+
+srcFactory = MonitoredSourceFactory()
+
+drpSources = srcFactory.create('DRP')
+blazars = srcFactory.create('Blazar')

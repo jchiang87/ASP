@@ -8,13 +8,17 @@
 #
 import cx_Oracle
 
-_connect_args = ("glastgen", "glast06", "GLASTP")
+db_config = open('/afs/slac/g/glast/ground/PipelineConfig/ASP/db_config', 'r')
+lines = db_config.readlines()
+
+glastp = lines[0].strip().encode('rot13').split()
+glastdev = lines[1].strip().encode('rot13').split()
 
 def nullFunc(*args):
     return None
 
-def apply(sql, cursorFunc=nullFunc):
-    my_connection = cx_Oracle.connect(*_connect_args)
+def apply(sql, cursorFunc=nullFunc, connection=glastp):
+    my_connection = cx_Oracle.connect(*connection)
     cursor = my_connection.cursor()
     try:
         cursor.execute(sql)
@@ -29,7 +33,7 @@ def apply(sql, cursorFunc=nullFunc):
     my_connection.close()
     return results
 
-def getDbObjects(tablename):
+def getDbObjects(tablename, connection=glastp):
     """Return a list of entries for the specified db table"""
     sql = "SELECT * from %s" % tablename
     def cursorFunc(cursor):
@@ -38,4 +42,4 @@ def getDbObjects(tablename):
         for item in cursor:
             entries.append(dict(zip(cols, item)))
         return entries
-    return apply(sql, cursorFunc)
+    return apply(sql, cursorFunc, connection)

@@ -27,10 +27,17 @@ def find_intervals():
                     tstart = entry[2]
                     tstop = entry[2]
             return minInterval, tstart, tstop
-        first_intervals[frequency] = dbAccess.apply(sql, findFirstInterval)
+        first_intervals[frequency] = dbAccess.apply(sql, findFirstInterval,
+                                                    dbAccess.glastdev)
     return first_intervals
 
 if __name__ == '__main__':
+    _asp_path = os.environ['ASP_PATH']
+    _version = os.path.split(os.environ['ASPLAUNCHERROOT'])[-1]
+    _aspLauncherRoot = os.path.join(_asp_path, 'ASP', 'AspLauncher', _version)
+
+    aspDataDir = lambda x : os.path.join('/nfs/farm/g/glast/u33/ASP/OpsSim2', x)
+
     intervals = find_intervals()
     args = {'folder' : os.environ['folder'],
             'nDownlink' : int(os.environ['nDownlink'])
@@ -42,7 +49,12 @@ if __name__ == '__main__':
             'Daily_nMetStop' : intervals['Daily'][2],
             'Weekly_interval' : intervals['Weekly'][0],
             'Weekly_nMetStart' : intervals['Weekly'][1],
-            'Weekly_nMetStop' : intervals['Weekly'][2]}
+            'Weekly_nMetStop' : intervals['Weekly'][2],
+            'GRBOUTPUTDIR' : aspDataDir('GRB'),
+            'DRPOUTPUTDIR' : aspDataDir('DRP'),
+            'PGWAVEOUTPUTDIR' : aspDataDir('PGWAVE'),
+            'PIPELINESERVER' : 'PROD',
+            'ASPLAUNCHERROOT' : _aspLauncherRoot}
             
     launcher = PipelineCommand('AspLauncher', args)
     launcher.run()

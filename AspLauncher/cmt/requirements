@@ -5,5 +5,8 @@ version v0
 
 use AspPolicy v* ASP
 use pyASP v* ASP
+use grbASP v* ASP
+use drpMonitoring v* ASP
+use pgwave v* ASP
 
 apply_pattern wrapper_scripts

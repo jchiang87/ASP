@@ -1,8 +1,8 @@
 """
 @file aspLauncher.py
 
-@brief Check coverage of FT1/2 files for the desired time intervals and
-launch the ASP pipeline tasks corresponding to those intervals.
+@brief Find the time intervals that need to have ASP tasks launched by
+querying the ASP database tables.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -10,62 +10,39 @@ launch the ASP pipeline tasks corresponding to those intervals.
 # $Header$
 #
 import os
-import pyfits
-from FitsNTuple import FitsNTuple
-from getFitsData import getFitsData
+import databaseAccess as dbAccess
 
-def consolidate(intervals):
-    bar = [intervals[0]]
-    for xx in intervals[1:]:
-        if bar[-1][1] == xx[0]:
-            bar[-1][1] = xx[1]
-        else:
-            bar.append(xx)
-    return bar
-
-def check_ft2(gtis, ft2):
-    tbounds = []
-    for item in ft2:
-        foo = pyfits.open(item)
-        tbounds.append( (int(foo[0].header['TSTART']),
-                         int(foo[0].header['TSTOP'])) )
-    tbounds = consolidate(tbounds)
-    for tmin, tmax in zip(gtis.START, gtis.STOP):
-        covered = False
-        for tbound in tbounds:
-            if tbound[0] <= tmin and tmax <= tbound[1]:
-                covered = True
-        if not covered:
-            raise RuntimeError, "FT2 files do not cover the FT1 data"
-    return True
-
-def providesCoverage(tstart, tstop, min_frac=0.70, requireFt2=True):
-    ft1, ft2 = getFitsData()
-    gtis = FitsNTuple(ft1, 'GTI')
-    if requireFt2:
-        check_ft2(gtis, ft2)
-    if tstart >= min(gtis.START) and tstop <= max(gtis.STOP):
-        total = 0
-        for tmin, tmax in zip(gtis.START, gtis.STOP):
-            total += tmax - tmin
-        if total/(tstop - tstart) > min_frac:
-            return True
-    return False
+def find_intervals():
+    """Find the first interval for each frequency that has not had its
+    corresponding task launched"""
+    frequencies = ("SixHour", "Daily", "Weekly")
+    first_intervals = {}
+    for frequency in frequencies:
+        sql = "SELECT * from FREQUENCIES where FREQUENCY='%s' and TASK_LAUNCHED='F'" % frequency
+        def findFirstInterval(cursor):
+            minInterval = -1
+            for entry in cursor:
+                if entry[0] > minInterval:
+                    minInterval = entry[0]
+                    tstart = entry[2]
+                    tstop = entry[2]
+            return minInterval, tstart, tstop
+        first_intervals[frequency] = dbAccess.apply(sql, findFirstInterval)
+    return first_intervals
 
 if __name__ == '__main__':
-    #
-
-
-
-
-    import glob
-    print consolidate(([0, 10], [11., 20], [20., 30]))
-
-    ft1 = glob.glob('test[2]_events*.fits')
-    gtis = FitsNTuple(ft1, 'GTI')
-    print gtis.START, gtis.STOP
-    ft2 = ('test_scData_0000.fits', 'test2_scData_0000.fits')
-    print check_ft2(gtis, ft2)
-    
-    print providesCoverage()
-    
+    intervals = find_intervals()
+    args = {'folder' : os.environ['folder'],
+            'nDownlink' : int(os.environ['nDownlink'])
+            'SixHour_interval' : intervals['SixHour'][0],
+            'SixHour_nMetStart' : intervals['SixHour'][1],
+            'SixHour_nMetStop' : intervals['SixHour'][2],
+            'Daily_interval' : intervals['Daily'][0],
+            'Daily_nMetStart' : intervals['Daily'][1],
+            'Daily_nMetStop' : intervals['Daily'][2],
+            'Weekly_interval' : intervals['Weekly'][0],
+            'Weekly_nMetStart' : intervals['Weekly'][1],
+            'Weekly_nMetStop' : intervals['Weekly'][2]}
+            
+    launcher = PipelineCommand('AspLauncher', args)
+    launcher.run()

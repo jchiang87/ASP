@@ -26,6 +26,7 @@ def drpStreams(daynum=1, output_dir=_outputDir, startTime=_startTime,
     os.chdir(output_dir)
     args = {'OUTPUTDIR' : output_dir,
             'logicalPath' : '/DC2/Downlinks',
+            'interval' : daynum,
             'TSTART' : start_time,
             'TSTOP' : stop_time,
             'num_RoIs' : num_RoIs,

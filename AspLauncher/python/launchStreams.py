@@ -12,35 +12,70 @@ each one if the required data are available.
 #
 import os
 from checkLevelOneFiles import providesCoverage
+from PipelineCommand import PipelineCommand, _asp_path
 from createGrbStreams import blindSearchStreams
-from createDrpStreams import launch_drp
-from createPGwaveStream import launch_pgwvae
+
+_version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
+_drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
+
+def launch_drp(interval, tstart, tstop, folder, output_dir,
+               num_RoIs=30, debug=False):
+    os.chdir(output_dir)
+    args = {'OUTPUDIR' : output_dir,
+            'logicalPath' : folder,
+            'interval' : interval,
+            'TSTART' : tstart,
+            'TSTOP' : tstop,
+            'num_RoIs' : num_RoIs,
+            'DRPMONITORINGROOT' : _drpRoot}
+    command = PipelineCommand('DRP_monitoring', args)
+    command.run(debug=debug)
+
+_version = os.path.split(os.environ['PGWVAEROOT'])[-1]
+_pgwaveRoot = os.path.join(_asp_path, 'ASP', 'pgwave', _version)
+
+def launch_pgwave(interval, tstart, tstop, folder, output_dir, debug=False):
+    args = {'logicalPath' : folder,
+            'TSTART' : tstart,
+            'TSTOP' : tstop,
+            'output_dir' : output_dir,
+            'CATDIR' : '/nfs/farm/g/glast/u33/tosti/october/catdir',
+            'PGWAVEROOT' : _pgwaveRoot}
+    command = PipelineCommand('PGWave', args)
+    command.run(debug=debug)
 
 def get_interval(freq):
+    """Read the environment variables set by the AspLauncher task
+    for each frequency of source monitoring to get the start and
+    stop times and interval number.
+    """
     return (int(os.environ[freq + '_interval']), 
             int(os.environ[freq + '_nMetStart']), 
             int(os.environ[freq + '_nMetStop']))
 
-min_frac = float(os.environ['minimum_coverage'])
-folder = os.environ['folder']
+if __name__ == '__main__':
+    min_frac = float(os.environ['minimum_coverage'])
+    folder = os.environ['folder']
 
-nDownlink = int(os.environ['nDownlink'])
-blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder, 
-                   output_dir=os.environ['GRBOUTPUTDIR'])
+    nDownlink = int(os.environ['nDownlink'])
+    blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder, 
+                       output_dir=os.environ['GRBOUTPUTDIR'])
 
-interval, tstart, tstop = get_interval('SixHour')
-if providesCoverage(tstart, tstop, min_frac, 
-                    'Ft1FileList_6hr', 'Ft2FileList_6hr'):
-    launch_pgwave(tstart, tstop)
+    interval, tstart, tstop = get_interval('SixHour')
+    if providesCoverage(tstart, tstop, min_frac, 
+                        'Ft1FileList_6hr', 'Ft2FileList_6hr'):
+        output_dir = createSubDir(interval, 'SixHour',
+                                  os.environ['PGWAVEOUTPUTDIR'])
+        launch_pgwave(interval, tstart, tstop, folder, output_dir)
 
-interval, tstart, tstop = get_interval('Daily')
-if providesCoverage(tstart, tstop, min_frac, 
-                    'Ft1FileList_day', 'Ft2FileList_day'):
-    launch_drp(interval, tstart, tstop, folder, 
-               output_dir=os.environ['DRPOUTPUTDIR'])
+    interval, tstart, tstop = get_interval('Daily')
+    if providesCoverage(tstart, tstop, min_frac, 
+                        'Ft1FileList_day', 'Ft2FileList_day'):
+        output_dir = createSubDir(interval, 'Daily', os.environ['DRPOUTPUTDIR'])
+        launch_drp(interval, tstart, tstop, folder, output_dir)
 
-interval, tstart, tstop = get_interval('Weekly')
-if providesCoverage(tstart, tstop, min_frac, 
-                    'Ft1FileList_week', 'Ft2FileList_week'):
-    launch_drp(interval, tstart, tstop, folder, 
-               output_dir=os.environ['DRPOUTPUTDIR'])
+    interval, tstart, tstop = get_interval('Weekly')
+    if providesCoverage(tstart, tstop, min_frac, 
+                        'Ft1FileList_week', 'Ft2FileList_week'):
+        output_dir = createSubDir(interval, 'Weekly',os.environ['DRPOUTPUTDIR'])
+        launch_drp(interval, tstart, tstop, folder, output_dir)

@@ -71,11 +71,13 @@ if __name__ == '__main__':
     interval, tstart, tstop = get_interval('Daily')
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList_day', 'Ft2FileList_day'):
-        output_dir = createSubDir(interval, 'Daily', os.environ['DRPOUTPUTDIR'])
+        output_dir = createSubDir(interval, 'Daily',
+                                  os.environ['DRPOUTPUTDIR'])
         launch_drp(interval, tstart, tstop, folder, output_dir)
 
     interval, tstart, tstop = get_interval('Weekly')
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList_week', 'Ft2FileList_week'):
-        output_dir = createSubDir(interval, 'Weekly',os.environ['DRPOUTPUTDIR'])
+        output_dir = createSubDir(interval, 'Weekly',
+                                  os.environ['DRPOUTPUTDIR'])
         launch_drp(interval, tstart, tstop, folder, output_dir)

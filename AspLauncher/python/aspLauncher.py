@@ -1,8 +1,14 @@
 """
 @file aspLauncher.py
 
-@brief Find the time intervals that need to have ASP tasks launched by
-querying the ASP database tables.
+@brief This script queries the TIMEINTERVALS db table and calculates the
+next set of intervals for which the associated ASP tasks are launched.
+This is intended to be launched as a subprocess of L1Proc.
+Only two environment variables need to be provided:
+
+nDownlink = Downlink ID of the current L1Proc instance
+folder = Logical folder in the dataCatalog that should be queried for
+         the FT1/2 data
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -48,7 +54,7 @@ if __name__ == '__main__':
     _version = os.path.split(os.environ['ASPLAUNCHERROOT'])[-1]
     _aspLauncherRoot = os.path.join(_asp_path, 'ASP', 'AspLauncher', _version)
 
-    aspDataDir = lambda x : os.path.join('/nfs/farm/g/glast/u33/ASP/OpsSim2', x)
+    aspOutput = lambda x : os.path.join('/nfs/farm/g/glast/u33/ASP/OpsSim2', x)
 
     intervals = find_intervals()
     args = {'folder' : os.environ['folder'],
@@ -62,9 +68,9 @@ if __name__ == '__main__':
             'Weekly_interval' : intervals['weekly'][0],
             'Weekly_nMetStart' : intervals['weekly'][1],
             'Weekly_nMetStop' : intervals['weekly'][2],
-            'GRBOUTPUTDIR' : aspDataDir('GRB'),
-            'DRPOUTPUTDIR' : aspDataDir('DRP'),
-            'PGWAVEOUTPUTDIR' : aspDataDir('PGWAVE'),
+            'GRBOUTPUTDIR' : aspOutput('GRB'),
+            'DRPOUTPUTDIR' : aspOutput('DRP'),
+            'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
             'PIPELINESERVER' : 'PROD',
             'ASPLAUNCHERROOT' : _aspLauncherRoot}
 

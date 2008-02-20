@@ -16,6 +16,26 @@ from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
 import drpDbAccess
+from drpDbAccess import databaseAccess as dbAccess
+
+def create_parfile(tstart, parfilename='drp_pars.txt'):
+    version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
+    infile = os.path.join(os.environ['ASP_PATH'], 'drpMonitoring', version,
+                          'data', parfilename)
+    shutil.copy(infile, 'drp_pars.txt')
+    sql = "select * from SOURCEMONITORINGCONFIG"
+    def findConfig(cursor):
+        for entry in cursor:
+            startdate, enddate = entry[1], entry[2]
+            if startdate <= tstart and tstart <= enddate:
+                return entry[3]
+        message = 'SourceMonitoring configuration not found for %i MET' % tstart
+        raise RuntimeError, message
+    irfs = dbAccess.apply(sql, findConfig, dbAccess.glastdev)
+    pars = Parfile(parfilename)
+    pars['rspfunc'] = irfs
+    pars.write()
+    return pars
 
 debug = False
 
@@ -24,11 +44,10 @@ ft1, ft2 = getFitsData()
 output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)
 
-parfile_basename = 'drp_pars.txt'
-pars = Parfile(parfile_basename)
-
 start_time = float(os.environ['TSTART'])
 stop_time = float(os.environ['TSTOP'])
+
+pars = create_parfile(start_time)
 
 gtselect = GtApp('gtselect')
 

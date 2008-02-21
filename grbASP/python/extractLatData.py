@@ -90,7 +90,7 @@ if __name__ == '__main__':
     ft1 = FileStager.infiles(ft1)
     ft1merge(ft1, ft1Merged)
 
-    ft2 = FileStager(ft2)
+    ft2 = fileStager.inputs(ft2)
     
     ft2list = open('ft2_file_list', 'w')
     for item in ft2:

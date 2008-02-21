@@ -31,7 +31,7 @@ def launch_drp(interval, tstart, tstop, folder, output_dir,
     command = PipelineCommand('DRP_monitoring', args)
     command.run(debug=debug)
 
-_version = os.path.split(os.environ['PGWVAEROOT'])[-1]
+_version = os.path.split(os.environ['PGWAVEROOT'])[-1]
 _pgwaveRoot = os.path.join(_asp_path, 'ASP', 'pgwave', _version)
 
 def launch_pgwave(interval, tstart, tstop, folder, output_dir, debug=False):

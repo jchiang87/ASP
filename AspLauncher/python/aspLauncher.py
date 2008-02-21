@@ -75,6 +75,7 @@ if __name__ == '__main__':
             'Weekly_interval' : intervals['weekly'][0],
             'Weekly_nMetStart' : intervals['weekly'][1],
             'Weekly_nMetStop' : intervals['weekly'][2],
+            'OUTPUTDIR' : os.environ['OUTPUTDIR'],
             'GRBOUTPUTDIR' : aspOutput('GRB'),
             'DRPOUTPUTDIR' : aspOutput('DRP'),
             'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),

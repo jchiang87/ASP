@@ -35,9 +35,9 @@
       <![CDATA[
         def query(outfile, path, TSTART, TSTOP):
             output = pipeline.createFile(outfile)
-            opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
-            opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
-            opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
+            opt1='(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)'%locals()
+            opt2='(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)'%locals()
+            opt3='(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
             query = ('DataType == \"%s\" && (%s || %s || %s)' 
                      % (path, opt1, opt2, opt3))
             datasetList = datacatalog.getDatasets(folder+'/*', query)

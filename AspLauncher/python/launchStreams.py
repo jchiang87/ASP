@@ -71,7 +71,8 @@ if __name__ == '__main__':
     folder = os.environ['folder']
 
     nDownlink = int(os.environ['nDownlink'])
-    blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder, 
+    blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder,
+                       grbroot_dir=os.environ['GRBOUTPUTDIR'],
                        output_dir=os.environ['GRBOUTPUTDIR'])
 
     interval, tstart, tstop = get_interval('SixHour')

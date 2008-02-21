@@ -4,11 +4,11 @@
 @brief This script queries the TIMEINTERVALS db table and calculates the
 next set of intervals for which the associated ASP tasks are launched.
 This is intended to be launched as a subprocess of L1Proc.
-Only two environment variables need to be provided:
+
+Two environment variables need to be provided:
 
 nDownlink = Downlink ID of the current L1Proc instance
-folder = Logical folder in the dataCatalog that should be queried for
-         the FT1/2 data
+folder = Logical folder in the dataCatalog that contains the FT1/2 data
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -38,8 +38,6 @@ def find_intervals():
         def findLastInterval(cursor):
             lastInterval = -1
             for entry in cursor:
-                print len(entry)
-                print entry
                 if entry[0] > lastInterval:
                     lastInterval = entry[0]
                     tstart = entry[2]

@@ -51,6 +51,7 @@ def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',
     fraction of the elapsed time that is covered by the GTIs.  Return
     False if the desired minumum fractional coverage is not
     achieved."""
+    print "providesCoverage: cwd = ", os.path.abspath(os.curdir)
     ft1, ft2 = getFitsData(ft1List, ft2List)
     gtis = FitsNTuple(ft1, 'GTI')
     check_ft2(gtis, ft2)

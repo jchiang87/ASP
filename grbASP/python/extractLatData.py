@@ -79,7 +79,8 @@ if __name__ == '__main__':
     from GrbAspConfig import grbAspConfig
     from FileStager import FileStager
 
-    fileStager = FileStager('GRB_refinement/extractLatData')
+    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
+    fileStager = FileStager('GRB_refinement/%s' % process_id)
 
     ft1, ft2 = getFitsData()
     os.chdir(os.environ['OUTPUTDIR'])

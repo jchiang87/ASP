@@ -42,3 +42,8 @@ class FileStager(object):
         if rc != 0:
             message = "Unknown error occurred in GPL.stageFiles.finish(...)"
             raise FileStagerError, message
+    def infiles(self, infiles):
+        filelist = []
+        for item in infiles:
+            filelist.append(self.input(item))
+        return filelist

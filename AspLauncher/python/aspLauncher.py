@@ -55,7 +55,7 @@ if __name__ == '__main__':
     aspOutput = lambda x : os.path.join('/nfs/farm/g/glast/u33/ASP/OpsSim2', x)
 
     os.environ['folder'] = '/Data/OpsSim2/Level1'
-    os.environ['nDownlink'] = 80219002
+    os.environ['nDownlink'] = '80219002'
 
     intervals = find_intervals()
     args = {'folder' : os.environ['folder'],
@@ -78,5 +78,5 @@ if __name__ == '__main__':
     for item in args:
         print item, args[item]
     
-#    launcher = PipelineCommand('AspLauncher', args)
-#    launcher.run()
+    launcher = PipelineCommand('AspLauncher', args)
+    launcher.run()

@@ -186,11 +186,17 @@ if __name__ == '__main__':
     from GrbAspConfig import grbAspConfig
     import grb_followup
     import dbAccess
+    from FileStager import FileStager
+    from getFitsData import filter_versions
     
+    fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'])
+
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
 
-    downlink_files = [x.strip().strip('+') for x in open('Ft1FileList')]
+    ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
+    ft1_files = filter_versions(ft1_files)
+    downlink_files = fileStager.infiles(ft1_files)
 
     os.chdir(grbroot_dir)  # test to see if this directory exists
     os.chdir(output_dir)   # move to the working directory

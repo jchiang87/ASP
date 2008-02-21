@@ -77,22 +77,35 @@ if __name__ == '__main__':
     from getFitsData import getFitsData
     from ft1merge import ft1merge
     from GrbAspConfig import grbAspConfig
+    from FileStager import FileStager
+
+    fileStager = FileStager('GRB_refinement/extractLatData')
 
     ft1, ft2 = getFitsData()
     os.chdir(os.environ['OUTPUTDIR'])
     gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
 
     ft1Merged = 'FT1_merged.fits'
+    ft1 = FileStager.infiles(ft1)
     ft1merge(ft1, ft1Merged)
 
+    ft2 = FileStager(ft2)
+    
+    ft2list = open('ft2_file_list', 'w')
+    for item in ft2:
+        ft2list.write("%s\n" % item)
+    ft2list.close()
+
     fmerge = GtApp('fmerge')
-    fmerge['infiles'] = '@Ft2FileList'
+    fmerge['infiles'] = '@ft2_file_list'
     fmerge['outfile'] = 'FT2_merged.fits'
     fmerge['clobber'] = 'yes'
     fmerge['columns'] = ' '
     fmerge['mextname'] = ' '
     fmerge['lastkey'] = ' '
     fmerge.run()
+
+    os.remove('ft2_file_list')
 
     config = grbAspConfig.find(gcnNotice.start_time)
     duration = config.TIMEWINDOW

@@ -103,7 +103,6 @@ if __name__ == '__main__':
     from GcnNotice import GcnNotice
     from parfile_parser import Parfile
     import dbAccess
-#    from createGrbStreams import afterglowStreams
     from GrbAspConfig import grbAspConfig
     import grb_followup
 
@@ -145,9 +144,3 @@ if __name__ == '__main__':
     pars.write()
 
     os.system('chmod 777 *')
-
-#    dirs = output_dir.split('/')[:-1]
-#    output_dir = '/' + os.path.join(*dirs)
-#    grb_followup.launch_afterglow_streams(output_dir)
-#    afterglowStreams((os.path.join(output_dir, parfile), ),
-#                     logicalPath=os.environ['logicalPath'])

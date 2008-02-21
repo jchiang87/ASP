@@ -22,7 +22,7 @@
    <process name="catalogQuery">
      <script><![CDATA[
        query = 'DataType == \"FT1\" && nDownlink == %i' % DownlinkId
-       print "dataCatlaog query: ", query
+       print "dataCatalog query: ", query
        datasetList = datacatalog.getDatasets(logicalPath + "/*", query)
        output = pipeline.createFile('Ft1FileList')
        datasetList.writeToFile(output, 1)

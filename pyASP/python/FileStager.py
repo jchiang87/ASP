@@ -25,10 +25,12 @@ class FileStagerError(IOError):
     "Unknown error occurred in GPL.stageFiles.finish(...)"
 
 class FileStager(object):
-    def __init__(self, stagingArea, messageLevel="CRITICAL"):
+    def __init__(self, stageName, messageLevel="CRITICAL", stageArea=None,
+                 cleanup=True):
         level = eval("logging." + messageLevel)
         log.setLevel(level)
-        self.stager = GPL.stageFiles.StageSet(stagingArea)
+        self.stager = GPL.stageFiles.StageSet(stageName, stageArea=stageArea)
+        self.cleanup = cleanup
     def in_out(self, infile, outfile):
         if infile == outfile:
             raise RuntimeError, "Cannot have identical input & output filenames"
@@ -38,6 +40,8 @@ class FileStager(object):
     def output(self, outfile):
         return self.stager.stageOut(outfile)
     def __del__(self):
+        if not self.cleanup:
+            return
         rc = self.stager.finish("alldone")
         if rc != 0:
             message = "Unknown error occurred in GPL.stageFiles.finish(...)"

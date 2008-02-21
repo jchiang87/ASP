@@ -24,7 +24,7 @@ def filter_versions(fitsfiles):
     basenames.sort()
     for item in basenames:
         fullpath = os.path.join(prefixes[item][0], 
-                                '_'.join((item, prefixes[item][1])))
+                                '_'.join((item, 'v'+prefixes[item][1])))
         outfiles.append(fullpath)
     return outfiles
 

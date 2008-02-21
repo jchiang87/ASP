@@ -29,6 +29,8 @@ def consolidate(intervals):
 def check_ft2(gtis, ft2):
     """Ensure that the GTIs are contained within contiguous intervals
     covered by the FT2 files."""
+    if not ft2:       # an empty set of files cannot cover the gtis
+        return False
     tbounds = []
     for item in ft2:
         foo = pyfits.open(item)

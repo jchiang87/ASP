@@ -8,7 +8,7 @@
 #
 
 import bisect
-import numarray as num
+import numpy as num
 from FitsNTuple import FitsNTuple
 from pyIrfLoader import SkyDir
 

@@ -6,7 +6,7 @@
 # $Header$
 #
 
-import numarray as num
+import numpy as num
 from FitsNTuple import FitsNTuple
 from BayesBlocks import BayesBlocks
 from GtApp import GtApp

@@ -6,7 +6,7 @@
 # $Header$
 #
 
-import numarray as num
+import numpy as num
 import pyASP
 
 _LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'

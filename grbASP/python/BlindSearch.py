@@ -7,10 +7,7 @@
 # $Header$
 #
 
-try:
-    import numarray as num
-except ImportError:
-    import numpy as num
+import numpy as num
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
@@ -125,8 +122,9 @@ class BlindSearch(object):
         events = self.events
         grb_dirs = []
         for tpeak, ll in zip(self.tpeaks, self.ll):
-            imin = min(num.where(events.TIME > tpeak-50)[0])
-            imax = max(num.where(events.TIME < tpeak+50)[0])
+            time = num.array(events.TIME)
+            imin = min(num.where(time > tpeak-50)[0])
+            imax = max(num.where(time < tpeak+50)[0])
             imin, imax = self._temper(imin, imax)
             try:
                 results = self.clusterAlg.processEvents(convert(events,
@@ -176,7 +174,9 @@ class PackagedEvents(object):
     def __call__(self, imin, imax):
         foo = Foo()
         for name in self.events.names:
-            foo.__dict__[name] = self.events.__dict__[name][imin:imax]
+        # Why do we need to convert these to a list for numpy???? There
+        # is bad interaction with the SWIG wrapper for Event.
+            foo.__dict__[name] = self.events.__dict__[name][imin:imax].tolist()
         return foo
 
 if __name__ == '__main__':
@@ -189,13 +189,18 @@ if __name__ == '__main__':
     from FileStager import FileStager
     from getFitsData import filter_versions
     
-    fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'])
+    fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'],
+                            stageArea='/nfs/farm/g/glast/u33/ASP/OpsSim2/GRB',
+                            cleanup=False)
 
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
     output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
     ft1_files = filter_versions(ft1_files)
+    print "staging files:"
+    for item in ft1_files:
+        print item
     downlink_files = fileStager.infiles(ft1_files)
 
     os.chdir(grbroot_dir)  # test to see if this directory exists

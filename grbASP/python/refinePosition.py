@@ -7,7 +7,7 @@
 # $Header$
 #
 import os
-import numarray as num
+import numpy as num
 from FitsNTuple import FitsNTuple
 from GcnNotice import GcnNotice
 from extractLatData import extractLatData

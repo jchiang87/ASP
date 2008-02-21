@@ -32,7 +32,8 @@ class GrbAspConfig(object):
                 entries.append(GrbAspConfigEntry(items))
             return entries
         self.entries = apply(sql, cursorFunc)
-    def find(self, met):
+    def find(self, met_arg):
+        met = int(met_arg)
         for entry in self.entries:
             if entry.STARTDATE <= met and entry.ENDDATE >= met:
                 return entry

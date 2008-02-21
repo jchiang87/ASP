@@ -10,7 +10,7 @@ an XML model file.
 #
 
 import sys, os
-import numarray as num
+import numpy as num
 from GtApp import GtApp
 import readXml
 import FuncFactory as funcFactory

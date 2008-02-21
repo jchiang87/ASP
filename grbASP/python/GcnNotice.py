@@ -8,7 +8,7 @@
 #
 
 import os
-import numarray as num
+import numpy as num
 import pyASP
 from GcnPacket import GcnPacket
 from dbAccess import readGcnNotices, readGrb, cx_Oracle

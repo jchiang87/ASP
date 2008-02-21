@@ -8,7 +8,7 @@
 #
 
 import sys
-import numarray as num
+import numpy as num
 from BlindSearch import *
 from grbASP import RootNTupleBase
 
@@ -27,7 +27,7 @@ class RootNTuple(object):
         for key in columns:
             self.__dict__[key] = num.array(rt[columns[key]])
         self.names = columns.keys()
-        self.EVENT_CLASS = num.array(self.EVENT_CLASS, type=num.Int)
+        self.EVENT_CLASS = num.array(self.EVENT_CLASS, dtype=num.int)
 
 _pass5_cuts = "((GltWord&10)>0) && ((GltWord&7)!=3) && (FilterStatus_HI==0) && (CTBClassLevel>0) && (CTBBestEnergyProb>0.1) && (CTBCORE>0.1) && (CTBBestEnergy>10) && (CTBBestEnergyRatio<5)"
 

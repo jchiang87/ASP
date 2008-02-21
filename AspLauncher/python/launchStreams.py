@@ -53,6 +53,19 @@ def get_interval(freq):
             int(os.environ[freq + '_nMetStart']), 
             int(os.environ[freq + '_nMetStop']))
 
+def createSubDir(interval, frequency, root_output_dir):
+    subdir = "%08i" % interval
+    os.chdir(root_output_dir)
+    newdir = os.path.join(root_output_dir, frequency)
+    if not os.path.isdir(newdir):
+        os.mkdir(newdir)
+        os.system('chmod o+w %s ' % newdir)
+    newdir = os.path.join(root_output_dir, frequency, subdir)
+    if not os.path.isdir(newdir):
+        os.mkdir(newdir)
+        os.system('chmod o+w %s ' % newdir)
+    return newdir    
+
 if __name__ == '__main__':
     min_frac = float(os.environ['minimum_coverage'])
     folder = os.environ['folder']

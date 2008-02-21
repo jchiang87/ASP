@@ -56,6 +56,9 @@ if __name__ == '__main__':
 
     aspOutput = lambda x : os.path.join('/nfs/farm/g/glast/u33/ASP/OpsSim2', x)
 
+    os.environ['folder'] = '/Data/OpsSim2/Level1'
+    os.environ['nDownlink'] = 80219002
+
     intervals = find_intervals()
     args = {'folder' : os.environ['folder'],
             'nDownlink' : int(os.environ['nDownlink']),

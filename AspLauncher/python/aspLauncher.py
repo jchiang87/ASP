@@ -16,7 +16,6 @@ folder = Logical folder in the dataCatalog that contains the FT1/2 data
 # $Header$
 #
 import os
-from PipelineCommand import PipelineCommand
 import databaseAccess as dbAccess
 
 def find_frequencies():
@@ -53,7 +52,12 @@ if __name__ == '__main__':
     _version = os.path.split(os.environ['ASPLAUNCHERROOT'])[-1]
     _aspLauncherRoot = os.path.join(_asp_path, 'ASP', 'AspLauncher', _version)
 
-    aspOutput = lambda x : os.path.join('/nfs/farm/g/glast/u33/ASP/OpsSim2', x)
+    _output_dir = '/nfs/farm/g/glast/u33/ASP/OpsSim2'
+    # @todo see if this env var is really needed for PipelineCommand
+    os.environ['OUTPUTDIR'] = _output_dir
+    from PipelineCommand import PipelineCommand
+
+    aspOutput = lambda x : os.path.join(_output_dir, x)
 
     os.environ['folder'] = '/Data/OpsSim2/Level1'
     os.environ['nDownlink'] = '80219002'

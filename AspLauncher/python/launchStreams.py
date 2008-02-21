@@ -70,11 +70,14 @@ if __name__ == '__main__':
     min_frac = float(os.environ['minimum_coverage'])
     folder = os.environ['folder']
 
+    currentDir = os.path.abspath(os.curdir)
+
     nDownlink = int(os.environ['nDownlink'])
     blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder,
                        grbroot_dir=os.environ['GRBOUTPUTDIR'],
                        output_dir=os.environ['GRBOUTPUTDIR'])
 
+    os.chdir(currentDir)
     interval, tstart, tstop = get_interval('SixHour')
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList_6hr', 'Ft2FileList_6hr'):
@@ -82,6 +85,7 @@ if __name__ == '__main__':
                                   os.environ['PGWAVEOUTPUTDIR'])
         launch_pgwave(interval, tstart, tstop, folder, output_dir)
 
+    os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Daily')
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList_day', 'Ft2FileList_day'):
@@ -89,6 +93,7 @@ if __name__ == '__main__':
                                   os.environ['DRPOUTPUTDIR'])
         launch_drp(interval, tstart, tstop, folder, output_dir)
 
+    os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Weekly')
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList_week', 'Ft2FileList_week'):

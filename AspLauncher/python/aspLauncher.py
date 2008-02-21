@@ -16,6 +16,7 @@ folder = Logical folder in the dataCatalog that contains the FT1/2 data
 # $Header$
 #
 import os
+from PipelineCommand import PipelineCommand
 import databaseAccess as dbAccess
 
 def find_frequencies():

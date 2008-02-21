@@ -53,6 +53,7 @@ if __name__ == '__main__':
     _aspLauncherRoot = os.path.join(_asp_path, 'ASP', 'AspLauncher', _version)
 
     _output_dir = '/nfs/farm/g/glast/u33/ASP/OpsSim2'
+
     # @todo see if this env var is really needed for PipelineCommand
     os.environ['OUTPUTDIR'] = _output_dir
     from PipelineCommand import PipelineCommand

@@ -23,6 +23,7 @@
     <prerequisite name="Weekly_interval" type="integer"/>
     <prerequisite name="Weekly_nMetStart" type="integer"/>
     <prerequisite name="Weekly_nMetStop" type="integer"/>
+    <prerequisite name="OUTPUTDIR" type="string"/>
     <prerequisite name="GRBOUTPUTDIR" type="string"/>
     <prerequisite name="DRPOUTPUTDIR" type="string"/>
     <prerequisite name="PGWAVEOUTPUTDIR" type="string"/>

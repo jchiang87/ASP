@@ -21,7 +21,7 @@ _drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
 def launch_drp(interval, tstart, tstop, folder, output_dir,
                num_RoIs=30, debug=False):
     os.chdir(output_dir)
-    args = {'OUTPUDIR' : output_dir,
+    args = {'OUTPUTDIR' : output_dir,
             'logicalPath' : folder,
             'interval' : interval,
             'TSTART' : tstart,
@@ -38,7 +38,7 @@ def launch_pgwave(interval, tstart, tstop, folder, output_dir, debug=False):
     args = {'logicalPath' : folder,
             'TSTART' : tstart,
             'TSTOP' : tstop,
-            'output_dir' : output_dir,
+            'OUTPUTDIR' : output_dir,
             'CATDIR' : '/nfs/farm/g/glast/u33/tosti/october/catdir',
             'PGWAVEROOT' : _pgwaveRoot}
     command = PipelineCommand('PGWave', args)

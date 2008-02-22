@@ -11,7 +11,7 @@ import os
 import glob
 import time
 from parfile_parser import Parfile
-from PipelineCommand import PipelineCommand, _outputDir, _asp_path
+from PipelineCommand import PipelineCommand, _asp_path
 
 # import these to ensure they are available for the various streams
 import grbASP
@@ -22,8 +22,7 @@ _version = os.path.split(os.environ['GRBASPROOT'])[-1]
 _grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
-                       output_dir=_outputDir, debug=False, streamId=None):
-    os.chdir(output_dir)
+                       debug=False, streamId=None):
     if downlinks is None:
         raise ValueError, "No downlink IDs specified"
     if grbroot_dir is None:
@@ -42,9 +41,8 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
         command.run(debug=debug)
 
 def refinementStreams(tstart, tstop, logicalPath=None,
-                      grb_ids=(), output_dir=_outputDir, debug=False,
+                      grb_ids=(), output_dir=None, debug=False,
                       streamId=None):
-    os.chdir(output_dir)
     for grb_id in grb_ids:
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id, 
@@ -59,7 +57,7 @@ def refinementStreams(tstart, tstop, logicalPath=None,
         command = PipelineCommand('GRB_refinement', args, stream=streamId)
         command.run(debug=debug)
 
-def afterglowStreams(parfiles=None, output_dir=_outputDir, debug=False,
+def afterglowStreams(parfiles=None, output_dir=None, debug=False,
                      logicalPath=None):
     os.chdir(output_dir)
     if parfiles is None:

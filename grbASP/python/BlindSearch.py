@@ -6,7 +6,6 @@
 #
 # $Header$
 #
-
 import numpy as num
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
@@ -194,7 +193,6 @@ if __name__ == '__main__':
                             cleanup=False)
 
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
-    output_dir = os.path.abspath(os.environ['OUTPUTDIR'])
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
     ft1_files = filter_versions(ft1_files)
@@ -203,8 +201,7 @@ if __name__ == '__main__':
         print item
     downlink_files = fileStager.infiles(ft1_files)
 
-    os.chdir(grbroot_dir)  # test to see if this directory exists
-    os.chdir(output_dir)   # move to the working directory
+    os.chdir(grbroot_dir)  # move to the working directory
 
     raw_events = FitsNTuple(downlink_files)
     print "Number of events read: ", len(raw_events.TIME)
@@ -256,4 +253,4 @@ if __name__ == '__main__':
             os.chmod(outfile, 0666)
             print grb_dir.ra(), grb_dir.dec(), tpeak
         
-    grb_followup.handle_unprocessed_events(output_dir)
+    grb_followup.handle_unprocessed_events(grbroot_dir)

@@ -28,14 +28,15 @@ def filter_versions(fitsfiles):
         outfiles.append(fullpath)
     return outfiles
 
-def getFileList(filelist):
-    output_dir = os.environ['OUTPUTDIR']
-    shutil.copy(filelist, os.path.join(output_dir, filelist))
+def getFileList(filelist, copylist=True):
+    if copylist:
+        output_dir = os.environ['OUTPUTDIR']
+        shutil.copy(filelist, os.path.join(output_dir, filelist))
     fitsfiles = []
     for line in open(filelist):
         if os.path.isfile(line.strip().strip('+')):    # file exists
             fitsfiles.append(line.strip().strip('+'))
     return filter_versions(fitsfiles)
 
-def getFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList'):
-    return getFileList(ft1list), getFileList(ft2list)
+def getFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList', copylist=True):
+    return getFileList(ft1list, copylist), getFileList(ft2list, copylist)

@@ -74,8 +74,7 @@ if __name__ == '__main__':
 
     nDownlink = int(os.environ['nDownlink'])
     blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder,
-                       grbroot_dir=os.environ['GRBOUTPUTDIR'],
-                       output_dir=os.environ['GRBOUTPUTDIR'])
+                       grbroot_dir=os.environ['GRBOUTPUTDIR'])
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('SixHour')

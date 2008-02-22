@@ -52,11 +52,13 @@ if __name__ == '__main__':
     _version = os.path.split(os.environ['ASPLAUNCHERROOT'])[-1]
     _aspLauncherRoot = os.path.join(_asp_path, 'ASP', 'AspLauncher', _version)
 
-    _output_dir = '/nfs/farm/g/glast/u33/ASP/OpsSim2'
-
-    # @todo see if this env var is really needed for PipelineCommand
-    os.environ['OUTPUTDIR'] = _output_dir
     from PipelineCommand import PipelineCommand
+
+    #
+    # Standard output directory for ASP results.  Will this be
+    # replaced by a symlink as proposed?
+    #
+    _output_dir = '/nfs/farm/g/glast/u33/ASP/OpsSim2'
 
     aspOutput = lambda x : os.path.join(_output_dir, x)
 
@@ -75,7 +77,6 @@ if __name__ == '__main__':
             'Weekly_interval' : intervals['weekly'][0],
             'Weekly_nMetStart' : intervals['weekly'][1],
             'Weekly_nMetStop' : intervals['weekly'][2],
-            'OUTPUTDIR' : os.environ['OUTPUTDIR'],
             'GRBOUTPUTDIR' : aspOutput('GRB'),
             'DRPOUTPUTDIR' : aspOutput('DRP'),
             'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),

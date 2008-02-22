@@ -30,7 +30,7 @@ def check_ft2(gtis, ft2):
     """Ensure that the GTIs are contained within contiguous intervals
     covered by the FT2 files."""
     if not ft2:       # an empty set of files cannot cover the gtis
-        return False
+        raise RuntimeError, "FT2 file list is empty"
     tbounds = []
     for item in ft2:
         foo = pyfits.open(item)
@@ -45,7 +45,6 @@ def check_ft2(gtis, ft2):
                 covered = True
         if not covered:
             raise RuntimeError, "FT2 files do not cover the FT1 data"
-    return True
 
 def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',
                      ft2List='Ft1FileList'):
@@ -54,7 +53,7 @@ def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',
     False if the desired minumum fractional coverage is not
     achieved."""
     print "providesCoverage: cwd = ", os.path.abspath(os.curdir)
-    ft1, ft2 = getFitsData(ft1List, ft2List)
+    ft1, ft2 = getFitsData(ft1List, ft2List, copylist=False)
     gtis = FitsNTuple(ft1, 'GTI')
     check_ft2(gtis, ft2)
     if tstart >= min(gtis.START) and tstop <= max(gtis.STOP):

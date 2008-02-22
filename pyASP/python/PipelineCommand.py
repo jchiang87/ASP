@@ -15,14 +15,14 @@ _bindir = os.environ['BINDIR']
 _st_inst = os.environ['ST_INST']
 _asp_path = os.environ['ASP_PATH']
 _pipelineServer = os.environ['PIPELINESERVER']
-_outputDir = os.environ['OUTPUTDIR']
+#_outputDir = os.environ['OUTPUTDIR']
 
 print "Using:\n"
 print "BINDIR = %s" % _bindir
 print "ST_INST = %s" % _st_inst
 print "ASP_PATH = %s" % _asp_path
 print "PIPELINESERVER = %s" % _pipelineServer
-print "OUTPUTDIR = %s" % _outputDir
+#print "OUTPUTDIR = %s" % _outputDir
 print ""
 
 class PipelineError(EnvironmentError):
@@ -60,8 +60,8 @@ class PipelineCommand(object):
         defaultDict = {'BINDIR' : _bindir,
                        'ST_INST' : _st_inst,
                        'ASP_PATH' : _asp_path,
-                       'PIPELINESERVER' : _pipelineServer,
-                       'output_dir' : _outputDir}
+                       'PIPELINESERVER' : _pipelineServer}
+#                       'output_dir' : _outputDir}
         defaultDict.update(argDict)
         arg_string = ""
         for item in defaultDict:

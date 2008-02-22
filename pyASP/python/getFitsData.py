@@ -8,12 +8,14 @@ query of the datacatalog in a Pipeline II scriptlet.
 # $Header$
 #
 import os, glob, shutil
+from FileStager import FileStager
 
 def filter_versions(fitsfiles):
     """Filter the input file list so that only the most recent version 
     of each dataset is returned."""
     prefixes = {}
     for item in fitsfiles:
+        print "processing ", item
         tokens = item.split('_v')
         dirname = os.path.dirname(tokens[0])
         basename = os.path.basename(tokens[0])
@@ -23,6 +25,7 @@ def filter_versions(fitsfiles):
     # sort by basename (with version info sliced off) to get time ordering
     basenames.sort()
     for item in basenames:
+        print "appending ", item
         fullpath = os.path.join(prefixes[item][0], 
                                 '_'.join((item, 'v'+prefixes[item][1])))
         outfiles.append(fullpath)
@@ -38,5 +41,18 @@ def getFileList(filelist, copylist=True):
             fitsfiles.append(line.strip().strip('+'))
     return filter_versions(fitsfiles)
 
+def getStagedFileList(filelist, output_dir=os.environ['OUTPUTDIR']):
+    fileStager = FileStager('', stageArea=output_dir, cleanup=False)
+    infiles = fileStager.infiles([line.strip() for line in open(filelist)])
+    fitsfiles = []
+    for item in infiles:
+        print "staged file:", item
+        if os.path.isfile(item.strip('+')):
+            fitsfiles.append(item.strip('+'))
+    return filter_versions(fitsfiles)
+
 def getFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList', copylist=True):
     return getFileList(ft1list, copylist), getFileList(ft2list, copylist)
+
+def getStagedFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList'):
+    return getStagedFileList(ft1list), getStagedFileList(ft2list)

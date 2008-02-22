@@ -9,7 +9,7 @@
 #
 import os
 from FitsNTuple import FitsNTuple
-from getFitsData import getFitsData
+from getFitsData import getStagedFitsData
 import dbAccess
 from createGrbStreams import refinementStreams
 
@@ -23,7 +23,11 @@ except OSError:
     else:
         raise OSError, "Error creating directory: " + output_dir
 
-ft1, ft2 = getFitsData()
+ft1, ft2 = getStagedFitsData()
+
+print 'reading FT1 files:'
+for item in ft1:
+    print item
 
 gti = FitsNTuple(ft1, 'GTI')
 
@@ -36,4 +40,3 @@ if tstart >= min(gti.START) and tstop <= max(gti.STOP):
     refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
                       output_dir=output_dir, grb_ids=(grb_id, ),
                       streamId=-1)
-#                      streamId=grb_id)

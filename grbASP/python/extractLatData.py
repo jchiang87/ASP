@@ -74,24 +74,23 @@ def burst_interval(lc_file, minrate=30):
 if __name__ == '__main__':
     import os, shutil
     from GcnNotice import GcnNotice
-    from getFitsData import getFitsData
+    from getFitsData import getStagedFitsData
     from ft1merge import ft1merge
     from GrbAspConfig import grbAspConfig
-    from FileStager import FileStager
 
-    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-    fileStager = FileStager('GRB_refinement/%s' % process_id)
-
-    ft1, ft2 = getFitsData()
+    ft1, ft2 = getStagedFitsData()
     os.chdir(os.environ['OUTPUTDIR'])
     gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
 
     ft1Merged = 'FT1_merged.fits'
-    ft1 = FileStager.infiles(ft1)
+    print "merging FT1 files:"
+    for item in ft1:
+        print item
     ft1merge(ft1, ft1Merged)
-
-    ft2 = fileStager.infiles(ft2)
     
+    if not ft2:
+        raise RuntimeError, "No FT2 files were found by the datacatalog query"
+
     ft2list = open('ft2_file_list', 'w')
     for item in ft2:
         ft2list.write("%s\n" % item)

@@ -86,6 +86,26 @@ def ft1merge(infiles, outfile):
     except OSError:
         pass
 
+def ft2merge(infiles, outfile):
+    if not infiles:
+        raise RuntimeError, "FT2 file list is empty"
+    tmpfile = "ft2_file_list"
+    ft2list = open(tmpfile, 'w')
+    for item in infiles:
+        ft2list.write("%s\n" % item)
+    ft2list.close()
+    fmerge['infiles'] = '@%s' % tmpfile
+    fmerge['outfile'] = outfile
+    fmerge['clobber'] = 'yes'
+    fmerge['columns'] = ' '
+    fmerge['mextname'] = ' '
+    fmerge['lastkey'] = ' '
+    fmerge.run()
+    try:
+        os.remove(tmpfile)
+    except OSError:
+        pass
+
 if __name__ == '__main__':
     L1DataPath = '/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks'
     infiles = [os.path.join(L1DataPath, 'downlink_%04i.fits' % i)

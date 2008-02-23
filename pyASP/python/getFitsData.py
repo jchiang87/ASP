@@ -15,7 +15,6 @@ def filter_versions(fitsfiles):
     of each dataset is returned."""
     prefixes = {}
     for item in fitsfiles:
-        print "processing ", item
         tokens = item.split('_v')
         dirname = os.path.dirname(tokens[0])
         basename = os.path.basename(tokens[0])
@@ -25,7 +24,6 @@ def filter_versions(fitsfiles):
     # sort by basename (with version info sliced off) to get time ordering
     basenames.sort()
     for item in basenames:
-        print "appending ", item
         fullpath = os.path.join(prefixes[item][0], 
                                 '_'.join((item, 'v'+prefixes[item][1])))
         outfiles.append(fullpath)
@@ -37,12 +35,20 @@ def getFileList(filelist, copylist=True):
         shutil.copy(filelist, os.path.join(output_dir, filelist))
     fitsfiles = []
     for line in open(filelist):
-        if os.path.isfile(line.strip().strip('+')):    # file exists
+        if (os.path.isfile(line.strip().strip('+')) or
+            line.find('root') == 0):    # file exists or is listed on xrootd
             fitsfiles.append(line.strip().strip('+'))
     return filter_versions(fitsfiles)
 
-def getStagedFileList(filelist, output_dir=os.environ['OUTPUTDIR']):
-    fileStager = FileStager('', stageArea=output_dir, cleanup=False)
+def getStagedFileList(filelist, output_dir=None, fileStager=None):
+    if fileStager is None:
+        if output_dir is None:
+            output_dir = os.environ['OUTPUTDIR']
+        #
+        # Do not clean-up, since staged files would otherwise be deleted
+        # when the FileStager object goes out of scope.
+        #
+        fileStager = FileStager('', stageArea=output_dir, cleanup=False)
     infiles = fileStager.infiles([line.strip() for line in open(filelist)])
     fitsfiles = []
     for item in infiles:
@@ -54,5 +60,7 @@ def getStagedFileList(filelist, output_dir=os.environ['OUTPUTDIR']):
 def getFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList', copylist=True):
     return getFileList(ft1list, copylist), getFileList(ft2list, copylist)
 
-def getStagedFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList'):
-    return getStagedFileList(ft1list), getStagedFileList(ft2list)
+def getStagedFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList',
+                      fileStager=None):
+    return (getStagedFileList(ft1list, fileStager=fileStager),
+            getStagedFileList(ft2list, fileStager=fileStager))

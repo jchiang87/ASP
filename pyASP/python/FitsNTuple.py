@@ -31,11 +31,20 @@ class FitsNTuple:
             if i == 0:
                 self.names = table[extension].columns.names
             for name in self.names:
+                myData = table[extension].data.field(name)
+                #
+                # These casts to generic data types are necessary to
+                # work with swig-wrapped C++ code.  This is required
+                # for numpy/pyfits for some reason.
+                #
+                if myData.dtype.name.find('float') == 0:
+                    myData = num.array(myData, dtype=num.float)
+                if myData.dtype.name.find('int') == 0:
+                    myData = num.array(myData, dtype=num.int)
                 if i == 0:
-                    columnData[name] = table[extension].data.field(name)
+                    columnData[name] = myData
                 else:
-                    columnData[name] = cat((columnData[name],
-                                            table[extension].data.field(name)))
+                    columnData[name] = cat((columnData[name], myData))
         #
         # Add these columns to the internal dictionary.
         #

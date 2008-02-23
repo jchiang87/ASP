@@ -16,12 +16,12 @@ from getFitsData import getFitsData
 from ft1merge import ft1merge
 from parfile_parser import Parfile
 import drpDbAccess
-from drpDbAccess import databaseAccess as dbAccess
+import databaseAccess as dbAccess
 
 def create_parfile(tstart, parfilename='drp_pars.txt'):
     version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
-    infile = os.path.join(os.environ['ASP_PATH'], 'drpMonitoring', version,
-                          'data', parfilename)
+    infile = os.path.join(os.environ['ASP_PATH'], 'ASP', 'drpMonitoring', 
+                          version, 'data', parfilename)
     shutil.copy(infile, 'drp_pars.txt')
     sql = "select * from SOURCEMONITORINGCONFIG"
     def findConfig(cursor):

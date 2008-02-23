@@ -12,8 +12,9 @@ TSTOP environment variables.
 import os, shutil
 from GtApp import GtApp
 from FitsNTuple import FitsNTuple
-from getFitsData import getFitsData
-from ft1merge import ft1merge
+from getFitsData import getStagedFitsData
+from FileStager import FileStager
+from ft1merge import ft1merge, ft2merge
 from parfile_parser import Parfile
 import drpDbAccess
 import databaseAccess as dbAccess
@@ -39,9 +40,12 @@ def create_parfile(tstart, parfilename='drp_pars.txt'):
 
 debug = False
 
-ft1, ft2 = getFitsData()
-
 output_dir = os.environ['OUTPUTDIR']
+process_id = os.environ['PIPELINE_PROCESSINSTANCE']
+fileStager = FileStager(process_id, stageArea=output_dir)
+
+ft1, ft2 = getStagedFitsData(fileStager=fileStager)
+
 os.chdir(output_dir)
 
 start_time = float(os.environ['TSTART'])
@@ -56,19 +60,8 @@ print "Using downlink files: ", ft1
 ft1Merged = 'FT1_merged.fits'
 ft1merge(ft1, ft1Merged)
 
-outfile = open('Ft2FileList', 'w')
-for item in ft2:
-    outfile.write('%s\n' % item)
-outfile.close()
-
-fmerge = GtApp('fmerge')
-fmerge['infiles'] = '@Ft2FileList'
-fmerge['outfile'] = 'FT2_merged.fits'
-fmerge['clobber'] = 'yes'
-fmerge['columns'] = ' '
-fmerge['mextname'] = ' '
-fmerge['lastkey'] = ' '
-fmerge.run()
+ft2Merged = 'FT2_merged.fits'
+ft2merge(ft2, ft2Merged)
 
 gtselect['infile'] = ft1Merged
 gtselect['outfile'] = 'temp_filtered.fits'
@@ -111,7 +104,7 @@ else:
     fcopy.run()
 
 pars['ft1file'] = fcopy['outfile']
-pars['ft2file'] = os.path.abspath(fmerge['outfile'])
+pars['ft2file'] = os.path.abspath(ft2Merged)
 pars['start_time'] = start_time
 pars['stop_time'] = stop_time
 pars.write()

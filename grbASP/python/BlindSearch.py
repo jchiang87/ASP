@@ -173,9 +173,10 @@ class PackagedEvents(object):
     def __call__(self, imin, imax):
         foo = Foo()
         for name in self.events.names:
-        # Why do we need to convert these to a list for numpy???? There
-        # is bad interaction with the SWIG wrapper for Event.
-            foo.__dict__[name] = self.events.__dict__[name][imin:imax].tolist()
+#        # Why do we need to convert these to a list for numpy???? There
+#        # is bad interaction with the SWIG wrapper for Event.
+#            foo.__dict__[name] = self.events.__dict__[name][imin:imax].tolist()
+            foo.__dict__[name] = self.events.__dict__[name][imin:imax]
         return foo
 
 if __name__ == '__main__':

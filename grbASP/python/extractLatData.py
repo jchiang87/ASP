@@ -75,7 +75,7 @@ if __name__ == '__main__':
     import os, shutil
     from GcnNotice import GcnNotice
     from getFitsData import getStagedFitsData
-    from ft1merge import ft1merge
+    from ft1merge import ft1merge, ft2merge
     from GrbAspConfig import grbAspConfig
 
     ft1, ft2 = getStagedFitsData()
@@ -88,31 +88,18 @@ if __name__ == '__main__':
         print item
     ft1merge(ft1, ft1Merged)
     
-    if not ft2:
-        raise RuntimeError, "No FT2 files were found by the datacatalog query"
-
-    ft2list = open('ft2_file_list', 'w')
+    ft2Merged = 'FT2_merged.fits'
+    print "merging FT2 files:"
     for item in ft2:
-        ft2list.write("%s\n" % item)
-    ft2list.close()
-
-    fmerge = GtApp('fmerge')
-    fmerge['infiles'] = '@ft2_file_list'
-    fmerge['outfile'] = 'FT2_merged.fits'
-    fmerge['clobber'] = 'yes'
-    fmerge['columns'] = ' '
-    fmerge['mextname'] = ' '
-    fmerge['lastkey'] = ' '
-    fmerge.run()
-
-    os.remove('ft2_file_list')
+        print item
+    ft2merge(ft2, ft2Merged)
 
     config = grbAspConfig.find(gcnNotice.start_time)
     duration = config.TIMEWINDOW
     ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, 
                                            duration=duration, radius=15)
     outfile = open('%s_files' % gcnNotice.Name, 'w')
-    outfile.write('%s\n%s\n' % (ft1_extracted, fmerge['outfile']))
+    outfile.write('%s\n%s\n' % (ft1_extracted, ft2Merged))
     outfile.close()
 
     os.system('chmod 777 *')

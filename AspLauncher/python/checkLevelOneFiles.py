@@ -14,7 +14,7 @@ should be launched.
 import os
 import pyfits
 from FitsNTuple import FitsNTuple
-from getFitsData import getFitsData
+from getFitsData import getFitsData, getStagedFitsData
 
 def consolidate(intervals):
     "Join consecutive intervals that have matching end points."
@@ -47,19 +47,24 @@ def check_ft2(gtis, ft2):
             raise RuntimeError, "FT2 files do not cover the FT1 data"
 
 def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',
-                     ft2List='Ft1FileList'):
+                     ft2List='Ft1FileList', fileStager=None):
     """Ensure the FT2 files cover the desired GTIs and compute the
     fraction of the elapsed time that is covered by the GTIs.  Return
     False if the desired minumum fractional coverage is not
     achieved."""
-    print "providesCoverage: cwd = ", os.path.abspath(os.curdir)
-    ft1, ft2 = getFitsData(ft1List, ft2List, copylist=False)
+    print "cwd = ", os.path.abspath(os.curdir)
+    if fileStager is None:
+        ft1, ft2 = getFitsData(ft1List, ft2List, copylist=False)
+    else:
+        ft1, ft2 = getStagedFitsData(ft1List, ft2List, fileStager=fileStager)
     gtis = FitsNTuple(ft1, 'GTI')
     check_ft2(gtis, ft2)
-    if tstart >= min(gtis.START) and tstop <= max(gtis.STOP):
-        total = 0
-        for tmin, tmax in zip(gtis.START, gtis.STOP):
-            total += tmax - tmin
-        if total/(tstop - tstart) > min_frac:
-            return True
+    print "Requested tstart, tstop: ", tstart, tstop
+    print "GTI range: ", min(gtis.START), max(gtis.STOP)
+    total = 0
+    for tmin, tmax in zip(gtis.START, gtis.STOP):
+        total += tmax - tmin
+    print "Fractional coverage of FT1 files: ", total/(tstop - tstart)
+    if total/(tstop - tstart) > min_frac:
+        return True
     return False

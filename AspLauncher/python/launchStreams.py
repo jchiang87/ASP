@@ -14,6 +14,7 @@ import os
 from checkLevelOneFiles import providesCoverage
 from PipelineCommand import PipelineCommand, _asp_path
 from createGrbStreams import blindSearchStreams
+from FileStager import FileStager
 
 _version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
 _drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
@@ -67,35 +68,43 @@ def createSubDir(interval, frequency, root_output_dir):
     return newdir    
 
 if __name__ == '__main__':
-    min_frac = float(os.environ['minimum_coverage'])
     folder = os.environ['folder']
-
     currentDir = os.path.abspath(os.curdir)
+    min_frac = float(os.environ['minimum_coverage'])
+    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
+
+    fileStager = FileStager(os.path.join(currentDir, 'AspLauncher', process_id),
+                            cleanup=False)
+
+    debug = False
 
     nDownlink = int(os.environ['nDownlink'])
     blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder,
-                       grbroot_dir=os.environ['GRBOUTPUTDIR'])
+                       grbroot_dir=os.environ['GRBOUTPUTDIR'], debug=debug)
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('SixHour')
     if providesCoverage(tstart, tstop, min_frac, 
-                        'Ft1FileList_6hr', 'Ft2FileList_6hr'):
+                        'Ft1FileList_6hr', 'Ft2FileList_6hr', 
+                        fileStager=fileStager):
         output_dir = createSubDir(interval, 'SixHour',
                                   os.environ['PGWAVEOUTPUTDIR'])
-        launch_pgwave(interval, tstart, tstop, folder, output_dir)
+        launch_pgwave(interval, tstart, tstop, folder, output_dir, debug=debug)
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Daily')
     if providesCoverage(tstart, tstop, min_frac, 
-                        'Ft1FileList_day', 'Ft2FileList_day'):
+                        'Ft1FileList_day', 'Ft2FileList_day', 
+                        fileStager=fileStager):
         output_dir = createSubDir(interval, 'Daily',
                                   os.environ['DRPOUTPUTDIR'])
-        launch_drp(interval, tstart, tstop, folder, output_dir)
+        launch_drp(interval, tstart, tstop, folder, output_dir, debug=debug)
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Weekly')
     if providesCoverage(tstart, tstop, min_frac, 
-                        'Ft1FileList_week', 'Ft2FileList_week'):
+                        'Ft1FileList_week', 'Ft2FileList_week', 
+                        fileStager=fileStager):
         output_dir = createSubDir(interval, 'Weekly',
                                   os.environ['DRPOUTPUTDIR'])
-        launch_drp(interval, tstart, tstop, folder, output_dir)
+        launch_drp(interval, tstart, tstop, folder, output_dir, debug=debug)

@@ -83,11 +83,13 @@ astro::JulianDate jd_from_MET(double met);
 }
 %extend grbASP::ClusterAlg {
    std::pair< std::pair<double, double>, astro::SkyDir>
-      processEvents(const std::vector<Event> & events, double bg_rate=0) {
+      processEvents(const std::vector<Event> & events, double bg_rate=0,
+                    double radius=10) {
       double logLike_time, logLike_pos;
       astro::SkyDir meanDir;
-      self->process(events, logLike_time, logLike_pos, meanDir, bg_rate);
-      return std::make_pair(std::make_pair(logLike_time, logLike_pos),meanDir);
+      self->process(events, logLike_time, logLike_pos, meanDir, 
+                    bg_rate, radius);
+      return std::make_pair(std::make_pair(logLike_time,logLike_pos), meanDir);
    }
 }
 %extend astro::SolarSystem {

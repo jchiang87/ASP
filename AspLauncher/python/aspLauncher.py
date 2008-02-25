@@ -62,8 +62,17 @@ if __name__ == '__main__':
 
     aspOutput = lambda x : os.path.join(_output_dir, x)
 
-    os.environ['folder'] = '/Data/OpsSim2/Level1'
-    os.environ['nDownlink'] = '80219002'
+    try:
+       os.environ['folder'], os.environ['nDownlink']
+    except KeyError:
+       os.environ['folder'] = '/Data/OpsSim2/Level1'
+#       os.environ['nDownlink'] = '80219002'
+#       os.environ['nDownlink'] = '80220001'
+       os.environ['nDownlink'] = '80220002'
+
+    print "Using "
+    print "DataCatalog folder =", os.environ['folder']
+    print "Downlink ID =", os.environ['nDownlink']
 
     intervals = find_intervals()
     args = {'folder' : os.environ['folder'],

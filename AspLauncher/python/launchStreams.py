@@ -55,7 +55,7 @@ def get_interval(freq):
             int(os.environ[freq + '_nMetStop']))
 
 def createSubDir(interval, frequency, root_output_dir):
-    subdir = "%08i" % interval
+    subdir = "%05i" % interval
     os.chdir(root_output_dir)
     newdir = os.path.join(root_output_dir, frequency)
     if not os.path.isdir(newdir):
@@ -69,12 +69,18 @@ def createSubDir(interval, frequency, root_output_dir):
 
 if __name__ == '__main__':
     folder = os.environ['folder']
-    currentDir = os.path.abspath(os.curdir)
+    currentDir = os.getcwd()
     min_frac = float(os.environ['minimum_coverage'])
     process_id = os.environ['PIPELINE_PROCESSINSTANCE']
 
-    fileStager = FileStager(os.path.join(currentDir, 'AspLauncher', process_id),
-                            cleanup=False)
+## Use the following for debugging in an accessible local directory.
+#    fileStager = FileStager(os.path.join(currentDir,'AspLauncher',process_id),
+#                            cleanup=True)
+    #
+    # Stage to local /scratch area and clean up on exit
+    #
+    fileStager = FileStager(os.path.join('AspLauncher', process_id),
+                            cleanup=True)
 
     debug = False
 

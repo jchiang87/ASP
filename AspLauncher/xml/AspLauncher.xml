@@ -31,6 +31,53 @@
     <prerequisite name="PIPELINESERVER" type="string"/>
     <prerequisite name="ASPLAUNCHERROOT" type="string"/>
   </prerequisites>
+  <process name="downlinkQuery">
+    <script>
+      <![CDATA[
+        def findDownlink(outfile, type, downlinkId):
+            output = pipeline.createFile(outfile)
+            query = 'nDownlink == %i && DataType=="%s"' % (DownlinkId, type)
+            datasetList = datacatalog.getDatasets(folder+'/*', query)
+            datasetList.writeToFile(output, 1)
+            pipeline.writeFile(output)
+        findDownlink('FT1_downlinks', 'FT1', nDownlink)
+        findDownlink('FT2_downlinks', 'FT2', nDownlink)
+      ]]>
+    </script>
+  </process>
+  <process name="computeDiffResps">
+    <job executable="${ASPLAUNCHERROOT}/${BINDIR}/computeDiffResps.sh",
+         batchOptions="-q glastdataq"/>
+    <depends>
+      <after process="downlinkQuery" status="SUCCESS"/>
+    </depends>
+  </process>
+  <process name="registerNewFT1">
+    <script>
+      <![CDATA[
+        def downlinkNames(type, downlinkId):
+            query = 'nDownlink == %i && DataType=="%s"' % (DownlinkId, type)
+            datasetList = datacatalog.getDatasets(folder+'/*', query)
+            it = datasetList.iterator()
+            names = []
+            while it.hasNext():
+                dataset = it.next()
+                filename = dataset.getFirstOKLocation().getPath()
+                # get basename and excise '.fit' suffix
+                basename = filename.split('/')[-1][:-4]
+                dsname = dataset.getName()
+                names.append((basename, dsname))
+            return names
+        ft1names = downlinkNames('FT1', nDownlink)
+        for items in ft1names:
+            logicalPath = 
+        
+      ]]>
+    </script>
+    <depends>
+      <after process="computeDiffResps" status="SUCCESS"/>
+    </depends>
+  </process>
   <process name="catalogQueries">
     <script>
       <![CDATA[

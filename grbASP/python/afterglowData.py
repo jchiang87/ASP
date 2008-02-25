@@ -1,5 +1,6 @@
 """
 @brief Extract data files for a GRB afterglow analysis.
+
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
 #
@@ -8,8 +9,8 @@
 
 import os, sys
 from GtApp import GtApp
-from getFitsData import getFitsData
-from ft1merge import ft1merge
+from getFitsData import getStagedFitsData
+from ft1merge import ft1merge, ft2merge
 from parfile_parser import Parfile
 import readXml
 import xmlSrcLib
@@ -17,14 +18,14 @@ import FuncFactory
 import dbAccess
 
 gtselect = GtApp('gtselect', 'dataSubselector')
-fmerge = GtApp('fmerge')
 
-def getData(time, ra, dec, srcName, ft1, duration=5*3600, radius=15,
-            extracted=False):
+def getData(time, ra, dec, srcName, ft1, ft2, duration=5*3600, radius=15):
     ft1Merged = 'FT1_merged.fits'
-    if not extracted:
-        ft1merge(ft1, ft1Merged)
-    
+    ft1merge(ft1, ft1Merged)
+
+    ft2Merged = 'FT2_merged.fits'
+    ft2merge(ft2, ft2Merged)
+
     gtselect['infile'] =  ft1Merged
     gtselect['outfile'] = srcName + '_L1.fits'
     gtselect['ra'] = ra
@@ -37,8 +38,7 @@ def getData(time, ra, dec, srcName, ft1, duration=5*3600, radius=15,
     gtselect['emax'] = 2e5
     gtselect['eventClass'] = -1
     gtselect['zmax'] = 100
-    if not extracted:
-        gtselect.run()
+    gtselect.run()
 
     srcModel = readXml.SourceModel()
     GalProp = readXml.Source(xmlSrcLib.GalProp())
@@ -55,15 +55,7 @@ def getData(time, ra, dec, srcName, ft1, duration=5*3600, radius=15,
     srcModel.filename = srcName + '_afterglow_model.xml'
     srcModel.writeTo()
 
-    fmerge['infiles'] = '@Ft2FileList'
-    fmerge['outfile'] = 'FT2_merged.fits'
-    fmerge['clobber'] = 'yes'
-    fmerge['columns'] = ' '
-    fmerge['mextname'] = ' '
-    fmerge['lastkey'] = ' '
-    fmerge.run()
-
-    return srcModel, gtselect['outfile'], fmerge['outfile']
+    return srcModel, gtselect['outfile'], ft2Merged
 
 def afterglow_pars(infile):
     pars = Parfile(infile)
@@ -81,7 +73,7 @@ if __name__ == '__main__':
     import os, sys, shutil
     from GrbAspConfig import grbAspConfig
 
-    ft1, ft2 = getFitsData()
+    ft1, ft2 = getStagedFitsData()
     outputDir = os.environ['OUTPUTDIR']
     os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
@@ -90,7 +82,7 @@ if __name__ == '__main__':
     config = grbAspConfig.find(tstart)
     print config
 
-    srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName, ft1,
+    srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName, ft1, ft2,
                                  duration=config.AGTIMESCALE,
                                  radius=config.AGRADIUS)
     outfile = open('%s_afterglow_files' % grbName, 'w')

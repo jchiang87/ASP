@@ -6,6 +6,7 @@
 #
 # $Header$
 #
+import pipeline
 import numpy as num
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir

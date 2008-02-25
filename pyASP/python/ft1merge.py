@@ -15,6 +15,7 @@ import os
 import pyfits
 from GtApp import GtApp
 
+fcopy = GtApp('fcopy')
 fmerge = GtApp('fmerge')
 fchecksum = GtApp('fchecksum')
 
@@ -86,9 +87,28 @@ def ft1merge(infiles, outfile):
     except OSError:
         pass
 
-def ft2merge(infiles, outfile):
-    if not infiles:
+class UnpaddedFT2Files(list):
+    def __init__(self, infiles, prefix='ft2_filtered'):
+        list.__init__(self)
+        for i, infile in enumerate(infiles):
+            outfile = "ft2_filtered_%04i.fits" % i
+            try:
+                os.remove(outfile)
+            except OSError:
+                pass
+            fcopy.run(infile='%s[SC_DATA][LIVETIME>0]'%infile, 
+                      outfile=outfile)
+            self.append(outfile)
+    def cleanup(self):
+        for item in self:
+            os.remove(item)
+
+def ft2merge(infiles_arg, outfile, filter_zeros=True):
+    if not infiles_arg:
         raise RuntimeError, "FT2 file list is empty"
+    infiles = infiles_arg
+    if filter_zeros:
+        infiles = UnpaddedFT2Files(infiles_arg)
     tmpfile = "ft2_file_list"
     ft2list = open(tmpfile, 'w')
     for item in infiles:
@@ -104,6 +124,10 @@ def ft2merge(infiles, outfile):
     try:
         os.remove(tmpfile)
     except OSError:
+        pass
+    try:
+        infiles.cleanup()
+    except AttributeError:
         pass
 
 if __name__ == '__main__':

@@ -55,13 +55,14 @@ class DrpSource(object):
 class DrpSources(dict):
     def __init__(self, infile=None):
         dict.__init__(self)
-        if infile is not None:
-            for line in open(infile):
-                if line.find("#") != 0:
-                    name, coord = line[1:].split('"')
-                    ra, dec = coord.strip().split()
-                    ra, dec = float(ra), float(dec)
-                    self[name] = DrpSource(name, ra, dec)
+        if infile is None:
+            return
+        for line in open(infile):
+            if line.find("#") != 0:
+                name, coord = line[1:].split('"')
+                ra, dec = coord.strip().split()
+                ra, dec = float(ra), float(dec)
+                self[name] = DrpSource(name, ra, dec)
     def select(self, ra, dec, radius):
         my_sources = []
         for source in self.keys():
@@ -77,7 +78,8 @@ class MonitoredSourceFactory(object):
     def create(self, srcType):
         sourceList = DrpSources()
         for item in self.ptsrcs[srcType]:
-            ra, dec, sep = self.ptsrcs[srcType][item]
+            src = self.ptsrcs[srcType][item]
+            ra, dec = src.ra, src.dec
             sourceList[item] = DrpSource(item, ra, dec)
         return sourceList        
 

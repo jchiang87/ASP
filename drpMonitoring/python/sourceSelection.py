@@ -57,7 +57,7 @@ def getXmlModel():
     doc = minidom.parseString(xmlModel)
     lib = doc.getElementsByTagName('source_library')[0]
     for src in ptsrcs:
-        xmldef = ptsrcs[src][3]
+        xmldef = ptsrcs[src].xml
         source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
         lib.appendChild(source)
     return cleanXml(doc)

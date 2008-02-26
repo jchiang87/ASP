@@ -41,24 +41,29 @@ def readRois(outfile='rois.txt'):
         output.close()
     return apply(sql, cursorFunc)
 
+class PointSource(object):
+    def __init__(self, entry):
+        self.nhat = entry[10:13]
+        self.ra = entry[6]
+        self.dec = entry[7]
+        self.xml = entry[13].read()
+    def cos_sep(self, nhat):
+        return sum(nhat*self.nhat)
+
 def findPointSources(ra, dec, radius, srctype=None):
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
     sql = "select * from POINTSOURCES"
     if srctype:
         sql += " where SOURCE_TYPE = '%s'" % srctype
-    def cursorFunc(cursor):
+    def getPtsrcs(cursor):
         srcs = {}
         for entry in cursor:
-            # Compute angular separation: get direction cosines
-            src_nhat = num.array(entry[10:13])
-            cos_sep = sum(src_nhat*nhat)
-            if cos_sep > mincos:
-                # fill with ra, dec, angular separation, and xml model
-                srcs[entry[0]] = (entry[6], entry[7], num.arccos(cos_sep),
-                                  entry[13].read())
+            src = PointSource(entry)
+            if src.sep(nhat) > mincos:
+                srcs[entry[0]] = src
         return srcs
-    return apply(sql, cursorFunc)
+    return apply(sql, getPtsrcs)
 
 def inspectRois():
     rois = getDbObjects('ROIS')
@@ -67,14 +72,15 @@ def inspectRois():
     for roi in rois:
         roi_data[roi['ROI_ID']] = roi
     for id in roi_data:
-        ptsrcs = findPointSources(roi_data[id]['RA'], roi_data[id]['DEC'],
-                                  roi_data[id]['RADIUS'])
+        ra, dec = roi_data[id]['RA'], roi_data[id]['DEC']
+        nhat = dircos(ra, dec)
+        ptsrcs = findPointSources(ra, dec, roi_data[id]['RADIUS'])
         sys.stdout.write("ROI_ID %i:\n" % id)
         for ptsrc in ptsrcs:
-            if ptsrc.find("HP") != 0:
-                sys.stdout.write("   %-30s  %.3f  %.3f  %.3e\n" %
-                                 (ptsrc, ptsrcs[ptsrc][0], ptsrcs[ptsrc][1],
-                                  ptsrcs[ptsrc][2]))
+            src = ptsrcs[ptsrc]
+            sys.stdout.write("   %-30s  %.3f  %.3f  %.3e\n" %
+                             (ptsrc, src.ra, src.dec,
+                              num.arccos(src.cos_sep(nhat))*180./num.pi))
 
 def findDiffuseSources():
     "Read the xml model from the db tables for Diffuse Sources"
@@ -97,7 +103,7 @@ def buildXmlModel(ra, dec, radius, outfile):
     doc = minidom.parseString(xmlModel)
     lib = doc.getElementsByTagName('source_library')[0]
     for src in ptsrcs:
-        xmldef = ptsrcs[src][3]
+        xmldef = ptsrcs[src].xml
         source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
         lib.appendChild(source)
     for src in diffuse:

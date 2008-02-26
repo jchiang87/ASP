@@ -60,7 +60,7 @@ def findPointSources(ra, dec, radius, srctype=None):
         srcs = {}
         for entry in cursor:
             src = PointSource(entry)
-            if src.sep(nhat) > mincos:
+            if src.cos_sep(nhat) > mincos:
                 srcs[entry[0]] = src
         return srcs
     return apply(sql, getPtsrcs)

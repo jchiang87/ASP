@@ -48,7 +48,7 @@ gtselect['ra'] = ra
 gtselect['dec'] = dec
 gtselect['rad'] = radius
 gtselect['emin'] = 30
-gtselect['emax'] = 2e5
+gtselect['emax'] = 3e5
 gtselect['tmin'] = pars['start_time']
 gtselect['tmax'] = pars['stop_time']
 if debug:

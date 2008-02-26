@@ -1,5 +1,8 @@
 """
-@brief Region-of-intereset source analysis for DRP monitoring.
+@brief Region-of-intereset source analysis for DRP monitoring.  This
+will be performed for the 100 MeV -- 300 GeV range and will provide
+the fluxes for determining if a non-DRP source is in a state where it
+should have its data made public.
 
 @author J. Carson <carson@slac.stanford.edu>
 @author J. Chiang <jchiang@slac.stanford.edu>
@@ -13,6 +16,7 @@ import pipeline
 from GtApp import GtApp
 from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
+import databaseAccess as dbAccess
 
 debug = False
 
@@ -23,6 +27,10 @@ os.chdir(name)
 ft1file = name + '_events.fits'
 srcModel = os.path.join(os.getcwd(), name + '_model.xml')
 
+gtselect = GtApp('gtselect')
+gtselect.run(infile=ft1file, outfile=name+'_100_300000.fits', 
+             radius=180, emin=100, emax=300000)
+
 if debug:
     print "analyzing ", ft1file, srcModel
 else:
@@ -31,7 +39,7 @@ else:
 # diffuseResponses process is parallelized
 #
     gtdiffrsp = GtApp('gtdiffrsp')
-    gtdiffrsp['evfile'] = ft1file
+    gtdiffrsp['evfile'] = gtselect['outfile']
     gtdiffrsp['scfile'] = pars['ft2file']
     gtdiffrsp['irfs'] = pars['rspfunc']
     gtdiffrsp['srcmdl'] = rootpath('diffuse_model.xml')
@@ -61,17 +69,20 @@ else:
 # query the db tables and write the energy bands that the pipeline
 # needs to dispatch for analysis
 #
-    sql = "select * from ENERGYBANDS"
+    sql = "select eband_id, emin, emax from ENERGYBANDS"
     def getEnergyBands(cursor):
-        emins = []
-        emaxs = []
+        ids, emins, emaxs = [], [], []
         for entry in cursor:
-            emins.append("%i" % entry[2])
-            emaxs.append("%i" % entry[3])
+            if not (entry[1]==100 and entry[2]==300000):
+                ids.append("%i", entry[0])
+                emins.append("%i" % entry[1])
+                emaxs.append("%i" % entry[2])
+        ids = ' '.join(ids)
         emins = ' '.join(emins)
         emaxs = ' '.join(emaxs)
-        return emins, emaxs
-    emins, emax = apply(sql, getEnergyBands)
+        return ids, emins, emaxs
+    ids, emins, emaxs = dbAccess.apply(sql, getEnergyBands)
+    pipeline.setVariable('EBAND_IDS', ids)
     pipeline.setVariable('MINIMUM_ENERGIES', emins)
     pipeline.setVariable('MAXIMUM_ENERGIES', emaxs)
             

@@ -16,30 +16,13 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
 from DbEntry import DbEntry
 from FitsNTuple import FitsNTuple
+import databaseAccess as dbAccess
 
 gtselect = GtApp('gtselect')
 
 def currentRoi():
     id = int(os.environ['ROI_ID']) - 1
     return rois[id]
-
-class SourceData(object):
-    def __init__(self, name, srcModel, emin, emax, flux, fluxerr, isUL=False):
-        self.name = name
-        self.srcModel = srcModel
-        self.emin, self.emax = emin, emax
-        self.flux, self.fluxerr = flux, fluxerr
-        self.isUL = isUL
-    def updateDbEntry(self):
-        variable = "flux_%i_%i" % (self.emin, self.emax)
-        dbEntry = DbEntry(self.name, variable, pars['start_time'],
-                          pars['stop_time'])
-        dbEntry.setValues(self.flux, self.fluxerr, isUpperLimit=self.isUL)
-        dbEntry.setXmlFile(self.srcModel)
-        dbEntry.write()
-        print "Writing database entry for %s." % self.name
-        print "%s = %e +/- %e" % (variable, self.flux, self.fluxerr)
-        print "time period: %s to %s" % (pars['start_time'], pars['stop_time'])
 
 def computeUpperLimit(like, source, parname='Integral', delta=2.71/2.,
                       tmpfile='temp_model.xml'):

@@ -14,6 +14,8 @@
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
     <prerequisite name="logicalPath" type="string"/>
+    <prerequisite name="interval" type="int"/>
+    <prerequisite name="frequency" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>
     <prerequisite name="num_RoIs" type="integer"/>
@@ -135,11 +137,12 @@
       <script language="python">
         <![CDATA[
           parent_process = pipeline.getProcessInstance("sourceAnalysis")
+          ids = parent_process.getVariable('EBAND_IDS').split()
           emins = parent_process.getVariable('MINIMUM_ENERGIES').split()
           emaxs = parent_process.getVariable('MAXIMUM_ENERGIES').split()
-          for i, emin, emax in zip(range(len(emins)), emins, emaxs):
-              args = "emin=%s,emax=%s,ROI_ID=%i" % (emin, emax,
-                                                    pipeline.stream)
+          for i, id, emin, emax in zip(range(len(emins)), ids, emins, emaxs):
+              args = "eband_id=%s,emin=%s,emax=%s,ROI_ID=%i" % (id, emin, emax,
+                                                                pipeline.stream)
               pipeline.createSubstream("energyBandAnalysis", i, args)
         ]]>
       </script>
@@ -166,6 +169,7 @@
 
     <task name="energyBandAnalysis" version="1.0" type="Data">
       <prerequisites>
+        <prerequisite name="eband_id" type="integer"/>
         <prerequisite name="emin" type="integer"/>
         <prerequisite name="emax" type="integer"/>
         <prerequisite name="ROI_ID" type="string"/>

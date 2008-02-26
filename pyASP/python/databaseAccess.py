@@ -6,27 +6,22 @@
 #
 # $Header$
 #
+import os
 import cx_Oracle
 
-db_config = open('/afs/slac/g/glast/ground/PipelineConfig/ASP/db_config', 'r')
+db_config = open(os.environ['ASP_DB_CONFIG'], 'r')
 lines = db_config.readlines()
 
 glastgen = lines[0].strip().encode('rot13').split()
 asp_prod = lines[1].strip().encode('rot13').split()
 asp_dev = lines[2].strip().encode('rot13').split()
 
-#
-# For backwards compatibility
-#
-glastp = glastgen
-glastdev = asp_dev
-
 asp_default = asp_dev
 
 def nullFunc(*args):
     return None
 
-def apply(sql, cursorFunc=nullFunc, connection=glastgen):
+def apply(sql, cursorFunc=nullFunc, connection=asp_default):
     my_connection = cx_Oracle.connect(*connection)
     cursor = my_connection.cursor()
     try:
@@ -42,7 +37,7 @@ def apply(sql, cursorFunc=nullFunc, connection=glastgen):
     my_connection.close()
     return results
 
-def getDbObjects(tablename, connection=glastgen):
+def getDbObjects(tablename, connection=asp_default):
     """Return a list of entries for the specified db table"""
     sql = "SELECT * from %s" % tablename
     def cursorFunc(cursor):

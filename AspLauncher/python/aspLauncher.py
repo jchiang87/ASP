@@ -25,7 +25,7 @@ def find_frequencies():
        for entry in cursor:
            freqs.append(entry[0])
        return freqs
-   return dbAccess.apply(sql, getFrequencies, dbAccess.glastdev)
+   return dbAccess.apply(sql, getFrequencies)
 
 def find_intervals():
     """Find the most recent interval for each frequency from the
@@ -43,8 +43,7 @@ def find_intervals():
                     tstart = entry[2]
                     tstop = entry[3]
             return lastInterval+1, tstop, 2*tstop - tstart
-        next_intervals[frequency] = dbAccess.apply(sql, findLastInterval,
-                                                   dbAccess.glastdev)
+        next_intervals[frequency] = dbAccess.apply(sql, findLastInterval)
     return next_intervals
 
 if __name__ == '__main__':
@@ -66,9 +65,9 @@ if __name__ == '__main__':
        os.environ['folder'], os.environ['nDownlink']
     except KeyError:
        os.environ['folder'] = '/Data/OpsSim2/Level1'
-#       os.environ['nDownlink'] = '80219002'
 #       os.environ['nDownlink'] = '80220001'
-       os.environ['nDownlink'] = '80220002'
+#       os.environ['nDownlink'] = '80220002'
+       os.environ['nDownlink'] = '80220003'
 
     print "Using "
     print "DataCatalog folder =", os.environ['folder']

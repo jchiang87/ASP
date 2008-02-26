@@ -14,7 +14,7 @@ from read_data import read_data
 from GtApp import GtApp
 from readXml import SourceModel, Source
 from cleanXml import cleanXml
-from drpDbAccess import apply, findPointSources
+from drpDbAccess import findPointSources
 from celgal import celgal, dist
 
 converter = celgal()
@@ -48,25 +48,21 @@ _xml_template = """<source name="%s" type="PointSource">
 </source>
 """
 
-ptsrcs = findPointSources(0, 0, 180)
-
-sql = "select * from SOURCEMONITORINGSOURCE"
-def cursorFunc(cursor):
+def getXmlModel():
+    ptsrcs = findPointSources(0, 0, 180)
     xmlModel = """<?xml version="1.0" ?>
 <source_library title="Likelihood model">
 </source_library>
 """
     doc = minidom.parseString(xmlModel)
     lib = doc.getElementsByTagName('source_library')[0]
-    for entry in cursor:
-        if (entry[0] in ptsrcs.keys() and entry[0].find('HP') != 0
-            and entry[0].find('_3EG') !=0):
-            xmldef = entry[3].read()
-            source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
-            lib.appendChild(source)
-    return doc
-xmlModel = apply(sql, cursorFunc)
-xmlModel = cleanXml(xmlModel)
+    for src in ptsrcs:
+        xmldef = ptsrcs[src][3]
+        source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
+        lib.appendChild(source)
+    return cleanXml(doc)
+
+xmlModel = getXmlModel()
 
 outfile = "point_sources.xml"
 output = open(outfile, 'w')

@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="5.3" type="Data">
+<task name="DRP_monitoring" version="5.4" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
@@ -134,12 +134,11 @@
     <process name="launchEnergyBandAnalyses">
       <script language="python">
         <![CDATA[
-          #emins = [100, 300, 1e3, 3e3, 1e4, 100]
-          #emaxs = [300, 1e3, 3e3, 1e4, 100, 3e5]
-          emins = [100, 100]
-          emaxs = [3e5, 300]
+          parent_process = pipeline.getProcessInstance("sourceAnalysis")
+          emins = parent_process.getVariable('MINIMUM_ENERGIES').split()
+          emaxs = parent_process.getVariable('MAXIMUM_ENERGIES').split()
           for i, emin, emax in zip(range(len(emins)), emins, emaxs):
-              args = "emin=%i,emax=%i,ROI_ID=%i" % (emin, emax,
+              args = "emin=%s,emax=%s,ROI_ID=%i" % (emin, emax,
                                                     pipeline.stream)
               pipeline.createSubstream("energyBandAnalysis", i, args)
         ]]>

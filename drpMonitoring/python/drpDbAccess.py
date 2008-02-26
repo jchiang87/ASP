@@ -20,12 +20,12 @@ def dircos(ra, dec):
     return num.array((nx, ny, nz))
 
 def insertRoi(id, ra, dec, radius, sr_rad):
-    sql = ("insert into SOURCEMONITORINGROI (ROI, RA, DEC, RADIUS, SR_RADIUS) "
+    sql = ("insert into ROIS (ROI_ID, RA, DEC, RADIUS, SR_RADIUS) "
            + "values (%i, %.3f, %.3f, %i, %i)" % (id, ra, dec, radius, sr_rad))
     apply(sql)
 
 def updateRoi(id, **kwds):
-    sql_template = ("update SOURCEMONITORINGROI set %s = %s where ROI = %i"
+    sql_template = ("update ROIS set %s = %s where ROI = %i"
                     % ('%s', '%s', id))
     for key in kwds:
         sql = sql_template % (key, kwds[key])
@@ -33,7 +33,7 @@ def updateRoi(id, **kwds):
 
 def readRois(outfile='rois.txt'):
     output = open(outfile, 'w')
-    sql = "select * from SOURCEMONITORINGROI"
+    sql = "select * from ROIS"
     def cursorFunc(cursor):
         for entry in cursor:
             pars = tuple([x for x in entry])
@@ -44,29 +44,32 @@ def readRois(outfile='rois.txt'):
 def findPointSources(ra, dec, radius, srctype=None):
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
-    sql = "select * from SOURCEMONITORINGPOINTSOURCE"
+    sql = "select * from POINTSOURCES"
     if srctype:
-        sql += " where SOURCETYPE = '%s'" % srctype
+        sql += " where SOURCE_TYPE = '%s'" % srctype
     def cursorFunc(cursor):
         srcs = {}
         for entry in cursor:
-            src_nhat = num.array(entry[4:7])
+            # Compute angular separation: get direction cosines
+            src_nhat = num.array(entry[10:13])
             cos_sep = sum(src_nhat*nhat)
             if cos_sep > mincos:
-                srcs[entry[0]] = entry[2], entry[3], num.arccos(cos_sep)
+                # fill with ra, dec, angular separation, and xml model
+                srcs[entry[0]] = (entry[6], entry[7], num.arccos(cos_sep),
+                                  entry[13].read())
         return srcs
     return apply(sql, cursorFunc)
 
 def inspectRois():
-    rois = getDbObjects('SOURCEMONITORINGROI')
+    rois = getDbObjects('ROIS')
 # repackage by primary key
     roi_data = {}
     for roi in rois:
-        roi_data[roi['ROI']] = roi
+        roi_data[roi['ROI_ID']] = roi
     for id in roi_data:
         ptsrcs = findPointSources(roi_data[id]['RA'], roi_data[id]['DEC'],
                                   roi_data[id]['RADIUS'])
-        sys.stdout.write("ROI %i:\n" % id)
+        sys.stdout.write("ROI_ID %i:\n" % id)
         for ptsrc in ptsrcs:
             if ptsrc.find("HP") != 0:
                 sys.stdout.write("   %-30s  %.3f  %.3f  %.3e\n" %
@@ -74,35 +77,34 @@ def inspectRois():
                                   ptsrcs[ptsrc][2]))
 
 def findDiffuseSources():
-    sql = "select * from SOURCEMONITORINGDIFFUSESOURCE"
+    "Read the xml model from the db tables for Diffuse Sources"
+    sql = "select * from DIFFUSESOURCES"
     def cursorFunc(cursor):
         srcs = {}
         for entry in cursor:
-            srcs[entry[0]] = entry[1]
+            if entry[2] != "F" and entry[2] != "f":
+                srcs[entry[0]] = entry[1].read()
         return srcs
     return apply(sql, cursorFunc)
 
 def buildXmlModel(ra, dec, radius, outfile):
     ptsrcs = findPointSources(ra, dec, radius)
     diffuse = findDiffuseSources()
-    sourceNames = ptsrcs.keys()
-    sourceNames.extend(diffuse.keys())
-    sql = "select * from SOURCEMONITORINGSOURCE"
-    def cursorFunc(cursor):
-        xmlModel = """<?xml version="1.0" ?>
+    xmlModel = """<?xml version="1.0" ?>
 <source_library title="Likelihood model">
 </source_library>
 """
-        doc = minidom.parseString(xmlModel)
-        lib = doc.getElementsByTagName('source_library')[0]
-        for entry in cursor:
-            if entry[0] in sourceNames and entry[0].find('l b') != 0:
-                xmldef = entry[3].read()
-                source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
-                lib.appendChild(source)
-        return doc
-    xmlModel = apply(sql, cursorFunc)
-    xmlModel = cleanXml(xmlModel)
+    doc = minidom.parseString(xmlModel)
+    lib = doc.getElementsByTagName('source_library')[0]
+    for src in ptsrcs:
+        xmldef = ptsrcs[src][3]
+        source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
+        lib.appendChild(source)
+    for src in diffuse:
+        xmldef = diffuse[src]
+        source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
+        lib.appendChild(source)
+    xmlModel = cleanXml(doc)
     output = open(outfile, 'w')
     output.write(xmlModel.toxml() + "\n")
     output.close()

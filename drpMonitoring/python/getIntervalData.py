@@ -32,7 +32,7 @@ def create_parfile(tstart, parfilename='drp_pars.txt'):
                 return entry[3]
         message = 'SourceMonitoring configuration not found for %i MET' % tstart
         raise RuntimeError, message
-    irfs = dbAccess.apply(sql, findConfig, dbAccess.glastdev)
+    irfs = dbAccess.apply(sql, findConfig)
     pars = Parfile(parfilename)
     pars['rspfunc'] = irfs
     pars.write()
@@ -42,7 +42,7 @@ debug = False
 
 output_dir = os.environ['OUTPUTDIR']
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-fileStager = FileStager(process_id, stageArea=output_dir)
+fileStager = FileStager(process_id, stageArea=output_dir, cleanup=False)
 
 ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 

@@ -111,4 +111,14 @@ pars.write()
 
 drpDbAccess.readRois()
 
+#
+# Insert the current interval into the TIMEINTERVALS table.
+#
+inum = int(os.environ['interval'])
+frequency = os.environ['frequency']
+sql = ("insert into TIMEINTERVALS " +
+       "(INTERVAL_NUMBER, FREQUENCY, TSTART, TSTOP) values " +
+       "(%i, '%s', %i, %i)" % (inum, frequency, start_time, stop_time))
+dbAccess.apply(sql)
+
 os.system('chmod 777 *')

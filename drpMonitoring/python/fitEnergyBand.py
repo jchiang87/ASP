@@ -14,9 +14,8 @@ import os, sys
 from GtApp import GtApp
 from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
-from DbEntry import DbEntry
 from FitsNTuple import FitsNTuple
-import databaseAccess as dbAccess
+from SourceData import SourceData
 
 gtselect = GtApp('gtselect')
 
@@ -123,8 +122,7 @@ def fitEnergyBand(emin, emax, srcModel):
         if like.Ts(srcname) < 25:
             flux = computeUpperLimit(like, srcname)
             isUL = True
-        results[srcname] = SourceData(srcname, outputModel, emin, emax,
-                                      flux, fluxerr, isUL)
+        results[srcname] = SourceData(srcname, flux, fluxerr, outputModel, isUL)
     return results
 
 if __name__ == '__main__':

@@ -11,46 +11,60 @@ methods for updating the LIGHTCURVES database tables.
 #
 import os
 import databaseAccess as dbAccess
+cx_Oracle = dbAccess.cx_Oracle
 
-def getMonitoringEband(emin=100, emax=300000):
+def getMonitoringBand(emin=100, emax=300000):
     sql = ("select eband_id from ENERGYBANDS where emin=%i and emax=%i"
            % (emin, emax))
-    def getEband(cursor):
+    def getBand(cursor):
         for entry in cursor:
             return entry[0]
-    return dbAccess.apply(sql, getEband)
+    return dbAccess.apply(sql, getBand)
 
 _monitoringBand = getMonitoringBand()
 
 class SourceData(object):
     _upperThreshold = 2e-6
     _lowerThreshold = 2e-7
-    def __init__(self, name, srcModel, emin, emax, 
-                 flux, fluxerr, srctype, isUL=False):
+    def __init__(self, name, flux, fluxerr, srcModel, isUL=False):
         self.name = name
-        self.srcModel = srcModel
-        self.emin, self.emax = emin, emax
         self.flux, self.fluxerr = flux, fluxerr
-        self.type = srctype
+        self.type = self._getSrcType()
+        self.srcModel = srcModel
         self.isUL = isUL
         try:
-            self.eband_id = os.environ['eband_id']
-        except OSError, message:
-            print message
+            self.eband_id = int(os.environ['eband_id'])
+        except KeyError:
             print "SourceData: eband_id env var not set"
-            print ("Setting eband_id to " + _monitoringBand + 
+            print ("Setting eband_id to " + "%i" % _monitoringBand + 
                    " for 100 MeV to 300 GeV")
             self.eband_id = _monitoringBand
-        self.interval_number = os.environ['interval_number']
+        self.interval_number = int(os.environ['interval'])
         self.frequency = os.environ['frequency']
-    def monitoredState(self):
+        self.is_monitored = self._monitoredState()
+        self.pkDict = {"PTSRC_NAME" : "'%s'" % self.name,
+                       "EBAND_ID" : self.eband_id,
+                       "INTERVAL_NUMBER" : self.interval_number,
+                       "FREQUENCY" : "'%s'" % self.frequency}
+        self.rowDict = {"FLUX" : self.flux,
+                        "ERROR" : self.fluxerr,
+                        "IS_UPPER_LIMIT" : "'%s'" % int(self.isUL),
+                        "IS_MONITORED" : "'%s'" % int(self.is_monitored),
+                        "IS_FLARING" : "'0'",
+                        "XMLFILE" : "'%s'" % self.srcModel}
+    def _getSrcType(self):
+        sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
+               self.name)
+        return dbAccess.apply(sql, lambda cursor : [x[0] for x in cursor][0])
+    def _monitoredState(self):
         """On daily time scales, the monitored state of a non-DRP source
         depends only on the current flux and its state in the previous
-        interval in the 100 MeV to 300 GeV band. According to the DRP, we
-        only care about this value for daily and weekly monitoring."""
+        interval in the 100 MeV to 300 GeV band."""
         if (self.type == "DRP" 
             or (self.flux > self._upperThreshold and not self.isUL)):
             return True
+        # According to the DRP, we only care about this value for
+        # daily and weekly monitoring.
         if not self.frequency in ("daily", "weekly"):
             return False
         if self.frequency == "daily" and self.eband_id == _monitoringBand:
@@ -61,8 +75,8 @@ class SourceData(object):
         #
         sql = ("select INTERVAL_NUMBER from TIMEINTERVALS where " +
                "FREQUENCY = 'daily' and " +
-               "TSTART >= %i and " % os.environ['TSTART'] +
-               "TSTOP <= %i" % os.environ['TSTOP'])
+               "TSTART >= %i and " % int(os.environ['TSTART']) +
+               "TSTOP <= %i" % int(os.environ['TSTOP']))
         def getIntervals(cursor):
             intervals = [entry[0] for entry in cursor]
             # These should be continguous, so just need endpoints.
@@ -73,9 +87,11 @@ class SourceData(object):
                "EBAND_ID = %i and " % _monitoringBand +
                "FREQUENCY = 'daily' and " +
                "INTERVAL_NUMBER <= %i and INTERVAL_NUMBER >= %i" % ilims)
+        print "_monitoredState():"
+        print sql
         def getState(cursor):
             for entry in cursor:
-                if entry[0]:
+                if int(entry[0]):
                     return True
             return False
         return dbAccess.apply(sql, getState)
@@ -84,40 +100,59 @@ class SourceData(object):
             return False
         # Use the current flux value and the previous is_monitored
         # state to compute the current is_monitored state
-        previous_interval = int(self.interval_number) - 1
+        previous_interval = self.interval_number - 1
         sql = ("select IS_MONITORED from LIGHTCURVES WHERE " +
-               "PTSRC_NAME='%s' and " % src.name +
+               "PTSRC_NAME='%s' and " % self.name +
                "EBAND_ID=%i and " % _monitoringBand + 
                "INTERVAL_NUMBER=%i and " % previous_interval +
                "FREQUENCY='daily'")
         def getState(cursor):
             for entry in cursor:
                 return entry[0]
-        previous_state = dbAccess.apply(sql, getState)
+        previous_state = int(dbAccess.apply(sql, getState))
         if (previous_state and not self.isUL 
             and self.flux > self._lowerThreshold):
             return True
         else:
             return False
     def insertDbEntry(self):
-        eband_id = 
-        interval_number = os.environ['interval']
-        frequency = os.environ['frequency']
-        sql = (("insert into LIGHTCURVES (PTRSRC_NAME, EBAND_ID, " +
-                "INTERVAL_NUMBER, FREQUENCY, FLUX, ERROR, IS_UPPER_LIMIT, " +
-                "IS_MONITORED, IS_FLARING, XMLFILE) values ('%s', %s, " +
-                "%s, '%s', %e, %e, %i, %i, %i, '%s')")
-               % (self.name, eband_id, interval_number, frequency,
-                  self.flux, self.fluxerr, int(self.isUL), int(
-
+        keys = (",".join(self.pkDict.keys()) + "," +
+                ",".join(self.rowDict.keys()))
+        values = (",".join(["%s" % x for x in self.pkDict.values()]) + "," +
+                  ",".join(["%s" % x for x in self.rowDict.values()]))
+        sql = "insert into LIGHTCURVES (%s) values (%s)" % (keys, values)
+        print sql
+        try:
+            dbAccess.apply(sql)
+        except cx_Oracle.IntegrityError:
+            # Assume this entry already exists and this is a unique
+            # constraint PK violation. Update the entry instead.
+            self.updateDbEntry()
     def updateDbEntry(self):
-        variable = "flux_%i_%i" % (self.emin, self.emax)
-        dbEntry = DbEntry(self.name, variable, pars['start_time'],
-                          pars['stop_time'])
-        dbEntry.setValues(self.flux, self.fluxerr, isUpperLimit=self.isUL)
-        dbEntry.setXmlFile(self.srcModel)
-        dbEntry.write()
-        print "Writing database entry for %s." % self.name
-        print "%s = %e +/- %e" % (variable, self.flux, self.fluxerr)
-        print "time period: %s to %s" % (pars['start_time'], pars['stop_time'])
+        pk_condition = ' and '.join(["%s=%s" % (x, self.pkDict[x]) 
+                                     for x in self.pkDict])
+        assignments = ','.join(["%s=%s" % (x, self.rowDict[x]) 
+                                for x in self.rowDict])
+        sql = "update LIGHTCURVES set %s where %s" % (assignments, pk_condition)
+        print sql
+        dbAccess.apply(sql)
 
+if __name__ == '__main__':
+    os.environ['frequency'] = 'daily'
+    os.environ['TSTART'] = '257644800'
+    os.environ['TSTOP'] = '257731200'
+    
+    #src = "BM_OS319"
+    src = "Mrk 501"
+
+    os.environ['interval'] = '0'
+    foo = SourceData(src, 3e-6, 1e-7, "foo.xml")
+    foo.insertDbEntry()
+    
+    os.environ['interval'] = '1'
+    bar = SourceData(src, 3e-7, 2e-7, "bar.xml")
+    bar.insertDbEntry()
+
+    os.environ['interval'] = '2'
+    foobar = SourceData(src, 1e-7, 1e-7, "foobar.xml")
+    foobar.insertDbEntry()

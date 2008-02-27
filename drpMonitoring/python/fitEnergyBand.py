@@ -106,10 +106,11 @@ if __name__ == '__main__':
     results = fitEnergyBand(emin, emax, srcModel)
     
     if results is not None:
-        drp_list = drpSources.select(roi.ra, roi.dec, roi.radius)
-        drp_list.extend(blazars.select(roi.ra, roi.dec, roi.radius))
+        monitored_list = drpSources.select(roi.id)
+        monitored_list.extend(blazars.select(roi.id))
 
-        for src in drp_list:
+        print "Writing db table entries for "
+        for src in monitored_list:
             print src
             results[src].insertDbEntry()
             

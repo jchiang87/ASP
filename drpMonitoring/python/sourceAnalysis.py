@@ -45,12 +45,15 @@ srcModel = os.path.join(os.getcwd(), name + '_model.xml')
 results = fitEnergyBand(100, 300000, srcModel)
 
 #
-# Write the results to the LIGHTCURVES database tables.
+# Write the results to the LIGHTCURVES database tables. Here we select
+# only those sources to write for which this is the principal ROI as
+# given by its POINTSOURCES table ROI_ID entry.
 #
 if results is not None:
-    drp_list = drpSources.select(roi.ra, roi.dec, roi.radius)
-    drp_list.extend(blazars.select(roi.ra, roi.dec, roi.radius))
-    for src in drp_list:
+    monitored_list = drpSources.select(roi.id)
+    monitored_list.extend(blazars.select(roi.id))
+    print "Writing db table entries for "
+    for src in monitored_list:
         print src
         results[src].insertDbEntry()
 

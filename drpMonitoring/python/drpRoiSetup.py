@@ -20,7 +20,8 @@ class RoI(object):
         """The region name is constructed using self.name =
         'region%03i' % int(region)
         """
-        self.name = 'region%03i' % int(region)
+        self.id = int(region)
+        self.name = 'region%03i' % self.id
         self.ra, self.dec, self.radius, self.sourcerad = (ra, dec, radius,
                                                           sourcerad)
         

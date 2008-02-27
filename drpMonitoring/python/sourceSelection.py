@@ -93,7 +93,7 @@ for src in pg_srcs:
             add = False
     if add:
         name = "pgw_%04i" % src.id
-        xmldef = minidom.parseString(_xml_template % (name, src.ra, src.dec)).getElementsByTagName('source')[0]                                     
-        foo[name] = Source(xmldef)
+        doc = minidom.parseString(_xml_template % (name, src.ra, src.dec))
+        foo[name] = Source(doc.getElementsByTagName('source')[0])
 
 foo.writeTo('point_sources.xml')

@@ -16,46 +16,13 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
 from FitsNTuple import FitsNTuple
 from SourceData import SourceData
+from computeUpperLimit import computeUpperLimit
 
 gtselect = GtApp('gtselect')
 
 def currentRoi():
     id = int(os.environ['ROI_ID']) - 1
     return rois[id]
-
-def computeUpperLimit(like, source, parname='Integral', delta=2.71/2.,
-                      tmpfile='temp_model.xml'):
-    saved_pars = [par.value() for par in like.model.params]
-    par = like[source].funcs['Spectrum'].getParam(parname)
-    logLike0 = like()
-    x0 = par.value()
-    dx = par.error()
-    return x0 + 2*dx  # kluge for now
-#    if dx == 0:
-#        dx = x0
-#    xvals, dlogLike = [], []
-#    par.setFree(0)
-#    for x in num.arange(x0, x0 + 3*dx, 3*dx/30):
-#        xvals.append(x)
-#        par.setValue(x)
-#        like.logLike.syncSrcParams(source)
-#        try:
-#            like.fit(0)
-#        except RuntimeError:
-#            try:
-#                like.fit(0)
-#            except RuntimeError:
-#                like.logLike.restoreBestFit()
-#                pass
-#        dlogLike.append(like()-logLike0)
-#        if dlogLike[-1] > delta:
-#            break
-#    par.setFree(1)
-#    for value, param in zip(saved_pars, like.model.params):
-#        param.setValue(value)
-#    xx = ((delta - dlogLike[-2])/(dlogLike[-1] - dlogLike[-2])
-#          *(xvals[-1] - xvals[-2]) + xvals[-2])
-#    return xx*par.getScale()
 
 def fitEnergyBand(emin, emax, srcModel):
     gtselect['infile'] = currentRoi().name + '_events.fits'
@@ -80,7 +47,7 @@ def fitEnergyBand(emin, emax, srcModel):
                       irfs=irfs)
     like = UnbinnedAnalysis(obs, srcModel, 'Minuit')
     like.state(open("analysis_%i_%i.py" % (emin, emax), "w"))
-    
+
     ptsrcs = []
     for srcname in like.model.srcNames:
         if like.model[srcname].src.getType() == 'Point':
@@ -126,12 +93,13 @@ def fitEnergyBand(emin, emax, srcModel):
     return results
 
 if __name__ == '__main__':
-    from DrpSources import drpSources, blazars
+    from MonitoredSources import drpSources, blazars
     
     roi = currentRoi()
     os.chdir(roi.name)
-    
-    srcModel = os.path.join(os.getcwd(), roi.name + '_model_out.xml')
+
+    inputModel = "%s_%i_%i_model.xml" % (currentRoi().name, 100, 300000)
+    srcModel = os.path.join(os.getcwd(), inputModel)
     emin = float(os.environ['emin'])
     emax = float(os.environ['emax'])
 
@@ -144,4 +112,5 @@ if __name__ == '__main__':
         for src in drp_list:
             print src
             results[src].insertDbEntry()
-    
+            
+    os.system('chmod o+w *')

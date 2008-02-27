@@ -41,30 +41,6 @@ def readRois(outfile='rois.txt'):
         output.close()
     return apply(sql, cursorFunc)
 
-class PointSource(object):
-    def __init__(self, entry):
-        self.nhat = entry[10:13]
-        self.ra = entry[6]
-        self.dec = entry[7]
-        self.xml = entry[13].read()
-    def cos_sep(self, nhat):
-        return sum(nhat*self.nhat)
-
-def findPointSources(ra, dec, radius, srctype=None):
-    nhat = dircos(ra, dec)
-    mincos = num.cos(radius*num.pi/180.)
-    sql = "select * from POINTSOURCES"
-    if srctype:
-        sql += " where SOURCE_TYPE = '%s'" % srctype
-    def getPtsrcs(cursor):
-        srcs = {}
-        for entry in cursor:
-            src = PointSource(entry)
-            if src.cos_sep(nhat) > mincos:
-                srcs[entry[0]] = src
-        return srcs
-    return apply(sql, getPtsrcs)
-
 def inspectRois():
     rois = getDbObjects('ROIS')
 # repackage by primary key
@@ -82,14 +58,59 @@ def inspectRois():
                              (ptsrc, src.ra, src.dec,
                               num.arccos(src.cos_sep(nhat))*180./num.pi))
 
+class PointSource(object):
+    def __init__(self, entry):
+        self.roi_id = entry[2]
+        self.ra = entry[6]
+        self.dec = entry[7]
+        self.nhat = entry[10:13]
+        self.xml = entry[13].read()
+    def domElement(self):
+        return minidom.parseString(self.xml).getElementsByTagName('source')[0]
+    def cos_sep(self, nhat):
+        return sum(nhat*self.nhat)
+    def __repr__(self):
+        return "%s  %.3f  %.3f" % (self.name, self.ra, self.dec)
+
+class PointSourceDict(dict):
+    def __init__(self):
+        dict.__init__(self)
+    def select(self, roi_id):
+        my_sources = []
+        for source in self.keys():
+            if self[source].roi_id == roi_id:
+                my_sources.append(source)
+        return my_sources
+
+def findPointSources(ra, dec, radius, srctype=None):
+    nhat = dircos(ra, dec)
+    mincos = num.cos(radius*num.pi/180.)
+    sql = "select * from POINTSOURCES"
+    if srctype:
+        sql += " where SOURCE_TYPE = '%s'" % srctype
+    def getSources(cursor):
+        srcs = PointSourceDict()
+        for entry in cursor:
+            src = PointSource(entry)
+            if src.cos_sep(nhat) > mincos:
+                srcs[entry[0]] = src
+        return srcs
+    return apply(sql, getSources)
+
+class DiffuseSource(object):
+    def __init__(self, entry):
+        self.xml = entry[1].read()
+    def domElement(self):
+        return minidom.parseString(self.xml).getElementsByTagName('source')[0]
+
 def findDiffuseSources():
     "Read the xml model from the db tables for Diffuse Sources"
     sql = "select * from DIFFUSESOURCES"
     def cursorFunc(cursor):
         srcs = {}
         for entry in cursor:
-            if entry[2] != "F" and entry[2] != "f":
-                srcs[entry[0]] = entry[1].read()
+            if entry[2] != "F" and entry[2] != "f" and entry[2] != "0":
+                srcs[entry[0]] = DiffuseSource(entry)
         return srcs
     return apply(sql, cursorFunc)
 
@@ -103,13 +124,9 @@ def buildXmlModel(ra, dec, radius, outfile):
     doc = minidom.parseString(xmlModel)
     lib = doc.getElementsByTagName('source_library')[0]
     for src in ptsrcs:
-        xmldef = ptsrcs[src].xml
-        source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
-        lib.appendChild(source)
+        lib.appendChild(ptsrcs[src].domElement())
     for src in diffuse:
-        xmldef = diffuse[src]
-        source = minidom.parseString(xmldef).getElementsByTagName('source')[0]
-        lib.appendChild(source)
+        lib.appendChild(diffuse[src].domElement())
     xmlModel = cleanXml(doc)
     output = open(outfile, 'w')
     output.write(xmlModel.toxml() + "\n")

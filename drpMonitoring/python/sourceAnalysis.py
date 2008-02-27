@@ -42,20 +42,7 @@ gtdiffrsp.run()
 # monitoring state of the non-DRP sources.
 #
 srcModel = os.path.join(os.getcwd(), name + '_model.xml')
-results = fitEnergyBand(100, 300000, srcModel)
-
-#
-# Write the results to the LIGHTCURVES database tables. Here we select
-# only those sources to write for which this is the principal ROI as
-# given by its POINTSOURCES table ROI_ID entry.
-#
-if results is not None:
-    monitored_list = drpSources.select(roi.id)
-    monitored_list.extend(blazars.select(roi.id))
-    print "Writing db table entries for "
-    for src in monitored_list:
-        print src
-        results[src].insertDbEntry()
+results = fitEnergyBand(100, 300000, srcModel, roi)
 
 #
 # Query the db tables and write the energy bands that the pipeline

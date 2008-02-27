@@ -24,8 +24,8 @@ def currentRoi():
     id = int(os.environ['ROI_ID']) - 1
     return rois[id]
 
-def fitEnergyBand(emin, emax, srcModel):
-    gtselect['infile'] = currentRoi().name + '_events.fits'
+def fitEnergyBand(emin, emax, srcModel, roi):
+    gtselect['infile'] = roi.name + '_events.fits'
     gtselect['outfile'] = 'events_%i_%i.fits' % (emin, emax)
     gtselect['rad'] = 180
     gtselect['emin'] = emin
@@ -70,7 +70,7 @@ def fitEnergyBand(emin, emax, srcModel):
         except RuntimeError:
             pass
 
-    outputModel = "%s_%i_%i_model.xml" % (currentRoi().name, emin, emax)
+    outputModel = "%s_%i_%i_model.xml" % (roi.name, emin, emax)
     like.writeXml(outputModel)
 
     outputModel = os.path.join(os.getcwd(), outputModel)
@@ -90,6 +90,23 @@ def fitEnergyBand(emin, emax, srcModel):
             flux = computeUpperLimit(like, srcname)
             isUL = True
         results[srcname] = SourceData(srcname, flux, fluxerr, outputModel, isUL)
+
+    #
+    # Write the results to the LIGHTCURVES database tables. Here we
+    # select only those sources to write for which this is the
+    # principal ROI as given by its POINTSOURCES table ROI_ID entry.
+    #
+    monitored_list = drpSources.select(roi.id)
+    monitored_list.extend(blazars.select(roi.id))
+
+    print "Writing db table entries for "
+    for src in monitored_list:
+        print src
+        try:
+            results[src].insertDbEntry()
+        except KeyError:
+            print src, "not found in this ROI"
+
     return results
 
 if __name__ == '__main__':
@@ -103,15 +120,6 @@ if __name__ == '__main__':
     emin = float(os.environ['emin'])
     emax = float(os.environ['emax'])
 
-    results = fitEnergyBand(emin, emax, srcModel)
-    
-    if results is not None:
-        monitored_list = drpSources.select(roi.id)
-        monitored_list.extend(blazars.select(roi.id))
-
-        print "Writing db table entries for "
-        for src in monitored_list:
-            print src
-            results[src].insertDbEntry()
+    fitEnergyBand(emin, emax, srcModel, roi)
             
     os.system('chmod o+w *')

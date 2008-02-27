@@ -19,12 +19,13 @@ from FileStager import FileStager
 _version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
 _drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
 
-def launch_drp(interval, tstart, tstop, folder, output_dir,
+def launch_drp(interval, frequency, tstart, tstop, folder, output_dir,
                num_RoIs=30, debug=False):
     os.chdir(output_dir)
     args = {'OUTPUTDIR' : output_dir,
             'logicalPath' : folder,
             'interval' : interval,
+            'frequency' : frequency, 
             'TSTART' : tstart,
             'TSTOP' : tstop,
             'num_RoIs' : num_RoIs,
@@ -104,7 +105,8 @@ if __name__ == '__main__':
                         fileStager=fileStager):
         output_dir = createSubDir(interval, 'Daily',
                                   os.environ['DRPOUTPUTDIR'])
-        launch_drp(interval, tstart, tstop, folder, output_dir, debug=debug)
+        launch_drp(interval, 'daily', tstart, tstop, folder, 
+                   output_dir, debug=debug)
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Weekly')
@@ -113,4 +115,5 @@ if __name__ == '__main__':
                         fileStager=fileStager):
         output_dir = createSubDir(interval, 'Weekly',
                                   os.environ['DRPOUTPUTDIR'])
-        launch_drp(interval, tstart, tstop, folder, output_dir, debug=debug)
+        launch_drp(interval, 'weekly', tstart, tstop, folder, 
+                   output_dir, debug=debug)

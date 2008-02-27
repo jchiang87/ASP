@@ -27,11 +27,14 @@ def find_frequencies():
        return freqs
    return dbAccess.apply(sql, getFrequencies)
 
-def find_intervals():
+def find_intervals(frequency=None):
     """Find the most recent interval for each frequency from the
     FREQUENCIES table and compute the next interval for which the
     corresponding ASP task must be launched"""
-    frequencies = find_frequencies()
+    if frequency is None:
+        frequencies = find_frequencies()
+    else:
+        frequencies = (frequency, )
     next_intervals = {}
     for frequency in frequencies:
         sql = "SELECT * from TIMEINTERVALS where FREQUENCY='%s'" % frequency

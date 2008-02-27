@@ -143,5 +143,5 @@ if __name__ == '__main__':
 
         for src in drp_list:
             print src
-            results[src].updateDbEntry()
+            results[src].insertDbEntry()
     

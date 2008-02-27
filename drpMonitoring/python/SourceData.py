@@ -87,8 +87,6 @@ class SourceData(object):
                "EBAND_ID = %i and " % _monitoringBand +
                "FREQUENCY = 'daily' and " +
                "INTERVAL_NUMBER <= %i and INTERVAL_NUMBER >= %i" % ilims)
-        print "_monitoredState():"
-        print sql
         def getState(cursor):
             for entry in cursor:
                 if int(entry[0]):
@@ -121,7 +119,6 @@ class SourceData(object):
         values = (",".join(["%s" % x for x in self.pkDict.values()]) + "," +
                   ",".join(["%s" % x for x in self.rowDict.values()]))
         sql = "insert into LIGHTCURVES (%s) values (%s)" % (keys, values)
-        print sql
         try:
             dbAccess.apply(sql)
         except cx_Oracle.IntegrityError:
@@ -134,7 +131,6 @@ class SourceData(object):
         assignments = ','.join(["%s=%s" % (x, self.rowDict[x]) 
                                 for x in self.rowDict])
         sql = "update LIGHTCURVES set %s where %s" % (assignments, pk_condition)
-        print sql
         dbAccess.apply(sql)
 
 if __name__ == '__main__':

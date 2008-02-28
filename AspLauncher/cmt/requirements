@@ -1,0 +1,9 @@
+package AspLauncher
+version v0
+
+# $Id$
+
+use AspPolicy v* ASP
+use pyASP v* ASP
+
+apply_pattern wrapper_scripts

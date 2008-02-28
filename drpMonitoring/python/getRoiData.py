@@ -15,17 +15,17 @@ from parfile_parser import Parfile
 from search_Srcs import search_Srcs
 import readXml
 from drpDbAccess import findDiffuseSources
-from drpRoiSetup import rootpath, pars, rois
+from drpRoiSetup import rootpath, pars, currentRoi
 
 debug = False
 #debug = True
 
-id = int(os.environ['ROI_ID']) - 1  # This env var is set in DRP_monitoring.xml
-name = rois[id].name
-ra = rois[id].ra
-dec = rois[id].dec
-radius = rois[id].radius
-sourcerad = rois[id].sourcerad
+roi = currentRoi()
+name = roi.name
+ra = roi.ra
+dec = roi.dec
+radius = roi.radius
+sourcerad = roi.sourcerad
 zenmax = pars['zenmax']
     
 #

@@ -14,7 +14,7 @@
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
     <prerequisite name="logicalPath" type="string"/>
-    <prerequisite name="interval" type="int"/>
+    <prerequisite name="interval" type="integer"/>
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>

@@ -33,7 +33,7 @@ def updateRoi(id, **kwds):
 
 def readRois(outfile='rois.txt'):
     output = open(outfile, 'w')
-    sql = "select * from ROIS"
+    sql = "select * from ROIS order by ROI_ID ASC"
     def cursorFunc(cursor):
         for entry in cursor:
             pars = tuple([x for x in entry])
@@ -91,6 +91,8 @@ def findPointSources(ra, dec, radius, srctype=None):
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
+            if entry[4] == 'Other_FSP':  # skip Gino's test sources
+                continue
             src = PointSource(entry)
             if src.cos_sep(nhat) > mincos:
                 srcs[entry[0]] = src
@@ -109,7 +111,7 @@ def findDiffuseSources():
     def cursorFunc(cursor):
         srcs = {}
         for entry in cursor:
-            if entry[2] != "F" and entry[2] != "f" and entry[2] != "0":
+            if entry[2] == "0":
                 srcs[entry[0]] = DiffuseSource(entry)
         return srcs
     return apply(sql, cursorFunc)

@@ -23,6 +23,9 @@ def getMonitoringBand(emin=100, emax=300000):
 
 _monitoringBand = getMonitoringBand()
 
+class SourceTypeError(RuntimeError):
+    "Requested source is not in POINTSOURCES table"
+
 class SourceData(object):
     _upperThreshold = 2e-6
     _lowerThreshold = 2e-7
@@ -35,9 +38,9 @@ class SourceData(object):
         try:
             self.eband_id = int(os.environ['eband_id'])
         except KeyError:
-            print "SourceData: eband_id env var not set"
-            print ("Setting eband_id to " + "%i" % _monitoringBand + 
-                   " for 100 MeV to 300 GeV")
+            #print "SourceData: eband_id env var not set"
+            #print ("Setting eband_id to " + "%i" % _monitoringBand + 
+            #       " for 100 MeV to 300 GeV")
             self.eband_id = _monitoringBand
         self.interval_number = int(os.environ['interval'])
         self.frequency = os.environ['frequency']
@@ -55,7 +58,13 @@ class SourceData(object):
     def _getSrcType(self):
         sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
                self.name)
-        return dbAccess.apply(sql, lambda cursor : [x[0] for x in cursor][0])
+        try:
+            type = dbAccess.apply(sql, lambda curs : [x[0] for x in curs][0])
+            return type
+        except IndexError, message:
+            print sql
+            message = "Requested source, %s, is not in database" % self.name
+            raise SourceTypeError, message
     def _monitoredState(self):
         """On daily time scales, the monitored state of a non-DRP source
         depends only on the current flux and its state in the previous
@@ -107,7 +116,14 @@ class SourceData(object):
         def getState(cursor):
             for entry in cursor:
                 return entry[0]
-        previous_state = int(dbAccess.apply(sql, getState))
+        previous_state = dbAccess.apply(sql, getState)
+        #
+        # This will not be necessary once the is_monitored column is an integer.
+        #
+        if previous_state is None:
+            previous_state = 0
+        else:
+            previous_state = int(previous_state)
         if (previous_state and not self.isUL 
             and self.flux > self._lowerThreshold):
             return True
@@ -119,6 +135,8 @@ class SourceData(object):
         values = (",".join(["%s" % x for x in self.pkDict.values()]) + "," +
                   ",".join(["%s" % x for x in self.rowDict.values()]))
         sql = "insert into LIGHTCURVES (%s) values (%s)" % (keys, values)
+        print sql
+        print
         try:
             dbAccess.apply(sql)
         except cx_Oracle.IntegrityError:
@@ -131,6 +149,8 @@ class SourceData(object):
         assignments = ','.join(["%s=%s" % (x, self.rowDict[x]) 
                                 for x in self.rowDict])
         sql = "update LIGHTCURVES set %s where %s" % (assignments, pk_condition)
+        print sql
+        print
         dbAccess.apply(sql)
 
 if __name__ == '__main__':

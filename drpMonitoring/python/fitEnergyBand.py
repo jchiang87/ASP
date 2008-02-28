@@ -13,16 +13,13 @@ pipeline and run in parallel.
 import os, sys
 from GtApp import GtApp
 from UnbinnedAnalysis import *
-from drpRoiSetup import rootpath, pars, rois, output_dir
+from drpRoiSetup import pars, currentRoi
 from FitsNTuple import FitsNTuple
-from SourceData import SourceData
+from SourceData import SourceData, SourceTypeError
 from computeUpperLimit import computeUpperLimit
+from MonitoredSources import drpSources, blazars
 
 gtselect = GtApp('gtselect')
-
-def currentRoi():
-    id = int(os.environ['ROI_ID']) - 1
-    return rois[id]
 
 def fitEnergyBand(emin, emax, srcModel, roi):
     gtselect['infile'] = roi.name + '_events.fits'
@@ -89,7 +86,11 @@ def fitEnergyBand(emin, emax, srcModel, roi):
         if like.Ts(srcname) < 25:
             flux = computeUpperLimit(like, srcname)
             isUL = True
-        results[srcname] = SourceData(srcname, flux, fluxerr, outputModel, isUL)
+        try:
+            results[srcname] = SourceData(srcname, flux, fluxerr, 
+                                          outputModel, isUL)
+        except SourceTypeError:
+            pass
 
     #
     # Write the results to the LIGHTCURVES database tables. Here we
@@ -110,8 +111,6 @@ def fitEnergyBand(emin, emax, srcModel, roi):
     return results
 
 if __name__ == '__main__':
-    from MonitoredSources import drpSources, blazars
-    
     roi = currentRoi()
     os.chdir(roi.name)
 

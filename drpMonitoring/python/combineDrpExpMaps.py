@@ -10,14 +10,12 @@
 import os
 from combineExpMaps import combineExpMaps
 
-from drpRoiSetup import rootpath, pars, rois
+from drpRoiSetup import pars, currentRoi
 
 debug = False
 
-id = int(os.environ['ROI_ID']) - 1
-name = rois[id].name
-
-os.chdir(name)
+roi = currentRoi()
+os.chdir(roi.name)
 
 if debug:
     print "running combineExMaps"

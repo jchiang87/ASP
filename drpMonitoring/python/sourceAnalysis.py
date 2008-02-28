@@ -18,7 +18,6 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
 import databaseAccess as dbAccess
 from fitEnergyBand import fitEnergyBand, currentRoi
-from MonitoredSources import drpSources, blazars
 
 #
 # Move to working directory for the ROI of interest
@@ -31,7 +30,7 @@ os.chdir(roi.name)
 # L1Proc.
 #
 gtdiffrsp = GtApp('gtdiffrsp')
-gtdiffrsp['evfile'] = name + '_events.fits'
+gtdiffrsp['evfile'] = roi.name + '_events.fits'
 gtdiffrsp['scfile'] = pars['ft2file']
 gtdiffrsp['irfs'] = pars['rspfunc']
 gtdiffrsp['srcmdl'] = rootpath('diffuse_model.xml')
@@ -41,7 +40,7 @@ gtdiffrsp.run()
 # Fit the energy band (100, 300000) MeV to be used for determining the
 # monitoring state of the non-DRP sources.
 #
-srcModel = os.path.join(os.getcwd(), name + '_model.xml')
+srcModel = os.path.join(os.getcwd(), roi.name + '_model.xml')
 results = fitEnergyBand(100, 300000, srcModel, roi)
 
 #
@@ -53,7 +52,7 @@ def getEnergyBands(cursor):
     ids, emins, emaxs = [], [], []
     for entry in cursor:
         if not (entry[1]==100 and entry[2]==300000):
-            ids.append("%i", entry[0])
+            ids.append("%i" % entry[0])
             emins.append("%i" % entry[1])
             emaxs.append("%i" % entry[2])
     ids = ' '.join(ids)

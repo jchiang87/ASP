@@ -25,14 +25,21 @@ class RoI(object):
         self.ra, self.dec, self.radius, self.sourcerad = (ra, dec, radius,
                                                           sourcerad)
         
-class RoiList(list):
+class RoiDict(dict):
     def __init__(self, roiFile='rois.txt'):
+        dict.__init__(self)
         for reg, ra, dec, radius, sourcerad in zip(*read_data(roiFile)):
-            self.append(RoI(reg, ra, dec, radius, sourcerad))
+            id = int(reg)
+            self[id] = RoI(reg, ra, dec, radius, sourcerad)
 
 output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)
 
 rootpath = lambda x : os.path.join(output_dir, x)
 pars = Parfile('drp_pars.txt')
-rois = RoiList()
+rois = RoiDict()
+
+def currentRoi():
+    id = int(os.environ['ROI_ID'])
+    return rois[id]
+

@@ -52,8 +52,8 @@ def exposureSubMap(outputDir, debug=False):
 if __name__ == '__main__':
     pass
 ## include this code for backwards compatibility    
-#    from drpRoiSetup import rootpath, pars, rois
-#    id = int(os.environ['ROI_ID']) - 1
-#    outputDir = rois[id].name
+#    from drpRoiSetup import currentRoi
+#    roi = currentRoi()
+#    outputDir = roi.name
 #    exposureSubMap(outputDir, debug=False)
     

@@ -10,9 +10,9 @@ to be run in parallel.
 
 import os
 from exposureSubMap import exposureSubMap
-from drpRoiSetup import rootpath, pars, rois
+from drpRoiSetup import currentRoi
 
-id = int(os.environ['ROI_ID']) - 1
-outputDir = rois[id].name
+roi = currentRoi()
+outputDir = roi.name
 
 exposureSubMap(outputDir, debug=False)

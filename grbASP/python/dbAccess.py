@@ -74,11 +74,10 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
     apply(sql)
 
 def updateGrb(grb_id, **kwds):
-    sql_template = ("update GRB set %s = %s where GRB_ID = %i" 
-                    % ('%s', '%s', grb_id))
-    for key in kwds:
-        sql = sql_template % (key, kwds[key])
-        apply(sql)
+    assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
+    sql = ("update GRB set %s where GRB_ID = %i" 
+           % (','.join(assignments), grb_id))
+    apply(sql)
 
 def current_date():
     data = time.gmtime()

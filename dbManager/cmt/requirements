@@ -1,4 +1,4 @@
-package dbManagement
+package dbManager
 version v0
 
 # $Id$
@@ -8,6 +8,6 @@ use pyASP v* ASP
 use drpMonitoring v* ASP
 use grbASP v* ASP
 
-path_remove PYTHONPATH dbManagement
-path_append PYTHONPATH $(DBMANAGEMENTROOT)/$(BINDIR)
-path_append PYTHONPATH $(DBMANAGEMENTROOT)/python
+path_remove PYTHONPATH dbManager
+path_append PYTHONPATH $(DBMANAGERROOT)/$(BINDIR)
+path_append PYTHONPATH $(DBMANAGERROOT)/python

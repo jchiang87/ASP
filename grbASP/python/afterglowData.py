@@ -52,6 +52,9 @@ def getData(time, ra, dec, srcName, ft1, ft2, duration=5*3600, radius=15):
     srcModel[srcName].spatialModel.RA.value = ra
     srcModel[srcName].spatialModel.DEC.value = dec
     srcModel[srcName].spatialModel.setAttributes()
+    srcModel[srcName].spectrum.LowerLimit.value = 100
+    srcModel[srcName].spectrum.UpperLimit.max = 5e5
+    srcModel[srcName].spectrum.UpperLimit.value = 3e5
     srcModel.filename = srcName + '_afterglow_model.xml'
     srcModel.writeTo()
 

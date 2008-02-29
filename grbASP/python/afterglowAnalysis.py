@@ -10,6 +10,7 @@ import os
 from parfile_parser import Parfile
 from UnbinnedAnalysis import *
 from GrbAspConfig import grbAspConfig
+import dbAccess
 
 os.chdir(os.environ['OUTPUTDIR'])
 grbpars = Parfile(os.environ['GRBPARS'])
@@ -42,6 +43,19 @@ except:
 
 print like.model
 print 'TS value: ', like.Ts(grbName)
+
+sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % grbName
+def getId(cursor):
+    for item in cursor:
+        return item[0]
+    
+grb_id = dbAccess.apply(sql, getId)
+
+dbAccess.insertAfterglow(grb_id)
+
+flux = like[grbName].flux(100, 3e5)
+flux
+
 
 like.writeXml()
 

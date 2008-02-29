@@ -1,3 +1,15 @@
+"""
+@file insertSources.py
+@brief Read the xml file of DRP, Blazar, and diffuse sources and insert
+them into the POINTSOURCES and DIFFUSESOURCES tables.
+
+@author J. Chiang <jchiang@slac.stanford.edu>
+"""
+#
+# $Header$
+#
+
+import os
 import readXml
 import databaseAccess as dbAccess
 from AspHealPix import Healpix, SkyDir
@@ -35,32 +47,32 @@ def roi_id(ra, dec):
             my_roi = roi.ROI_ID
     return my_roi
 
-srcModel = readXml.SourceModel('AspSrcModel.xml')
-
-for name in srcModel.names():
-    src = srcModel[name]
-    xmldef = src.node.toxml().encode()
-    if src.type == 'PointSource':
-        ra, dec = src.spatialModel.RA.value, src.spatialModel.DEC.value
-        hpId = hp_id(ra, dec)
-        roiId = roi_id(ra, dec)
-        srcType = src.sourceType
-        specType = src.spectrum.type
-        nhat = dircos(ra, dec)
-        if srcType == 'DRP':
-            ispublic = 1
+def insertSources(srcModelFile):
+    srcModel = readXml.SourceModel(srcModelFile)
+    for name in srcModel.names():
+        src = srcModel[name]
+        xmldef = src.node.toxml().encode()
+        if src.type == 'PointSource':
+            ra, dec = src.spatialModel.RA.value, src.spatialModel.DEC.value
+            hpId = hp_id(ra, dec)
+            roiId = roi_id(ra, dec)
+            srcType = src.sourceType
+            specType = src.spectrum.type
+            nhat = dircos(ra, dec)
+            if srcType == 'DRP':
+                ispublic = 1
+            else:
+                ispublic = 0
+            sql = ("insert into POINTSOURCES (PTSRC_NAME, HEALPIX_ID, ROI_ID, "
+                   + "SOURCE_TYPE, SPECTRUM_TYPE, RA, DEC, ERROR_RADIUS, "
+                   + "POSITION_QUALITY, NX, NY, NZ, XML_MODEL, IS_OBSOLETE, "
+                   + "IS_PUBLIC) values ('%s', %i, %i, '%s', '%s', %f, %f, %f, "
+                   + "%f, %f, %f, %f, '%s', '%i', '%i')")
+            sql = sql % (name, hpId, roiId, srcType, specType, ra, dec, 0, -1,
+                         nhat[0], nhat[1], nhat[2], xmldef, 0, ispublic)
         else:
-            ispublic = 0
-        sql = ("insert into POINTSOURCES (PTSRC_NAME, HEALPIX_ID, ROI_ID, "
-               + "SOURCE_TYPE, SPECTRUM_TYPE, RA, DEC, ERROR_RADIUS, "
-               + "POSITION_QUALITY, NX, NY, NZ, XML_MODEL, IS_OBSOLETE, "
-               + "IS_PUBLIC) values ('%s', %i, %i, '%s', '%s', %f, %f, %f, "
-               + "%f, %f, %f, %f, '%s', '%i', '%i')")
-        sql = sql % (name, hpId, roiId, srcType, specType, ra, dec, 0, -1,
-                     nhat[0], nhat[1], nhat[2], xmldef, 0, ispublic)
-    else:
-        sql = ("insert into DIFFUSESOURCES " +
-               "(DIFFSRC_NAME, XML_MODEL, IS_OBSOLETE) " +
-               "values ('%s', '%s', '%i')")
-        sql = sql % (name, xmldef, 0)
-    dbAccess.apply(sql)
+            sql = ("insert into DIFFUSESOURCES " +
+                   "(DIFFSRC_NAME, XML_MODEL, IS_OBSOLETE) " +
+                   "values ('%s', '%s', '%i')")
+            sql = sql % (name, xmldef, 0)
+        dbAccess.apply(sql)

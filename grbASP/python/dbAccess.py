@@ -48,13 +48,21 @@ def deleteNotice(grb_id):
     sql = "delete from GCNNOTICES where GRB_ID = %i" % grb_id
     apply(sql)
 
+def deleteAfterglow(grb_id):
+    sql = "delete from GRBAFTERGLOW where GRB_ID = %i" % grb_id
+
 def deleteGrb(grb_id):
     deleteNotice(grb_id)
+    deleteAfterglow(grb_id)
     sql = "delete from GRB where GRB_ID = %i" % grb_id
     apply(sql)
 
 def insertGrb(grb_id):
-    sql = ("insert into GRB (GRB_ID) values (%i)" % grb_id)
+    sql = "insert into GRB (GRB_ID) values (%i)" % grb_id
+    apply(sql)
+
+def insertAfterglow(grb_id):
+    sql = "insert into GRBAFTERGLOW (GRB_ID) values (%i)" % grb_id
     apply(sql)
 
 def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
@@ -67,8 +75,8 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
             return
     sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
            + "NOTICEMET, RA, DEC, ERROR, ISUPDATE) values "
-#           + "(%i, '%s', SYSDATE, %i, %.5f, %.5f, %.5f, %i)"
-           + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, %.5f, %.5f, %.5f, %i)"
+           + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
+           + "%.5f, %.5f, %.5f, %i)"
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
               met, ra, dec, error, isUpdate))
     apply(sql)
@@ -76,6 +84,12 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
 def updateGrb(grb_id, **kwds):
     assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
     sql = ("update GRB set %s where GRB_ID = %i" 
+           % (','.join(assignments), grb_id))
+    apply(sql)
+
+def updateAfterglow(grb_id, **kwds):
+    assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
+    sql = ("update GRBAFTERGLOW set %s where GRB_ID = %i" 
            % (','.join(assignments), grb_id))
     apply(sql)
 

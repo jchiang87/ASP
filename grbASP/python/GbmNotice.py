@@ -9,8 +9,6 @@
 import numpy as num
 import pyASP
 
-_LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
-
 class GbmNotice(object):
     _id = {'BURST Name' : 'Name',
            'BURST Date' : 'Date',
@@ -45,7 +43,7 @@ class GbmNotice(object):
             self.__dict__[self._id[' '.join(fields[:2])]] = fields[-1]
             if fields[0] == 'Closest':
                 self.Closest_detectors = line.split('=')[-1].strip().split()
-    def offAxisAngle(self, ft2File=_LatFt2File):
+    def offAxisAngle(self, ft2File):
         self._getFt2(ft2File)
         indx = num.where(self.ft2.START > self.start_time)
         ii = indx[0][0]
@@ -56,7 +54,7 @@ class GbmNotice(object):
         my_dir = pyASP.SkyDir_interpolate(dir1, dir2, t1, t2,
                                           self.start_time)
         return my_dir.difference(pyASP.SkyDir(self.RA, self.DEC))*180./num.pi
-    def inSAA(self, ft2File =_LatFt2File):
+    def inSAA(self, ft2File):
         self._getFt2(ft2File)
         indx = num.where(self.ft2.START < self.start_time)
         ii = indx[0][-1]

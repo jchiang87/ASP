@@ -15,9 +15,7 @@ import dbAccess
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtbin = GtApp('gtbin', 'evtbin')
 
-_LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
-
-def extractLatData(gcnNotice, ft1File=_LatFt1File, duration=100, radius=15):
+def extractLatData(gcnNotice, ft1File, duration=100, radius=15):
     gtselect['infile'] = ft1File
     gtselect['outfile'] = gcnNotice.Name + '_LAT.fits'
     gtselect['ra'] = gcnNotice.RA

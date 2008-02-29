@@ -1,5 +1,5 @@
 """
-@brief Use gtfindsrc to refine the burst position based on a GCN Notice
+@brief Use gtfindsrc to refine the burst position based on a GCN Notice.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -14,14 +14,10 @@ from extractLatData import extractLatData
 from GtApp import GtApp
 import celgal
 
-# defaults for DC2 data
-_LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
-_LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
-
 gtfindsrc = GtApp('gtfindsrc', 'Likelihood')
 
-def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
-                   ft2Input=_LatFt2File, tsmap=True, duration=100,
+def refinePosition(gcn_notice, ft1Input, ft2Input, 
+                   extracted=False, tsmap=True, duration=100,
                    radius=15, irfs='DSS', optimizer='DRMNFB'):
     try:
         notice = GcnNotice(gcn_notice)
@@ -37,7 +33,7 @@ def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
         raise ValueError, ("Burst occurred while LAT was in the SAA.")
 
     if not extracted:
-        ft1_file, lc_file = extractLatData(notice, ft1File=ft1Input,
+        ft1_file, lc_file = extractLatData(notice, ft1Input, 
                                            duration=duration, radius=radius)
     else:
         ft1_file = notice.Name + '_LAT_2.fits'
@@ -94,6 +90,9 @@ def refinePosition(gcn_notice, extracted=False, ft1Input=_LatFt1File,
     notice.ts = ts
     return notice
 
+#
+# @todo Need to generalize this somehow.
+#
 def absFilePath(filename):
     abspath = os.path.abspath(filename)
     return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
@@ -119,8 +118,8 @@ if __name__ == '__main__':
     config = grbAspConfig.find(gcnNotice.start_time)
     print config
 
-    gcnNotice = refinePosition(gcnNotice, extracted=True, ft1Input=ft1File,
-                               ft2Input=ft2File, tsmap=True, 
+    gcnNotice = refinePosition(gcnNotice, ft1File, ft2File, 
+                               extracted=True, tsmap=True, 
                                duration=config.TIMEWINDOW,
                                radius=config.RADIUS,
                                irfs=config.IRFS,
@@ -133,6 +132,7 @@ if __name__ == '__main__':
                        INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
                        FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
                                                      '_LAT_2.fits'))
+
     parfile = '%s_pars.txt' % gcnNotice.Name
     pars = Parfile(parfile, fixed_keys=False)
     pars['name'] = gcnNotice.Name

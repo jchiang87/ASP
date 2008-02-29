@@ -21,9 +21,6 @@ import dbAccess
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
 
-_LatFt1File = '/nfs/farm/g/glast/u33/jchiang/DC2/FT1_merged_gti.fits'
-_LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
-
 def pl_integral(emin, emax, gamma):
     if gamma == 1:
         return num.log(emax/emin)
@@ -44,7 +41,7 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
     return num.array((flux, flux*fractionalError))
 
 def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
-                   ft1File=_LatFt1File, ft2File=_LatFt2File, irfs='DC2',
+                   ft1File=None, ft2File=None, irfs='DC2',
                    optimizer='Minuit'):
     try:
         gcnNotice = ra

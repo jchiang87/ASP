@@ -6,11 +6,15 @@
 # $Header$
 #
 
-import os
+import os, sys
 from parfile_parser import Parfile
 from UnbinnedAnalysis import *
 from GrbAspConfig import grbAspConfig
 import dbAccess
+
+def absFilePath(filename):
+    abspath = os.path.abspath(filename)
+    return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
 
 os.chdir(os.environ['OUTPUTDIR'])
 grbpars = Parfile(os.environ['GRBPARS'])
@@ -26,12 +30,23 @@ grbName = grbpars['name']
 afterglowFiles = grbName + '_afterglow_files'
 pars = Parfile(afterglowFiles)
 
+print "Using files: "
+print pars
+
+#
+# Perform Likelihood analysis
+#
+print "Running unbinned analysis..."
 obs = UnbinnedObs(pars['ft1File'], pars['ft2File'], expMap=pars['expmap'],
                   expCube=pars['expcube'], irfs=irfs)
 
+sys.stdout.flush()
+print "Creating UnbinnedAnalysis object..."
 like = UnbinnedAnalysis(obs, grbName + '_afterglow_model.xml', config.OPTIMIZER)
 
-like.thaw(6)
+sys.stdout.flush()
+print "likelihood state:"
+like.state()
 
 try:
     like.fit()
@@ -42,21 +57,64 @@ except:
         pass
 
 print like.model
-print 'TS value: ', like.Ts(grbName)
+
+TS_value = like.Ts(grbName)
+
+print 'TS value: ', TS_value
+
+like.writeXml()
+like.state(open(grbName + '_afterglow_analysis.py', 'w'))
 
 sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % grbName
 def getId(cursor):
     for item in cursor:
         return item[0]
     
-grb_id = dbAccess.apply(sql, getId)
+grb_id = int(dbAccess.apply(sql, getId))
 
-dbAccess.insertAfterglow(grb_id)
+try:
+    dbAccess.insertAfterglow(grb_id)
+except dbAccess.cx_Oracle.IntegrityError, message:
+    print message
 
-flux = like[grbName].flux(100, 3e5)
-flux
+flux = like[grbName].funcs['Spectrum'].params['Integral'].value()
+fluxerr = like[grbName].funcs['Spectrum'].params['Integral'].parameter.error()
 
+index = like[grbName].funcs['Spectrum'].params['Index'].value()
+indexerr = like[grbName].funcs['Spectrum'].params['Index'].parameter.error()
 
-like.writeXml()
+ra = like[grbName].funcs['Position'].params['RA'].value()
+dec = like[grbName].funcs['Position'].params['DEC'].value()
+
+xmlfile = absFilePath(like.srcModel)
+
+dbAccess.updateAfterglow(grb_id, FLUX=flux, FLUX_ERROR=fluxerr,
+                         PHOTON_INDEX=index, PHOTON_INDEX_ERROR=indexerr,
+                         RA=ra, DEC=dec, XML_FILE="'%s'" % xmlfile)
+
+#
+# import GtApp here since it imports py_facilities which does not
+# interact happily with pyLikelihood and causes core dumps.
+#
+from GtApp import GtApp
+
+#
+# Compute a simple light curve
+#
+gtselect = GtApp('gtselect')
+gtselect.run(evfile=pars['ft1File'], outfile='filtered_3deg.fits',
+             ra=grbpars['ra'], dec=grbpars['dec'], rad=3, coordSys='CEL')
+
+gtbin = GtApp('gtbin')
+gtbin.run(evfile=gtselect['outfile'], scfile=pars['ft2File'], 
+          outfile=grbName + '_afterglow_lc.fits',
+          algorithm='LC', tbinalg='LIN', tstart=grbpars['tstop'],
+          tstop=grbpars['tstop'] + config.AGTIMESCALE, 
+          dtime=config.AGTIMESCALE/100)
+
+gtexposure = GtApp('gtexposure')
+gtexposure.run(lcfile=gtbin['outfile'], scfile=pars['ft2File'],
+               rspfunc=config.IRFS, source_model_file=like.srcModel,
+               target_source=grbName)
 
 os.system('chmod 777 *')

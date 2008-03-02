@@ -8,6 +8,12 @@
 # $Header$
 #
 
+import os
+#
+# Need to set this so that pylab can write .matplotlib
+#
+os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
+
 import numpy as num
 import pylab
 import pyfits
@@ -119,11 +125,10 @@ def tsMap(grbName, fitsfile, ra, dec):
     pylab.close()
 
 if __name__ == '__main__':
-    import os
     import glob
     from parfile_parser import Parfile
     from GtApp import GtApp
-    import databaseAcces as dbAccess
+    import databaseAccess as dbAccess
 
     os.chdir(os.environ['OUTPUTDIR'])
 

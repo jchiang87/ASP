@@ -50,6 +50,7 @@ def deleteNotice(grb_id):
 
 def deleteAfterglow(grb_id):
     sql = "delete from GRBAFTERGLOW where GRB_ID = %i" % grb_id
+    apply(sql)
 
 def deleteGrb(grb_id):
     deleteNotice(grb_id)

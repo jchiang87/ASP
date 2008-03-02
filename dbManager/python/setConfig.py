@@ -51,8 +51,47 @@ smConfig = {"SM_CONFIG_ID": 0,
             "ST_VERSION" : "'v9r4p2'",
             "ASP_VERSION" : "'v2'"}
 
-keys = ",".join(smConfig.keys())
-values = ",".join(["%s" % x for x in smConfig.values()])
-sql = "insert into SOURCEMONITORINGCONFIG (%s) values (%s)" % (keys, values)
-print sql
-dbAccess.apply(sql)
+def insertSmConfig(config):
+    keys = ",".join(config.keys())
+    values = ",".join(["%s" % x for x in config.values()])
+    sql = "insert into SOURCEMONITORINGCONFIG (%s) values (%s)" % (keys, values)
+    print sql
+    try:
+        dbAccess.apply(sql)
+    except StandardError, message:
+        print "Standard Error caught: ", message
+
+insertSmConfig(smConfig)
+
+#
+# Set the initial TIMEINTERVALS
+#
+def insertInterval(id, freq, tstart, tstop):
+    sql_template = ("insert into TIMEINTERVALS (INTERVAL_NUMBER, FREQUENCY, "
+                    + "TSTART, TSTOP) values (%i, '%s', %i, %i)")
+    sql = sql_template % (id, freq, tstart, tstop)
+    dbAccess.apply(sql, connection=dbAccess.asp_dev)
+
+#
+# This is for AspSims test data
+#
+id = 1
+grbConfig['STARTDATE'] = date2met("2001-01-01")
+grbConfig['ENDDATE'] = date2met("2002-01-01")
+
+try:
+    GrbAspConfigManager.insertEntry(id)
+except StandardError, message:
+    print "StandardError caught: ", message
+
+GrbAspConfigManager.updateEntry(id, grbConfig)
+
+smConfig['SM_CONFIG_ID'] = 1
+smConfig['STARTDATE'] = date2met('2001-01-01')
+smConfig['ENDDATE'] = date2met('2002-01-01')
+insertSmConfig(smConfig)
+
+t0 = date2met('2001-01-01')
+insertInterval(0, 'six_hours', t0 - 6*3600, t0)
+insertInterval(0, 'daily', t0 - 86400, t0)
+insertInterval(0, 'weekly', t0 - 7*86400, t0)

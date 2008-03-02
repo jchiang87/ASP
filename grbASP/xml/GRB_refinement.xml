@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="3.7" type="Data">
+<task name="GRB_refinement" version="4.0" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -77,26 +77,32 @@
           <after process="refinePosition" status="SUCCESS"/>
       </depends>
    </process>
-   <process>
+   <process name="makeRefinementPlots">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
       </variables>
      <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
           batchOptions="-q short"/>
      <depends>
-       <after process="tsMap" status="SUCCESS">  
-       <after process="LatGrbSpectrum" status="SUCCESS">  
+       <after process="tsMap" status="SUCCESS"/>
+       <after process="LatGrbSpectrum" status="SUCCESS"/>
      </depends>
    </process>
    <process name='registerPlots'>
      <script><![CDATA[
      dataTypes = ('COUNTSMAP', 'SPECTRUM', 'LIGHTCURVE', 'ERRORCONTOURS')
-     files = ('countsMap.png', 'countsSpectra.png', 'lightCurve.png',
-              'positionErrorContours.png')
+     prefixes = ('countsMap', 'countsSpectra', 'lightCurve',
+                 'errorContours')
+     files = ['%s_%i.png' % (prefix, GRB_ID) for prefix in prefixes]
      for dataType, outfile in zip(dataTypes, files):
-         logicalPath = '/ASP/Results/GRB:%i/%s' % (GRB_ID, outfile)
+         attributes = 'nGrbId=%i' % GRB_ID
+         print attributes
+         logicalPath = '/ASP/Results/GRB/%s:%s' % (dataType, outfile)
+         print logicalPath
          filePath = '%s/%s' % (output_dir, outfile)
-         datacatalog.registerDataset(dataType, logicalPath, filePath)
+         print filePath
+         datacatalog.registerDataset(dataType, logicalPath, filePath, 
+                                     attributes)
       ]]></script>
      <depends>
        <after process="makeRefinementPlots" status="SUCCESS"/>

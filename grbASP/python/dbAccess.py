@@ -73,10 +73,10 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
             # This GCN Notice associated with this grb_id is already
             # in the database table.
             return
-    sql = ("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
-           + "NOTICEMET, RA, DEC, ERROR, ISUPDATE) values "
-           + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
-           + "%.5f, %.5f, %.5f, %i)"
+    sql = (("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
+            + "NOTICEMET, RA, DEC, ERROR, ISUPDATE) values "
+            + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
+            + "%.5f, %.5f, %.5f, %i)")
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
               met, ra, dec, error, isUpdate))
     apply(sql)

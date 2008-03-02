@@ -29,7 +29,7 @@ def refinePosition(gcn_notice, ft1Input, ft2Input,
                            + "> 70 degrees and so lies outside the "
                            + "nominal LAT FOV.")
 
-    if notice.inSAA():
+    if notice.inSAA(ft2Input):
         raise ValueError, ("Burst occurred while LAT was in the SAA.")
 
     if not extracted:
@@ -128,7 +128,8 @@ if __name__ == '__main__':
     dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
                        LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
                        ERROR_RADIUS=gcnNotice.pos_error,
-                       INITIAL_RA=gcnNotice.RA, INITIAL_DEC=gcnNotice.DEC,
+                       INITIAL_LAT_RA=gcnNotice.RA, 
+                       INITIAL_LAT_DEC=gcnNotice.DEC,
                        INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
                        FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
                                                      '_LAT_2.fits'))

@@ -77,20 +77,29 @@
           <after process="refinePosition" status="SUCCESS"/>
       </depends>
    </process>
+   <process>
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+      </variables>
+     <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
+          batchOptions="-q short"/>
+     <depends>
+       <after process="tsMap" status="SUCCESS">  
+       <after process="LatGrbSpectrum" status="SUCCESS">  
+     </depends>
+   </process>
    <process name='registerPlots'>
      <script><![CDATA[
      dataTypes = ('COUNTSMAP', 'SPECTRUM', 'LIGHTCURVE', 'ERRORCONTOURS')
      files = ('countsMap.png', 'countsSpectra.png', 'lightCurve.png',
               'positionErrorContours.png')
      for dataType, outfile in zip(dataTypes, files):
-         logicalPath = ('/ServiceChallenge/55Day/ASP/GRB_refinement/%i/%s' 
-                        % (GRB_ID, outfile))
+         logicalPath = '/ASP/Results/GRB:%i/%s' % (GRB_ID, outfile)
          filePath = '%s/%s' % (output_dir, outfile)
          datacatalog.registerDataset(dataType, logicalPath, filePath)
       ]]></script>
      <depends>
-       <after process="tsMap" status="SUCCESS"/>
-       <after process="LatGrbSpectrum" status="SUCCESS"/>
+       <after process="makeRefinementPlots" status="SUCCESS"/>
      </depends>
    </process>
 </task>

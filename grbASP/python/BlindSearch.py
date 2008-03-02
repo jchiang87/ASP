@@ -197,6 +197,7 @@ if __name__ == '__main__':
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
+    print ft1_files
     ft1_files = filter_versions(ft1_files)
     print "staging files:"
     for item in ft1_files:

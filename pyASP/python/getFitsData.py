@@ -13,6 +13,8 @@ from FileStager import FileStager
 def filter_versions(fitsfiles):
     """Filter the input file list so that only the most recent version 
     of each dataset is returned."""
+    if fitsfiles[0].find('_v') == -1:  # assume no versioning, so just return
+        return fitsfiles               # original list
     prefixes = {}
     for item in fitsfiles:
         tokens = item.split('_v')

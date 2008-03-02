@@ -35,7 +35,12 @@ class FileStager(object):
         if infile == outfile:
             raise RuntimeError, "Cannot have identical input & output filenames"
         return self.input(infile), self.output(outfile)
-    def input(self, infile):
+    def input(self, infileArg):
+        # Strip possible leading "+" in case the file hasn't been scanned.
+        # GPL.stageFiles code does not throw an exception if it is asked to
+        # stage a file that doesn't exist, yet it will return a valid path
+        # for the staged file.
+        infile = infileArg.strip('+')
         return self.stager.stageIn(infile)
     def output(self, outfile):
         return self.stager.stageOut(outfile)

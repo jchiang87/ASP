@@ -45,7 +45,7 @@
       # Find the location of the source list prepared by pgwave.
       #
       output = pipeline.createFile('pgwaveFileList')
-      query = 'DataType="PGWAVESOURCELIST" && nProcessId=%i' % pgwave_processId
+      query = 'DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' % pgwave_processId
       logicalPath = '/ASP/OpsSim2/FlareMonitoring/%s' % frequency
       datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
       datasetList.writeToFile(output, 1)

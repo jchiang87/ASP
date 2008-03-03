@@ -14,10 +14,10 @@ import os, sys
 from GtApp import GtApp
 from UnbinnedAnalysis import *
 from drpRoiSetup import pars, currentRoi
-from FitsNTuple import FitsNTuple
+import pyfits
 from SourceData import SourceData, SourceTypeError
 from computeUpperLimit import computeUpperLimit
-from MonitoredSources import drpSources, blazars
+import drpDbAccess
 
 gtselect = GtApp('gtselect')
 
@@ -29,9 +29,9 @@ def fitEnergyBand(emin, emax, srcModel, roi):
     gtselect['emax'] = emax
     gtselect.run()
 
-    foo = FitsNTuple(gtselect['outfile'])
-    if len(foo.TIME) == 0:
-        print "no events in this energy band, (%e, %e)" % (emin, emax)
+    foo = pyfits.open(gtselect['outfile'])
+    if foo[1].data is None:
+        print "No events in this energy band, (%e, %e)" % (emin, emax)
         return None
 
     irfs = pars['rspfunc']
@@ -68,7 +68,9 @@ def fitEnergyBand(emin, emax, srcModel, roi):
             pass
 
     outputModel = "%s_%i_%i_model.xml" % (roi.name, emin, emax)
-    like.writeXml(outputModel)
+    like.srcModel = outputModel
+    like.writeXml()
+    like.state(open("analysis_%i_%i.py" % (emin, emax), "w"))
 
     outputModel = os.path.join(os.getcwd(), outputModel)
 
@@ -97,8 +99,7 @@ def fitEnergyBand(emin, emax, srcModel, roi):
     # select only those sources to write for which this is the
     # principal ROI as given by its POINTSOURCES table ROI_ID entry.
     #
-    monitored_list = drpSources.select(roi.id)
-    monitored_list.extend(blazars.select(roi.id))
+    monitored_list = drpDbAccess.findPointSources(0, 0, 180).select(roi.id)
 
     print "Writing db table entries for "
     for src in monitored_list:

@@ -16,8 +16,8 @@ def computeUpperLimit(like, source, parname='Integral', delta=2.71/2.,
     saved_pars = [par.value() for par in like.model.params]
     par = like[source].funcs['Spectrum'].getParam(parname)
     logLike0 = like()
-    x0 = par.value()
-    dx = par.error()
+    x0 = par.getTrueValue()
+    dx = par.error()*par.getScale()
     return x0 + 2*dx  # kluge for now
 
 # The implementation below does the right thing for simple source

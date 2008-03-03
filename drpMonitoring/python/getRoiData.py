@@ -14,7 +14,6 @@ from combineExpMaps import writeExpMapBounds
 from parfile_parser import Parfile
 from search_Srcs import search_Srcs
 import readXml
-from drpDbAccess import findDiffuseSources
 from drpRoiSetup import rootpath, pars, currentRoi
 
 debug = False
@@ -82,23 +81,18 @@ gtltcube.run(evfile=gtmktime['outfile'], scfile=pars['ft2file'],
 # Build the xml model by using the point source model derived in
 # sourceSelection process
 #
-sourceModel = '../point_sources.xml'
+sourceModel = rootpath('point_sources.xml')
 modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, sourcerad)
 outputModel = name + '_ptsrcs_model.xml'
-model = search_Srcs(sourceModel, modelRequest, outputModel)
-
-diffuseSources = findDiffuseSources()
-print "Found from DiffuseSources db table:"
-for item in diffuseSources:
-    print item
+search_Srcs(sourceModel, modelRequest, outputModel)
 
 srcModel = readXml.SourceModel(outputModel)
-GalProp = readXml.Source(diffuseSources["Galactic Diffuse"].domElement())
-EGDiffuse = readXml.Source(diffuseSources["Extragalactic Diffuse"].domElement())
-srcModel['Galactic Diffuse'] = GalProp
-srcModel['Galactic Diffuse'].spectrum.Value.free = 1
-srcModel['Extragalactic Diffuse'] = EGDiffuse
-srcModel['Extragalactic Diffuse'].spectrum.Prefactor.free = 1
+
+diffModel = readXml.SourceModel(rootpath('diffuse_model.xml'))
+for item in diffModel.names():
+    print item
+    srcModel[item] = diffModel[item]
+
 srcModel.filename = name + '_model.xml'
 srcModel.writeTo()
 

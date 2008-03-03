@@ -58,13 +58,34 @@ def inspectRois():
                              (ptsrc, src.ra, src.dec,
                               num.arccos(src.cos_sep(nhat))*180./num.pi))
 
+def defaultPtSrcXml(name, ra, dec):
+    xml_template = """<source name="%s" type="PointSource">
+  <spectrum type="PowerLaw2">
+    <parameter free="1" max="1000.0" min="1e-05" name="Integral" scale="1e-06" value="1"/>
+    <parameter free="1" max="-1.5" min="-5.0" name="Index" scale="1.0" value="-2"/>
+    <parameter free="0" max="200000.0" min="20.0" name="LowerLimit" scale="1.0" value="20.0"/>
+    <parameter free="0" max="200000.0" min="20.0" name="UpperLimit" scale="1.0" value="200000.0"/>
+  </spectrum>
+  <spatialModel type="SkyDirFunction">
+    <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="%.3f"/>
+    <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="%.3f"/>
+  </spatialModel>
+</source>
+"""
+    return xml_template % (name, ra, dec)
+
 class PointSource(object):
     def __init__(self, entry):
+        self.name = entry[0]
         self.roi_id = entry[2]
         self.ra = entry[6]
         self.dec = entry[7]
         self.nhat = entry[10:13]
-        self.xml = entry[13].read()
+        try:
+            self.xml = entry[13].read()
+        except AttributeError:
+            # This entry has no xml definition, so use default
+            self.xml = defaultPtSrcXml(self.name, self.ra, self.dec)
     def domElement(self):
         return minidom.parseString(self.xml).getElementsByTagName('source')[0]
     def cos_sep(self, nhat):
@@ -91,8 +112,8 @@ def findPointSources(ra, dec, radius, srctype=None):
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
-            if entry[4] == 'Other_FSP':  # skip Gino's test sources
-                continue
+#            if entry[4] == 'Other_FSP':  # skip Gino's test sources
+#                continue
             src = PointSource(entry)
             if src.cos_sep(nhat) > mincos:
                 srcs[entry[0]] = src

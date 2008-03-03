@@ -51,9 +51,9 @@ class SourceData(object):
                        "FREQUENCY" : "'%s'" % self.frequency}
         self.rowDict = {"FLUX" : self.flux,
                         "ERROR" : self.fluxerr,
-                        "IS_UPPER_LIMIT" : "'%s'" % int(self.isUL),
-                        "IS_MONITORED" : "'%s'" % int(self.is_monitored),
-                        "IS_FLARING" : "'0'",
+                        "IS_UPPER_LIMIT" : int(self.isUL),
+                        "IS_MONITORED" : int(self.is_monitored),
+                        "IS_FLARING" : 0,
                         "XMLFILE" : "'%s'" % self.srcModel}
     def _getSrcType(self):
         sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
@@ -90,7 +90,11 @@ class SourceData(object):
             intervals = [entry[0] for entry in cursor]
             # These should be continguous, so just need endpoints.
             return min(intervals), max(intervals)
-        ilims = dbAccess.apply(sql, getIntervals)
+        try:
+            ilims = dbAccess.apply(sql, getIntervals)
+        except StandardError, message:
+            print sql
+            raise StandardError, message
         sql = ("select IS_MONITORED from LIGHTCURVES where " +
                "PTSRC_NAME = '%s' and " % self.name + 
                "EBAND_ID = %i and " % _monitoringBand +

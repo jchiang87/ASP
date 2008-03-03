@@ -13,22 +13,43 @@ from xml.dom import minidom
 from read_data import read_data
 from readXml import SourceModel, Source
 from cleanXml import cleanXml
-from drpDbAccess import findPointSources
+import databaseAccess as dbAccess
+from drpDbAccess import findPointSources, defaultPtSrcXml
 from celgal import celgal, dist
 
-_xml_template = """<source name="%s" type="PointSource">
-  <spectrum type="PowerLaw2">
-    <parameter free="1" max="1000.0" min="1e-05" name="Integral" scale="1e-06" value="1"/>
-    <parameter free="1" max="0.0" min="-5.0" name="Index" scale="1.0" value="-2"/>
-    <parameter free="0" max="200000.0" min="20.0" name="LowerLimit" scale="1.0" value="20.0"/>
-    <parameter free="0" max="200000.0" min="20.0" name="UpperLimit" scale="1.0" value="200000.0"/>
-  </spectrum>
-  <spatialModel type="SkyDirFunction">
-    <parameter free="0" max="360.0" min="-360.0" name="RA" scale="1.0" value="%.3f"/>
-    <parameter free="0" max="90.0" min="-90.0" name="DEC" scale="1.0" value="%.3f"/>
-  </spatialModel>
-</source>
-"""
+class Roi(object):
+    def __init__(self, ra, dec, rad, sr):
+        self.ra, self.dec = ra, dec
+        self.rad, self.sr = rad, sr
+
+class RoiIds(dict):
+    def __init__(self, roiFile='rois.txt'):
+        for id, ra, dec, rad, sr in zip(*read_data(roiFile)):
+            self[id] = Roi(ra, dec, rad, sr)
+    def __call__(self, ra, dec):
+        ids = self.keys()
+        myId = ids[0]
+        mindist = dist((self[myId].ra, self[myId].dec), (ra, dec))
+        for id in ids[1:]:
+            curDist = dist((self[id].ra, self[id].dec), (ra, dec))
+            if curDist < mindist:
+                myId = id
+                mindist = curDist
+        if mindist < self[myId].sr:
+            return myId
+        return None
+
+roiIds = RoiIds()
+
+def assignNullRois():
+    sql = "select PTSRC_NAME, ra, dec from POINTSOURCES where ROI_ID IS NULL"
+    srcs = dbAccess.apply(sql, lambda curs : [entry[:3] for entry in curs])
+    for src in srcs:
+        id = roiIds(src[1], src[2])
+        if id is not None:
+            sql = ("update POINTSOURCES set ROI_ID=%i where PTSRC_NAME='%s'" 
+                   % (id, src[0]))
+            dbAccess.apply(sql)
 
 def getXmlModel():
     ptsrcs = findPointSources(0, 0, 180)
@@ -50,8 +71,13 @@ class PgwaveSource(object):
     def __init__(self, line):
         data = line.split()
         self.id = int(data[0])
-        self.l, self.b = float(data[3]), float(data[4])
-        self.ra, self.dec = self._converter.cel((self.l, self.b))
+        #
+        # Need to be careful here.  pgwave .list output had been
+        # mislabeled as RA, Dec when it really was l, b.  Now it
+        # appears to give correct data.
+        #
+        self.ra, self.dec = float(data[3]), float(data[4])
+        self.l, self.b = self._converter.gal((self.ra, self.dec))
         self.snr = float(data[5])
     def dist(self, xmlsrc):
         ra = xmlsrc.spatialModel.RA.value
@@ -59,11 +85,13 @@ class PgwaveSource(object):
         return dist((self.ra, self.dec), (ra, dec))
 
 if __name__ == '__main__':
-#    from GtApp import GtApp
+    os.chdir(os.environ['OUTPUTDIR'])
+
+    # Ensure every source in the POINTSOURCES table has an ROI_ID if
+    # it is in a source region.
+    assignNullRois()
 
     pgwaveSrcList = open('pgwaveFileList').readlines()[0].strip().strip('+')
-
-    os.chdir(os.environ['OUTPUTDIR'])
 
     xmlModel = getXmlModel()
 
@@ -72,32 +100,27 @@ if __name__ == '__main__':
     output.write(xmlModel.toxml() + "\n")
     output.close()
 
-    foo = SourceModel(outfile)
-
-#    gtbin = GtApp('gtbin')
-#    gtbin['evfile'] = 'time_filtered_events.fits'
-#    gtbin['outfile'] = 'cmap.fits'
-#    gtbin['algorithm'] = 'CMAP'
-#    gtbin.run(nxpix=720, nypix=360, binsz=0.5, coordsys='GAL',
-#              xref=0, yref=0, axisrot=0, proj='CAR')
-#
-#    pgwave = GtApp('pgwave2D', 'pgwave')
-#    pgwave['input_file'] = gtbin['outfile']
-#    pgwave['bgk_choise'] = "n"
-#    pgwave['circ_square'] = "s"
-#    pgwave.run(kappa=5)
+    srcModel = SourceModel(outfile)
 
     pg_srcs = [PgwaveSource(line) for line in open(pgwaveSrcList) 
                if line.find("#")==-1]
 
-    for src in pg_srcs:
-        add = True
-        for item in foo.names():
-            if src.dist(foo[item]) < 0.5:
-                add = False
-        if add:
-            name = "pgw_%04i" % src.id
-            doc = minidom.parseString(_xml_template % (name, src.ra, src.dec))
-            foo[name] = Source(doc.getElementsByTagName('source')[0])
+    def srcPosCoincidence(src, srcModel, tol=0.5):
+        for item in srcModel.names():
+            if src.dist(srcModel[item]) < tol:
+                return True
+        return False
 
-    foo.writeTo('point_sources.xml')
+    for src in pg_srcs:
+        if not srcPosCoincidence(src, srcModel):
+            name = "pgw_%04i" % src.id
+            doc = minidom.parseString(defaultPtSrcXml(name, src.ra, src.dec))
+            srcModel[name] = Source(doc.getElementsByTagName('source')[0])
+
+    #
+    # Limit the photon indices to < -1.5:
+    #
+    for src in srcModel.names():
+        srcModel[src].spectrum.Index.max = -1.5
+
+    srcModel.writeTo('point_sources.xml')

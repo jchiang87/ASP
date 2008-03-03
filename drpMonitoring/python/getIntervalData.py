@@ -40,6 +40,11 @@ def create_parfile(tstart, parfilename='drp_pars.txt'):
 
 debug = False
 
+#
+# Copy the pgwave source list file to the output directory.
+#
+shutil.copy('pgwaveFileList', os.environ['OUTPUTDIR'])
+
 output_dir = os.environ['OUTPUTDIR']
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
 fileStager = FileStager(process_id, stageArea=output_dir, cleanup=False)
@@ -123,7 +128,8 @@ try:
     dbAccess.apply(sql)
 except dbAccess.cx_Oracle.IntegrityError, message:
     #
-    # Check to see if this interval is already in the table
+    # Check to see if this interval is already in the table. If so,
+    # proceed anyways.  This is useful for rollbacks.
     #
     sql = ("select tstart, tstop from TIMEINTERVALS where " +
            "INTERVAL_NUMBER=%i and FREQUENCY='%s'" % (inum, frequency))

@@ -51,6 +51,7 @@ def getStagedFileList(filelist, output_dir=None, fileStager=None):
         # when the FileStager object goes out of scope.
         #
         fileStager = FileStager('', stageArea=output_dir, cleanup=False)
+    print "getStagedFileList: opening", filelist
     infiles = fileStager.infiles([line.strip() for line in open(filelist)])
     fitsfiles = []
     for item in infiles:

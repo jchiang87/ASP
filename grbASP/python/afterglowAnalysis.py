@@ -63,14 +63,17 @@ TS_value = like.Ts(grbName)
 print 'TS value: ', TS_value
 
 like.writeXml()
+spectrumFile = grbName + '_afterglow_spec.fits'
+like.writeCountsSpectra(spectrumFile)
 like.state(open(grbName + '_afterglow_analysis.py', 'w'))
 
-sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % grbName
-def getId(cursor):
-    for item in cursor:
-        return item[0]
-    
-grb_id = int(dbAccess.apply(sql, getId))
+#sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % grbName
+#def getId(cursor):
+#    for item in cursor:
+#        return item[0]
+#    
+#grb_id = int(dbAccess.apply(sql, getId))
+grb_id = int(os.path.basename(os.getcwd()))
 
 try:
     dbAccess.insertAfterglow(grb_id)
@@ -90,7 +93,8 @@ xmlfile = absFilePath(like.srcModel)
 
 dbAccess.updateAfterglow(grb_id, FLUX=flux, FLUX_ERROR=fluxerr,
                          PHOTON_INDEX=index, PHOTON_INDEX_ERROR=indexerr,
-                         RA=ra, DEC=dec, XML_FILE="'%s'" % xmlfile)
+                         RA=ra, DEC=dec, XML_FILE="'%s'" % xmlfile,
+                         SPECTRUMFILE="'%s'" % spectrumFile)
 
 #
 # import GtApp here since it imports py_facilities which does not
@@ -103,7 +107,8 @@ from GtApp import GtApp
 #
 gtselect = GtApp('gtselect')
 gtselect.run(evfile=pars['ft1File'], outfile='filtered_3deg.fits',
-             ra=grbpars['ra'], dec=grbpars['dec'], rad=3, coordSys='CEL')
+             ra=grbpars['ra'], dec=grbpars['dec'], rad=3, coordSys='CEL',
+             emin=100, emax=3e5)
 
 gtbin = GtApp('gtbin')
 gtbin.run(evfile=gtselect['outfile'], scfile=pars['ft2File'], 
@@ -115,6 +120,9 @@ gtbin.run(evfile=gtselect['outfile'], scfile=pars['ft2File'],
 gtexposure = GtApp('gtexposure')
 gtexposure.run(lcfile=gtbin['outfile'], scfile=pars['ft2File'],
                rspfunc=config.IRFS, source_model_file=like.srcModel,
-               target_source=grbName)
+               target_source=grbName, emin=100, emax=3e5)
+
+
+dbAccess.updateAfterglow(grb_id, LIGHTCURVEFILE="'%s'" % gtbin['outfile'])
 
 os.system('chmod 777 *')

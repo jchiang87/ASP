@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="4.0" type="Data">
+<task name="GRB_refinement" version="4.1" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -88,7 +88,7 @@
        <after process="LatGrbSpectrum" status="SUCCESS"/>
      </depends>
    </process>
-   <process name='registerPlots'>
+   <process name="registerPlots">
      <script><![CDATA[
      dataTypes = ('COUNTSMAP', 'SPECTRUM', 'LIGHTCURVE', 'ERRORCONTOURS')
      prefixes = ('countsMap', 'countsSpectra', 'lightCurve',
@@ -106,6 +106,13 @@
       ]]></script>
      <depends>
        <after process="makeRefinementPlots" status="SUCCESS"/>
+     </depends>
+   </process>
+   <process name="syncDataViewer">
+     <job executable="${GRBASPROOT}/${BINDIR}/syncDataViewer.sh"
+          batchOptions="-q short"/>
+     <depends>
+       <after process="registerPlots" status="SUCCESS"/>
      </depends>
    </process>
 </task>

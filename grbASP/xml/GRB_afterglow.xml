@@ -5,9 +5,9 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="4.8" type="Data">
+<task name="GRB_afterglow" version="5.0" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r3p1"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <prerequisites>
@@ -96,5 +96,45 @@
     </depends>
   </process>
 
+  <process name="makeAfterglowPlots">
+    <job executable="${GRBASPROOT}/${BINDIR}/makeAfterglowPlots.sh"
+         batchOptions=" -q short " allocationGroup="glastdata" />
+    <depends>
+      <after process="afterglowAnalysis" status="SUCCESS"/>
+    </depends>
+  </process>
+
+  <process name="registerPlots">
+    <script>
+      <![CDATA[
+        priorProcess = pipeline.getProcessInstance("makeAfterglowPlots")
+        grb_id = priorProcess.getVariable('GRB_ID')
+        dataTypes = ('SPECTRUM', 'LIGHTCURVE')
+        prefixes = ('countsSpectra', 'lightCurve')
+        files = ['%s_afterglow_%i.png' % (prefix, grb_id)
+                 for prefix in prefixes]
+        for dataType, outfile in zip(dataTypes, files):
+            attributes = 'nGrbId=%i' % grb_id
+            print attributes
+            logicalPath = '/ASP/Results/GRB/%s:%s' % (dataType, outfile)
+            print logicalPath
+            filePath = '%s/%s' % (output_dir, outfile)
+            print filePath
+            datacatalog.registerDataset(dataType, logicalPath, filePath, 
+                                        attributes)
+       ]]>
+    </script>
+    <depends>
+      <after process="makeAfterglowPlots" status="SUCCESS"/>
+    </depends>
+  </process>
+
+  <process name="syncDataViewer">
+    <job executable="${GRBASPROOT}/${BINDIR}/syncDataViewer.sh"
+         batchOptions="-q short"/>
+    <depends>
+      <after process="registerPlots" status="SUCCESS"/>
+    </depends>
+  </process>
 </task> <!-- GRB_afterglow -->
 </pipeline>

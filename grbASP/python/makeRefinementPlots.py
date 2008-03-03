@@ -40,7 +40,7 @@ def plotCircle(ra, dec, radius, color='r'):
     pylab.plot([ra], [dec], color+'+', markersize=10)
     pylab.plot(xx, yy, color+'-')
 
-def countsMap(grbName, grb_id, cmapfile, pos, init_pos):
+def countsMap(grbName, grb_id, cmapfile, pos, init_pos, outfile=None):
     cmap = pyfits.open(cmapfile)
     axisRange = getAxisRange(cmap[0].header)
     pylab.imshow(cmap[0].data, interpolation='nearest', 
@@ -54,15 +54,16 @@ def countsMap(grbName, grb_id, cmapfile, pos, init_pos):
     pylab.ylabel('Dec (deg)')
     pylab.title('Counts Map')
     #pylab.show()
-    #pylab.savefig(grbName+'_cmap.png')
-    pylab.savefig('countsMap_%i.png' % grb_id)
+    if outfile is None:
+        outfile = 'countsMap_%i.png' % grb_id
+    pylab.savefig(outfile)
     pylab.close()
 
 def oplot_errors(x, y, yerr):
     for xx, yy, err in zip(x, y, yerr):
         pylab.plot([xx, xx], [yy-yerr, yy+yerr], 'k-')
         
-def countsSpectra(grbName, grb_id, spectrumfile):
+def countsSpectra(grbName, grb_id, spectrumfile, outfile=None):
     counts = FitsNTuple(spectrumfile)
     ebounds = FitsNTuple(spectrumfile, 'EBOUNDS')
     energies = num.sqrt(ebounds.E_MIN*ebounds.E_MAX)
@@ -70,21 +71,25 @@ def countsSpectra(grbName, grb_id, spectrumfile):
     pylab.loglog(energies, counts.ObsCounts, 'k+', markersize=10)
     oplot_errors(energies, counts.ObsCounts, num.sqrt(counts.ObsCounts))
 
+    modelSum = num.zeros(len(counts.ObsCounts))
     for item in counts.names:
         if item != 'ObsCounts':
-            pylab.plot(energies, counts.__dict__[item], 'k-')
+            modelSum += counts.__dict__[item]
+            pylab.plot(energies, counts.__dict__[item], 'k--')
+    pylab.plot(energies, modelSum, 'k-')
 
     pylab.xlabel('Energy (MeV)')
     pylab.ylabel('Counts / bin')
     pylab.title('Counts Spectra')
     #pylab.show()
-    #pylab.savefig(grbName + '_cspec.png')
-    pylab.savefig('countsSpectra_%i.png' % grb_id)
+    if outfile is None:
+        outfile = 'countsSpectra_%i.png' % grb_id
+    pylab.savefig(outfile)
     pylab.close()
 
 def createHist(xvals, xmin, xmax, nx=50):
     xstep = (xmax - xmin)/nx
-    xx = num.arange(xmin, xmax, xstep) + xstep/2
+    xx = num.arange(xmin, xmax, xstep)
     bins = num.zeros(nx)
     for val in xvals:
         indx = int((val - xmin)/xstep)
@@ -95,7 +100,7 @@ def createHist(xvals, xmin, xmax, nx=50):
                 bins[-1] += 1
     return xx, bins
 
-def lightCurve(grbName, grb_id, ft1file):
+def lightCurve(grbName, grb_id, ft1file, outfile=None):
     ft1 = FitsNTuple(ft1file)
     tvals = ft1.TIME - grb_id
     xx, yy = createHist(tvals, min(tvals), max(tvals))
@@ -105,11 +110,12 @@ def lightCurve(grbName, grb_id, ft1file):
     pylab.ylabel('entries / bin')
     pylab.title('Light Curve')
     #pylab.show()
-    #pylab.savefig(grbName + '_lc.png')
-    pylab.savefig('lightCuve_%i.png' % grb_id)
+    if outfile is None:
+        outfile = 'lightCurve_%i.png' % grb_id
+    pylab.savefig(outfile)
     pylab.close()
 
-def tsMap(grbName, grb_id, fitsfile, ra, dec):
+def tsMap(grbName, grb_id, fitsfile, ra, dec, outfile=None):
     ts = pyfits.open(fitsfile)
     axisRange = getAxisRange(ts[0].header)
     levels = max(ts[0].data.flat) - num.array((2.31, 4.61, 9.21))
@@ -120,8 +126,9 @@ def tsMap(grbName, grb_id, fitsfile, ra, dec):
     pylab.ylabel('Dec (deg)')
     pylab.title('Error Contours')
     #pylab.show()
-    #pylab.savefig(grbName + '_tsmap.png')
-    pylab.savefig('errorContours_%i.png' % grb_id)
+    if outfile is None:
+        outfile = 'errorContours_%i.png' % grb_id
+    pylab.savefig(outfile)
     pylab.close()
 
 if __name__ == '__main__':

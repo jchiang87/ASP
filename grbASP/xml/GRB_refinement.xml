@@ -108,12 +108,5 @@
        <after process="makeRefinementPlots" status="SUCCESS"/>
      </depends>
    </process>
-   <process name="syncDataViewer">
-     <job executable="${GRBASPROOT}/${BINDIR}/syncDataViewer.sh"
-          batchOptions="-q short"/>
-     <depends>
-       <after process="registerPlots" status="SUCCESS"/>
-     </depends>
-   </process>
 </task>
 </pipeline>

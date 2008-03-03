@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="5.4" type="Data">
+<task name="DRP_monitoring" version="5.5" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
@@ -18,6 +18,7 @@
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>
+    <prerequisite name="pgwave_processId" type="integer"/>
     <prerequisite name="num_RoIs" type="integer"/>
     <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="DRPMONITORINGROOT" type="string"/>
@@ -25,6 +26,9 @@
 
   <process name="catalogQuery">
     <script><![CDATA[
+      #
+      # Query for the FT1/2 files for this time interval.
+      #
       def query(outfile, path, TSTART, TSTOP):
           output = pipeline.createFile(outfile)
           opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
@@ -37,6 +41,15 @@
           pipeline.writeFile(output)
       query("Ft1FileList", "FT1", TSTART, TSTOP)
       query("Ft2FileList", "FT2", TSTART, TSTOP)
+      #
+      # Find the location of the source list prepared by pgwave.
+      #
+      output = pipeline.createFile('pgwaveFileList')
+      query = 'DataType="PGWAVESOURCELIST" && nProcessId=%i' % pgwave_processId
+      logicalPath = '/ASP/OpsSim2/FlareMonitoring/%s' % frequency
+      datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
+      datasetList.writeToFile(output, 1)
+      pipeline.writeFile(output)
       ]]>
     </script>
   </process>

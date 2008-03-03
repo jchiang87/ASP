@@ -11,7 +11,6 @@
 import os
 from xml.dom import minidom
 from read_data import read_data
-from GtApp import GtApp
 from readXml import SourceModel, Source
 from cleanXml import cleanXml
 from drpDbAccess import findPointSources
@@ -60,6 +59,10 @@ class PgwaveSource(object):
         return dist((self.ra, self.dec), (ra, dec))
 
 if __name__ == '__main__':
+#    from GtApp import GtApp
+
+    pgwaveSrcList = open('pgwaveFileList').readlines()[0].strip().strip('+')
+
     os.chdir(os.environ['OUTPUTDIR'])
 
     xmlModel = getXmlModel()
@@ -71,20 +74,20 @@ if __name__ == '__main__':
 
     foo = SourceModel(outfile)
 
-    gtbin = GtApp('gtbin')
-    gtbin['evfile'] = 'time_filtered_events.fits'
-    gtbin['outfile'] = 'cmap.fits'
-    gtbin['algorithm'] = 'CMAP'
-    gtbin.run(nxpix=720, nypix=360, binsz=0.5, coordsys='GAL',
-              xref=0, yref=0, axisrot=0, proj='CAR')
+#    gtbin = GtApp('gtbin')
+#    gtbin['evfile'] = 'time_filtered_events.fits'
+#    gtbin['outfile'] = 'cmap.fits'
+#    gtbin['algorithm'] = 'CMAP'
+#    gtbin.run(nxpix=720, nypix=360, binsz=0.5, coordsys='GAL',
+#              xref=0, yref=0, axisrot=0, proj='CAR')
+#
+#    pgwave = GtApp('pgwave2D', 'pgwave')
+#    pgwave['input_file'] = gtbin['outfile']
+#    pgwave['bgk_choise'] = "n"
+#    pgwave['circ_square'] = "s"
+#    pgwave.run(kappa=5)
 
-    pgwave = GtApp('pgwave2D', 'pgwave')
-    pgwave['input_file'] = gtbin['outfile']
-    pgwave['bgk_choise'] = "n"
-    pgwave['circ_square'] = "s"
-    pgwave.run(kappa=5)
-
-    pg_srcs = [PgwaveSource(line) for line in open('cmap.list') 
+    pg_srcs = [PgwaveSource(line) for line in open(pgwaveSrcList) 
                if line.find("#")==-1]
 
     for src in pg_srcs:

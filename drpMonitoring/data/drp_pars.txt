@@ -13,5 +13,6 @@ stop_time =
 rspfunc = 
 expCube = expCube.fits
 expMap = expMap_sum.fits
-ft1_filter = CTBCLASSLEVEL>1
+#ft1_filter = CTBCLASSLEVEL>1
+ft1_filter = ENERGY>0
 zenmax = 100

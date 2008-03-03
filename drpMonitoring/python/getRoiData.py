@@ -88,6 +88,9 @@ outputModel = name + '_ptsrcs_model.xml'
 model = search_Srcs(sourceModel, modelRequest, outputModel)
 
 diffuseSources = findDiffuseSources()
+print "Found from DiffuseSources db table:"
+for item in diffuseSources:
+    print item
 
 srcModel = readXml.SourceModel(outputModel)
 GalProp = readXml.Source(diffuseSources["Galactic Diffuse"].domElement())

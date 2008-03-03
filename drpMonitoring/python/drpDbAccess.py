@@ -111,7 +111,7 @@ def findDiffuseSources():
     def cursorFunc(cursor):
         srcs = {}
         for entry in cursor:
-            if entry[2] == "0":
+            if entry[2] == 0:
                 srcs[entry[0]] = DiffuseSource(entry)
         return srcs
     return apply(sql, cursorFunc)

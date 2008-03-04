@@ -39,9 +39,8 @@ class RoiIds(dict):
             return myId
         return None
 
-roiIds = RoiIds()
-
 def assignNullRois():
+    roiIds = RoiIds()
     sql = "select PTSRC_NAME, ra, dec from POINTSOURCES where ROI_ID IS NULL"
     srcs = dbAccess.apply(sql, lambda curs : [entry[:3] for entry in curs])
     for src in srcs:

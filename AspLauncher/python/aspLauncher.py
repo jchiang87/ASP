@@ -27,27 +27,50 @@ def find_frequencies():
        return freqs
    return dbAccess.apply(sql, getFrequencies)
 
-def find_intervals(frequency=None):
-    """Find the most recent interval for each frequency from the
-    FREQUENCIES table and compute the next interval for which the
-    corresponding ASP task must be launched"""
-    if frequency is None:
-        frequencies = find_frequencies()
-    else:
-        frequencies = (frequency, )
-    next_intervals = {}
-    for frequency in frequencies:
-        sql = "SELECT * from TIMEINTERVALS where FREQUENCY='%s'" % frequency
-        def findLastInterval(cursor):
-            lastInterval = -1
-            for entry in cursor:
-                if entry[0] > lastInterval:
-                    lastInterval = entry[0]
-                    tstart = entry[2]
-                    tstop = entry[3]
-            return lastInterval+1, tstop, 2*tstop - tstart
-        next_intervals[frequency] = dbAccess.apply(sql, findLastInterval)
-    return next_intervals
+class TimeInterval(object):
+   def __init__(self, entry):
+      self.interval = entry[0]
+      self.frequency = entry[1]
+      self.tstart = entry[2]
+      self.tstop = entry[3]
+      self.is_processed = entry[4]
+
+def find_intervals():
+   """Find unhandled intervals"""
+   sql = ("SELECT  from TIMEINTERVALS where IS_PROCESSED=0 "
+          + "order by interval_number asc")
+   frequencies = find_frequencies()
+   unhandled = {}
+   for freq in frequencies:
+      unhandled[freq] = []
+   def findUnhandled(cursor, unhandled=unhandled):
+      for entry in cursor:
+         timeInterval = TimeInterval(entry)
+         unhandled[timeInterval.frequency].append(timeInterval)
+      return unhandled
+   return dbAccess.apply(sql, findUnhandled)
+
+#def find_intervals(frequency=None):
+#    """Find the most recent interval for each frequency from the
+#    FREQUENCIES table and compute the next interval for which the
+#    corresponding ASP task must be launched"""
+#    if frequency is None:
+#        frequencies = find_frequencies()
+#    else:
+#        frequencies = (frequency, )
+#    next_intervals = {}
+#    for frequency in frequencies:
+#        sql = "SELECT * from TIMEINTERVALS where FREQUENCY='%s'" % frequency
+#        def findLastInterval(cursor):
+#            lastInterval = -1
+#            for entry in cursor:
+#                if entry[0] > lastInterval:
+#                    lastInterval = entry[0]
+#                    tstart = entry[2]
+#                    tstop = entry[3]
+#            return lastInterval+1, tstop, 2*tstop - tstart
+#        next_intervals[frequency] = dbAccess.apply(sql, findLastInterval)
+#    return next_intervals
 
 if __name__ == '__main__':
     _asp_path = os.environ['ASP_PATH']

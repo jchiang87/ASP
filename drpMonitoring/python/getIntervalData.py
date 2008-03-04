@@ -116,28 +116,4 @@ pars.write()
 
 drpDbAccess.readRois()
 
-#
-# Insert the current interval into the TIMEINTERVALS table.
-#
-inum = int(os.environ['interval'])
-frequency = os.environ['frequency']
-sql = ("insert into TIMEINTERVALS " +
-       "(INTERVAL_NUMBER, FREQUENCY, TSTART, TSTOP) values " +
-       "(%i, '%s', %i, %i)" % (inum, frequency, start_time, stop_time))
-try:
-    dbAccess.apply(sql)
-except dbAccess.cx_Oracle.IntegrityError, message:
-    #
-    # Check to see if this interval is already in the table. If so,
-    # proceed anyways.  This is useful for rollbacks.
-    #
-    sql = ("select tstart, tstop from TIMEINTERVALS where " +
-           "INTERVAL_NUMBER=%i and FREQUENCY='%s'" % (inum, frequency))
-    def getTlims(cursor):
-        for entry in cursor:
-            return entry[0], entry[1]
-    tlims = dbAccess.apply(sql, getTlims)
-    if tlims[0] != start_time or tlims[1] != stop_time:
-        raise dbAccess.cx_Oracle.IntegrityError, message 
-
 os.system('chmod 777 *')

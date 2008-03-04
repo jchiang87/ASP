@@ -5,7 +5,6 @@ version v1
 
 use AspPolicy v* ASP
 use pyASP v* ASP
-#use pgwave v* ASP
 use pyIrfLoader v* irfs -no_auto_imports
 use BayesianBlocks v* ASP -no_auto_imports
 use sane v* -no_auto_imports

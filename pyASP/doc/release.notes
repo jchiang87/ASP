@@ -1,0 +1,9 @@
+/** @file release.notes
+    @brief package pyASP
+    @brief Package coordinator: J. Chiang
+
+    @verbatim
+    v0r1   10-Jul-06   JC   Version with scripts to do basic GRB analysis.
+    v0     03-Jul-06   JC   Initial import.
+    @endverbatim
+*/

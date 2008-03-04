@@ -1,0 +1,161 @@
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:01:40 PDT 2007
+ASP/grbASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:01:39 PDT 2007
+ASP/grbASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 24 16:41:58 PDT 2007
+ASP/grbASP/python
+
+Modified Files:
+	LatGcnNotice.py 
+Log Message:
+delete old template string
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 24 16:04:15 PDT 2007
+ASP/grbASP/python
+
+Modified Files:
+	LatGcnNotice.py 
+Log Message:
+output in proposed GCN format
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 24 13:55:14 PDT 2007
+ASP/grbASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+parse correct GCN format
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 24 13:55:13 PDT 2007
+ASP/grbASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py refinePosition.py 
+Added Files:
+	GcnNotice.py 
+Log Message:
+parse correct GCN format
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 16:39:27 PDT 2007
+ASP/grbASP/xml
+
+Modified Files:
+	GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+updates for subpackage migration
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 16:39:27 PDT 2007
+ASP/grbASP/src
+
+Modified Files:
+	grbASP.in 
+Log Message:
+updates for subpackage migration
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 16:39:26 PDT 2007
+ASP/grbASP/python
+
+Modified Files:
+	BlindSearch.py LatGrbSpectrum.py afterglowData.py 
+	afterglowDiffResps.py afterglowLivetimeCube.py 
+	combineExpMaps.py createGrbStreams.py extractLatData.py 
+	refinePosition.py tsMap.py 
+Log Message:
+updates for subpackage migration
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 16:39:26 PDT 2007
+ASP/grbASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+updates for subpackage migration
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 08:44:04 PDT 2007
+ASP/grbASP/python
+
+Added Files:
+	combineExpMaps.py extractLatData.py refinePosition.py tsMap.py 
+Log Message:
+mv more scripts
+    *
+------------------------------------------------------------
+User: jchiang  Sat Apr 21 17:44:16 PDT 2007
+ASP/grbASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use AspPolicy to generate wrapper scripts
+    *
+------------------------------------------------------------
+User: jchiang  Sat Apr 21 14:39:17 PDT 2007
+ASP/grbASP
+
+Log Message:
+initial import 
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N ASP/grbASP/.cvsignore
+N ASP/grbASP/cmt/requirements
+N ASP/grbASP/doc/release.notes
+N ASP/grbASP/python/BlindSearch.py
+N ASP/grbASP/python/EventClusters.py
+N ASP/grbASP/python/GbmNotice.py
+N ASP/grbASP/python/GrbSrcIds.py
+N ASP/grbASP/python/LatGcnNotice.py
+N ASP/grbASP/python/LatGrbSpectrum.py
+N ASP/grbASP/python/PsfClusters.py
+N ASP/grbASP/python/ScData.py
+N ASP/grbASP/python/afterglowAnalysis.py
+N ASP/grbASP/python/afterglowData.py
+N ASP/grbASP/python/afterglowDiffResps.py
+N ASP/grbASP/python/afterglowExpMap.py
+N ASP/grbASP/python/afterglowLivetimeCube.py
+N ASP/grbASP/python/createGrbStreams.py
+N ASP/grbASP/xml/GRB_afterglow.xml
+N ASP/grbASP/xml/GRB_blind_search.xml
+N ASP/grbASP/xml/GRB_refinement.xml
+N ASP/grbASP/src/ClusterAlg.cxx
+N ASP/grbASP/src/Event.cxx
+N ASP/grbASP/src/EventClusters.cxx
+N ASP/grbASP/src/PsfClusters.cxx
+N ASP/grbASP/src/ScData.cxx
+I ASP/grbASP/src/.#GRBs.in
+N ASP/grbASP/src/grbASP.in
+N ASP/grbASP/grbASP/ClusterAlg.h
+N ASP/grbASP/grbASP/Event.h
+N ASP/grbASP/grbASP/EventClusters.h
+N ASP/grbASP/grbASP/PsfClusters.h
+N ASP/grbASP/grbASP/ScData.h
+
+No conflicts created by this import
+
+    *

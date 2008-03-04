@@ -1,0 +1,44 @@
+// -*- mode: c++ -*-
+/**
+ * @file pyASP.in
+ * @brief Interface file for SWIG generated wrappers.
+ * @author J. Chiang <jchiang@slac.stanford.edu>
+ *
+ * $Header$
+ */
+%module pyASP
+%{
+#include <stdexcept>
+#include <string>
+#include <vector>
+#include "astro/JulianDate.h"
+#include "astro/SkyDir.h"
+#include "astro/SkyProj.h"
+#include "astro/SolarSystem.h"
+astro::JulianDate jd_from_MET(double met) {
+   return astro::JulianDate(astro::JulianDate::missionStart() + met/8.64e4);
+}
+%}
+%include stl.i
+%exception {
+   try {
+      $action
+   } catch (std::exception & eObj) {
+      PyErr_SetString(PyExc_RuntimeError, const_cast<char*>(eObj.what()));
+      return NULL;
+   }
+}
+%template(DoublePair) std::pair<double, double>;
+%template(DoubleVector) std::vector<double>;
+%include $(ASTROROOT)/astro/JulianDate.h
+%include $(ASTROROOT)/astro/SkyProj.h
+%include $(ASTROROOT)/astro/SkyDir.h
+%include $(ASTROROOT)/astro/SolarSystem.h
+astro::JulianDate jd_from_MET(double met);
+%extend astro::SkyDir {
+   static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
+                                    const astro::SkyDir & dir2,
+                                    double t1, double t2, double tt) {
+      return astro::SkyDir((tt - t1)/(t2 - t1)*(dir2() - dir1()) + dir1());
+   }
+}

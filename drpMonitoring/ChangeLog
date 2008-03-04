@@ -1,0 +1,114 @@
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:04:28 PDT 2007
+ASP/drpMonitoring/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:04:28 PDT 2007
+ASP/drpMonitoring/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:03:04 PDT 2007
+ASP/drpMonitoring/python
+
+Added Files:
+	launch_process.py 
+Log Message:
+script to setup environment for running task
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 09:16:41 PDT 2007
+ASP/drpMonitoring/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add package to python path
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:51:46 PDT 2007
+ASP/drpMonitoring/python
+
+Removed Files:
+	extractLatData.py 
+Log Message:
+remove file used for grb analysis
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:47:06 PDT 2007
+ASP/drpMonitoring/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+finish off migration from pyASP
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:47:06 PDT 2007
+ASP/drpMonitoring/python
+
+Modified Files:
+	DrpSources.py createDrpStreams.py drpRoiSetup.py 
+	getIntervalData.py 
+Log Message:
+finish off migration from pyASP
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:47:05 PDT 2007
+ASP/drpMonitoring/data
+
+Added Files:
+	DRP_SourceList.txt DRP_SourceModel.xml drp_pars.txt rois.txt 
+Log Message:
+finish off migration from pyASP
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:46:14 PDT 2007
+ASP/drpMonitoring/data
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP/drpMonitoring/data added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun Apr 22 07:39:29 PDT 2007
+ASP/drpMonitoring
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N ASP/drpMonitoring/.cvsignore
+N ASP/drpMonitoring/cmt/requirements
+N ASP/drpMonitoring/python/combineDrpExpMaps.py
+N ASP/drpMonitoring/python/createDrpStreams.py
+N ASP/drpMonitoring/python/diffuseResponses.py
+N ASP/drpMonitoring/python/drpExpMap.py
+N ASP/drpMonitoring/python/drpRoiSetup.py
+N ASP/drpMonitoring/python/DrpSources.py
+N ASP/drpMonitoring/python/exposureSubMap.py
+N ASP/drpMonitoring/python/extractLatData.py
+N ASP/drpMonitoring/python/getIntervalData.py
+N ASP/drpMonitoring/python/livetimecube.py
+N ASP/drpMonitoring/python/getRoiData.py
+N ASP/drpMonitoring/python/sourceAnalysis.py
+N ASP/drpMonitoring/python/fitEnergyBand.py
+N ASP/drpMonitoring/doc/release.notes
+N ASP/drpMonitoring/xml/DRP_monitoring.xml
+
+No conflicts created by this import
+
+    *

@@ -1,0 +1,98 @@
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:00:32 PST 2008
+ASP/dbManager/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:00:31 PST 2008
+ASP/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:59:29 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	insertSources.py 
+Log Message:
+add guarding try/except so sql can be inspected
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  2 07:10:34 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	setConfig.py 
+Log Message:
+refactor SMCONFIG handling; insert data for AspSims test
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 29 19:20:39 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	setConfig.py 
+Log Message:
+insert SOURCEMONITORINGCONFIG data
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 29 14:22:29 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	insertSources.py 
+Added Files:
+	GrbAspConfigManager.py setConfig.py 
+Removed Files:
+	modify_grb_asp_config.py 
+Log Message:
+add scripts for setting db config
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 28 08:26:27 PST 2008
+ASP/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+reset package name
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 28 08:25:55 PST 2008
+ASP/dbManager/doc
+
+Added Files:
+	release.notes 
+Log Message:
+add release.notes
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 28 08:22:46 PST 2008
+ASP/dbManager
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N ASP/dbManager/.cvsignore
+N ASP/dbManager/cmt/requirements
+N ASP/dbManager/python/insertSources.py
+N ASP/dbManager/python/modify_Frequencies.py
+N ASP/dbManager/python/modify_grb_asp_config.py
+N ASP/dbManager/data/AspSrcModel.xml
+
+No conflicts created by this import
+
+    *

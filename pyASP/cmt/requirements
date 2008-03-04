@@ -1,0 +1,14 @@
+package pyASP
+version v0r1
+
+use SwigPolicy v*
+use astro v*
+use BayesianBlocks v*
+use sane v* -no_auto_imports
+use pyLikelihood v* -no_auto_imports
+
+path_remove PYTHONPATH pyASP
+path_append PYTHONPATH $(PYASPROOT)/$(BINDIR)
+path_append PYTHONPATH $(PYASPROOT)/python
+
+apply_pattern swig_module name="pyASP"

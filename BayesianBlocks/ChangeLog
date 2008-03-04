@@ -1,0 +1,577 @@
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:34:24 PDT 2006
+users/jchiang/BayesianBlocks/doc
+
+Added Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:34:23 PDT 2006
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:13:13 PDT 2006
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+refactor lightCurve access
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:13:13 PDT 2006
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py trials.py 
+Log Message:
+refactor lightCurve access
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:13:13 PDT 2006
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+refactor lightCurve access
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.in Exposure.cxx 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	test_BayesianBlocks.py 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:35 PST 2005
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	Exposure.cxx 
+Added Files:
+	BayesianBlocks.in 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:35 PST 2005
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py BayesBlocks.py global_opt.py 
+	pks1622_flare.py test_BayesianBlocks.py 
+Removed Files:
+	BayesianBlocks.i Makefile 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:34 PST 2005
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:34 PST 2005
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 25 21:04:58 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	createFlare.py 
+Added Files:
+	find_flare_2.py trials.py 
+Log Message:
+add trade study
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 21 09:17:17 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 21 09:17:16 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	find_flare.py 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 21 09:17:15 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Modified Files:
+	Doxyfile 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 21:59:41 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	find_flare.py 
+Log Message:
+apply floor to prevent zero effective areas
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 15:27:22 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	Exposure.cxx mainpage.h 
+Log Message:
+update docs and scripts to generate figures
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 15:27:22 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	createFlare.py find_flare.py pks1622_flare.py 
+Log Message:
+update docs and scripts to generate figures
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 15:27:21 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Modified Files:
+	Makefile 
+Log Message:
+update docs and scripts to generate figures
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 22:36:49 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+PKS 1622-297 plots
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 22:36:49 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Added Files:
+	pks1622_flare.py pksData.py 
+Log Message:
+PKS 1622-297 plots
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 17:51:11 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx mainpage.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 17:51:11 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py detrend.py 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 17:51:10 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 07:44:43 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 07:44:43 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	detrend.py 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 22:03:52 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+add to docs
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 22:03:52 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py distributions.py 
+Added Files:
+	BB_example_0.py 
+Log Message:
+add to docs
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:34 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	Exposure.cxx 
+Added Files:
+	mainpage.h 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:34 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	find_flare.py 
+Added Files:
+	BB_example.py 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:33 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Added Files:
+	Doxyfile Makefile 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:33 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:22:09 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/BayesianBlocks/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:21 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx Exposure.cxx 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:20 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py BayesianBlocks.i Makefile find_flare.py 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:20 PDT 2004
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:20 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 16:27:00 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Added Files:
+	Exposure.cxx 
+Log Message:
+add Exposure class
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 16:27:00 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Added Files:
+	Exposure.h 
+Log Message:
+add Exposure class
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 14 16:13:57 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	createFlare.py find_flare.py 
+Log Message:
+read flare location from xml file
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 14 14:32:10 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Added Files:
+	createFlare.py find_flare.py 
+Log Message:
+generate random flares
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 14 14:32:09 PDT 2004
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+generate random flares
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 13 15:58:18 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+correct last change point
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 13 15:58:17 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py 
+Log Message:
+correct last change point
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 13 13:34:32 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	detrend.py 
+Added Files:
+	BayesBlocks.py 
+Log Message:
+pythonic interface to SWIG module
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 10:45:36 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+restore algorithm to be O(N^2)
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 10:45:35 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	Makefile detrend.py 
+Log Message:
+restore algorithm to be O(N^2)
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 10:45:35 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+restore algorithm to be O(N^2)
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 07:01:46 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+rescale spectrum correctly for plotting
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 07:01:46 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	detrend.py 
+Log Message:
+rescale spectrum correctly for plotting
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 07:01:46 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+rescale spectrum correctly for plotting
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 22:40:34 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+detrend using scale factors
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 22:40:34 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	Makefile detrend.py test_BayesianBlocks.py 
+Log Message:
+detrend using scale factors
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 22:40:34 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+detrend using scale factors
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 17:23:56 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+try detrending for finding spectral features
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 17:23:56 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesianBlocks.i test_BayesianBlocks.py 
+Added Files:
+	detrend.py 
+Log Message:
+try detrending for finding spectral features
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 17:23:55 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+try detrending for finding spectral features
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 14:22:25 PDT 2004
+users/jchiang/BayesianBlocks
+
+Log Message:
+Initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+I users/jchiang/BayesianBlocks/rh9_gcc32
+N users/jchiang/BayesianBlocks/.cvsignore
+N users/jchiang/BayesianBlocks/src/BayesianBlocks.cxx
+N users/jchiang/BayesianBlocks/cmt/requirements
+N users/jchiang/BayesianBlocks/BayesianBlocks/BayesianBlocks.h
+N users/jchiang/BayesianBlocks/python/EventData.py
+N users/jchiang/BayesianBlocks/python/distributions.py
+N users/jchiang/BayesianBlocks/python/gammaln.py
+N users/jchiang/BayesianBlocks/python/global_opt.py
+N users/jchiang/BayesianBlocks/python/test_BayesianBlocks.py
+N users/jchiang/BayesianBlocks/python/timing_study.py
+N users/jchiang/BayesianBlocks/python/Makefile
+N users/jchiang/BayesianBlocks/python/BayesianBlocks.i
+N users/jchiang/BayesianBlocks/data/events.dat
+
+No conflicts created by this import
+
+    *

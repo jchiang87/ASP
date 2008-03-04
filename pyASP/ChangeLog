@@ -1,0 +1,136 @@
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:37 PDT 2006
+users/jchiang/pyASP/doc
+
+Added Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:36 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:15 PDT 2006
+users/jchiang/pyASP/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:33 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py extractLatData.py refinePosition.py 
+Added Files:
+	LatGrbSpectrum.py 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:32 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:12:15 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py errEst.py extractLatData.py refinePosition.py 
+Log Message:
+use BayesianBlocks
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:12:15 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use BayesianBlocks
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul  7 13:16:06 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	errEst.py refinePosition.py 
+Added Files:
+	FitsNTuple.py read_data.py 
+Removed Files:
+	find_Sun.py 
+Log Message:
+add local scripts
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul  7 10:27:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	extractLatData.py 
+Added Files:
+	errEst.py refinePosition.py 
+Log Message:
+add error estimator and position refinement scripts
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:53:17 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	GbmNotice.py extractLatData.py 
+Log Message:
+scripts for GRB analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:53:17 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+scripts for GRB analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:35:38 PDT 2006
+users/jchiang/pyASP
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N users/jchiang/pyASP/.cvsignore
+I users/jchiang/pyASP/.cvsignore~
+N users/jchiang/pyASP/src/pyASP.in
+N users/jchiang/pyASP/cmt/requirements
+N users/jchiang/pyASP/python/find_Sun.py
+
+No conflicts created by this import
+
+    *

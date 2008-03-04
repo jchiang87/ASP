@@ -13,7 +13,6 @@
   </variables>
   <prerequisites>
     <prerequisite name="folder" type="string"/>
-    <prerequisite name="nDownlink" type="integer"/>
     <prerequisite name="interval" type="integer"/>
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="nMetStart" type="integer"/>

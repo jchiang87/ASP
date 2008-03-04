@@ -13,7 +13,6 @@ each one if the required data are available.
 import os
 from checkLevelOneFiles import providesCoverage
 from PipelineCommand import PipelineCommand, _asp_path
-from createGrbStreams import blindSearchStreams
 from FileStager import FileStager
 
 _version = os.path.split(os.environ['PGWAVEROOT'])[-1]
@@ -68,10 +67,6 @@ if __name__ == '__main__':
                             cleanup=True)
 
     debug = False
-
-    nDownlink = int(os.environ['nDownlink'])
-    blindSearchStreams(downlinks=(nDownlink,), logicalPath=folder,
-                       grbroot_dir=os.environ['GRBOUTPUTDIR'], debug=debug)
 
     os.chdir(currentDir)
     interval, frequency, tstart, tstop = get_interval()

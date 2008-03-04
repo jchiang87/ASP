@@ -16,6 +16,7 @@ folder = Logical folder in the dataCatalog that contains the FT1/2 data
 # $Header$
 #
 import os
+from createGrbStreams import blindSearchStreams
 import databaseAccess as dbAccess
 
 def find_frequencies():
@@ -54,28 +55,6 @@ def find_intervals():
       print message
       print sql
 
-#def find_intervals(frequency=None):
-#    """Find the most recent interval for each frequency from the
-#    FREQUENCIES table and compute the next interval for which the
-#    corresponding ASP task must be launched"""
-#    if frequency is None:
-#        frequencies = find_frequencies()
-#    else:
-#        frequencies = (frequency, )
-#    next_intervals = {}
-#    for frequency in frequencies:
-#        sql = "SELECT * from TIMEINTERVALS where FREQUENCY='%s'" % frequency
-#        def findLastInterval(cursor):
-#            lastInterval = -1
-#            for entry in cursor:
-#                if entry[0] > lastInterval:
-#                    lastInterval = entry[0]
-#                    tstart = entry[2]
-#                    tstop = entry[3]
-#            return lastInterval+1, tstop, 2*tstop - tstart
-#        next_intervals[frequency] = dbAccess.apply(sql, findLastInterval)
-#    return next_intervals
-
 if __name__ == '__main__':
     _asp_path = os.environ['ASP_PATH']
     _version = os.path.split(os.environ['ASPLAUNCHERROOT'])[-1]
@@ -108,7 +87,6 @@ if __name__ == '__main__':
        intervals = frequencies[frequency]
        for interval in intervals:
           args = {'folder' : os.environ['folder'],
-                  'nDownlink' : int(os.environ['nDownlink']),
                   'interval' : interval.interval,
                   'frequency' : frequency,
                   'nMetStart' : interval.tstart,
@@ -123,5 +101,5 @@ if __name__ == '__main__':
              print item, args[item]
           print "\n*******************\n"
     
-    launcher = PipelineCommand('AspLauncher', args)
-    launcher.run()
+          launcher = PipelineCommand('AspLauncher', args)
+          launcher.run()

@@ -1,0 +1,51 @@
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:13:17 PST 2008
+ASP/AspHealPix/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 22 20:33:53 PST 2008
+ASP/AspHealPix/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+set PYTHONPATH
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb  7 14:12:31 PST 2008
+ASP/AspHealPix
+
+Log Message:
+AspHealPix converted from HealPix package to accommodate the new healpix 
+package since CMT is note case-sensitive to package names
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N ASP/AspHealPix/.cvsignore
+N ASP/AspHealPix/AspHealPix/CountsArray.h
+N ASP/AspHealPix/AspHealPix/ExposureArray.h
+N ASP/AspHealPix/AspHealPix/HealpixArray.h
+N ASP/AspHealPix/AspHealPix/Pixel.h
+N ASP/AspHealPix/AspHealPix/PoissonProb.h
+N ASP/AspHealPix/cmt/requirements
+N ASP/AspHealPix/src/HealPix.in
+N ASP/AspHealPix/src/CountsArray.cxx
+N ASP/AspHealPix/src/ExposureArray.cxx
+N ASP/AspHealPix/src/HealpixArray.cxx
+N ASP/AspHealPix/src/PoissonProb.cxx
+N ASP/AspHealPix/src/AspHealPix.in
+N ASP/AspHealPix/python/HpArrayWrapper.py
+N ASP/AspHealPix/python/test.py
+N ASP/AspHealPix/python/weighted_exposure.py
+
+No conflicts created by this import
+
+    *

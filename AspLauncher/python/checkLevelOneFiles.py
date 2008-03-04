@@ -57,6 +57,8 @@ def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',
         ft1, ft2 = getFitsData(ft1List, ft2List, copylist=False)
     else:
         ft1, ft2 = getStagedFitsData(ft1List, ft2List, fileStager=fileStager)
+    if not ft1 or not ft2:  # at least one file list is empty
+        return False
     gtis = FitsNTuple(ft1, 'GTI')
     check_ft2(gtis, ft2)
     print "Requested tstart, tstop: ", tstart, tstop

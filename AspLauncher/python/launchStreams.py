@@ -16,28 +16,14 @@ from PipelineCommand import PipelineCommand, _asp_path
 from createGrbStreams import blindSearchStreams
 from FileStager import FileStager
 
-_version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
-_drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
-
-def launch_drp(interval, frequency, tstart, tstop, folder, output_dir,
-               num_RoIs=30, debug=False):
-    os.chdir(output_dir)
-    args = {'OUTPUTDIR' : output_dir,
-            'logicalPath' : folder,
-            'interval' : interval,
-            'frequency' : frequency, 
-            'TSTART' : tstart,
-            'TSTOP' : tstop,
-            'num_RoIs' : num_RoIs,
-            'DRPMONITORINGROOT' : _drpRoot}
-    command = PipelineCommand('DRP_monitoring', args)
-    command.run(debug=debug)
-
 _version = os.path.split(os.environ['PGWAVEROOT'])[-1]
 _pgwaveRoot = os.path.join(_asp_path, 'ASP', 'pgwave', _version)
 
-def launch_pgwave(interval, tstart, tstop, folder, output_dir, debug=False):
+def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
+                  debug=False):
     args = {'logicalPath' : folder,
+            'interval' : interval,
+            'frequency' : frequency,
             'TSTART' : tstart,
             'TSTOP' : tstop,
             'OUTPUTDIR' : output_dir,
@@ -96,17 +82,19 @@ if __name__ == '__main__':
                         fileStager=fileStager):
         output_dir = createSubDir(interval, 'SixHour',
                                   os.environ['PGWAVEOUTPUTDIR'])
-        launch_pgwave(interval, tstart, tstop, folder, output_dir, debug=debug)
+        launch_pgwave(interval, 'six_hours', tstart, tstop, folder, 
+                      output_dir, debug=debug)
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Daily')
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList_day', 'Ft2FileList_day', 
                         fileStager=fileStager):
+        createSubDir(interval, 'Daily', os.environ['DRPOUTPUTDIR'])
         output_dir = createSubDir(interval, 'Daily',
-                                  os.environ['DRPOUTPUTDIR'])
-        launch_drp(interval, 'daily', tstart, tstop, folder, 
-                   output_dir, debug=debug)
+                                  os.environ['PGWAVEOUTPUTDIR'])
+        launch_pgwave(interval, 'daily', tstart, tstop, folder, 
+                      output_dir, debug=debug)
 
     os.chdir(currentDir)
     interval, tstart, tstop = get_interval('Weekly')
@@ -115,5 +103,5 @@ if __name__ == '__main__':
                         fileStager=fileStager):
         output_dir = createSubDir(interval, 'Weekly',
                                   os.environ['DRPOUTPUTDIR'])
-        launch_drp(interval, 'weekly', tstart, tstop, folder, 
-                   output_dir, debug=debug)
+        launch_pgwave(interval, 'weekly', tstart, tstop, folder, 
+                      output_dir, debug=debug)

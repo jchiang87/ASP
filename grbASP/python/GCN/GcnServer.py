@@ -84,7 +84,7 @@ class GcnServer(object):
             print message
             pass
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.candidateName(),
-                           INITIAL_RA=packet.RA, INITIAL_DEC=packet.Dec,
+                           INITIAL_LAT_RA=packet.RA, INITIAL_LAT_DEC=packet.Dec,
                            INITIAL_ERROR_RADIUS=packet.posError, 
                            L1_DATA_AVAILABLE=0, ANALYSIS_VERSION=0)
         dbAccess.insertGcnNotice(grb_id, packet.buffer, 

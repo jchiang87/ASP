@@ -82,6 +82,11 @@ if __name__ == '__main__':
     print "DataCatalog folder =", os.environ['folder']
     print "Downlink ID =", os.environ['nDownlink']
 
+    nDownlink = int(os.environ['nDownlink'])
+    blindSearchStreams(downlinks=(nDownlink,),
+                       logicalPath=os.environ['folder'],
+                       grbroot_dir=aspOutput('GRB'))
+
     frequencies = find_intervals()
     for frequency in frequencies:
        intervals = frequencies[frequency]

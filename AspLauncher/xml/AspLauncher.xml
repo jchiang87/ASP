@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher" version="0.4" type="Data">
+<task name="AspLauncher" version="1.0" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -14,15 +14,10 @@
   <prerequisites>
     <prerequisite name="folder" type="string"/>
     <prerequisite name="nDownlink" type="integer"/>
-    <prerequisite name="SixHour_interval" type="integer"/>
-    <prerequisite name="SixHour_nMetStart" type="integer"/>
-    <prerequisite name="SixHour_nMetStop" type="integer"/>
-    <prerequisite name="Daily_interval" type="integer"/>
-    <prerequisite name="Daily_nMetStart" type="integer"/>
-    <prerequisite name="Daily_nMetStop" type="integer"/>
-    <prerequisite name="Weekly_interval" type="integer"/>
-    <prerequisite name="Weekly_nMetStart" type="integer"/>
-    <prerequisite name="Weekly_nMetStop" type="integer"/>
+    <prerequisite name="interval" type="integer"/>
+    <prerequisite name="frequency" type="string"/>
+    <prerequisite name="nMetStart" type="integer"/>
+    <prerequisite name="nMetStop" type="integer"/>
     <prerequisite name="GRBOUTPUTDIR" type="string"/>
     <prerequisite name="DRPOUTPUTDIR" type="string"/>
     <prerequisite name="PGWAVEOUTPUTDIR" type="string"/>
@@ -43,12 +38,8 @@
             datasetList = datacatalog.getDatasets(folder+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
-        query("Ft1FileList_6hr", "FT1", SixHour_nMetStart, SixHour_nMetStop)
-        query("Ft2FileList_6hr", "FT2", SixHour_nMetStart, SixHour_nMetStop)
-        query("Ft1FileList_day", "FT1", Daily_nMetStart, Daily_nMetStop)
-        query("Ft2FileList_day", "FT2", Daily_nMetStart, Daily_nMetStop)
-        query("Ft1FileList_week", "FT1", Weekly_nMetStart, Weekly_nMetStop)
-        query("Ft2FileList_week", "FT2", Weekly_nMetStart, Weekly_nMetStop)
+        query("Ft1FileList", "FT1", nMetStart, nMetStop)
+        query("Ft2FileList", "FT2", nMetStart, nMetStop)
     ]]></script>
   </process>
   <process name="launchStreams">

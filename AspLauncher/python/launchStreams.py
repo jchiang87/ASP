@@ -32,14 +32,15 @@ def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
     command = PipelineCommand('PGWave', args)
     command.run(debug=debug)
 
-def get_interval(freq):
+def get_interval():
     """Read the environment variables set by the AspLauncher task
     for each frequency of source monitoring to get the start and
     stop times and interval number.
     """
-    return (int(os.environ[freq + '_interval']), 
-            int(os.environ[freq + '_nMetStart']), 
-            int(os.environ[freq + '_nMetStop']))
+    return (int(os.environ['interval']), 
+            os.environ['frequency'],
+            int(os.environ['nMetStart']), 
+            int(os.environ['nMetStop']))
 
 def createSubDir(interval, frequency, root_output_dir):
     subdir = "%05i" % interval
@@ -60,9 +61,6 @@ if __name__ == '__main__':
     min_frac = float(os.environ['minimum_coverage'])
     process_id = os.environ['PIPELINE_PROCESSINSTANCE']
 
-## Use the following for debugging in an accessible local directory.
-#    fileStager = FileStager(os.path.join(currentDir,'AspLauncher',process_id),
-#                            cleanup=True)
     #
     # Stage to local /scratch area and clean up on exit
     #
@@ -76,32 +74,13 @@ if __name__ == '__main__':
                        grbroot_dir=os.environ['GRBOUTPUTDIR'], debug=debug)
 
     os.chdir(currentDir)
-    interval, tstart, tstop = get_interval('SixHour')
+    interval, frequency, tstart, tstop = get_interval()
     if providesCoverage(tstart, tstop, min_frac, 
-                        'Ft1FileList_6hr', 'Ft2FileList_6hr', 
+                        'Ft1FileList', 'Ft2FileList', 
                         fileStager=fileStager):
-        output_dir = createSubDir(interval, 'SixHour',
+        if frequency in ('daily', 'weekly'):
+            createSubDir(interval, frequency, os.environ['DRPOUTPUTDIR'])
+        output_dir = createSubDir(interval, frequency,
                                   os.environ['PGWAVEOUTPUTDIR'])
-        launch_pgwave(interval, 'six_hours', tstart, tstop, folder, 
-                      output_dir, debug=debug)
-
-    os.chdir(currentDir)
-    interval, tstart, tstop = get_interval('Daily')
-    if providesCoverage(tstart, tstop, min_frac, 
-                        'Ft1FileList_day', 'Ft2FileList_day', 
-                        fileStager=fileStager):
-        createSubDir(interval, 'Daily', os.environ['DRPOUTPUTDIR'])
-        output_dir = createSubDir(interval, 'Daily',
-                                  os.environ['PGWAVEOUTPUTDIR'])
-        launch_pgwave(interval, 'daily', tstart, tstop, folder, 
-                      output_dir, debug=debug)
-
-    os.chdir(currentDir)
-    interval, tstart, tstop = get_interval('Weekly')
-    if providesCoverage(tstart, tstop, min_frac, 
-                        'Ft1FileList_week', 'Ft2FileList_week', 
-                        fileStager=fileStager):
-        output_dir = createSubDir(interval, 'Weekly',
-                                  os.environ['DRPOUTPUTDIR'])
-        launch_pgwave(interval, 'weekly', tstart, tstop, folder, 
+        launch_pgwave(interval, frequency, tstart, tstop, folder, 
                       output_dir, debug=debug)

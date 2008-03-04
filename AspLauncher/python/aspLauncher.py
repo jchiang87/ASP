@@ -37,7 +37,7 @@ class TimeInterval(object):
 
 def find_intervals():
    """Find unhandled intervals"""
-   sql = ("SELECT  from TIMEINTERVALS where IS_PROCESSED=0 "
+   sql = ("SELECT * from TIMEINTERVALS where IS_PROCESSED=0 "
           + "order by interval_number asc")
    frequencies = find_frequencies()
    unhandled = {}
@@ -48,7 +48,11 @@ def find_intervals():
          timeInterval = TimeInterval(entry)
          unhandled[timeInterval.frequency].append(timeInterval)
       return unhandled
-   return dbAccess.apply(sql, findUnhandled)
+   try:
+      return dbAccess.apply(sql, findUnhandled)
+   except dbAccess.cx_Oracle.DatabaseError, message:
+      print message
+      print sql
 
 #def find_intervals(frequency=None):
 #    """Find the most recent interval for each frequency from the
@@ -99,26 +103,25 @@ if __name__ == '__main__':
     print "DataCatalog folder =", os.environ['folder']
     print "Downlink ID =", os.environ['nDownlink']
 
-    intervals = find_intervals()
-    args = {'folder' : os.environ['folder'],
-            'nDownlink' : int(os.environ['nDownlink']),
-            'SixHour_interval' : intervals['six_hour'][0],
-            'SixHour_nMetStart' : intervals['six_hour'][1],
-            'SixHour_nMetStop' : intervals['six_hour'][2],
-            'Daily_interval' : intervals['daily'][0],
-            'Daily_nMetStart' : intervals['daily'][1],
-            'Daily_nMetStop' : intervals['daily'][2],
-            'Weekly_interval' : intervals['weekly'][0],
-            'Weekly_nMetStart' : intervals['weekly'][1],
-            'Weekly_nMetStop' : intervals['weekly'][2],
-            'GRBOUTPUTDIR' : aspOutput('GRB'),
-            'DRPOUTPUTDIR' : aspOutput('DRP'),
-            'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
-            'PIPELINESERVER' : 'PROD',
-            'ASPLAUNCHERROOT' : _aspLauncherRoot}
+    frequencies = find_intervals()
+    for frequency in frequencies:
+       intervals = frequencies[frequency]
+       for interval in intervals:
+          args = {'folder' : os.environ['folder'],
+                  'nDownlink' : int(os.environ['nDownlink']),
+                  'interval' : interval.interval,
+                  'frequency' : frequency,
+                  'nMetStart' : interval.tstart,
+                  'nMetStop' : interval.tstop,
+                  'GRBOUTPUTDIR' : aspOutput('GRB'),
+                  'DRPOUTPUTDIR' : aspOutput('DRP'),
+                  'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
+                  'PIPELINESERVER' : 'PROD',
+                  'ASPLAUNCHERROOT' : _aspLauncherRoot}
 
-    for item in args:
-        print item, args[item]
+          for item in args:
+             print item, args[item]
+          print "\n*******************\n"
     
     launcher = PipelineCommand('AspLauncher', args)
     launcher.run()

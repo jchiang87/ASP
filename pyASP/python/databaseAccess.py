@@ -16,7 +16,8 @@ glastgen = lines[0].strip().encode('rot13').split()
 asp_prod = lines[1].strip().encode('rot13').split()
 asp_dev = lines[2].strip().encode('rot13').split()
 
-asp_default = asp_dev
+#asp_default = asp_dev
+asp_default = asp_prod
 
 def nullFunc(*args):
     return None

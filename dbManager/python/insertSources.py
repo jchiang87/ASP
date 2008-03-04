@@ -75,4 +75,8 @@ def insertSources(srcModelFile):
                    "(DIFFSRC_NAME, XML_MODEL, IS_OBSOLETE) " +
                    "values ('%s', '%s', '%i')")
             sql = sql % (name, xmldef, 0)
-        dbAccess.apply(sql)
+        try:
+            dbAccess.apply(sql)
+        except StandardError, message:
+            print message
+            print sql

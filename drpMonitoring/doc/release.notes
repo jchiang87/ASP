@@ -5,7 +5,9 @@
     $Id$
 
     @verbatim
-    v0r4   07-Feb-07   JC   use db tables and pgwave to build source models; 
+    v1     04-Mar-08   JC   use new db tables; refactored to be triggered by
+                            pgwave
+    v0r4   07-Feb-08   JC   use db tables and pgwave to build source models; 
                             2-sig UL calc
     v0r3   13-Jul-07   JC   switch to new gt app names
     v0r2   13-May-07   JC   use ASP_PATH and ST_INST

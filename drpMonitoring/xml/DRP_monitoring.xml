@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="5.6" type="Data">
+<task name="DRP_monitoring" version="5.7" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
@@ -45,7 +45,8 @@
       # Find the location of the source list prepared by pgwave.
       #
       output = pipeline.createFile('pgwaveFileList')
-      query = 'DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' % pgwave_processId
+      #query = 'DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' % pgwave_processId
+      query = 'DataType==\"PGWAVESOURCELIST\" && nMetStart==%i' % TSTART
       logicalPath = '/ASP/OpsSim2/FlareMonitoring/%s' % frequency
       datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
       datasetList.writeToFile(output, 1)

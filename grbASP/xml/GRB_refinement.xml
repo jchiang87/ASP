@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="4.1" type="Data">
+<task name="GRB_refinement" version="4.2" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -52,7 +52,7 @@
          <var name="OUTPUTDIR">${output_dir}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/refinePosition.sh"
-           batchOptions="-q short"/>
+           batchOptions=" -q glastdataq " allocationGroup="glastdata"/>
       <depends>
           <after process="extractLatData" status="SUCCESS"/>
       </depends>

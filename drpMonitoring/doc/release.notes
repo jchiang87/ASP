@@ -6,7 +6,7 @@
 
     @verbatim
     v1     04-Mar-08   JC   use new db tables; refactored to be triggered by
-                            pgwave
+                            pgwave; OpsSim2 tag
     v0r4   07-Feb-08   JC   use db tables and pgwave to build source models; 
                             2-sig UL calc
     v0r3   13-Jul-07   JC   switch to new gt app names

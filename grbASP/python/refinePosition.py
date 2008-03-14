@@ -50,7 +50,12 @@ def refinePosition(gcn_notice, ft1Input, ft2Input,
     gtfindsrc['ftol'] = 1e-10
     gtfindsrc['atol'] = 1e-5
     gtfindsrc['chatter'] = 2
-    gtfindsrc.run()
+
+    #
+    # kluge if gtfindsrc is run by hand (outside of pipeline)
+    # -JC 05-Mar-08
+    if not os.path.isfile(gtfindsrc['outfile']):
+        gtfindsrc.run()
     results = open(gtfindsrc['outfile']).readlines()
     fields = results[-3].split()
     ra, dec, ts, pos_error = (float(fields[0]), float(fields[1]),
@@ -132,7 +137,8 @@ if __name__ == '__main__':
                        INITIAL_LAT_DEC=gcnNotice.DEC,
                        INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
                        FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
-                                                     '_LAT_2.fits'))
+                                                     '_LAT_2.fits'),
+                       L1_DATA_AVAILABLE=1)
 
     parfile = '%s_pars.txt' % gcnNotice.Name
     pars = Parfile(parfile, fixed_keys=False)

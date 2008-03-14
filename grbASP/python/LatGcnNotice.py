@@ -168,14 +168,14 @@ class LatGcnNotice(object):
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate))
     def email_notification(self):
         import smtplib
-        sql = "select * from GRB_EMAIL_LIST where ROLE = 'Advocate'"
-        def cursorFunc(cursor):
-            return [item[1] for item in cursor]
+#        sql = "select * from GRB_EMAIL_LIST where ROLE = 'Advocate'"
+#        def cursorFunc(cursor):
+#            return [item[1] for item in cursor]
 #        recipients = dbAccess.apply(sql, cursorFunc)
-#        recipients.extend(['shiftslist@glast.stanford.edu', 
-#                           'GRBslist@glast.stanford.edu'])
-#        print recipients
         recipients = ['jchiang@slac.stanford.edu']
+        recipients.extend(['shiftslist@glast.stanford.edu', 
+                           'GRBslist@glast.stanford.edu'])
+        print recipients
         fromadr = "solist@glast.stanford.edu"
         subj = "ASP blind search GRB candidate"
         mail = smtplib.SMTP('smtpunix.slac.stanford.edu')
@@ -185,7 +185,7 @@ class LatGcnNotice(object):
                    % (fromadr, address, subj))
             message = ("%sASP GRB_blind_search found a burst candidate at\n\n"
                        + "MET = %i, (RA, Dec) = (%.3f, %.3f)\n\n"
-                       + "See http://glast-ground.slac.stanford.edu/GRBMonitoring/") % (hdr, self.grb_id, self.ra, self.dec)
+                       + "See http://glast-ground.slac.stanford.edu/ASPDataViewer/") % (hdr, self.grb_id, self.ra, self.dec)
             mail.sendmail(fromadr, address, message)
         mail.quit()
 

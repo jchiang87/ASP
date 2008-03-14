@@ -239,7 +239,7 @@ if __name__ == '__main__':
             #
             isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
             notice.registerWithDatabase(isUpdate=isUpdate)
-#            notice.email_notification()
+            notice.email_notification()
             grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
             try:
                 os.mkdir(grb_output)

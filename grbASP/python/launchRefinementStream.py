@@ -35,8 +35,11 @@ tstart = int(float(os.environ['TSTART']))
 tstop = int(float(os.environ['TSTOP']))
 grb_id = int(os.environ['GRB_ID'])
 
-if tstart >= min(gti.START) and tstop <= max(gti.STOP):
-    dbAccess.updateGrb(grb_id, L1_DATA_AVAILABLE=1)
+print "TSTART, TSTOP =", tstart, tstop
+print "min(gti.START), max(gti.STOP) =", min(gti.START), max(gti.STOP)
+#if tstart >= min(gti.START) and tstop <= max(gti.STOP):
+if True:
     refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
                       output_dir=output_dir, grb_ids=(grb_id, ),
                       streamId=-1)
+

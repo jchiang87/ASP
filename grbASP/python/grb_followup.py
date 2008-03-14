@@ -23,7 +23,7 @@ grbasproot = os.path.join(os.environ['ASP_PATH'], 'ASP', 'grbASP',
                           os.path.split(os.environ['GRBASPROOT'])[-1])
 
 def promptGrbs():
-    sql = "select * from GRB where L1_DATA_AVAILABLE = 0"
+    sql = "select GRB_ID from GRB where L1_DATA_AVAILABLE = 0"
     def cursorFunc(cursor):
         notices = {}
         for item in cursor:
@@ -33,14 +33,15 @@ def promptGrbs():
     return apply(sql, cursorFunc)
 
 def afterglows():
-    sql = "select * from GRB where L1_DATA_AVAILABLE = 1 AND ANALYSIS_VERSION = 0"
+    sql = ("select GRB_ID, LAT_ALERT_TIME, LAT_DURATION from GRB where " + 
+           "L1_DATA_AVAILABLE = 1 AND ANALYSIS_VERSION = 0")
     def cursorFunc(cursor):
         notices = {}
         for item in cursor:
             grb_id = item[0]
             notices[grb_id] = GcnNotice(grb_id)
             try:
-                notices[grb_id].ag_time = item[6] + item[-4]
+                notices[grb_id].ag_time = item[1] + item[2]
             except TypeError:
                 # kluge. refinement task has not successfully run for this burst
                 del notices[grb_id]

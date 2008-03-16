@@ -26,6 +26,14 @@ def consolidate(intervals):
             bar.append(xx)
     return bar
 
+def isCovered(tstart, tstop, tbounds, slop=0.1):
+    """Check if the time interval (tstart, tstop) is contained within a
+    contiguous interval contained in the tbounds sequence."""
+    for interval in tbounds:
+        if interval[0] <= tstart+slop and tstop-slop <= interval[1]:
+            return True
+    return False
+
 def check_ft2(gtis, ft2):
     """Ensure that the GTIs are contained within contiguous intervals
     covered by the FT2 files."""
@@ -33,17 +41,15 @@ def check_ft2(gtis, ft2):
         raise RuntimeError, "FT2 file list is empty"
     tbounds = []
     for item in ft2:
-        foo = pyfits.open(item)
-        tbounds.append( (int(foo[0].header['TSTART']),
-                         int(foo[0].header['TSTOP'])) )
+        scData = FitsNTuple(item)
+        tbounds.append((min(scData.START), max(scData.STOP)))
     tbounds.sort()
     tbounds = consolidate(tbounds)
-    for tmin, tmax in zip(gtis.START, gtis.STOP):
-        covered = False
-        for tbound in tbounds:
-            if tbound[0] <= tmin and tmax <= tbound[1]:
-                covered = True
-        if not covered:
+    print "ranges of FT2 data:", tbounds
+    print "ranges of FT1 data:", gtis.START, gtis.STOP
+    for tstart, tstop in zip(gtis.START, gtis.STOP):
+        if not isCovered(tstart, tstop, tbounds):
+            print tstart, tstop
             raise RuntimeError, "FT2 files do not cover the FT1 data"
 
 def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',

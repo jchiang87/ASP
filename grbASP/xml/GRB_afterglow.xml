@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="5.0" type="Data">
+<task name="GRB_afterglow" version="5.1" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -116,7 +116,7 @@
         for dataType, outfile in zip(dataTypes, files):
             attributes = 'nGrbId=%i' % grb_id
             print attributes
-            logicalPath = '/ASP/Results/GRB/%s:%s' % (dataType, outfile)
+            logicalPath = '/ASP/Results/GRB/afterglow/%s:%s' % (dataType, outfile)
             print logicalPath
             filePath = '%s/%s' % (output_dir, outfile)
             print filePath

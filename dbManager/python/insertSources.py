@@ -47,6 +47,20 @@ def roi_id(ra, dec):
             my_roi = roi.ROI_ID
     return my_roi
 
+def updateRois():
+    sql = "select PTSRC_NAME, RA, DEC from POINTSOURCES"
+    def getSrcCoords(cursor):
+        srcs = {}
+        for entry in cursor:
+            srcs[entry[0]] = entry[1], entry[2]
+        return srcs
+    srcs = dbAccess.apply(sql, getSrcCoords)
+    for name in srcs:
+        ra, dec = srcs[name]
+        sql = ("update POINTSOURCES set ROI_ID=%i where PTSRC_NAME='%s'"
+               % (roi_id(ra, dec), name))
+        dbAccess.apply(sql)
+
 def insertSources(srcModelFile):
     srcModel = readXml.SourceModel(srcModelFile)
     for name in srcModel.names():

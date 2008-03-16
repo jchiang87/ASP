@@ -18,7 +18,6 @@
 astro::JulianDate jd_from_MET(double met) {
    return astro::JulianDate(astro::JulianDate::missionStart() + met/8.64e4);
 }
-#include "pyASP/ChiProb.h"
 %}
 %include stl.i
 %exception {
@@ -31,12 +30,10 @@ astro::JulianDate jd_from_MET(double met) {
 }
 %template(DoublePair) std::pair<double, double>;
 %template(DoubleVector) std::vector<double>;
-%template(PairVector) std::vector< std::pair<double, double> >;
 %include $(ASTROROOT)/astro/JulianDate.h
 %include $(ASTROROOT)/astro/SkyProj.h
 %include $(ASTROROOT)/astro/SkyDir.h
 %include $(ASTROROOT)/astro/SolarSystem.h
-%include $(PYASPROOT)/pyASP/ChiProb.h
 astro::JulianDate jd_from_MET(double met);
 %extend astro::SkyDir {
    static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
@@ -59,17 +56,5 @@ astro::JulianDate jd_from_MET(double met);
       data.push_back(day);
       data.push_back(hours);
       return data;
-   }
-   double value() {
-      return *self;
-   }
-   double tjd() {
-      return *self - 2440000.5;
-   }
-   int dayOfYear() {
-      int year, month, day;
-      double hours;
-      self->getGregorianDate(year, month, day, hours);
-      return *self - astro::JulianDate(year, 1, 1, 0) + 1;
    }
 }

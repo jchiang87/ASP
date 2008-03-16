@@ -14,23 +14,20 @@ _L1DataPath = '/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks'
 
 _dtime = 10800
 
-_startTime = 220838400.   # for DC2 data
-#_startTime = 0.            # for testdata
+_startTime = 220838400.
 
-def getL1Data(tmin, tmax, l1DataPath=_L1DataPath, ft2File=_ft2File,
-              startTime=_startTime):
-    "Return full paths to FT1 and FT2 files."
-    ifile0 = int((tmin - startTime)/_dtime)
-    ifile1 = int((tmax - startTime)/_dtime)
+def getL1Data(tmin, tmax):
+    ifile0 = int((tmin - _startTime)/_dtime)
+    ifile1 = int((tmax - _startTime)/_dtime)
 
     ft1Files = []
     for i in range(ifile0, ifile1 + 1):
-        ft1Files.append(os.path.join(l1DataPath, 'downlink_%04i.fits' % i))
+        ft1Files.append(os.path.join(_L1DataPath, 'downlink_%04i.fits' % i))
 
     if len(ft1Files) == 0:
         raise LookupError, ("No FT1 files found for METs %s to %s"
                             % (tmin, tmax))
-    return tuple(ft1Files), (ft2File,)
+    return tuple(ft1Files), (_ft2File,)
 
 if __name__ == '__main__':
     from FitsNTuple import FitsNTuple

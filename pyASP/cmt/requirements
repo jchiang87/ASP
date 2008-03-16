@@ -1,20 +1,16 @@
 package pyASP
-version v2r1
+version v0r2
 
 # $Id$
 
 use SwigPolicy v*
 use astro v*
-
-apply_pattern shared_library
+use BayesianBlocks v* -no_auto_imports
+use sane v* -no_auto_imports
+use pyLikelihood v* -no_auto_imports
 
 path_remove PYTHONPATH pyASP
 path_append PYTHONPATH $(PYASPROOT)/$(BINDIR)
 path_append PYTHONPATH $(PYASPROOT)/python
-
-macro_append cppflags "" Linux " -I../src -DTRAP_FPE " 
-macro source *.cxx WIN32 "*.h *.cxx"
-
-library pyASP $(source)
 
 apply_pattern swig_module name="pyASP"

@@ -2,48 +2,48 @@
 <pipeline
    xmlns="http://glast-ground.slac.stanford.edu/pipeline"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/pipeline/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="1.7" type="Data">
+<task>
+   <name>GBM_refinement</name>
+   <version>
+      <major>1</major>
+      <minor>3</minor>
+   </version>
+   <type>Data</type>
+   <notation> </notation>
    <prerequisites>
       <prerequisite name="GBM_Notice" type="string"/>
       <prerequisite name="output_dir" type="string"/>
       <prerequisite name="PYASPROOT" type="string"/>
-      <prerequisite name="BINDIR" type="string"/>
    </prerequisites>
-   <process name="extractLatData">
+   <process name="extractLatData" type="batch">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/extractLatData.sh" maxCPU="600"/>
+      <job executable="${PYASPROOT}/python/extractLatData.sh" maxCPU="600">
+      </job>
    </process>
-   <process name="refinePosition">
+   <process name="refinePosition" type="batch">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/refinePosition.sh" maxCPU="600"/>
+      <job executable="${PYASPROOT}/python/refinePosition.sh" maxCPU="600">
+      </job>
       <depends>
           <after process="extractLatData" status="SUCCESS"/>
       </depends>
    </process>
-   <process name="tsMap">
-      <variables>
-         <var name="OUTPUTDIR">${output_dir}</var>
-      </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/tsMap.sh" maxCPU="10000"/>
-      <depends>
-          <after process="refinePosition" status="SUCCESS"/>
-      </depends>
-   </process>
-   <process name="LatGrbSpectrum">
+   <process name="LatGrbSpectrum" type="batch">
       <variables>
          <var name="OUTPUTDIR">${output_dir}</var>
          <var name="GBMNOTICE">${GBM_Notice}</var>
       </variables>
-      <job executable="${PYASPROOT}/${BINDIR}/LatGrbSpectrum.sh" maxCPU="600"/>
+      <job executable="${PYASPROOT}/python/LatGrbSpectrum.sh" maxCPU="600">
+      </job>
       <depends>
           <after process="refinePosition" status="SUCCESS"/>
       </depends>

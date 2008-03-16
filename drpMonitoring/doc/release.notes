@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r1   16-Mar-08   JC   improved upperlimit calculation; code freeze tag
     v1     04-Mar-08   JC   use new db tables; refactored to be triggered by
                             pgwave; OpsSim2 tag
     v0r4   07-Feb-08   JC   use db tables and pgwave to build source models; 

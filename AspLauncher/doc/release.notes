@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r0p1  16-Mar-08    JC   reimplement check_ft2; code freeze tag
     v1      04-Mar-08    JC   OpsSim2 tag
     v0                   JC   Initial import.
     @endverbatim

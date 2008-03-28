@@ -190,11 +190,11 @@ if __name__ == '__main__':
     from FileStager import FileStager
     from getFitsData import filter_versions
     
-    fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'],
-                            stageArea='/nfs/farm/g/glast/u33/ASP/OpsSim2/GRB',
-                            cleanup=False)
-
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
+
+    fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'],
+                            stageArea=grbroot_dir, cleanup=False,
+                            messageLevel='DEBUG')
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
     print ft1_files

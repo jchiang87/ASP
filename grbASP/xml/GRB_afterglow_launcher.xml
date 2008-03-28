@@ -29,7 +29,7 @@
             opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
             query = ('DataType == \"%s\" && (%s || %s || %s)' 
                      % (path, opt1, opt2, opt3))
-            datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
+            datasetList = datacatalogPROD.getDatasets(logicalPath+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
         query("Ft1FileList", "FT1", TSTART, TSTOP)

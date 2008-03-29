@@ -67,9 +67,17 @@ def countsSpectra(grbName, grb_id, spectrumfile, outfile=None):
     counts = FitsNTuple(spectrumfile)
     ebounds = FitsNTuple(spectrumfile, 'EBOUNDS')
     energies = num.sqrt(ebounds.E_MIN*ebounds.E_MAX)
- 
-    pylab.loglog(energies, counts.ObsCounts, 'k+', markersize=10)
+
+    axUpper = pylab.axes((0.1, 0.3, 0.8, 0.6))
+    axUpper.loglog(energies, counts.ObsCounts, 'kD', markersize=3)
     oplot_errors(energies, counts.ObsCounts, num.sqrt(counts.ObsCounts))
+
+    xrange = [min(energies)/2., max(energies)*2]
+
+    yrange = [min(counts.ObsCounts - num.sqrt(counts.ObsCounts))/2, 
+              max(counts.ObsCounts + num.sqrt(counts.ObsCounts))*2]
+    if yrange[0] == 0:
+        yrange[0] = 0.5
 
     modelSum = num.zeros(len(counts.ObsCounts))
     for item in counts.names:
@@ -77,10 +85,24 @@ def countsSpectra(grbName, grb_id, spectrumfile, outfile=None):
             modelSum += counts.__dict__[item]
             pylab.plot(energies, counts.__dict__[item], 'k--')
     pylab.plot(energies, modelSum, 'k-')
-
-    pylab.xlabel('Energy (MeV)')
-    pylab.ylabel('Counts / bin')
+    pylab.axis((xrange[0], xrange[1], yrange[0], yrange[1]))
+    pylab.ylabel('counts / bin')
     pylab.title('Counts Spectra')
+
+    residuals = (counts.ObsCounts - modelSum)/modelSum
+    residual_errors = num.sqrt(counts.ObsCounts)/modelSum
+
+    axLower = pylab.axes((0.1, 0.1, 0.8, 0.2))
+    axLower.semilogx(energies, residuals, 'kD', markersize=3)
+    oplot_errors(energies, residuals, residual_errors)
+
+    pylab.plot([xrange[0]/10, xrange[1]*10], [0, 0], 'k--')
+    pylab.axis((xrange[0], xrange[1], min(residuals - residual_errors)*2, 
+                max(residuals + residual_errors)*1.1))
+                
+    pylab.xlabel('Energy (MeV)')
+    pylab.ylabel('(counts - model) / model', fontsize=8)
+
     #pylab.show()
     if outfile is None:
         outfile = 'countsSpectra_%i.png' % grb_id

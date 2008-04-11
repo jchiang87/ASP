@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="2.7" type="Data">
+<task name="GRB_blind_search" version="2.5" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p2"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <prerequisites>
@@ -22,8 +22,7 @@
     <script><![CDATA[
       query = 'DataType == \"FT1\" && nDownlink == %i' % DownlinkId
       print "dataCatalog query: ", query
-      #datasetList = datacatalog.getDatasets(logicalPath + "/*", query)
-      datasetList = datacatalogPROD.getDatasets(logicalPath + "/*", query)
+      datasetList = datacatalog.getDatasets(logicalPath + "/*", query)
       output = pipeline.createFile('Ft1FileList')
       datasetList.writeToFile(output, 1)
       pipeline.writeFile(output)

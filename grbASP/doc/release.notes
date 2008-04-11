@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v3r1p1 11-Apr-08   JC   improve counts spectrum plots, adding
+                            residuals, setting y range to data and fixing
+                            bug in error bar plotting.
     v3r1   16-Mar-08   JC   move GRB grid code to separate package;
                             add afterglow to folder path; use longer queue
                             for refinePosition process; code freeze tag

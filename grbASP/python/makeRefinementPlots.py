@@ -61,7 +61,7 @@ def countsMap(grbName, grb_id, cmapfile, pos, init_pos, outfile=None):
 
 def oplot_errors(x, y, yerr):
     for xx, yy, err in zip(x, y, yerr):
-        pylab.plot([xx, xx], [yy-yerr, yy+yerr], 'k-')
+        pylab.plot([xx, xx], [yy-err, yy+err], 'k-')
         
 def countsSpectra(grbName, grb_id, spectrumfile, outfile=None):
     counts = FitsNTuple(spectrumfile)

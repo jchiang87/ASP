@@ -72,12 +72,11 @@ def refinePosition(gcn_notice, ft1Input, ft2Input,
         gttsmap['srcmdl'] = 'none'
         gttsmap['outfile'] = notice.Name + '_tsmap.fits'
         gttsmap['coordsys'] = 'CEL'
-        gttsmap['xref_min'] = ra - mapsize
-        gttsmap['xref_max'] = ra + mapsize
-        gttsmap['nx'] = npix
-        gttsmap['yref_min'] = dec - mapsize
-        gttsmap['yref_max'] = dec + mapsize
-        gttsmap['ny'] = npix
+        gttsmap['nxpix'] = npix
+        gttsmap['nypix'] = npix
+        gttsmap['binsz'] = mapsize/float(npix-1)
+        gttsmap['xref'] = ra
+        gttsmap['yref'] = dec
         print gttsmap.command()
         outfile = os.path.join(os.environ['OUTPUTDIR'], 'gttsmap.par')
         print "writing " + outfile

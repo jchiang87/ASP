@@ -22,7 +22,8 @@ _version = os.path.split(os.environ['GRBASPROOT'])[-1]
 _grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
-                       debug=False, streamId=None):
+                       debug=False, streamId=None, 
+                       datacatalog_imp="datacatalog"):
     if downlinks is None:
         raise ValueError, "No downlink IDs specified"
     if grbroot_dir is None:
@@ -34,7 +35,8 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                 'GRBROOTDIR' : grbroot_dir,
                 'GRBASPROOT' : _grbAspRoot,
                 'logicalPath' : '/DC2/Downlinks',
-                'ST_INST' : os.environ['ST_INST']}
+                'ST_INST' : os.environ['ST_INST'],
+                'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_blind_search', args, stream=streamId)
@@ -42,7 +44,8 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
 
 def refinementStreams(tstart, tstop, logicalPath=None,
                       grb_ids=(), output_dir=None, debug=False,
-                      streamId=None):
+                      streamId=None, 
+                      datacatalog_imp="datacatalog"):
     for grb_id in grb_ids:
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id, 
@@ -51,14 +54,16 @@ def refinementStreams(tstart, tstop, logicalPath=None,
                 'TSTART' : tstart,
                 'TSTOP' : tstop,
                 'logicalPath' : '/DC2/Downlinks',
-                'ST_INST' : os.environ['ST_INST']}
+                'ST_INST' : os.environ['ST_INST'],
+                'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_refinement', args, stream=streamId)
         command.run(debug=debug)
 
 def afterglowStreams(parfiles=None, output_dir=None, debug=False,
-                     logicalPath=None):
+                     logicalPath=None, 
+                     datacatalog_imp="datacatalog"):
     os.chdir(output_dir)
     if parfiles is None:
         parfiles = glob.glob('GRB*_pars.txt')
@@ -76,7 +81,8 @@ def afterglowStreams(parfiles=None, output_dir=None, debug=False,
                 'output_dir' : output_dir,
                 'GRBASPROOT' : _grbAspRoot,
                 'logicalPath' : '/DC2/Downlinks',
-                'ST_INST' : os.environ['ST_INST']}
+                'ST_INST' : os.environ['ST_INST'],
+                'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_afterglow', args)

@@ -5,10 +5,11 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement_launcher" version="0.5" type="Data">
+<task name="GRB_refinement_launcher" version="1.0" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5"</var>
     <var name="BINDIR">rh9_gcc32</var>
+    <var name="datacatalog_imp">datacatalog</var>
   </variables>
   <prerequisites>
     <prerequisite name="GCN_NOTICE" type="string"/>
@@ -24,6 +25,8 @@
   <process name="catalogQuery">
     <script>
       <![CDATA[
+        print "using datacatalog implementation: ", datacatalog_imp
+        datacat = eval(datacatalog_imp)
         def query(outfile, path, TSTART, TSTOP):
             output = pipeline.createFile(outfile)
             opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
@@ -31,7 +34,7 @@
             opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
             query = ('DataType == \"%s\" && (%s || %s || %s)' 
                      % (path, opt1, opt2, opt3))
-            datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
+            datasetList = datacat.getDatasets(logicalPath+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
         query("Ft1FileList", "FT1", TSTART, TSTOP)

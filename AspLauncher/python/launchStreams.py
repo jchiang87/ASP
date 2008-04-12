@@ -17,6 +17,7 @@ from FileStager import FileStager
 
 _version = os.path.split(os.environ['PGWAVEROOT'])[-1]
 _pgwaveRoot = os.path.join(_asp_path, 'ASP', 'pgwave', _version)
+_datacatalog_imp = os.environ['datacatalog_imp']
 
 def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
                   debug=False):
@@ -27,7 +28,8 @@ def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
             'TSTOP' : tstop,
             'OUTPUTDIR' : output_dir,
             'CATDIR' : '/nfs/farm/g/glast/u33/tosti/october/catdir',
-            'PGWAVEROOT' : _pgwaveRoot}
+            'PGWAVEROOT' : _pgwaveRoot,
+            'datacatalog_imp' : _datacatalog_imp}
     command = PipelineCommand('PGWave', args)
     command.run(debug=debug)
 

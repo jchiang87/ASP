@@ -5,10 +5,11 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="5.1" type="Data">
+<task name="GRB_afterglow" version="6.0" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5"</var>
     <var name="BINDIR">rh9_gcc32</var>
+    <var name="datacatalog_imp">datacatalog</var>
   </variables>
   <prerequisites>
     <prerequisite name="logicalPath" type="string"/>
@@ -22,6 +23,8 @@
   </prerequisites>
   <process name="catalogQuery">
     <script><![CDATA[
+      print "using datacatalog implementation: ", datacatalog_imp
+      datacat = eval(datacatalog_imp)
       def query(outfile, path, TSTART, TSTOP):
           output = pipeline.createFile(outfile)
           opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
@@ -29,7 +32,7 @@
           opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
           query = ('DataType == \"%s\" && (%s || %s || %s)' 
                    % (path, opt1, opt2, opt3))
-          datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
+          datasetList = datacat.getDatasets(logicalPath+'/*', query)
           datasetList.writeToFile(output, 1)
           pipeline.writeFile(output)
       query("Ft1FileList", "FT1", TSTART, TSTOP)
@@ -107,6 +110,8 @@
   <process name="registerPlots">
     <script>
       <![CDATA[
+        print "using datacatalog implementation: ", datacatalog_imp
+        datacat = eval(datacatalog_imp)
         priorProcess = pipeline.getProcessInstance("makeAfterglowPlots")
         grb_id = priorProcess.getVariable('GRB_ID')
         dataTypes = ('SPECTRUM', 'LIGHTCURVE')
@@ -120,8 +125,8 @@
             print logicalPath
             filePath = '%s/%s' % (output_dir, outfile)
             print filePath
-            datacatalog.registerDataset(dataType, logicalPath, filePath, 
-                                        attributes)
+            datacat.registerDataset(dataType, logicalPath, filePath, 
+                                    attributes)
        ]]>
     </script>
     <depends>

@@ -16,6 +16,7 @@ from cleanXml import cleanXml
 import databaseAccess as dbAccess
 from drpDbAccess import findPointSources, defaultPtSrcXml
 from celgal import celgal, dist
+from SourceData import _monitoringBand as monitoringBand
 
 class Roi(object):
     def __init__(self, ra, dec, rad, sr):
@@ -83,6 +84,27 @@ class PgwaveSource(object):
         dec = xmlsrc.spatialModel.DEC.value
         return dist((self.ra, self.dec), (ra, dec))
 
+def currentDailyInterval(time):
+    sql = ("select INTERVAL_NUMBER from TIMEINTERVALS where " + 
+           "TSTART<=%i and %i<=TSTOP and FREQUENCY='daily'" % (time, time))
+    def getIntervalNum(cursor):
+        for entry in cursor:
+            return entry[0]
+    return dbAccess.apply(sql, getIntervalNum)
+
+def isMonitored(src, interval_time):
+    "Return IS_MONITORED flag from the preceeding day."
+    currentInterval = currentDailyInterval(interval_time - 8.64e4)
+    sql = ("select IS_MONITORED from LIGHTCURVES where "
+           + "FREQUENCY='daily' and " 
+           + "INTERVAL_NUMBER=%i and " % currentInterval
+           + "PTSRC_NAME='%s' and " % src
+           + "EBAND_ID=%i" % monitoringBand)
+    def getFlag(cursor):
+        for entry in cursor:
+            return entry[0]
+    return dbAccess.apply(sql, getFlag)
+
 if __name__ == '__main__':
     os.chdir(os.environ['OUTPUTDIR'])
 
@@ -104,17 +126,45 @@ if __name__ == '__main__':
     pg_srcs = [PgwaveSource(line) for line in open(pgwaveSrcList) 
                if line.find("#")==-1]
 
-    def srcPosCoincidence(src, srcModel, tol=0.5):
-        for item in srcModel.names():
-            if src.dist(srcModel[item]) < tol:
-                return True
-        return False
+    def nearestSource(src, srcModel):
+        srcNames = srcModel.names()
+        nearest = srcNames[0]
+        mindist = src.dist(srcModel[nearest])
+        for item in srcNames[1:]:
+            dist = src.dist(srcModel[item]) 
+            if dist < mindist:
+                nearest = item
+                mindist = dist
+        return nearest, mindist
 
+    # Keep track of all of the found by pgwave, substituting the name
+    # from POINTSOURCES when it is within the positional coincidence
+    # tolerance.
+    pgwave_list = []
+    tol = 0.5
     for src in pg_srcs:
-        if not srcPosCoincidence(src, srcModel):
+        nearest, dist = nearestSource(src, srcModel)
+        if dist > tol:  # add this in as a anonymous pgwave source
             name = "pgw_%04i" % src.id
             doc = minidom.parseString(defaultPtSrcXml(name, src.ra, src.dec))
             srcModel[name] = Source(doc.getElementsByTagName('source')[0])
+            pgwave_list.append(name)
+        else:
+            pgwave_list.append(nearest)
+
+    tstart = int(os.environ['TSTART'])
+    tstop = int(os.environ['TSTOP'])
+    interval_time = (tstart + tstop)/2.
+
+    #
+    # Loop over sources in model and keep only DRP, pgwave, and monitored
+    # sources
+    #
+    for src in srcModel.names():
+        if not (src in pgwave_list or
+                srcModel[src].sourceType == 'DRP' or
+                isMonitored(src, interval_time)):
+            del srcModel[src]
 
     #
     # Limit the photon indices to < -1.5:

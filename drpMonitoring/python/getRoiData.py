@@ -34,7 +34,7 @@ try:
     os.mkdir(name)
 except OSError:
     pass
-os.chmod(name, 0777)
+#os.chmod(name, 0777)
 os.chdir(name)
 
 #

@@ -16,7 +16,11 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import pars, currentRoi
 import pyfits
 from SourceData import SourceData, SourceTypeError
-from computeUpperLimit import computeUpperLimit
+
+# use local version of UpperLimits since the final fit in the
+# pyLikelihood v1r5 version can end in abnormal termination
+# from UpperLimits import UpperLimits
+from computeUpperLimit import UpperLimits
 import drpDbAccess
 
 gtselect = GtApp('gtselect')
@@ -77,6 +81,10 @@ def fitEnergyBand(emin, emax, srcModel, roi):
     print like.model
     sys.stdout.flush()
 
+    # Compute 90% CL upper limits using class from pyLikelihood.
+    # One-sided 90% UL corresponds to delta-chi-square of 3.065 for 1 dof.
+    ul = UpperLimits(like)
+
     results = {}
     for srcname in ptsrcs:
         src = like.model[srcname]
@@ -86,7 +94,9 @@ def fitEnergyBand(emin, emax, srcModel, roi):
         fluxerr = integral.error()*integral.getScale()
         isUL = False
         if like.Ts(srcname) < 25:
-            flux = computeUpperLimit(like, srcname)
+#            flux = computeUpperLimit(like, srcname)
+            print "computing upper limit for ", srcname
+            flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.)
             isUL = True
         try:
             results[srcname] = SourceData(srcname, flux, fluxerr, 

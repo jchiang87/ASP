@@ -69,6 +69,11 @@ def getXmlModel():
 class PgwaveSource(object):
     _converter = celgal()
     def __init__(self, line):
+        """This class is extremely dangerous since it relies on
+        a fixed format for an ascii file from pgwave.  This format
+        seems to change without warning, so this needs to be
+        checked against the current version of the pgwave code.
+        """
         data = line.split()
         self.id = int(data[0])
         #
@@ -78,7 +83,7 @@ class PgwaveSource(object):
         #
         self.ra, self.dec = float(data[3]), float(data[4])
         self.l, self.b = self._converter.gal((self.ra, self.dec))
-        self.snr = float(data[5])
+        self.signif = float(data[7])
     def dist(self, xmlsrc):
         ra = xmlsrc.spatialModel.RA.value
         dec = xmlsrc.spatialModel.DEC.value
@@ -105,6 +110,12 @@ def isMonitored(src, interval_time):
             return entry[0]
     return dbAccess.apply(sql, getFlag)
 
+def sourceType(src):
+    try:
+        return src.sourceType
+    except AttributeError:
+        return 'None'
+
 if __name__ == '__main__':
     os.chdir(os.environ['OUTPUTDIR'])
 
@@ -123,19 +134,30 @@ if __name__ == '__main__':
 
     srcModel = SourceModel(outfile)
 
+    pg_srcs = []
+
+## See how it goes without applying thresholding, so leave commented out.
+#    blim = 2.  # use higher threshold within blim degrees of Galactic plane
+#    threshold = 5
+#    for line in open(pgwaveSrcList):
+#        if line.find("#") == -1:
+#            pg_src = PgwaveSource(line)
+#            if abs(pg_src.b) > blim or pg_src.signif > threshold:
+#                pg_srcs.append(pg_src)
+
     pg_srcs = [PgwaveSource(line) for line in open(pgwaveSrcList) 
                if line.find("#")==-1]
 
     def nearestSource(src, srcModel):
         srcNames = srcModel.names()
         nearest = srcNames[0]
-        mindist = src.dist(srcModel[nearest])
+        minsep = src.dist(srcModel[nearest])
         for item in srcNames[1:]:
-            dist = src.dist(srcModel[item]) 
-            if dist < mindist:
+            sep = src.dist(srcModel[item]) 
+            if sep < minsep:
                 nearest = item
-                mindist = dist
-        return nearest, mindist
+                minsep = sep
+        return nearest, minsep
 
     # Keep track of all of the found by pgwave, substituting the name
     # from POINTSOURCES when it is within the positional coincidence
@@ -143,8 +165,8 @@ if __name__ == '__main__':
     pgwave_list = []
     tol = 0.5
     for src in pg_srcs:
-        nearest, dist = nearestSource(src, srcModel)
-        if dist > tol:  # add this in as a anonymous pgwave source
+        nearest, sep = nearestSource(src, srcModel)
+        if sep > tol:  # add this in as a anonymous pgwave source
             name = "pgw_%04i" % src.id
             doc = minidom.parseString(defaultPtSrcXml(name, src.ra, src.dec))
             srcModel[name] = Source(doc.getElementsByTagName('source')[0])
@@ -162,7 +184,7 @@ if __name__ == '__main__':
     #
     for src in srcModel.names():
         if not (src in pgwave_list or
-                srcModel[src].sourceType == 'DRP' or
+                sourceType(srcModel[src]) == 'DRP' or
                 isMonitored(src, interval_time)):
             del srcModel[src]
 

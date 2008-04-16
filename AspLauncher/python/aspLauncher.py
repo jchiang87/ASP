@@ -10,6 +10,12 @@ Two environment variables need to be provided:
 nDownlink = Downlink ID of the current L1Proc instance
 folder = Logical folder in the dataCatalog that contains the FT1/2 data
 
+The bash wrapper script requires two addtional environment variables:
+
+ST_INST = path to ST installation, e.g.,
+       /nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5
+ASP_PATH = path to ASP installation, e.g., /afs/slac/g/glast/ground/ASP/prod
+
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
 #
@@ -20,7 +26,7 @@ from createGrbStreams import blindSearchStreams
 import databaseAccess as dbAccess
 
 def find_frequencies():
-   sql = "select * from FREQUENCIES"
+   sql = "select FREQUENCY from FREQUENCIES"
    def getFrequencies(cursor):
        freqs = []
        for entry in cursor:
@@ -74,9 +80,7 @@ if __name__ == '__main__':
        os.environ['folder'], os.environ['nDownlink']
     except KeyError:
        os.environ['folder'] = '/Data/OpsSim2/Level1'
-#       os.environ['nDownlink'] = '80220001'
-#       os.environ['nDownlink'] = '80220002'
-       os.environ['nDownlink'] = '80220003'
+       os.environ['nDownlink'] = '80306003'
 
     print "Using "
     print "DataCatalog folder =", os.environ['folder']
@@ -85,10 +89,11 @@ if __name__ == '__main__':
     nDownlink = int(os.environ['nDownlink'])
     blindSearchStreams(downlinks=(nDownlink,),
                        logicalPath=os.environ['folder'],
-                       grbroot_dir=aspOutput('GRB'))
+                       grbroot_dir=aspOutput('GRB'),
+                       streamId=nDownlink, debug=False)
 
     frequencies = find_intervals()
-    for frequency in frequencies:
+    for offset, frequency in enumerate(frequencies):
        intervals = frequencies[frequency]
        for interval in intervals:
           args = {'folder' : os.environ['folder'],
@@ -106,5 +111,6 @@ if __name__ == '__main__':
              print item, args[item]
           print "\n*******************\n"
     
-          launcher = PipelineCommand('AspLauncher', args)
+          stream_id = interval.start + offset
+          launcher = PipelineCommand('AspLauncher', args, stream=stream_id)
           launcher.run()

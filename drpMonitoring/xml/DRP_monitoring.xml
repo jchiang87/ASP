@@ -19,7 +19,7 @@
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>
-    <prerequisite name="pgwave_processId" type="integer"/>
+    <prerequisite name="pgwave_streamId" type="integer"/>
     <prerequisite name="num_RoIs" type="integer"/>
     <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="DRPMONITORINGROOT" type="string"/>
@@ -48,8 +48,8 @@
       # Find the location of the source list prepared by pgwave.
       #
       output = pipeline.createFile('pgwaveFileList')
-      #query = 'DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' % pgwave_processId
-      query = 'DataType==\"PGWAVESOURCELIST\" && nMetStart==%i' % TSTART
+      query = ('DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' 
+               % pgwave_streamId)
       logicalPath = '/ASP/OpsSim2/FlareMonitoring/%s' % frequency
       datasetList = datacat.getDatasets(logicalPath+'/*', query)
       datasetList.writeToFile(output, 1)

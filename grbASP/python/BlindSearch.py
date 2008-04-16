@@ -193,7 +193,7 @@ if __name__ == '__main__':
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
 
     fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'],
-                            stageArea=grbroot_dir, cleanup=False,
+                            stageArea=grbroot_dir, cleanup=True,
                             messageLevel='DEBUG')
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
@@ -239,7 +239,7 @@ if __name__ == '__main__':
             #
             isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
             notice.registerWithDatabase(isUpdate=isUpdate)
-            notice.email_notification()
+            #notice.email_notification()
             grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
             try:
                 os.mkdir(grb_output)

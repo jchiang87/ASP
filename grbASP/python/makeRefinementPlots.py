@@ -18,6 +18,8 @@ import numpy as num
 import pylab
 import pyfits
 from FitsNTuple import FitsNTuple
+import pyASP
+from SkyCone import makeCone
 
 def getAxisRange(header):
     naxis1 = header['naxis1']
@@ -32,17 +34,92 @@ def getAxisRange(header):
     yy = (num.arange(naxis2, dtype=num.float) - crpix2 + 1)*cdelt2 + crval2
     return (xx[0], xx[-1], yy[0], yy[-1])
 
-def plotCircle(ra, dec, radius, color='r'):
-    dphi = 2*num.pi/20
-    phi = num.arange(0, 2*num.pi + dphi, dphi)
-    xx = radius*num.cos(phi) + ra
-    yy = radius*num.sin(phi) + dec
-    pylab.plot([ra], [dec], color+'+', markersize=10)
-    pylab.plot(xx, yy, color+'-')
+class CoordSys(object):
+    def __init__(self, fitsfile):
+        self.proj = pyASP.SkyProj(fitsfile)
+        x0, x1, y0, y1 = self._getAxisRange(pyfits.open(fitsfile)[0].header)
+        self.lonRange = x0, x1
+        self.latRange = y0, y1
+    def meridian(self, longitude, npts=50):
+        dlat = (self.latRange[1] - self.latRange[0])/(npts - 1)
+        lats = num.arange(self.latRange[0], self.latRange[1], dlat)
+        x, y = [], []
+        for latitude in lats:
+            xx, yy = self.proj.sph2pix(longitude, latitude)
+            x.append(xx)
+            y.append(yy)
+        return num.array(x), num.array(y)
+    def circle_of_latitude(self, latitude, npts=50):
+        dlon = (self.lonRange[1] - self.lonRange[0])/(npts - 1)
+        lons = num.arange(self.lonRange[0], self.lonRange[1], dlon)
+        x, y = [], []
+        for longitude in lons:
+            xx, yy = self.proj.sph2pix(longitude, latitude)
+            x.append(xx)
+            y.append(yy)
+        return num.array(x), num.array(y)
+    def _getAxisRange(self, header):
+        nxpix = header['NAXIS1']
+        nypix = header['NAXIS2']
+        x, y = self.proj.pix2sph(0, 0)
+        xmin = xmax = x
+        ymin = ymax = y
+        for i in range(nxpix):
+            x, y = self.proj.pix2sph(i, 0)
+            ymin = min(ymin, y)
+            ymax = max(ymax, y)
+            x, y = self.proj.pix2sph(i, nypix + 1)
+            ymin = min(ymin, y)
+            ymax = max(ymax, y)
+        for j in range(nypix):
+            x, y = self.proj.pix2sph(0, j)
+            xmin = min(xmin, x)
+            xmax = max(xmax, x)
+            x, y = self.proj.pix2sph(nxpix + 1, j)
+            xmin = min(xmin, x)
+            xmax = max(xmax, x)
+        return xmin, xmax, ymin, ymax
+    def oplotCoords(self, lons, lats, format="%i"):
+        xtics = []
+        xticnames = []
+        for i in lons:
+            x, y = self.meridian(i)
+            yabs = num.abs(y)
+            indx = num.where(yabs == min(yabs))
+            xtics.append(x[indx[0][0]])
+            xticnames.append(format % i)
+            pylab.plot(x, y, 'b:')
+        pylab.xticks(xtics, xticnames)
+
+        ytics = []
+        yticnames = []
+        for i in lats:
+            x, y = self.circle_of_latitude(i)
+            xabs = num.abs(x)
+            indx = num.where(xabs == min(xabs))
+            ytics.append(y[indx[0][0]])
+            yticnames.append(format % i)
+            pylab.plot(x, y, 'b:')
+        pylab.yticks(ytics, yticnames)
+
+def plotCircle(ra, dec, radius, color='r', proj=None):
+    ras, decs = makeCone(ra, dec, radius)
+    if proj is not None:
+        xx, yy = [], []
+        for coords in zip(ras, decs):
+            x, y = proj.sph2pix(*coords)
+            xx.append(x)
+            yy.append(y)
+        x, y = proj.sph2pix(ra, dec)
+    else:
+        x, y = ra, dec
+        xx, yy = ras, decs
+    pylab.plot([x], [y], '+', markersize=10, color=color)
+    pylab.plot(xx, yy, '-', color=color)
 
 def countsMap(grb_id, cmapfile, pos, init_pos, outfile=None):
     cmap = pyfits.open(cmapfile)
-    axisRange = getAxisRange(cmap[0].header)
+    axisRange = (1, cmap[0].header['NAXIS1'], 1, cmap[0].header['NAXIS2'])
     image = cmap[0].data.tolist()
     image.reverse()
     image = num.array(image)
@@ -50,13 +127,23 @@ def countsMap(grb_id, cmapfile, pos, init_pos, outfile=None):
                  cmap=pylab.cm.spectral_r, extent=axisRange)
     pylab.colorbar()
 
-    plotCircle(pos[0], pos[1], pos[2])
-    plotCircle(init_pos[0], init_pos[1], init_pos[2], color='k')
+    coordSys = CoordSys(cmapfile)
+
+    delta = 5.
+    xmin = int(coordSys.lonRange[0]/delta)*delta
+    xmax = int(coordSys.lonRange[1]/delta + 1)*delta
+    ymin = int(coordSys.latRange[0]/delta)*delta
+    ymax = int(coordSys.latRange[1]/delta + 1)*delta
+    coordSys.oplotCoords(num.arange(xmin, xmax, delta), 
+                         num.arange(ymin, ymax, delta))
+
+    plotCircle(pos[0], pos[1], pos[2], proj=coordSys.proj)
+    plotCircle(init_pos[0], init_pos[1], init_pos[2], color='w',
+               proj=coordSys.proj)
     pylab.axis(axisRange)
     pylab.xlabel('RA (deg)')
     pylab.ylabel('Dec (deg)')
     pylab.title('Counts Map')
-    #pylab.show()
     if outfile is None:
         outfile = 'countsMap_%i.png' % grb_id
     pylab.savefig(outfile)
@@ -108,7 +195,6 @@ def countsSpectra(grb_id, spectrumfile, outfile=None):
     pylab.xlabel('Energy (MeV)')
     pylab.ylabel('(counts - model) / model', fontsize=8)
 
-    #pylab.show()
     if outfile is None:
         outfile = 'countsSpectra_%i.png' % grb_id
     pylab.savefig(outfile)
@@ -136,7 +222,6 @@ def lightCurve(grb_id, ft1file, outfile=None):
     pylab.xlabel('MET - %i (s)' % grb_id)
     pylab.ylabel('entries / bin')
     pylab.title('Light Curve')
-    #pylab.show()
     if outfile is None:
         outfile = 'lightCurve_%i.png' % grb_id
     pylab.savefig(outfile)
@@ -144,22 +229,44 @@ def lightCurve(grb_id, ft1file, outfile=None):
 
 def tsMap(grb_id, fitsfile, ra, dec, outfile=None):
     ts = pyfits.open(fitsfile)
-    axisRange = getAxisRange(ts[0].header)
+    axisRange = (1, ts[0].header['NAXIS1'], 1, ts[0].header['NAXIS2'])
     levels = max(ts[0].data.flat) - num.array((2.31, 4.61, 9.21))
     image = ts[0].data.tolist()
     image.reverse()
     image = num.array(image)
-    pylab.contour(image, levels, interpolation='nearest',
-                  extent=axisRange)
-    pylab.plot([ra], [dec], 'k+', ms=10)
+    pylab.contour(image, levels, interpolation='nearest', extent=axisRange)
+
+    coordSys = CoordSys(fitsfile)
+
+    scaleFactor = float(10**(-int(num.log10(ts[0].header['CDELT1']))))
+
+    deltax = int((coordSys.latRange[1] - coordSys.latRange[0])
+                 /3.*scaleFactor)/scaleFactor
+
+    xmin = int(coordSys.lonRange[0]*scaleFactor)/scaleFactor
+    xmax = int(coordSys.lonRange[1]*scaleFactor)/scaleFactor
+    xrange = num.arange(xmin, xmax, deltax)
+
+    deltay = int((coordSys.latRange[1] - coordSys.latRange[0])
+                 /5.*scaleFactor)/scaleFactor
+    ymin = int(coordSys.latRange[0]*scaleFactor)/scaleFactor
+    ymax = int(coordSys.latRange[1]*scaleFactor)/scaleFactor
+    yrange = num.arange(ymin, ymax, deltay)
+
+    coordSys.oplotCoords(xrange, yrange, format="%.2f")
+
+    x, y = coordSys.proj.sph2pix(ra, dec)
+    pylab.plot([x], [y], 'k+', ms=10)
+
+    pylab.axis(axisRange)
     pylab.xlabel('RA (deg)')
     pylab.ylabel('Dec (deg)')
     pylab.title('Error Contours')
-    #pylab.show()
     if outfile is None:
         outfile = 'errorContours_%i.png' % grb_id
     pylab.savefig(outfile)
     pylab.close()
+    return coordSys
 
 if __name__ == '__main__':
     import glob
@@ -201,4 +308,4 @@ if __name__ == '__main__':
     countsMap(grb_id, cmapfile, (ra, dec, error), (init_ra, init_dec, init_err))
     lightCurve(grb_id, ft1file)
     countsSpectra(grb_id, grbName + '_grb_spec.fits')
-    tsMap(grb_id, grbName + '_tsmap.fits', ra, dec)
+    coordSys = tsMap(grb_id, grbName + '_tsmap.fits', ra, dec)

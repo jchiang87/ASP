@@ -24,12 +24,12 @@ def getAxisRange(header):
     crpix1 = header['crpix1']
     crval1 = header['crval1']
     cdelt1 = header['cdelt1']
-    xx = (num.arange(naxis1, dtype=num.float) - crpix1)*cdelt1 + crval1
+    xx = (num.arange(naxis1, dtype=num.float) - crpix1 + 1)*cdelt1 + crval1
     naxis2 = header['naxis2']
     crpix2 = header['crpix2']
     crval2 = header['crval2']
     cdelt2 = header['cdelt2']
-    yy = (num.arange(naxis2, dtype=num.float) - crpix2)*cdelt2 + crval2
+    yy = (num.arange(naxis2, dtype=num.float) - crpix2 + 1)*cdelt2 + crval2
     return (xx[0], xx[-1], yy[0], yy[-1])
 
 def plotCircle(ra, dec, radius, color='r'):
@@ -40,10 +40,13 @@ def plotCircle(ra, dec, radius, color='r'):
     pylab.plot([ra], [dec], color+'+', markersize=10)
     pylab.plot(xx, yy, color+'-')
 
-def countsMap(grbName, grb_id, cmapfile, pos, init_pos, outfile=None):
+def countsMap(grb_id, cmapfile, pos, init_pos, outfile=None):
     cmap = pyfits.open(cmapfile)
     axisRange = getAxisRange(cmap[0].header)
-    pylab.imshow(cmap[0].data, interpolation='nearest', 
+    image = cmap[0].data.tolist()
+    image.reverse()
+    image = num.array(image)
+    pylab.imshow(image, interpolation='nearest', 
                  cmap=pylab.cm.spectral_r, extent=axisRange)
     pylab.colorbar()
 
@@ -61,9 +64,11 @@ def countsMap(grbName, grb_id, cmapfile, pos, init_pos, outfile=None):
 
 def oplot_errors(x, y, yerr):
     for xx, yy, err in zip(x, y, yerr):
+        if err == yy == 1:
+            err = 0.999 # workaround for plotting bug in pylab for ylog plots
         pylab.plot([xx, xx], [yy-err, yy+err], 'k-')
         
-def countsSpectra(grbName, grb_id, spectrumfile, outfile=None):
+def countsSpectra(grb_id, spectrumfile, outfile=None):
     counts = FitsNTuple(spectrumfile)
     ebounds = FitsNTuple(spectrumfile, 'EBOUNDS')
     energies = num.sqrt(ebounds.E_MIN*ebounds.E_MAX)
@@ -122,7 +127,7 @@ def createHist(xvals, xmin, xmax, nx=50):
                 bins[-1] += 1
     return xx, bins
 
-def lightCurve(grbName, grb_id, ft1file, outfile=None):
+def lightCurve(grb_id, ft1file, outfile=None):
     ft1 = FitsNTuple(ft1file)
     tvals = ft1.TIME - grb_id
     xx, yy = createHist(tvals, min(tvals), max(tvals))
@@ -137,11 +142,14 @@ def lightCurve(grbName, grb_id, ft1file, outfile=None):
     pylab.savefig(outfile)
     pylab.close()
 
-def tsMap(grbName, grb_id, fitsfile, ra, dec, outfile=None):
+def tsMap(grb_id, fitsfile, ra, dec, outfile=None):
     ts = pyfits.open(fitsfile)
     axisRange = getAxisRange(ts[0].header)
     levels = max(ts[0].data.flat) - num.array((2.31, 4.61, 9.21))
-    pylab.contour(ts[0].data, levels, interpolation='nearest',
+    image = ts[0].data.tolist()
+    image.reverse()
+    image = num.array(image)
+    pylab.contour(image, levels, interpolation='nearest',
                   extent=axisRange)
     pylab.plot([ra], [dec], 'k+', ms=10)
     pylab.xlabel('RA (deg)')
@@ -190,8 +198,7 @@ if __name__ == '__main__':
               algorithm='CMAP', nxpix=nxpix, nypix=nypix, binsz=binsz, 
               coordsys='CEL', xref=ra, yref=dec, proj='STG')
 
-    countsMap(grbName, grb_id, cmapfile, (ra, dec, error), 
-              (init_ra, init_dec, init_err))
-    lightCurve(grbName, grb_id, ft1file)
-    countsSpectra(grbName, grb_id, grbName + '_grb_spec.fits')
-    tsMap(grbName, grb_id, grbName + '_tsmap.fits', ra, dec)
+    countsMap(grb_id, cmapfile, (ra, dec, error), (init_ra, init_dec, init_err))
+    lightCurve(grb_id, ft1file)
+    countsSpectra(grb_id, grbName + '_grb_spec.fits')
+    tsMap(grb_id, grbName + '_tsmap.fits', ra, dec)

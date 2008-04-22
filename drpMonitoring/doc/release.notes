@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r2   22-Apr-08   JC   use pgwave streamIds instead of process ids;
+                            modify source selection to exclude non-pgwave
+                            sources
     v1r1   16-Mar-08   JC   improved upperlimit calculation; code freeze tag
     v1     04-Mar-08   JC   use new db tables; refactored to be triggered by
                             pgwave; OpsSim2 tag

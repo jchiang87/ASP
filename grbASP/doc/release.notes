@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v3r2   22-Apr-08   JC   overlay wcs coord grid on cmap and tsmap plots;
+                            pixel-offset bug fix; new gttsmap interface
     v3r1p1 11-Apr-08   JC   improve counts spectrum plots, adding
                             residuals, setting y range to data and fixing
                             bug in error bar plotting.

@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r1    22-Apr-08    JC   set pgwave stream ids using nMetStart + offset,
+                              where offset depends on the frequency;
+                              added option to used datacatalogPROD in xml
     v1r0p1  16-Mar-08    JC   reimplement check_ft2; code freeze tag
     v1      04-Mar-08    JC   OpsSim2 tag
     v0                   JC   Initial import.

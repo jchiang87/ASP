@@ -234,7 +234,9 @@ def tsMap(grb_id, fitsfile, ra, dec, outfile=None):
     image = ts[0].data.tolist()
     image.reverse()
     image = num.array(image)
-    pylab.contour(image, levels, interpolation='nearest', extent=axisRange)
+    contourSet = pylab.contour(image, levels, interpolation='nearest', 
+                               extent=axisRange)
+    #pylab.clabel(contourSet)
 
     coordSys = CoordSys(fitsfile)
 

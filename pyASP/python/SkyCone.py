@@ -6,16 +6,11 @@ coordinates
 #
 # $Header$
 #
-
 import copy
+import numpy as num
+from numpy import pi, cos, sin, arcsin, arctan2
 
-import numarray as num
-from numarray import pi, cos, sin, arcsin, arctan2
-
-import hippoplotter as plot
 import celgal
-
-na = num.array
 convertTo = celgal.celgal()
 
 class SkyDir(object):
@@ -25,20 +20,23 @@ class SkyDir(object):
             ra, dec = convertTo.cel((ra, dec))
         ra *= pi/180.
         dec *= pi/180.
-        self.unit = num.array([cos(dec)*cos(ra),
-                               cos(dec)*sin(ra),
-                               sin(dec)])
+        self.unit = num.matrix([cos(dec)*cos(ra),
+                                cos(dec)*sin(ra),
+                                sin(dec)])
+        self.unit = self.unit.transpose()
     def rotate(self, axis, angle):
         rot = Rotation()
         rot.rotate(axis, angle)
         self.unit = rot*self.unit
     def ra(self):
-        my_ra = arctan2(self.unit[1], self.unit[0])*180./pi
+        my_unit = self.unit.flat
+        my_ra = arctan2(my_unit[1], my_unit[0])*180./pi
         if self.spin:
             if my_ra < 0: my_ra += 360.
         return my_ra
     def dec(self):
-        return arcsin(self.unit[2])*180./pi
+        my_unit = self.unit.flat
+        return arcsin(my_unit[2])*180./pi
     def l(self):
         return convertTo.glon(self.ra(), self.dec())
     def b(self):
@@ -50,9 +48,9 @@ class SkyDir(object):
 class Rotation(object):
     def __init__(self, matrix=None):
         if matrix is None:
-            self.matrix = num.array([[1, 0, 0],
-                                     [0, 1, 0],
-                                     [0, 0, 1]])
+            self.matrix = num.matrix([[1, 0, 0],
+                                      [0, 1, 0],
+                                      [0, 0, 1]])
         else:
             self.matrix = copy.deepcopy(matrix)
     def rotate(self, axis, angle):
@@ -60,36 +58,36 @@ class Rotation(object):
         ct = cos(theta)
         st = sin(theta)
         if axis.lower() == 'x':
-            A = num.array([[1,  0,   0],
-                           [0, ct, -st],
-                           [0, st,  ct]])
+            A = num.matrix([[1,  0,   0],
+                            [0, ct, -st],
+                            [0, st,  ct]])
         elif axis.lower() == 'y':
-            A = num.array([[ ct, 0, st],
-                           [  0, 1,  0],
-                           [-st, 0, ct]])
+            A = num.matrix([[ ct, 0, st],
+                            [  0, 1,  0],
+                            [-st, 0, ct]])
         elif axis.lower() == 'z':
-            A = num.array([[ct, -st, 0],
-                           [st,  ct, 0],
-                           [ 0,   0, 1]])
-        self.matrix = num.matrixmultiply(A, self.matrix)
+            A = num.matrix([[ct, -st, 0],
+                            [st,  ct, 0],
+                            [ 0,   0, 1]])
+        self.matrix = A*self.matrix
         return self
     def inverse(self):
         a = copy.deepcopy(self.matrix)
-        a.transpose()
+        a = a.transpose()
         return Rotation(a)
     def __mul__(self, rhs):
         if isinstance(rhs, Rotation):
-            result = num.matrixmultiply(self.matrix, rhs.matrix)
+            result = self.matrix*rhs.matrix
             return Rotation(result)
         else:
-            result = num.matrixmultiply(self.matrix, rhs)
+            result = self.matrix*rhs
             return result
     def __rmul__(self, lhs):
         if isinstance(lhs, Rotation):
-            result = num.matrixmultiply(lhs.matrix, self.matrix)
+            result = lhs.matrix*self.matrix
             return Rotation(result)
         else:
-            result = num.matrixmultiply(lhs, self.matrix)
+            result = lhs*self.matrix
             return result
     def __repr__(self):
         return `self.matrix`
@@ -117,6 +115,7 @@ def makeCone(ra, dec, radius, npts = 50):
 
 def plotCone(disp, pos=(0, 0), radius=20, color='red', connect=0,
              oplot=1):
+    import hippoplotter as plot
     ras, decs = makeCone(pos[0], pos[1], radius)
     plot.canvas.selectDisplay(disp)
     if connect:

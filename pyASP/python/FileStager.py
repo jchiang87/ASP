@@ -44,13 +44,15 @@ class FileStager(object):
         return self.stager.stageIn(infile)
     def output(self, outfile):
         return self.stager.stageOut(outfile)
-    def __del__(self):
-        if not self.cleanup:
-            return
+    def finish(self):
         rc = self.stager.finish("alldone")
         if rc != 0:
             message = "Unknown error occurred in GPL.stageFiles.finish(...)"
-            raise FileStagerError, message
+            raise FileStagerError(message)
+    def __del__(self):
+        if not self.cleanup:
+            return
+        self.finish()
     def infiles(self, infiles):
         filelist = []
         for item in infiles:

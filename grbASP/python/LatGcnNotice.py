@@ -119,11 +119,8 @@ class LatGcnNotice(object):
         ra2000, dec2000 = sexigesimal(ra, dec)
         ra1950, dec1950 = sexigesimal(*b1950)
         foo = self.notice
-        foo['GRB_RA'] = ('%7.3fd {%s} (J2000),\n%16s%7.3fd {%s} (B1950)'
-                         % (ra, ra2000, ' ', b1950[0], ra1950))
-        foo['GRB_DEC'] = ('%s (J2000),\n%16s%s (B1950)'
-                          % (dec_string(dec, dec2000), ' ',
-                             dec_string(b1950[1], dec1950)))
+        foo['GRB_RA'] = '%7.3fd {%s} (J2000)' % (ra, ra2000)
+        foo['GRB_DEC'] = '%s (J2000)' % dec_string(dec, dec2000)
         self._packet[7] = int(self.ra*1e4)
         self._packet[8] = int(self.dec*1e4)
     def _setTime(self, burstTime):

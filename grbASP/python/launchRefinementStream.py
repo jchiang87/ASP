@@ -41,5 +41,6 @@ print "min(gti.START), max(gti.STOP) =", min(gti.START), max(gti.STOP)
 if True:
     refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
                       output_dir=output_dir, grb_ids=(grb_id, ),
-                      streamId=grb_id)
+                      streamId=grb_id, 
+                      datacatalog_imp=os.environ['datacatalog_imp'])
 

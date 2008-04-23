@@ -38,7 +38,7 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
             *like[srcname].flux(emin, emax)*ergperMeV)
     fractionalError = (spec.getParam('Integral').error()
                        /spec.getParam('Integral').getValue())
-    return num.array((flux, flux*fractionalError))
+    return flux, flux*fractionalError
 
 def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
                    ft1File=None, ft2File=None, irfs='DC2',
@@ -89,8 +89,10 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
 
     grb_id = int(os.environ['GRB_ID'])
 
-    fluence_30, f30_error = tuple(pl_energy_flux(like, 30, 3e5)*(tmax - tmin))
-    fluence_100, f100_error = tuple(pl_energy_flux(like, 100, 3e5)*(tmax-tmin))
+    f30 = pl_energy_flux(like, 30, 3e5)
+    fluence_30, f30_error = f30[0]*(tmax - tmin), f30[1]*(tmax - tmin)
+    f100 = pl_energy_flux(like, 100, 3e5)
+    fluence_100, f100_error = f100[0]*(tmax - tmin), f100[1]*(tmax - tmin)
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
                        XML_FILE="'%s'" % absFilePath(srcModelFile),
                        PHOTON_INDEX=like[1].getTrueValue(),

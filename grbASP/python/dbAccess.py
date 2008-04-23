@@ -86,6 +86,8 @@ def updateGrb(grb_id, **kwds):
     assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
     sql = ("update GRB set %s where GRB_ID = %i" 
            % (','.join(assignments), grb_id))
+    print "updateGrb sql = "
+    print sql
     apply(sql)
 
 def updateAfterglow(grb_id, **kwds):

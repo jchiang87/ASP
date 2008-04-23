@@ -61,6 +61,6 @@ if __name__ == '__main__':
             return entry[0]
     grbName = dbAccess.apply(sql, getInfo)
 
-    countsSpectra(grbName, grb_id, grbName + '_afterglow_spec.fits',
+    countsSpectra(grb_id, grbName + '_afterglow_spec.fits',
                   outfile='countsSpectra_afterglow_%i.png' % grb_id)
     afterglow_lc(grbName, grb_id, grbName + '_afterglow_lc.fits')

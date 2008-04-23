@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="6.0" type="Data">
+<task name="GRB_afterglow" version="6.1" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -114,7 +114,7 @@
         datacat = eval(datacatalog_imp)
         priorProcess = pipeline.getProcessInstance("makeAfterglowPlots")
         grb_id = priorProcess.getVariable('GRB_ID')
-        dataTypes = ('SPECTRUM', 'LIGHTCURVE')
+        dataTypes = ('SPECTRUM_AFTERGLOW', 'LIGHTCURVE_AFTERGLOW')
         prefixes = ('countsSpectra', 'lightCurve')
         files = ['%s_afterglow_%i.png' % (prefix, grb_id)
                  for prefix in prefixes]

@@ -119,10 +119,12 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
     fluence_30, f30_error = f30[0]*(tmax - tmin), f30[1]*(tmax - tmin)
     f100 = pl_energy_flux(like, 100, 3e5, name)
     fluence_100, f100_error = f100[0]*(tmax - tmin), f100[1]*(tmax - tmin)
+
+    index_par = like[name].funcs['Spectrum'].getParam('Index')
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
                        XML_FILE="'%s'" % absFilePath(srcModelFile),
-                       PHOTON_INDEX=like[1].getTrueValue(),
-                       PHOTON_INDEX_ERROR=like[1].error(),
+                       PHOTON_INDEX=index_par.getTrueValue(),
+                       PHOTON_INDEX_ERROR=index_par.error(),
                        FLUENCE_30=fluence_30, FLUENCE_30_ERROR=f30_error,
                        FLUENCE_100=fluence_100, FLUENCE_100_ERROR=f100_error)
     return like

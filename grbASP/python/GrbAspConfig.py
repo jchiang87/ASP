@@ -11,7 +11,7 @@ from databaseAccess import *
 
 _columns = ['ID', 'STARTDATE', 'ENDDATE', 'IRFS', 'PARTITIONSIZE',
             'THRESHOLD', 'DEADTIME', 'TIMEWINDOW', 'RADIUS', 
-            'AGTIMESCALE', 'AGRADIUS', 'OPTIMIZER']
+            'AGTIMESCALE', 'AGRADIUS', 'OPTIMIZER', 'NOMINAL_WINDOW']
 
 class GrbAspConfigEntry(object):
     def __init__(self, items):
@@ -25,7 +25,7 @@ class GrbAspConfigEntry(object):
 
 class GrbAspConfig(object):
     def __init__(self):
-        sql = 'select * from GRB_ASP_CONFIG'
+        sql = 'select %s from GRB_ASP_CONFIG' % (",".join(_columns))
         def cursorFunc(cursor):
             entries = []
             for items in cursor:

@@ -10,21 +10,18 @@
 import os
 from GtApp import GtApp
 import dbAccess
-from refinePosition import absFilePath
+from refinePosition import absFilePath, likelyUL
+import pipeline
 
 os.chdir(os.environ['OUTPUTDIR'])
-
-gttsmap = GtApp('gttsmap', 'Likelihood')
-
-# Use par file written by refinePosition.py
-
-gttsmap.run()
-
 grb_id = int(os.environ['GRB_ID'])
-dbAccess.updateGrb(grb_id, TS_MAP="'%s'" % absFilePath(gttsmap['outfile']))
 
-# create plots
+if likelyUL(grb_id):
+    print "Likely upper limit candidate.  Skipping TS map calculation."
+    pipeline.setVariable('LIKELY_UPPER_LIMIT', 'true')
+else:
+    pipeline.setVariable('LIKELY_UPPER_LIMIT', 'false')
+    gttsmap = GtApp('gttsmap', 'Likelihood')
+    gttsmap.run() # Use par file written by refinePosition.py
+    dbAccess.updateGrb(grb_id, TS_MAP="'%s'" % absFilePath(gttsmap['outfile']))
 
-command = ("/afs/slac/g/glast/ground/grbMonitoring/bin/makeAllPlots . png %i"
-           % grb_id)
-os.system(command)

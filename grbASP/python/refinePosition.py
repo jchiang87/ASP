@@ -13,12 +13,14 @@ from GcnNotice import GcnNotice
 from extractLatData import extractLatData
 from GtApp import GtApp
 import celgal
-
+import dbAccess
+    
 gtfindsrc = GtApp('gtfindsrc', 'Likelihood')
 
-def refinePosition(gcn_notice, ft1Input, ft2Input, 
-                   extracted=False, tsmap=True, duration=100,
-                   radius=15, irfs='DSS', optimizer='DRMNFB'):
+def refinePosition(gcn_notice, ft1Input, ft2Input, config,
+                   extracted=False, tsmap=True):
+    irfs = config.IRFS
+    optimizer = config.OPTIMIZER
     try:
         notice = GcnNotice(gcn_notice)
     except TypeError:
@@ -33,8 +35,7 @@ def refinePosition(gcn_notice, ft1Input, ft2Input,
         raise ValueError, ("Burst occurred while LAT was in the SAA.")
 
     if not extracted:
-        ft1_file, lc_file = extractLatData(notice, ft1Input, 
-                                           duration=duration, radius=radius)
+        ft1_file, lc_file = extractLatData(notice, ft1Input, config)
     else:
         ft1_file = notice.Name + '_LAT_2.fits'
         lc_file = notice.Name + '_LAT_lc_2.fits'
@@ -94,6 +95,16 @@ def refinePosition(gcn_notice, ft1Input, ft2Input,
     notice.ts = ts
     return notice
 
+def likelyUL(grb_id):
+    """For 'zero' duration bursts, we could not extract a LAT light curve, 
+    this is a likely upper limit candidate"""
+    sql = "select LAT_DURATION from GRB where GRB_ID=%i" % grb_id
+    def getDuration(cursor):
+        for entry in cursor:
+            return entry[0]
+    duration = dbAccess.apply(sql, getDuration)
+    return duration == 0
+
 #
 # @todo Need to generalize this somehow.
 #
@@ -105,7 +116,6 @@ if __name__ == '__main__':
     import sys
     from GcnNotice import GcnNotice
     from parfile_parser import Parfile
-    import dbAccess
     from GrbAspConfig import grbAspConfig
     import grb_followup
 
@@ -122,22 +132,26 @@ if __name__ == '__main__':
     config = grbAspConfig.find(gcnNotice.start_time)
     print config
 
-    gcnNotice = refinePosition(gcnNotice, ft1File, ft2File, 
-                               extracted=True, tsmap=True, 
-                               duration=config.TIMEWINDOW,
-                               radius=config.RADIUS,
-                               irfs=config.IRFS,
-                               optimizer=config.OPTIMIZER)
+    if likelyUL(grb_id):
+        # use parameters from GCN Notice instead of running refinePosition
+        gcnNotice.ra = gcnNotice.RA
+        gcnNotice.dec = gcnNotice.DEC
+        gcnNotice.pos_error = gcnNotice.LOC_ERR
+        gcnNotice.tmin = gcnNotice.start_time
+        gcnNotice.tmax = gcnNotice.start_time + config.NOMINAL_WINDOW
+    else:
+        gcnNotice = refinePosition(gcnNotice, ft1File, ft2File, config,
+                                   extracted=True, tsmap=True)
 
-    dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
-                       LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
-                       ERROR_RADIUS=gcnNotice.pos_error,
-                       INITIAL_LAT_RA=gcnNotice.RA, 
-                       INITIAL_LAT_DEC=gcnNotice.DEC,
-                       INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
-                       FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
-                                                     '_LAT_2.fits'),
-                       L1_DATA_AVAILABLE=1)
+        dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
+                           LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
+                           ERROR_RADIUS=gcnNotice.pos_error,
+                           INITIAL_LAT_RA=gcnNotice.RA, 
+                           INITIAL_LAT_DEC=gcnNotice.DEC,
+                           INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
+                           FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
+                                                         '_LAT_2.fits'),
+                           L1_DATA_AVAILABLE=1)
 
     parfile = '%s_pars.txt' % gcnNotice.Name
     pars = Parfile(parfile, fixed_keys=False)

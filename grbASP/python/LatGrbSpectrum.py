@@ -13,13 +13,17 @@ import sys, os
 import numpy as num
 from GtApp import GtApp
 import readXml
+import xmlSrcLib
 import FuncFactory as funcFactory
-from refinePosition import absFilePath
+from refinePosition import absFilePath, likelyUL
 from UnbinnedAnalysis import *
 import dbAccess
+from parfile_parser import Parfile
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
+gtexpmap = GtApp('gtexpmap', 'Likelihood')
+gtdiffrsp = GtApp('gtdiffrsp', 'Likelihood')
 
 def pl_integral(emin, emax, gamma):
     if gamma == 1:
@@ -40,18 +44,18 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
                        /spec.getParam('Integral').getValue())
     return flux, flux*fractionalError
 
-def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
-                   ft1File=None, ft2File=None, irfs='DC2',
-                   optimizer='Minuit'):
-    try:
-        gcnNotice = ra
-        ra = gcnNotice.ra
-        dec = gcnNotice.dec
-        tmin = gcnNotice.tmin
-        tmax = gcnNotice.tmax
-        name = gcnNotice.Name
-    except AttributeError:
-        pass
+def createExpMap(ft1File, ft2File, name, config):
+    gtexpmap.run(evfile=ft1File, scfile=ft2File, expcube="none",
+                 outfile='%s_expMap.fits' % name, irfs=config.IRFS,
+                 srcrad=config.RADIUS+10)
+    return gtexpmap['outfile']
+
+def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
+                   config, computeTs=False):
+    radius = config.RADIUS
+    irfs = config.IRFS
+    optimizer = config.OPTIMIZER
+    expMap = None
 
     gtselect['infile'] = ft1File
     gtselect['outfile'] = name + '_LAT_3.fits'
@@ -63,6 +67,9 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     gtselect['zmax'] = 100
     gtselect.run()
 
+    if computeTs:
+        expMap = createExpMap(gtselect['outfile'], ft2File, name, config)
+
     src = funcFactory.PtSrc()
     src.spectrum.Integral.min = 0
     src.spectrum.Integral.max = 1e7
@@ -72,14 +79,27 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     src.spatialModel.setAttributes()
     srcModel = readXml.SourceModel()
     srcModel[name] = src
+    srcModel[name].name = name
+
+    if computeTs:
+        GalProp = readXml.Source(xmlSrcLib.GalProp())
+        EGDiffuse = readXml.Source(xmlSrcLib.EGDiffuse())
+        srcModel['Galactic Diffuse'] = GalProp
+        srcModel['Galactic Diffuse'].name = 'Galactic Diffuse'
+        srcModel['Extragalactic Diffuse'] = EGDiffuse
+        
     srcModelFile = name + '_model.xml'
     srcModel.writeTo(srcModelFile)
+
+    if computeTs:
+        gtdiffrsp.run(evfile=gtselect['outfile'], scfile=ft2File, 
+                      srcmdl=srcModelFile, irfs=config.IRFS)
 
     spectrumFile = name + '_grb_spec.fits'
 
     if irfs == 'DSS':
         irfs = 'DC2'
-    obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=None,
+    obs = UnbinnedObs(gtselect['outfile'], ft2File, expMap=expMap,
                       expCube=None, irfs=irfs)
     like = UnbinnedAnalysis(obs, srcModelFile, optimizer)
     like[0].setBounds(0, 1e7)
@@ -88,10 +108,16 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     like.writeCountsSpectra(spectrumFile)
 
     grb_id = int(os.environ['GRB_ID'])
+    if computeTs:
+        from UpperLimits import UpperLimits
+        Ts = like.Ts(name)
+        ul = UpperLimits(like)
+        upper_limit = ul[name].compute(renorm=True)
+        dbAccess.updateGrb(grb_id, TS_VALUE=Ts, UPPER_LIMIT=upper_limit)
 
-    f30 = pl_energy_flux(like, 30, 3e5)
+    f30 = pl_energy_flux(like, 30, 3e5, name)
     fluence_30, f30_error = f30[0]*(tmax - tmin), f30[1]*(tmax - tmin)
-    f100 = pl_energy_flux(like, 100, 3e5)
+    f100 = pl_energy_flux(like, 100, 3e5, name)
     fluence_100, f100_error = f100[0]*(tmax - tmin), f100[1]*(tmax - tmin)
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
                        XML_FILE="'%s'" % absFilePath(srcModelFile),
@@ -102,12 +128,8 @@ def LatGrbSpectrum(ra, dec=None, tmin=None, tmax=None, name=None, radius=15,
     return like
 
 def grbCoords(gcnNotice):
-    infile = open(gcnNotice.Name + '_findSrc.txt')
-    lines = infile.readlines()
-    tokens = lines[-3].split()
-    ra = float(tokens[0])
-    dec = float(tokens[1])
-    return ra, dec
+    pars = Parfile(gcnNotice.Name + '_pars.txt')
+    return pars['ra'], pars['dec']
 
 def grbTiming(gcnNotice):
     from FitsNTuple import FitsNTuple
@@ -125,18 +147,21 @@ if __name__ == '__main__':
     from GrbAspConfig import grbAspConfig
 
     os.chdir(os.environ['OUTPUTDIR'])
-    gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
+
+    grb_id = int(os.environ['GRB_ID'])
+    gcnNotice = GcnNotice(grb_id)
     
+    compute_Ts = likelyUL(grb_id)
+
     config = grbAspConfig.find(gcnNotice.start_time)
     print config
 
     ra, dec = grbCoords(gcnNotice)
     tmin, tmax = grbTiming(gcnNotice)
     ft1File, ft2File = grbFiles(gcnNotice)
+
     like = LatGrbSpectrum(ra, dec, tmin, tmax, gcnNotice.Name,
-                          ft1File=ft1File, ft2File=ft2File,
-                          radius=config.RADIUS, 
-                          irfs=config.IRFS,
-                          optimizer=config.OPTIMIZER)
+                          ft1File, ft2File, 
+                          config, computeTs=compute_Ts)
 
     os.system('chmod 777 *')

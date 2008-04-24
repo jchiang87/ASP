@@ -242,17 +242,20 @@ def tsMap(grb_id, fitsfile, ra, dec, outfile=None):
 
     scaleFactor = float(10**(-int(num.log10(ts[0].header['CDELT1']))))
 
-    deltax = int((coordSys.latRange[1] - coordSys.latRange[0])
-                 /3.*scaleFactor)/scaleFactor
+    deltax = max(int((coordSys.latRange[1] - coordSys.latRange[0])
+                     /3.*scaleFactor), 1)/scaleFactor
 
     xmin = int(coordSys.lonRange[0]*scaleFactor)/scaleFactor
     xmax = int(coordSys.lonRange[1]*scaleFactor)/scaleFactor
     xrange = num.arange(xmin, xmax, deltax)
 
-    deltay = int((coordSys.latRange[1] - coordSys.latRange[0])
-                 /5.*scaleFactor)/scaleFactor
+    deltay = max(int((coordSys.latRange[1] - coordSys.latRange[0])
+                     /5.*scaleFactor), 1)/scaleFactor
     ymin = int(coordSys.latRange[0]*scaleFactor)/scaleFactor
     ymax = int(coordSys.latRange[1]*scaleFactor)/scaleFactor
+    print scaleFactor
+    print coordSys.latRange
+    print ymin, ymax, deltay
     yrange = num.arange(ymin, ymax, deltay)
 
     coordSys.oplotCoords(xrange, yrange, format="%.2f")
@@ -275,6 +278,7 @@ if __name__ == '__main__':
     from parfile_parser import Parfile
     from GtApp import GtApp
     import databaseAccess as dbAccess
+    from refinePosition import likelyUL
 
     os.chdir(os.environ['OUTPUTDIR'])
 
@@ -310,4 +314,5 @@ if __name__ == '__main__':
     countsMap(grb_id, cmapfile, (ra, dec, error), (init_ra, init_dec, init_err))
     lightCurve(grb_id, ft1file)
     countsSpectra(grb_id, grbName + '_grb_spec.fits')
-    coordSys = tsMap(grb_id, grbName + '_tsmap.fits', ra, dec)
+    if not likelyUL(grb_id):
+        tsMap(grb_id, grbName + '_tsmap.fits', ra, dec)

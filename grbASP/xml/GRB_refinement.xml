@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="5.0" type="Data">
+<task name="GRB_refinement" version="5.1" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
   </variables>
@@ -75,7 +75,7 @@
          <var name="OUTPUTDIR">${output_dir}</var>
       </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/LatGrbSpectrum.sh"
-           batchOptions="-q short"/>
+           batchOptions="-q glastdataq " allocationGroup="glastdata"/>
       <depends>
           <after process="refinePosition" status="SUCCESS"/>
       </depends>
@@ -99,7 +99,13 @@
      prefixes = ('countsMap', 'countsSpectra', 'lightCurve',
                  'errorContours')
      files = ['%s_%i.png' % (prefix, GRB_ID) for prefix in prefixes]
-     for dataType, outfile in zip(dataTypes, files):
+     nfiles = len(files)
+     priorProcess = pipeline.getProcessInstance("tsMap")
+     likelyUL = pipeline.getVariable("LIKELY_UPPER_LIMIT")
+     if likelyUL == 'true':
+         # TS map was not generated so skip registration of error contours plot
+         nfiles -= 1
+     for dataType, outfile in zip(dataTypes[:nfiles], files[:nfiles]):
          attributes = 'nGrbId=%i' % GRB_ID
          print attributes
          logicalPath = '/ASP/Results/GRB/%s:%s' % (dataType, outfile)

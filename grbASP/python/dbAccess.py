@@ -106,8 +106,6 @@ def current_date():
     date = "%4i-%s-%02i 10:11:00" % (year, months[month], day)
     print date
     return date
-#    return "%02i %s %i" % (day, months[month], year)
-#    return `datetime.datetime(*data[:6])`
 
 def simple_packet(type):
     my_packet = array.array("l", (type,) + 39*(0,))

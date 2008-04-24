@@ -15,7 +15,9 @@ import dbAccess
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtbin = GtApp('gtbin', 'evtbin')
 
-def extractLatData(gcnNotice, ft1File, duration=100, radius=15):
+def extractLatData(gcnNotice, ft1File, config):
+    duration = config.TIMEWINDOW
+    radius = config.RADIUS
     gtselect['infile'] = ft1File
     gtselect['outfile'] = gcnNotice.Name + '_LAT.fits'
     gtselect['ra'] = gcnNotice.RA
@@ -41,10 +43,20 @@ def extractLatData(gcnNotice, ft1File, duration=100, radius=15):
     x, y = lc.dataPoints()
 
     try:
+        grb_id = int(os.environ['GRB_ID'])
         if len(x) == 2:
-            tmin, tmax = tuple(x)
+            # No change points found.  Flag this burst for upper limit
+            # calculation by setting LAT_DURATION = 0 and use nominal
+            # time window starting at trigger time.
+            dbAccess.updateGrb(grb_id, LAT_DURATION=0)
+            tmin = gcnNotice.start_time
+            try:
+                tmax = tmin + config.NOMINAL_WINDOW
+            except AttributeError:
+                tmax = tmin + 60
         else:
             tmin, tmax = x[1], x[-2]
+            dbAccess.updateGrb(grb_id, LAT_DURATION=tmax-tmin)
         gtselect['infile'] = gtselect['outfile']
         gtselect['outfile'] = gcnNotice.Name + '_LAT_2.fits'
         gtselect['tmin'] = tmin
@@ -58,7 +70,6 @@ def extractLatData(gcnNotice, ft1File, duration=100, radius=15):
     except:
         pass
 
-    dbAccess.updateGrb(int(os.environ['GRB_ID']), LAT_DURATION=tmax-tmin)
     return gtselect['outfile'], gtbin['outfile']
 
 def burst_interval(lc_file, minrate=30):
@@ -93,9 +104,7 @@ if __name__ == '__main__':
     ft2merge(ft2, ft2Merged)
 
     config = grbAspConfig.find(gcnNotice.start_time)
-    duration = config.TIMEWINDOW
-    ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, 
-                                           duration=duration, radius=15)
+    ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, config)
     outfile = open('%s_files' % gcnNotice.Name, 'w')
     outfile.write('%s\n%s\n' % (ft1_extracted, ft2Merged))
     outfile.close()

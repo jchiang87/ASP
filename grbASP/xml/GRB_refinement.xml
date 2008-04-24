@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="5.1" type="Data">
+<task name="GRB_refinement" version="5.2" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -101,7 +101,7 @@
      files = ['%s_%i.png' % (prefix, GRB_ID) for prefix in prefixes]
      nfiles = len(files)
      priorProcess = pipeline.getProcessInstance("tsMap")
-     likelyUL = pipeline.getVariable("LIKELY_UPPER_LIMIT")
+     likelyUL = priorProcess.getVariable("LIKELY_UPPER_LIMIT")
      if likelyUL == 'true':
          # TS map was not generated so skip registration of error contours plot
          nfiles -= 1

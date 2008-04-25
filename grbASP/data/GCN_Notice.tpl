@@ -16,8 +16,7 @@ GRB_INTEN4:     0 [10. < cnts (GeV)]
 GRB_DATE:       14466 TJD; 1 DOY; 08/01/01 
 GRB_TIME:       47537.12 SOD {13:12:17.12} UT (trigger time) 
 TRIGGER_DUR:    3.468 [sec] (interval, Tlast-Tfirst photons) 
-TRIGGER_INDEX:  1 (precise definition TBD) 
-TRIGGER_SIGNIF: 12.1 [sigma] (precise definition TBD) 
+TRIGGER_SIGNIF: 12.1 [sigma]
 GRB_PHI:        90.00 [deg] 
 GRB_THETA:      4.54 [deg] 
 COMMENTS:       Put comments here.

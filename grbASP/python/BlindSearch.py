@@ -234,7 +234,7 @@ if __name__ == '__main__':
             # check that the grb_id (int(MET of burst)) hasn't already
             # been used by an entry in the GRB database table.
             #
-            isUpdate = (len(dbAccess.readGrb(notice.grb_id)) > 0)
+            isUpdate = dbAccess.haveGrb(notice.grb_id)
             notice.registerWithDatabase(isUpdate=isUpdate)
             #notice.email_notification()
             grb_output = os.path.join(grbroot_dir, `notice.grb_id`)

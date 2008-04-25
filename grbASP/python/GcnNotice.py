@@ -11,7 +11,7 @@ import os
 import numpy as num
 import pyASP
 from GcnPacket import GcnPacket
-from dbAccess import readGcnNotices, readGrb
+from dbAccess import readGcnNotices, haveGrb
 
 class GcnNotice(object):
     def __init__(self, grb_id):
@@ -30,7 +30,7 @@ class GcnNotice(object):
         self.DEC = notice.Dec
         self.LOC_ERR = notice.posError
         self.start_time = notice.MET
-        self.Name = readGrb(grb_id)[1]
+        self.Name = haveGrb(grb_id)
     def _parseTextFile(self, infile):
         self._create_dict(infile)
         self.RA = self._readcoord('GRB_RA')

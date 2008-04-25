@@ -16,16 +16,17 @@ def convert_clob(clob):
     foo = array.array('l', base64.decodestring(clob.read()))
     return foo
 
-def readGrb(grb_id):
-    sql = "select * from GRB where GRB_ID = %i" % grb_id
+def haveGrb(grb_id):
+    "Return true if desired GRB_ID is in the GRB table"
+    sql = "select GRB_ID from GRB where GRB_ID = %i" % grb_id
     def cursorFunc(cursor):
         for item in cursor:
-            return item
-        return []
+            return True
+        return False
     return apply(sql, cursorFunc)
 
 def getGrbIds():
-    sql = "select * from GRB"
+    sql = "select GRB_ID from GRB"
     def cursorFunc(cursor):
         grb_ids = []
         for item in cursor:
@@ -133,11 +134,10 @@ if __name__ == '__main__':
         notice[1].byteswap()
         print notice
 
-    print readGrb(grb_id)
+    print haveGrb(grb_id)
 
     updateGrb(grb_id, LAT_GRB_ID=111, LAT_RA=121.3, GBM_CAT_ID="'foo'",
               GCN_NAME="'GRB07010100'")
-    print readGrb(grb_id)
-    print readGrb(grb_id)[1]
+    print haveGrb(grb_id)
 
     print getGrbIds()

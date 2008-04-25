@@ -232,7 +232,7 @@ if __name__ == '__main__':
     notice.setDuration(pars['tstop'] - pars['tstart'])
 
     if Ts_value is None:
-        notice.notice['TRIGGER_SIGNIF'] = '>25 [sigma]'
+        notice.notice['TRIGGER_SIGNIF'] = '> 5 [sigma]'
     else:
         notice.notice['TRIGGER_SIGNIF'] = '%.1f [sigma]' % num.sqrt(Ts_value)
 

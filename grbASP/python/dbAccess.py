@@ -34,13 +34,12 @@ def getGrbIds():
     return apply(sql, cursorFunc)
 
 def readGcnNotices(grb_id):
-    sql = "select * from GCNNOTICES where GRB_ID = %i" % grb_id
+    """Return the stored packet buffers from the GCNNOTICES table"""
+    sql = "select GCN_NOTICE from GCNNOTICES where GRB_ID = %i" % grb_id
     def cursorFunc(cursor):
         notices = []
         for entry in cursor:
-            data = [x for x in entry]
-            data[1] = convert_clob(data[1])
-            notices.append(data)
+            notices.append(convert_clob(entry[0]))
         return notices
     return apply(sql, cursorFunc)
 
@@ -74,12 +73,17 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
             # This GCN Notice associated with this grb_id is already
             # in the database table.
             return
+    sql = "select gcnnotices_seq.nextval from dual"
+    def getId(cursor):
+        for entry in cursor:
+            return entry[0]
+    gcnnotice_id = apply(sql, getId)
     sql = (("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
-            + "NOTICEMET, RA, DEC, ERROR, ISUPDATE) values "
+            + "NOTICEMET, RA, DEC, ERROR, ISUPDATE, GCNNOTICE_ID) values "
             + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
-            + "%.5f, %.5f, %.5f, %i)")
+            + "%.5f, %.5f, %.5f, %i, %i)")
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
-              met, ra, dec, error, isUpdate))
+              met, ra, dec, error, isUpdate, gcnnotice_id))
     apply(sql)
 
 def updateGrb(grb_id, **kwds):

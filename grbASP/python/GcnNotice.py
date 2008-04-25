@@ -11,22 +11,20 @@ import os
 import numpy as num
 import pyASP
 from GcnPacket import GcnPacket
-from dbAccess import readGcnNotices, readGrb, cx_Oracle
+from dbAccess import readGcnNotices, readGrb
 
 class GcnNotice(object):
     def __init__(self, grb_id):
         self._accessDb(grb_id)
-#        try:
-#            self._accessDb(grb_id)
-#        except (cx_Oracle.DatabaseError, TypeError):
-#            # Assume grb_id a text file Notice
-#            self._parseTextFile(grb_id)
         self.ft2 = None
     def _accessDb(self, grb_id):
         #
-        # for now, just assume the first one returned is the one to use
+        # Retrieve the last Notice that was inserted for this burst,
+        # assuming it has the best position. @todo Implement
+        # precedence based on Notice type for determining best
+        # position.
         #
-        notice = GcnPacket(readGcnNotices(grb_id)[0][1].tostring())
+        notice = GcnPacket(readGcnNotices(grb_id)[-1].tostring())
         self.packet = notice
         self.RA = notice.RA
         self.DEC = notice.Dec

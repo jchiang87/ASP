@@ -14,6 +14,8 @@ import array
 import celgal
 import pyASP
 import dbAccess
+import numpy as num
+from FitsNTuple import FitsNTuple
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
@@ -105,7 +107,7 @@ class LatGcnNotice(object):
         foo['GRB_INTEN3'] = '%i [1.0 < cnts < 10. (GeV)]' % counts[2]
         foo['GRB_INTEN4'] = '%i [10. < cnts (GeV)]' % counts[3]
     def setTriggerNum(self, triggerNum):
-        self.notice['TRIGGER_NUM'] = '%i,   Sequence_Num: 0' % triggerNum
+        self.notice['TRIGGER_NUM'] = '%i' % triggerNum
         self._packet[4] = int(triggerNum)
     def setDuration(self, duration):
         foo = self.notice
@@ -127,8 +129,9 @@ class LatGcnNotice(object):
         jd = pyASP.jd_from_MET(burstTime)
         year, month, day, hours = jd.gregorianDate()
         foo = self.notice
-        foo['GRB_DATE'] = ('%i TJD; %i DOY; %s/%s/%s' %
-                           (jd.tjd(), jd.dayOfYear(), year%100, month, day))
+#        foo['GRB_DATE'] = ('%i TJD; %i DOY; %s/%s/%s' %
+#                           (jd.tjd(), jd.dayOfYear(), year%100, month, day))
+        foo['GRB_DATE'] = ('%i TJD; %i DOY' % (jd.tjd(), jd.dayOfYear()))
         foo['GRB_TIME'] = time_string(hours*3600)
         self.name = ('GRB%02i%02i%02i%03i' %
                      (year % 100, month, day, hours/24.*1000))
@@ -186,9 +189,62 @@ class LatGcnNotice(object):
             mail.sendmail(fromadr, address, message)
         mail.quit()
 
+def latCounts(ft1File):
+    ebounds = (1e2, 1e3, 1e4)
+    ft1 = FitsNTuple(ft1File)
+    foo = []
+    for ee in ebounds:
+        indx = num.where(ft1.ENERGY < ee)
+        foo.append(len(indx[0]))
+    foo.append(len(ft1.ENERGY))
+    return (foo[0], foo[1] - foo[0], foo[2] - foo[1], foo[3] - foo[2])
+
 if __name__ == '__main__':
-    notice = LatGcnNotice(222535575.0, 305.723, -67.0446)
-    notice.setLocErr(0.33)
-    notice.setIntens((20, 5, 0, 1))
-    notice.setDuration(12.33)
-    notice.write('foo.txt')
+    import glob
+    from parfile_parser import Parfile
+    from pyASP import SkyDir
+    from ScData import ScData
+
+    output_dir = os.environ['OUTPUTDIR']
+
+    os.chdir(output_dir)
+    grb_id = int(os.environ['GRB_ID'])
+
+    sql = "select TS_VALUE from GRB where GRB_ID=%i" % grb_id
+    def getTs(cursor):
+        for entry in cursor:
+            return entry[0]
+    Ts_value = dbAccess.apply(sql, getTs)
+
+    if Ts_value is not None and Ts_value < 25:
+        print "Likely non-detection in Level-1 data. TS = ", Ts_value
+
+    pars = Parfile(glob.glob('*_pars.txt')[0])
+
+    notice = LatGcnNotice(pars['tstart'], pars['ra'], pars['dec'])
+
+    notice.setLocErr(pars['loc_err'])
+
+    notice.setIntens(latCounts(pars['name'] + '_LAT_3.fits'))
+
+    notice.setTriggerNum(grb_id)
+
+    notice.setDuration(pars['tstop'] - pars['tstart'])
+
+    if Ts_value is None:
+        notice.notice['TRIGGER_SIGNIF'] = '>25 [sigma]'
+    else:
+        notice.notice['TRIGGER_SIGNIF'] = '%.1f [sigma]' % num.sqrt(Ts_value)
+
+    ft2File = open(pars['name'] + '_files').readlines()[-1].strip()
+    scData = ScData(ft2File)
+    srcDir = SkyDir(pars['ra'], pars['dec'])
+    notice.notice['GRB_THETA'] = ("%.2f [deg]" % 
+                                  scData.inclination(pars['tstart'], srcDir))
+    notice.notice['GRB_PHI'] = ("%.2f [deg]" % 
+                                scData.azimuth(pars['tstart'], srcDir))
+    
+    outfile = pars['name'] + '_Notice.txt'
+    notice.write(outfile)
+#    dbAccess.updateGrb(grb_id, 
+#                       GCN_NOTICE_FILE="'%s'"%os.path.join(output_dir,outfile))

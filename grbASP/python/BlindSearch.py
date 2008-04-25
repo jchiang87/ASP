@@ -227,6 +227,17 @@ if __name__ == '__main__':
         grbDirs = blindSearch.grbDirs()
         for item in grbDirs:
             grb_dir, tpeak, ll = item
+            #
+            # Use GCNNOTICES db table to keep track of GRBs found via
+            # blind search.  This will likely occur after all other
+            # instruments/missions (GBM, Swift) have already sent out
+            # their GCN Notices, so the blind search result will
+            # automatically be the position used in the refinement
+            # task.  Need to sort out Notice type precedence for this.
+            #
+            # Do not write this Notice out, since the ASP Notice will
+            # be generated after the GRB_refinement task.
+            #
             notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
             #
             # Need better logic to check if this burst already has a
@@ -246,11 +257,8 @@ if __name__ == '__main__':
                     os.chmod(grb_output, 0777)
                 else:
                     raise OSError, "Error creating directory: " + grb_output
-            outfile = os.path.join(grb_output, notice.name + '_Notice.txt')
             notice.setTriggerNum(tpeak)
             notice.addComment(', '.join(downlink_files))
-            notice.write(outfile)
-            os.chmod(outfile, 0666)
             print grb_dir.ra(), grb_dir.dec(), tpeak
         
     grb_followup.handle_unprocessed_events(grbroot_dir)

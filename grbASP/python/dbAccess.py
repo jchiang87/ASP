@@ -25,6 +25,13 @@ def haveGrb(grb_id):
         return False
     return apply(sql, cursorFunc)
 
+def grbName(grb_id):
+    sql = "select GCN_NAME from GRB where GRB_ID=%i" % grb_id
+    def getName(cursor):
+        for item in cursor:
+            return item[0]
+    return apply(sql, getName)
+
 def getGrbIds():
     sql = "select GRB_ID from GRB"
     def cursorFunc(cursor):

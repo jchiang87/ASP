@@ -43,7 +43,8 @@ def afterglows():
             try:
                 notices[grb_id].ag_time = item[1] + item[2]
             except TypeError:
-                # kluge. refinement task has not successfully run for this burst
+                # kluge. LAT_ALERT_TIME is null, so infer refinement
+                # task has not successfully run for this burst.
                 del notices[grb_id]
         return notices
     return apply(sql, cursorFunc)

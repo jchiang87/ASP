@@ -12,8 +12,6 @@ import os
 
 # blech.  @todo rationalize use of OUTPUTDIR vs output_dir.  The
 # following is needed by the makeRefinementPlots import.
-os.environ['OUTPUTDIR'] = os.environ['output_dir']
-
 os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
 
 import numpy as num

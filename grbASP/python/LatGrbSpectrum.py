@@ -123,6 +123,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
     index_par = like[name].funcs['Spectrum'].getParam('Index')
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
                        XML_FILE="'%s'" % absFilePath(srcModelFile),
+                       FT1_FILE="'%s'" % absFilePath(name + '_LAT_3.fits'),
                        PHOTON_INDEX=index_par.getTrueValue(),
                        PHOTON_INDEX_ERROR=index_par.error(),
                        FLUENCE_30=fluence_30, FLUENCE_30_ERROR=f30_error,
@@ -138,15 +139,15 @@ def grbTiming(gcnNotice):
     gtis = FitsNTuple(gcnNotice.Name + '_LAT_2.fits', 'GTI')
     return gtis.START[0], gtis.STOP[-1]
 
-def grbFiles(gcnNotice):
-    infile = open(gcnNotice.Name + '_files')
-    lines = infile.readlines()
-    return 'FT1_merged.fits', lines[-1].strip()
-
 if __name__ == '__main__':
     import os
     from GcnNotice import GcnNotice
     from GrbAspConfig import grbAspConfig
+
+    def grbFiles(gcnNotice):
+        infile = open(gcnNotice.Name + '_files')
+        lines = infile.readlines()
+        return 'FT1_merged.fits', lines[-1].strip()
 
     os.chdir(os.environ['OUTPUTDIR'])
 

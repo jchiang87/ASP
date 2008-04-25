@@ -74,9 +74,14 @@ def updateAnalysisVersion(name):
 if __name__ == '__main__':
     import os, sys, shutil
     from GrbAspConfig import grbAspConfig
+    from FileStager import FileStager
 
-    ft1, ft2 = getStagedFitsData()
     outputDir = os.environ['OUTPUTDIR']
+
+    fileStager = FileStager('stagingDir', stageArea=output_dir, 
+                            messageLevel="INFO")
+    ft1, ft2 = getStagedFitsData(fileStager=fileStager)
+
     os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
     updateAnalysisVersion(grbName)

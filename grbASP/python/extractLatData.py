@@ -83,12 +83,18 @@ def burst_interval(lc_file, minrate=30):
 if __name__ == '__main__':
     import os, shutil
     from GcnNotice import GcnNotice
+    from FileStager import FileStager
     from getFitsData import getStagedFitsData
     from ft1merge import ft1merge, ft2merge
     from GrbAspConfig import grbAspConfig
 
-    ft1, ft2 = getStagedFitsData()
-    os.chdir(os.environ['OUTPUTDIR'])
+    output_dir = os.environ['OUTPUTDIR']
+    
+    fileStager = FileStager('stagingDir', stageArea=output_dir, 
+                            messageLevel="INFO")
+    ft1, ft2 = getStagedFitsData(fileStager=fileStager)
+
+    os.chdir(output_dir)
     gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
 
     ft1Merged = 'FT1_merged.fits'
@@ -108,5 +114,7 @@ if __name__ == '__main__':
     outfile = open('%s_files' % gcnNotice.Name, 'w')
     outfile.write('%s\n%s\n' % (ft1_extracted, ft2Merged))
     outfile.close()
+
+    fileStager.finish()
 
     os.system('chmod 777 *')

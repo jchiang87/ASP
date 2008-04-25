@@ -143,15 +143,15 @@ if __name__ == '__main__':
         gcnNotice = refinePosition(gcnNotice, ft1File, ft2File, config,
                                    extracted=True, tsmap=True)
 
-        dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
-                           LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
-                           ERROR_RADIUS=gcnNotice.pos_error,
-                           INITIAL_LAT_RA=gcnNotice.RA, 
-                           INITIAL_LAT_DEC=gcnNotice.DEC,
-                           INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
-                           FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
-                                                         '_LAT_2.fits'),
-                           L1_DATA_AVAILABLE=1)
+    dbAccess.updateGrb(grb_id, LAT_ALERT_TIME=gcnNotice.tmin,
+                       LAT_RA=gcnNotice.ra, LAT_DEC=gcnNotice.dec,
+                       ERROR_RADIUS=gcnNotice.pos_error,
+                       INITIAL_LAT_RA=gcnNotice.RA, 
+                       INITIAL_LAT_DEC=gcnNotice.DEC,
+                       INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
+                       L1_DATA_AVAILABLE=1,
+                       FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
+                                                     '_LAT_2.fits'))
 
     parfile = '%s_pars.txt' % gcnNotice.Name
     pars = Parfile(parfile, fixed_keys=False)

@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="5.2" type="Data">
+<task name="GRB_refinement" version="5.3" type="Data">
   <variables>
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
@@ -17,7 +17,7 @@
       <prerequisite name="logicalPath" type="string"/>
       <prerequisite name="TSTART" type="integer"/>
       <prerequisite name="TSTOP" type="integer"/>
-      <prerequisite name="output_dir" type="string"/>
+      <prerequisite name="OUTPUTDIR" type="string"/>
       <prerequisite name="ASP_PATH" type="string"/>
       <prerequisite name="GRBASPROOT" type="string"/>
       <prerequisite name="PIPELINESERVER" type="string"/>
@@ -41,9 +41,6 @@
        ]]></script>
    </process>
    <process name="extractLatData">
-      <variables>
-         <var name="OUTPUTDIR">${output_dir}</var>
-      </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/extractLatData.sh"
            batchOptions="-q short"/>
       <depends>
@@ -51,9 +48,6 @@
       </depends>
    </process>
    <process name="refinePosition">
-      <variables>
-         <var name="OUTPUTDIR">${output_dir}</var>
-      </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/refinePosition.sh"
            batchOptions=" -q glastdataq " allocationGroup="glastdata"/>
       <depends>
@@ -61,19 +55,13 @@
       </depends>
    </process>
    <process name="tsMap">
-      <variables>
-         <var name="OUTPUTDIR">${output_dir}</var>
-      </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/tsMap.sh" 
-           batchOptions="-q long"/>
+           batchOptions="-q glastdataq " allocationGroup="glastdata"/>
       <depends>
           <after process="refinePosition" status="SUCCESS"/>
       </depends>
    </process>
    <process name="LatGrbSpectrum">
-      <variables>
-         <var name="OUTPUTDIR">${output_dir}</var>
-      </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/LatGrbSpectrum.sh"
            batchOptions="-q glastdataq " allocationGroup="glastdata"/>
       <depends>
@@ -81,10 +69,15 @@
       </depends>
    </process>
    <process name="makeRefinementPlots">
-      <variables>
-         <var name="OUTPUTDIR">${output_dir}</var>
-      </variables>
      <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
+          batchOptions="-q short"/>
+     <depends>
+       <after process="tsMap" status="SUCCESS"/>
+       <after process="LatGrbSpectrum" status="SUCCESS"/>
+     </depends>
+   </process>
+   <process name="LatGcnNotice">
+     <job executable="${GRBASPROOT}/${BINDIR}/LatGcnNotice.sh"
           batchOptions="-q short"/>
      <depends>
        <after process="tsMap" status="SUCCESS"/>
@@ -110,7 +103,7 @@
          print attributes
          logicalPath = '/ASP/Results/GRB/%s:%s' % (dataType, outfile)
          print logicalPath
-         filePath = '%s/%s' % (output_dir, outfile)
+         filePath = '%s/%s' % (OUTPUTDIR, outfile)
          print filePath
          datacat.registerDataset(dataType, logicalPath, filePath, 
                                  attributes)

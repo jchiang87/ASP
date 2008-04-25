@@ -15,8 +15,8 @@
     <prerequisite name="logicalPath" type="string"/>
     <prerequisite name="TSTART" type="integer"/>
     <prerequisite name="TSTOP" type="integer"/>
-    <prerequisite name="output_dir" type="string"/>
-    <prerequisite name="GRB_parfile" type="string"/>
+    <prerequisite name="OUTPUTDIR" type="string"/>
+    <prerequisite name="GRBPARS" type="string"/>
     <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="GRBASPROOT" type="string"/>
     <prerequisite name="PIPELINESERVER" type="string"/>
@@ -40,10 +40,6 @@
       ]]></script>
   </process>
   <process name="afterglowData">
-    <variables>
-      <var name="OUTPUTDIR">${output_dir}</var>
-      <var name="GRBPARS">${GRB_parfile}</var>
-    </variables>
     <job executable="${GRBASPROOT}/${BINDIR}/afterglowData.sh"
          batchOptions="-q short"/>
     <depends>
@@ -51,10 +47,6 @@
     </depends>
   </process>
   <process name="afterglowDiffResps">
-    <variables>
-      <var name="OUTPUTDIR">${output_dir}</var>
-      <var name="GRBPARS">${GRB_parfile}</var>
-    </variables>
     <job executable="${GRBASPROOT}/${BINDIR}/afterglowDiffResps.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -63,10 +55,6 @@
   </process>
 
   <process name="afterglowLivetimeCube">
-    <variables>
-      <var name="OUTPUTDIR">${output_dir}</var>
-      <var name="GRBPARS">${GRB_parfile}</var>
-    </variables>
     <job executable="${GRBASPROOT}/${BINDIR}/afterglowLivetimeCube.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -75,10 +63,6 @@
   </process>
 
   <process name="afterglowExpMap">
-    <variables>
-      <var name="OUTPUTDIR">${output_dir}</var>
-      <var name="GRBPARS">${GRB_parfile}</var>
-    </variables>
     <job executable="${GRBASPROOT}/${BINDIR}/afterglowExpMap.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -87,10 +71,6 @@
   </process>
 
   <process name="afterglowAnalysis">
-    <variables>
-      <var name="OUTPUTDIR">${output_dir}</var>
-      <var name="GRBPARS">${GRB_parfile}</var>
-    </variables>
     <job executable="${GRBASPROOT}/${BINDIR}/afterglowAnalysis.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -123,7 +103,7 @@
             print attributes
             logicalPath = '/ASP/Results/GRB/afterglow/%s:%s' % (dataType, outfile)
             print logicalPath
-            filePath = '%s/%s' % (output_dir, outfile)
+            filePath = '%s/%s' % (OUTPUTDIR, outfile)
             print filePath
             datacat.registerDataset(dataType, logicalPath, filePath, 
                                     attributes)

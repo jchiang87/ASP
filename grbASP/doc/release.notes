@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4     28-Apr-08   JC   add code to process GCN Notices received via email;
+                            non-detections flagged, TS and UpperLimits computed;
+                            db tables filled; log-probability distributions 
+                            tracked
     v3r2   22-Apr-08   JC   overlay wcs coord grid on cmap and tsmap plots;
                             pixel-offset bug fix; new gttsmap interface
     v3r1p1 11-Apr-08   JC   improve counts spectrum plots, adding

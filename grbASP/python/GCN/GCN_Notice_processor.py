@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
-@brief Redirect GCN Notices to my account.  Write GCN messages to files,
-indexed by the notice type and TRIGGER_NUM fields.
+@brief Redirect GCN Notices to my account.  Write GCN messages to
+files, indexed by the mission and TRIGGER_NUM fields.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -22,8 +22,11 @@ class GcnNoticeEmail(object):
             if line.find("Date: ") == 0:
                 self.date = line
             if line.find("Subject: GCN") == 0:
+                # parse subject line to determine notice type and
+                # mission name
                 self.subject = line
                 self.notice_type = line.split("/")[-1].strip()
+                self.mission_name = self.notice_type.split("_")[0]
             if line.find("TITLE:") == 0:
                 self.title = line.strip().split(":")[-1].strip()
                 body = True
@@ -36,7 +39,9 @@ class GcnNoticeEmail(object):
             if body:
                 self.lines.append(line)
     def write(self, path):
-        output_dir = os.path.join(path, self.notice_type)
+        """Archive the notice under path, in a subdirectory given by the
+        mission name and in a filename given by the trigger number."""
+        output_dir = os.path.join(path, self.mission_name)
         try:
             os.mkdir(output_dir)
         except OSError:

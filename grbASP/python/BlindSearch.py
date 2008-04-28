@@ -177,6 +177,51 @@ class PackagedEvents(object):
             foo.__dict__[name] = self.events.__dict__[name][imin:imax]
         return foo
 
+class LogProbHist(object):
+    def __init__(self, xmin=-200, xmax=0, nx=100):
+        self.xmin = xmin
+        self.xstep = (xmax - xmin)/float(nx)
+        self.binValues = num.zeros(nx + 2)
+    def add(self, xx):
+        indx = int(xx - self.xmin)/self.xstep + 1
+        if indx < 0:
+            indx = 0
+        elif indx > len(self.binValues) - 1:
+            indx = len(self.binValues) - 1
+        self.binValues[indx] += 1
+    def xlims(self):
+        return (num.arange(len(self.binValues) + 1)*self.xstep 
+                + self.xmin - self.xstep)
+
+class LogProbHists(object):
+    def __init__(self, xmin=-200, xmax=0, nx=200):
+        self.logdt = LogProbHist(xmin, xmax, nx)
+        self.logdist = LogProbHist(xmin, xmax, nx)
+        self.logProb = LogProbHist(xmin, xmax, nx)
+    def add(self, logdt, logdist):
+        self.logdt.add(logdt)
+        self.logdist.add(logdist)
+        self.logProb.add(logdt + logdist)
+    def write(self, output):
+        xlims = self.xlims()
+        for tup in zip(xlims[:-1], xlims[1:], self.logdt.binValues, 
+                       self.logdist.binValues, self.binValues):
+            output.write("%12e  %12e  %12e  %12e  %12e\n" % tup)
+    def __getattr__(self, attrname):
+        return getattr(self.logProb, attrname)
+
+def mkdir(new_dir):
+    """Create a new directory and set permissions to be world-rwx-able"""
+    try:
+        os.mkdir(new_dir)
+        os.chmod(new_dir, 0777)
+    except OSError:
+        # Directory may already exist.
+        if os.path.isdir(new_dir):
+            os.chmod(new_dir, 0777)
+        else:
+            raise OSError, "Error creating directory: " + new_dir
+
 if __name__ == '__main__':
     import os, shutil
     import sys
@@ -204,12 +249,19 @@ if __name__ == '__main__':
     os.chdir(grbroot_dir)  # move to the working directory
 
     raw_events = FitsNTuple(downlink_files)
+    nMetStart = int(min(raw_events.TIME))
+    nMetStop = int(max(raw_events.TIME))
+    pipeline.setVariable('nMetStart', '%i' % nMetStart)
+    pipeline.setVariable('nMetStop', '%i' % nMetStop)
+
     print "Number of events read: ", len(raw_events.TIME)
     print "from FT1 files: ", downlink_files
     raw_events = zenmax_filter(raw_events)
 
     gtis = read_gtis(downlink_files)
     clusterAlg = EventClusters(gtis)
+
+    logProbHists = LogProbHists()
 
     imins, imaxs = gti_bounds(raw_events, gtis)
 
@@ -223,6 +275,8 @@ if __name__ == '__main__':
                                   dn=grbConfig.PARTITIONSIZE,
                                   deadtime=grbConfig.DEADTIME, 
                                   threshold=grbConfig.THRESHOLD)
+        for logdt, logdist in zip(blindSearch.logdts, blindSearch.logdists):
+            logProbHists.add(logdt, logdist)
 
         grbDirs = blindSearch.grbDirs()
         for item in grbDirs:
@@ -247,18 +301,21 @@ if __name__ == '__main__':
             #
             isUpdate = dbAccess.haveGrb(notice.grb_id)
             notice.registerWithDatabase(isUpdate=isUpdate)
-            #notice.email_notification()
             grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
-            try:
-                os.mkdir(grb_output)
-                os.chmod(grb_output, 0777)
-            except OSError:
-                if os.path.isdir(grb_output):
-                    os.chmod(grb_output, 0777)
-                else:
-                    raise OSError, "Error creating directory: " + grb_output
+            mkdir(grb_output)
             notice.setTriggerNum(tpeak)
             notice.addComment(', '.join(downlink_files))
             print grb_dir.ra(), grb_dir.dec(), tpeak
+            
+    downlink_dir = os.path.join(grbroot_dir, 'Downlinks')
+    mkdir(downlink_dir)
+    logprob_dir = os.path.join(downlink_dir, os.environ['DownlinkId'])
+    mkdir(logprob_dir)
+
+    filename = 'logProbs_%s.dat' % os.environ['DownlinkId']
+
+    filepath = os.path.join(logprob_dir, filename)
+    logProbHists.write(open(filepath, 'w'))
+    pipeline.setVariable('filepath', filepath)
         
     grb_followup.handle_unprocessed_events(grbroot_dir)

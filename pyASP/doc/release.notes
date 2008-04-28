@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v3r2   28-Apr-08   JC   add dot and cross products to SkyDir
     v3r1   22-Apr-08   JC   make FileStager.finish() a separate function
                             move to numpy from numarray in SkyCone.py
     v3     04-Mar-08   JC   OpsSim2 tag

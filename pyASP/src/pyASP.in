@@ -48,8 +48,6 @@ astro::JulianDate jd_from_MET(double met);
    astro::SkyDir operator+(const astro::SkyDir & other) {
       return astro::SkyDir(self->operator()() + other());
    }
-}
-%extend astro::SkyDir {
    static astro::SkyDir rotateToCelestial(const astro::SkyDir & scZAxis,
                                           const astro::SkyDir & scXAxis,
                                           double theta, double phi) {
@@ -61,6 +59,12 @@ astro::JulianDate jd_from_MET(double met);
                                                std::sin(theta)*std::sin(phi),
                                                std::cos(theta))),
                            astro::SkyDir::EQUATORIAL);
+   }
+   double dot(const astro::SkyDir & other) const {
+      return self->dir().dot(other.dir());
+   }
+   astro::SkyDir cross(const astro::SkyDir & other) const {
+      return astro::SkyDir(self->dir().cross(other.dir()));
    }
 }
 %extend astro::JulianDate {

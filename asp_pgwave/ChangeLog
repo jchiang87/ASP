@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue Apr 29 12:23:27 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	createPgwStreams.py dbmanager.py makeHealPixMaps.py 
+Log Message:
+set path to pgwave2D executable correctly; return the correct ptsrc_name; read IRFS from sourcemonitoringconfig db table
+    *
+------------------------------------------------------------
 User: jchiang  Tue Apr 29 09:08:36 PDT 2008
 ASP/asp_pgwave/cmt
 

@@ -1,0 +1,11 @@
+/** @file release.notes
+    @brief package pgwave
+    @brief Package coordinator: G. Tosti
+
+    $Id$
+
+    @verbatim
+    v1r2   22-Apr-08   JC   propagate stream ids to drpMonitoring tasks;
+                            register data products by stream id
+    @endverbatim
+*/

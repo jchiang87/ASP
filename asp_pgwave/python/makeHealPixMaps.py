@@ -12,6 +12,7 @@ from consecutive downlink analyses.
 import os
 from FitsNTuple import FitsNTuple
 from generateMaps import CountsArrayFactory, ExposureArrayFactory
+import databaseAccess as dbAccess
 
 def get_tlims(ft1file):
     gti = FitsNTuple(ft1file, 'GTI')
@@ -42,7 +43,12 @@ if __name__ == '__main__':
     #
     # Should read this from db table
     #
-    irfs = 'P5_v0_source'
+    sql = ("select IRFS from SOURCEMONITORINGCONFIG where " +
+           "STARTDATE<=%i and ENDDATE>=%i" % (tmin, tmin))
+    def readIrfs(cursor):
+        for entry in cursor:
+            return entry[0]
+    irfs = dbAccess.apply(sql, readIrfs)
 
     emapFactory = ExposureArrayFactory(ft2file, irfs=irfs)
     emap = emapFactory.create(tmin, tmax, 'FT1_merged.fits')

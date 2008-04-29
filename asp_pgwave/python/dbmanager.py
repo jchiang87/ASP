@@ -165,7 +165,7 @@ class dbmanager:
         	res=cursor.execute(sql4)
         	self.conn.commit()
 		cursor.close()	
-		return nome
+		return nome1
 if __name__=="__main__":
 
 	#d=datetime.now()

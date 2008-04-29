@@ -22,7 +22,7 @@
     <prerequisite name="TSTOP" type="integer"/>
     <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="CATDIR" type="string"/>
-    <prerequisite name="PGWAVEROOT" type="string"/>
+    <prerequisite name="ASP_PGWAVEROOT" type="string"/>
   </prerequisites>
 
   <process name="catalogQuery">
@@ -46,7 +46,7 @@
   </process>
 
   <process name="getPgwInputData">
-    <job executable="${PGWAVEROOT}/${BINDIR}/getPgwInputData.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/getPgwInputData.sh"
          batchOptions=" -q short"/>
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>
@@ -54,7 +54,7 @@
   </process>
 
   <process name="makeHealPixMaps">
-    <job executable="${PGWAVEROOT}/${BINDIR}/makeHealPixMaps.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/makeHealPixMaps.sh"
          batchOptions="-q medium"/>
     <depends>
       <after process="getPgwInputData" status="SUCCESS"/>
@@ -62,7 +62,7 @@
   </process>
 
   <process name="runpgw">
-    <job executable="${PGWAVEROOT}/${BINDIR}/runpgw.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runpgw.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
       <after process="makeHealPixMaps" status="SUCCESS"/>
@@ -128,7 +128,7 @@
       <prerequisite name="pgwave_streamId" type="integer"/>
     </prerequisites>
     <process name="launchDrpMonitoring">
-      <job executable="${PGWAVEROOT}/${BINDIR}/launchDrpMonitoring.sh"
+      <job executable="${ASP_PGWAVEROOT}/${BINDIR}/launchDrpMonitoring.sh"
            batchOptions=" -q short"/>
     </process>
   </task><!--drpMonitoring-->

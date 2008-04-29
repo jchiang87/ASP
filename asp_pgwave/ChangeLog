@@ -1,4 +1,48 @@
 ------------------------------------------------------------
+User: jchiang  Mon Apr 28 20:11:23 PDT 2008
+ASP/asp_pgwave
+
+Log Message:
+migration of ASP/pgwave to ASP/asp_pgwave
+
+Status:
+
+Vendor Tag:	GLAST
+Release Tags:	v1r2
+		
+N ASP/asp_pgwave/ChangeLog
+N ASP/asp_pgwave/.cvsignore
+N ASP/asp_pgwave/cmt/requirements
+N ASP/asp_pgwave/doc/release.notes
+N ASP/asp_pgwave/xml/PGWave.xml
+N ASP/asp_pgwave/python/runpgw.py
+N ASP/asp_pgwave/python/astroUtil.py
+N ASP/asp_pgwave/python/createPgwStreams.py
+N ASP/asp_pgwave/python/build_lc_db.py
+N ASP/asp_pgwave/python/makeHealPixMaps.py
+N ASP/asp_pgwave/python/dbmanager.py
+N ASP/asp_pgwave/python/sendFAmail.py
+N ASP/asp_pgwave/python/readFT.py
+N ASP/asp_pgwave/python/pgw2xml.py
+N ASP/asp_pgwave/python/runPipe.py
+N ASP/asp_pgwave/python/angdist.py
+N ASP/asp_pgwave/python/syncDataViewer.py
+N ASP/asp_pgwave/python/creaXimageGif.py
+N ASP/asp_pgwave/python/launchDrpMonitoring.py
+N ASP/asp_pgwave/python/getPgwInputData.py
+N ASP/asp_pgwave/python/lc.py
+N ASP/asp_pgwave/python/startpgw.py
+N ASP/asp_pgwave/python/start_pipe.py
+N ASP/asp_pgwave/python/getLightCurves.py
+N ASP/asp_pgwave/python/runsrcid.py
+N ASP/asp_pgwave/python/renameOutFiles.py
+N ASP/asp_pgwave/python/readpgw.py
+N ASP/asp_pgwave/python/pgw2fits.py
+
+No conflicts created by this import
+
+    *
+------------------------------------------------------------
 User: jchiang  Mon Apr 28 16:38:41 PDT 2008
 ASP/pgwave/xml
 

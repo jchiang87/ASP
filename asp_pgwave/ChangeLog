@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue Apr 29 09:08:36 PDT 2008
+ASP/asp_pgwave/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+PGWAVEROOT -> ASP_PGWAVEROOT
+    *
+------------------------------------------------------------
 User: jchiang  Tue Apr 29 09:07:36 PDT 2008
 ASP/asp_pgwave/xml
 

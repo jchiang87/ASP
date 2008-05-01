@@ -29,8 +29,9 @@ double EventClusters::logLikePosition() const {
    for (std::vector<Event>::const_iterator event(m_events.begin()); 
         event != m_events.end(); ++event) {
       double sep(event->dir().difference(cluster_dir));
-      if (sep < radius && sep != 0) {
-          logLike += std::log(1 - std::cos(sep));
+      double arg(1 - std::cos(sep));
+      if (sep < radius && sep != 0 && arg != 0) {
+          logLike += std::log(arg);
       }
    }
    return logLike;

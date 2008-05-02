@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher" version="2.0" type="Data">
+<task name="AspLauncher" version="2.1" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5"</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5p2"</var>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="minimum_coverage">0.70</var>
     <var name="datacatalog_imp">datacatalog</var>

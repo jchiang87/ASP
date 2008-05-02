@@ -78,7 +78,7 @@ if __name__ == '__main__':
 
     outputDir = os.environ['OUTPUTDIR']
 
-    fileStager = FileStager('stagingDir', stageArea=output_dir, 
+    fileStager = FileStager('stagingDir', stageArea=outputDir, 
                             messageLevel="INFO")
     ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 

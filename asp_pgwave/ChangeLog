@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri May  2 15:16:55 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py 
+Log Message:
+use ra, dec in degrees for building source name; use v9r5p2 by default
+    *
+------------------------------------------------------------
 User: jchiang  Tue Apr 29 13:11:41 PDT 2008
 ASP/asp_pgwave/python
 

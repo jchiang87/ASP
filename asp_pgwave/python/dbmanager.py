@@ -157,7 +157,7 @@ class dbmanager:
 		res=cursor.execute(sql)
                 nrec=cursor.fetchone()
 		nome=('FSP_%05d' % nrec[0])
-		nome1='ASPJ'+ast.sphd2shptext(r,d)
+		nome1='ASPJ'+ast.sphd2shptext(ra,dec)
                 #
                 # Check if this source is already in the table.
                 #

@@ -8,6 +8,7 @@
 #
 import pipeline
 import numpy as num
+import pyfits
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
@@ -59,9 +60,16 @@ def downlink_bg_rate(events, imin, imax):
     localmax = min(len(times)-1, imax + offset)
     return (localmax - localmin)/(times[localmax] - times[localmin])
 
+def local_bg_rate(events, imin, imax, window=100):
+    times = events.TIME
+    tmin, tmax = times[imin] - window, times[imax-1] + window
+    indx1 = num.where(times > tmin)[0][0]
+    indx2 = num.where(times < tmax)[0][-1]
+    return float(indx2 - indx1)/(times[indx2] - times[indx1])
+
 class BlindSearch(object):
     def __init__(self, events, clusterAlg, dn=30, deadtime=1000, threshold=110,
-                 bg_rate=0):
+                 bg_rate=0, bg_window=None):
         """events is a FitsNTuple of an FT1 file(s);
         dn is the number of consecutive events (in time) to consider;
         deadtime is the time in seconds to wait for the current trigger state
@@ -90,6 +98,8 @@ class BlindSearch(object):
         mean_bg_rate = nevts/(events.TIME[-1] - events.TIME[0])
         for imin, imax in zip(indices[:-1], indices[1:]):
             try:
+                if bg_window is not None:
+                    bg_rate = local_bg_rate(events, imin, imax, bg_window)
                 results = clusterAlg.processEvents(convert(events, imin, imax),
                                                    bg_rate)
                 (logPdts, logPdists), meanDir = results
@@ -133,7 +143,8 @@ class BlindSearch(object):
                 grb_dir.append(tpeak)
                 grb_dir.append(ll)
                 grb_dirs.append(grb_dir)
-            except:
+            except Exception, message:
+                print message
                 pass
         return grb_dirs
     def _temper(self, imin, imax, limit=100):
@@ -142,6 +153,16 @@ class BlindSearch(object):
             return midpoint - limit/2, midpoint + limit/2
         else:
             return imin, imax
+
+def writeTimeHistory(times, logdts, logdists, outfile):
+    time = pyfits.Column(name="time", format="D", array=times)
+    logdt = pyfits.Column(name="logL_temporal", format="D", array=logdts)
+    logdist = pyfits.Column(name="logL_spatial", format="D", array=logdists)
+    output = pyfits.HDUList()
+    output.append(pyfits.PrimaryHDU())
+    output.append(pyfits.new_table((time, logdt, logdist)))
+    output[1].name = "LogProbabilities"
+    output.writeto(outfile, clobber=True)
 
 def read_gtis(ft1files):
     data = FitsNTuple(ft1files, 'GTI')
@@ -218,7 +239,10 @@ def mkdir(new_dir):
     except OSError:
         # Directory may already exist.
         if os.path.isdir(new_dir):
-            os.chmod(new_dir, 0777)
+            try:
+                os.chmod(new_dir, 0777)
+            except:
+                pass
         else:
             raise OSError, "Error creating directory: " + new_dir
 
@@ -231,12 +255,15 @@ if __name__ == '__main__':
     import dbAccess
     from FileStager import FileStager
     from getFitsData import filter_versions
+    import grbASP
+
+    grbASP.Event_enableFPE()
     
     grbroot_dir = os.path.abspath(os.environ['GRBROOTDIR'])
 
     fileStager = FileStager("GRB_blind_search/%s" % os.environ['DownlinkId'],
                             stageArea=grbroot_dir, cleanup=True,
-                            messageLevel='DEBUG')
+                            messageLevel='CRITICAL')
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
     print ft1_files
@@ -261,11 +288,13 @@ if __name__ == '__main__':
     gtis = read_gtis(downlink_files)
     clusterAlg = EventClusters(gtis)
 
-    logProbHists = LogProbHists()
-
     imins, imaxs = gti_bounds(raw_events, gtis)
 
     package = PackagedEvents(raw_events)
+
+    times = num.array([])
+    logdts = num.array([])
+    logdists = num.array([])
 
     for imin, imax in zip(imins, imaxs):
         events = package(imin, imax)
@@ -274,9 +303,12 @@ if __name__ == '__main__':
         blindSearch = BlindSearch(events, clusterAlg, 
                                   dn=grbConfig.PARTITIONSIZE,
                                   deadtime=grbConfig.DEADTIME, 
-                                  threshold=grbConfig.THRESHOLD)
-        for logdt, logdist in zip(blindSearch.logdts, blindSearch.logdists):
-            logProbHists.add(logdt, logdist)
+                                  threshold=grbConfig.THRESHOLD,
+                                  bg_window=50)
+
+        times = num.concatenate((times, blindSearch.times))
+        logdts = num.concatenate((logdts, blindSearch.logdts))
+        logdists = num.concatenate((logdists, blindSearch.logdists))
 
         grbDirs = blindSearch.grbDirs()
         for item in grbDirs:
@@ -307,15 +339,17 @@ if __name__ == '__main__':
             notice.addComment(', '.join(downlink_files))
             print grb_dir.ra(), grb_dir.dec(), tpeak
             
+
     downlink_dir = os.path.join(grbroot_dir, 'Downlinks')
     mkdir(downlink_dir)
     logprob_dir = os.path.join(downlink_dir, os.environ['DownlinkId'])
     mkdir(logprob_dir)
 
-    filename = 'logProbs_%s.dat' % os.environ['DownlinkId']
+    filename = 'logProbs_%s.fits' % os.environ['DownlinkId']
 
     filepath = os.path.join(logprob_dir, filename)
-    logProbHists.write(open(filepath, 'w'))
+    writeTimeHistory(times, logdts, logdists, filepath)
+
     pipeline.setVariable('filepath', filepath)
         
     grb_followup.handle_unprocessed_events(grbroot_dir)

@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Fri May  2 15:16:55 PDT 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+use ra, dec in degrees for building source name; use v9r5p2 by default
+    *
+------------------------------------------------------------
+User: jchiang  Fri May  2 15:16:55 PDT 2008
 ASP/asp_pgwave/python
 
 Modified Files:

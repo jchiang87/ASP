@@ -15,22 +15,22 @@ from checkLevelOneFiles import providesCoverage
 from PipelineCommand import PipelineCommand, _asp_path
 from FileStager import FileStager
 
-_version = os.path.split(os.environ['PGWAVEROOT'])[-1]
-_pgwaveRoot = os.path.join(_asp_path, 'ASP', 'pgwave', _version)
+_version = os.path.split(os.environ['ASP_PGWAVEROOT'])[-1]
+_pgwaveRoot = os.path.join(_asp_path, 'ASP', 'asp_pgwave', _version)
 _datacatalog_imp = os.environ['datacatalog_imp']
 
 def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
-                  debug=False):
+                  streamId=None, debug=False):
     args = {'logicalPath' : folder,
             'interval' : interval,
             'frequency' : frequency,
             'TSTART' : tstart,
             'TSTOP' : tstop,
             'OUTPUTDIR' : output_dir,
-            'CATDIR' : '/nfs/farm/g/glast/u33/tosti/october/catdir',
-            'PGWAVEROOT' : _pgwaveRoot,
+            'CATDIR' : '/afs/slac/g/glast/ground/ASP/catalogs',
+            'ASP_PGWAVEROOT' : _pgwaveRoot,
             'datacatalog_imp' : _datacatalog_imp}
-    command = PipelineCommand('PGWave', args)
+    command = PipelineCommand('PGWave', args, stream=streamId)
     command.run(debug=debug)
 
 def get_interval():
@@ -61,6 +61,7 @@ if __name__ == '__main__':
     currentDir = os.getcwd()
     min_frac = float(os.environ['minimum_coverage'])
     process_id = os.environ['PIPELINE_PROCESSINSTANCE']
+    streamId = int(os.environ['PIPELINE_STREAM'])
 
     #
     # Stage to local /scratch area and clean up on exit
@@ -80,4 +81,4 @@ if __name__ == '__main__':
         output_dir = createSubDir(interval, frequency,
                                   os.environ['PGWAVEOUTPUTDIR'])
         launch_pgwave(interval, frequency, tstart, tstop, folder, 
-                      output_dir, debug=debug)
+                      output_dir, streamId=streamId, debug=debug)

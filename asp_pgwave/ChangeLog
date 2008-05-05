@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: jchiang  Mon May  5 13:14:06 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	runpgw.py 
+Added Files:
+	refinePositions.py 
+Log Message:
+add refinePositions with pointfit
+    *
+------------------------------------------------------------
+User: jchiang  Mon May  5 13:14:06 PDT 2008
 ASP/asp_pgwave/cmt
 
 Modified Files:

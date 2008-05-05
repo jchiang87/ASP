@@ -158,22 +158,14 @@ class dbmanager:
                 nrec=cursor.fetchone()
 		nome=('FSP_%05d' % nrec[0])
 		nome1='ASPJ'+ast.sphd2shptext(r,d)
-                #
-                # Check if this source is already in the table.
-                #
-                my_sql = ("select PTSRC_NAME from POINTSOURCES " +
-                          "where PTSRC_NAME='%s'" % nome1)
-                cursor.execute(my_sql)
-                ptsrc_name = cursor.fetchone()
-                if ptsrc_name is None:
-                        sql2="insert into pointsources(ptsrc_name,healpix_id,source_type,ra,dec,error_radius,nx,ny,nz,is_obsolete,is_public) "
-                        sql3= ("values('%s',%i,'Other_FSP',%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,0,0)" % (nome1,heaid,ra,dec,err,dir[0],dir[1],dir[2]))
-                        sql4=sql2+sql3
-        	        #print sql4
-                        res=cursor.execute(sql4)
-                        self.conn.commit()
+        	sql2="insert into pointsources(ptsrc_name,healpix_id,source_type,ra,dec,error_radius,nx,ny,nz,is_obsolete,is_public) "
+        	sql3= ("values('%s',%i,'Other_FSP',%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,0,0)" % (nome1,heaid,ra,dec,err,dir[0],dir[1],dir[2]))
+        	sql4=sql2+sql3
+        	#print sql4
+        	res=cursor.execute(sql4)
+        	self.conn.commit()
 		cursor.close()	
-		return nome1
+		return nome
 if __name__=="__main__":
 
 	#d=datetime.now()

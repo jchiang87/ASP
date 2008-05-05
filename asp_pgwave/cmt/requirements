@@ -1,16 +1,39 @@
-package asp_pgwave
+package pgwave
 version v1r2
 
 # $Id$
 
-use pgwave *
 use AspPolicy v* ASP
 use pyASP v* ASP
 use sourceDet v* ASP -no_auto_imports
 use drpMonitoring v* ASP -no_auto_imports
-use sane v* -no_auto_imports
+use astro v*
+use cfitsio * IExternal
+use pil * IExternal
+use fftw * IExternal
 
-path_remove PYTHONPATH asp_pgwave
-path_append PYTHONPATH $(ASP_PGWAVEROOT)/python
+use pyIrfLoader v* irfs -no_auto_imports
+use sane v* -no_auto_imports
+use pyLikelihood v* -no_auto_imports
+
+path_remove PYTHONPATH pgwave
+path_append PYTHONPATH $(PGWAVEROOT)/$(BINDIR)
+path_append PYTHONPATH $(PGWAVEROOT)/python
 
 apply_pattern wrapper_scripts
+
+apply_pattern package_include
+apply_pattern package_linkopts
+apply_pattern package_stamps
+#
+apply_pattern ST_pfiles
+
+private
+
+macro source  "*.cpp" WIN32 "*.h *.cpp"
+
+library pgwave -no_share \
+ -s=../pgwave $(source) \ 
+ -s=../src $(source)
+
+application pgwave2D app/main.cpp

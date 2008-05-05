@@ -1,5 +1,5 @@
 package AspLauncher
-version v1r1
+version v1r2
 
 # $Id$
 
@@ -7,10 +7,9 @@ use AspPolicy v* ASP
 use pyASP v* ASP
 use grbASP v* ASP
 use drpMonitoring v* ASP
-use pgwave v* ASP
+use asp_pgwave v* ASP
 
 path_remove PYTHONPATH AspLauncher
-path_append PYTHONPATH $(ASPLAUNCHERROOT)/$(BINDIR)
 path_append PYTHONPATH $(ASPLAUNCHERROOT)/python
 
 apply_pattern wrapper_scripts

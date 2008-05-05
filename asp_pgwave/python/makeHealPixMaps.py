@@ -50,6 +50,8 @@ if __name__ == '__main__':
             return entry[0]
     irfs = dbAccess.apply(sql, readIrfs)
 
+    print "using IRFs: ", irfs
+
     emapFactory = ExposureArrayFactory(ft2file, irfs=irfs)
     emap = emapFactory.create(tmin, tmax, 'FT1_merged.fits')
     emapfile = 'exposure_%s.fits' % suffix

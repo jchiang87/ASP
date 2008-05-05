@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r2p1 04-May-08   JC   mv to ST v9r5p2; omit distant sources from 
+                            model defs; make pgwave_folder configurable arg
+                            to stream creation
     v1r2   22-Apr-08   JC   use pgwave streamIds instead of process ids;
                             modify source selection to exclude non-pgwave
                             sources

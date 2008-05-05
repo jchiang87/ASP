@@ -10,9 +10,12 @@
 #
 import shutil
 from read_data import read_data
+import numpy as num
 from pointfit import Background
 from fitter import Fitter, photonmap, Source
 import pyfits
+import celgal
+converter = celgal.celgal()
 
 class PgwaveData(list):
     def __init__(self, infile='Filtered_evt_map.list'):
@@ -22,20 +25,28 @@ class PgwaveData(list):
                                         self.data[4], self.data[7]):
             self.append(Source(`id`, ra, dec))
             self[-1].ksignif = ksignif
-    def write(self, outfile):
+    def write(self, outfile, glat_cutoff=5, TS_cutoff=0):
         output = open(outfile, 'w')
         output.write(self.header)
         for irow, source in enumerate(self):
-            output.write("%4i" % self.data[0][irow])
-            output.write("%8.1f %8.1f" % (self.data[1][irow],self.data[2][irow]))
-            output.write("%12.4f%12.4f" % (source.ra, source.dec))
-            for icol in range(5, len(self.data)):
-                output.write("%10s" % self.data[icol][irow])
-            output.write("\n")
+            if self.saveSource(source, glat_cutoff, TS_cutoff):
+                output.write("%4i" % self.data[0][irow])
+                output.write("%8.1f %8.1f" % (self.data[1][irow],
+                                              self.data[2][irow]))
+                output.write("%12.4f%12.4f" % (source.ra, source.dec))
+                for icol in range(5, len(self.data)):
+                    output.write("%10s" % self.data[icol][irow])
+                output.write("\n")
         output.close()
+    def saveSource(self, source, glat_cutoff, TS_cutoff):
+        ll, bb = converter.gal((source.ra, source.dec))
+        if num.abs(bb) > glat_cutoff or source.TS > TS_cutoff:
+            return True
+        return False
 
 def refinePositions(pgwave_list='Filtered_evt_map.list',
-                    ft1File='Filtered_evt.fits'):
+                    ft1File='Filtered_evt.fits', glat_cutoff=5,
+                    TS_cutoff=0.1):
     srclist = PgwaveData(pgwave_list)
     data = photonmap(ft1File, pixeloutput=None, eventtype=-1)
     
@@ -53,6 +64,7 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
                      (source.name, source.ra, source.dec, fit.ra, 
                       fit.dec, fit.delta, fit.TS, source.ksignif))
         source.ra, source.dec = fit.ra, fit.dec
+        source.TS = fit.TS
     output.close()
     #
     # Move original list out of the way.
@@ -61,7 +73,7 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
     #
     # Write the updated list in its place.
     #
-    srclist.write(pgwave_list)
+    srclist.write(pgwave_list, glat_cutoff, TS_cutoff)
 
 if __name__ == '__main__':
     refinePositions()

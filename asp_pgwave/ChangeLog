@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon May  5 13:14:06 PDT 2008
+ASP/asp_pgwave/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add refinePositions with pointfit
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r3, operation: add
 Package: asp_pgwave

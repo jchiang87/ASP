@@ -4,6 +4,7 @@ version v1r3
 # $Id$
 
 use pgwave *
+use py_pointlike v*
 use AspPolicy v* ASP
 use pyASP v* ASP
 use sourceDet v* ASP -no_auto_imports

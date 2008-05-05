@@ -6,8 +6,7 @@ from pgw2fits import *
 from runsrcid import *
 from creaXimageGif import *
 from FitsNTuple import FitsNTuple
-#Sc2Ft2File=os.environ['INPUTFT2FILE']
-#tSc2Data ='nicola5.fits'
+from refinePositions import refinePositions
 
 gtselect = GtApp('gtselect')
 gtbin = GtApp('gtbin')
@@ -118,6 +117,12 @@ def runpgw(infile):
 	createMap(infile,mapParAit,aitmap)
 	#creaXimageGif(aitmap)
         pgwave(inmap1)
+        #
+        # Perform position refinement
+        #
+        refinePositions(pgwave_list='Filtered_evt_map.list',
+                        ft1File='Filtered_evt.fits')
+        
 	outf=inmap1.replace('.fits','.list')
 	outfits=pgw2fits(outf,1)
 	runsrcid(outfits,.01)
@@ -128,12 +133,8 @@ def runpgw(infile):
 if __name__=="__main__":
         from syncDataViewer import syncDataViewer
         from renameOutFiles import renameOutFiles
-
 	os.chdir(os.environ['OUTPUTDIR'])
-
 	runpgw('Filtered_evt.fits')
-
+	os.system('chmod 777 *')
         syncDataViewer()
         renameOutFiles()
-
-	os.system('chmod 777 *')

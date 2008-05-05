@@ -82,7 +82,8 @@ gtltcube.run(evfile=gtmktime['outfile'], scfile=pars['ft2file'],
 # sourceSelection process
 #
 sourceModel = rootpath('point_sources.xml')
-modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, sourcerad)
+#modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, sourcerad)
+modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, radius)
 outputModel = name + '_ptsrcs_model.xml'
 search_Srcs(sourceModel, modelRequest, outputModel)
 

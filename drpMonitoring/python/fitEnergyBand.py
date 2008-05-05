@@ -17,10 +17,7 @@ from drpRoiSetup import pars, currentRoi
 import pyfits
 from SourceData import SourceData, SourceTypeError
 
-# use local version of UpperLimits since the final fit in the
-# pyLikelihood v1r5 version can end in abnormal termination
-# from UpperLimits import UpperLimits
-from computeUpperLimit import UpperLimits
+from UpperLimits import UpperLimits
 import drpDbAccess
 
 gtselect = GtApp('gtselect')
@@ -64,12 +61,16 @@ def fitEnergyBand(emin, emax, srcModel, roi):
         upperLimit.parameter.setValue(emax)
 
     try:
-        like.fit()
+        like.fit(optimizer='DRMNFB')
     except RuntimeError:
         try:
-            like.fit()
+            like.logLike.restoreBestFit()
+            like.fit(optimizer='Minuit')
         except RuntimeError:
+            like.logLike.restoreBestFit()
             pass
+
+    print "-log-likelihood after fitting: ", like()
 
     outputModel = "%s_%i_%i_model.xml" % (roi.name, emin, emax)
     like.srcModel = outputModel
@@ -94,9 +95,9 @@ def fitEnergyBand(emin, emax, srcModel, roi):
         fluxerr = integral.error()*integral.getScale()
         isUL = False
         if like.Ts(srcname) < 25:
-#            flux = computeUpperLimit(like, srcname)
             print "computing upper limit for ", srcname
-            flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.)
+            flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
+                                       renorm=True)
             isUL = True
         try:
             results[srcname] = SourceData(srcname, flux, fluxerr, 
@@ -124,6 +125,8 @@ def fitEnergyBand(emin, emax, srcModel, roi):
 if __name__ == '__main__':
     roi = currentRoi()
     os.chdir(roi.name)
+
+    print "Working in ", os.getcwd
 
     inputModel = "%s_%i_%i_model.xml" % (currentRoi().name, 100, 300000)
     srcModel = os.path.join(os.getcwd(), inputModel)

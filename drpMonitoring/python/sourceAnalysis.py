@@ -11,7 +11,7 @@ should have its data made public.
 # $Header$
 #
 
-import os, sys
+import os, sys, shutil
 import pipeline
 from GtApp import GtApp
 from UnbinnedAnalysis import *
@@ -24,6 +24,7 @@ from fitEnergyBand import fitEnergyBand, currentRoi
 #
 roi = currentRoi()
 os.chdir(roi.name)
+print "Working in ", os.getcwd
 
 #
 # Run gtdiffrsp locally for each region in case it hasn't been run by
@@ -41,6 +42,7 @@ gtdiffrsp.run()
 # monitoring state of the non-DRP sources.
 #
 srcModel = os.path.join(os.getcwd(), roi.name + '_model.xml')
+shutil.copy(srcModel, srcModel + '_input')
 results = fitEnergyBand(100, 300000, srcModel, roi)
 
 #

@@ -117,13 +117,12 @@ def runpgw(infile):
 	createMap(infile,mapParAit,aitmap)
 	#creaXimageGif(aitmap)
         pgwave(inmap1)
-        #
-        # Perform position refinement
-        #
-        refinePositions(pgwave_list='Filtered_evt_map.list',
-                        ft1File='Filtered_evt.fits')
-        
 	outf=inmap1.replace('.fits','.list')
+        #
+        # Perform position refinement. This updates the positions in outf.
+        #
+        refinePositions(pgwave_list=outf, ft1File=infile)
+
 	outfits=pgw2fits(outf,1)
 	runsrcid(outfits,.01)
 	print 'PGWave FITS output file:',outfits 

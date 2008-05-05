@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon May  5 13:37:34 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	runpgw.py 
+Log Message:
+use variables with filenames
+    *
+------------------------------------------------------------
 User: jchiang  Mon May  5 13:14:06 PDT 2008
 ASP/asp_pgwave/python
 

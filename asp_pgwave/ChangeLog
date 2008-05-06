@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon May  5 22:18:44 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	makeHealPixMaps.py refinePositions.py 
+Log Message:
+try to account for high latitude sources that pointfit bungles
+    *
+------------------------------------------------------------
 User: jchiang  Mon May  5 14:07:02 PDT 2008
 ASP/asp_pgwave/python
 

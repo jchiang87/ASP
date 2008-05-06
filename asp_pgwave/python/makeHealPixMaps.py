@@ -34,15 +34,8 @@ if __name__ == '__main__':
     cmapfile = 'counts_%s.fits' % suffix
     cmap.write(cmapfile)
 
-#    #
-#    # awful kluge for 55d data: hardwire FT2 file and irfs
-#    #
-#    ft2file = '/nfs/farm/g/glast/u44/MC-tasks/Interleave55d-GR-v11r17/prune/FT2_55day_patch.fits'
     ft2file = 'FT2_merged.fits'
     
-    #
-    # Should read this from db table
-    #
     sql = ("select IRFS from SOURCEMONITORINGCONFIG where " +
            "STARTDATE<=%i and ENDDATE>=%i" % (tmin, tmin))
     def readIrfs(cursor):

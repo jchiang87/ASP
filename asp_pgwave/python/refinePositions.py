@@ -2,6 +2,7 @@
 @file refinePositions.py
 
 @brief Run pointfit to refine the source positions from pgwave.
+Filter out zero pointfit TS sources for abs(glat) < 5 deg.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -12,10 +13,32 @@ import shutil
 from read_data import read_data
 import numpy as num
 from pointfit import Background
-from fitter import Fitter, photonmap, Source
+from fitter import Fitter, photonmap, Source, SkyDir
 import pyfits
 import celgal
+import databaseAccess as dbAccess
+import pyfits
+from FitsNTuple import FitsNTuple
+
+def getIrfs(ft1file):
+    ft1 = pyfits.open(ft1file)
+    tmin, tmax = ft1[1].header['TSTART'], ft1[1].header['TSTOP']
+    sql = ("select IRFS from SOURCEMONITORINGCONFIG where " +
+           "STARTDATE<=%i and ENDDATE>=%i" % (tmin, tmax))
+    def readIrfs(cursor):
+        for entry in cursor:
+            return entry[0]
+    return dbAccess.apply(sql, readIrfs)
+
 converter = celgal.celgal()
+
+def saveSource(source, glat_cutoff, TS_cutoff):
+    ll, bb = converter.gal((source.ra, source.dec))
+    if num.abs(bb) > glat_cutoff and source.TS <= TS_cutoff:
+        print source.name, source.ra, source.dec
+    if num.abs(bb) > glat_cutoff or source.TS > TS_cutoff:
+        return True
+    return False
 
 class PgwaveData(list):
     def __init__(self, infile='Filtered_evt_map.list'):
@@ -29,7 +52,7 @@ class PgwaveData(list):
         output = open(outfile, 'w')
         output.write(self.header)
         for irow, source in enumerate(self):
-            if self.saveSource(source, glat_cutoff, TS_cutoff):
+            if saveSource(source, glat_cutoff, TS_cutoff):
                 output.write("%4i" % self.data[0][irow])
                 output.write("%8.1f %8.1f" % (self.data[1][irow],
                                               self.data[2][irow]))
@@ -38,33 +61,50 @@ class PgwaveData(list):
                     output.write("%10s" % self.data[icol][irow])
                 output.write("\n")
         output.close()
-    def saveSource(self, source, glat_cutoff, TS_cutoff):
-        ll, bb = converter.gal((source.ra, source.dec))
-        if num.abs(bb) > glat_cutoff or source.TS > TS_cutoff:
-            return True
-        return False
 
 def refinePositions(pgwave_list='Filtered_evt_map.list',
                     ft1File='Filtered_evt.fits', glat_cutoff=5,
-                    TS_cutoff=0.1):
+                    TS_cutoff=1e-5, use_bg=True):
+    irfs = getIrfs(ft1File)
+
     srclist = PgwaveData(pgwave_list)
     data = photonmap(ft1File, pixeloutput=None, eventtype=-1)
     
+    events = FitsNTuple(ft1File)
     ft1 = pyfits.open(ft1File)
     ontime = ft1['GTI'].header['ONTIME']
 
-    # Crude estimate based on default exposure for Background class
-    exposure = ontime*1e3 
-    bg = Background('galdiffuse', exposure=exposure)
+    if use_bg:
+        # Crude estimate based on default exposure for Background class
+        exposure = ontime*1e3 
+        bg = Background('galdiffuse', exposure=exposure)
+    else:
+        bg = lambda : None
 
     output = open('updated_positions.txt', 'w')
     for source in srclist:
+        output.write(("%5s" + "  %8.3f"*2) % 
+                     (source.name, source.ra, source.dec))
         fit = Fitter(source, data, background=bg(), verbose=0)
-        output.write(("%5s" + "  %8.3f"*7 + "\n") % 
-                     (source.name, source.ra, source.dec, fit.ra, 
-                      fit.dec, fit.delta, fit.TS, source.ksignif))
-        source.ra, source.dec = fit.ra, fit.dec
-        source.TS = fit.TS
+        source.ra, source.dec, source.TS = fit.ra, fit.dec, fit.TS
+        if source.TS < TS_cutoff:
+            ll, bb = converter.gal((source.ra, source.dec))
+            if num.abs(bb) > glat_cutoff:
+                dists = []
+                for coord in zip(events.RA, events.DEC):
+                    dists.append(celgal.dist(coord, (source.ra, source.dec)))
+                dists = num.array(dists)
+                indx = num.where(dists < 3)
+                norm = sum(events.ENERGY[indx]**2)
+                source.ra = sum(events.RA[indx]*events.ENERGY[indx]**2)/norm
+                source.dec = sum(events.DEC[indx]*events.ENERGY[indx]**2)/norm
+                source.sdir = SkyDir(source.ra, source.dec)
+                print "calling Fitter with ", source.ra, source.dec
+                fit = Fitter(source, data, background=bg(), verbose=0)
+                print "fitted values: ", fit.ra, fit.dec
+                source.ra, source.dec, source.TS = fit.ra, fit.dec, fit.TS
+        output.write(("  %8.3f"*5 + "\n") % 
+                     (source.ra, source.dec, fit.delta, fit.TS, source.ksignif))
     output.close()
     #
     # Move original list out of the way.

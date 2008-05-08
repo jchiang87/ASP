@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Thu May  8 10:47:29 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	crearoi.py 
+Log Message:
+reduced the number of overlapping Rois
+    *
+------------------------------------------------------------
 User: tosti  Thu May  8 09:22:16 PDT 2008
 ASP/asp_pgwave/python
 

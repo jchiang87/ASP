@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Thu May  8 14:11:15 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	crearoi.py 
+Log Message:
+modify interface to pass arrays of ptsrc data instead of filename
+    *
+------------------------------------------------------------
 User: tosti  Thu May  8 10:47:29 PDT 2008
 ASP/asp_pgwave/python
 

@@ -1,3 +1,13 @@
+"""
+@brief For a list of point sources, generate a set of ROIs with a
+given radius that covers them for Likelihood analysis.
+
+@author Gino Tosti
+"""
+#
+# $Header$
+# 
+
 import string, os, math,sys
 import numpy
 
@@ -177,13 +187,13 @@ def printRoi(outfile,ra_fin,dec_fin,rad_fin,source):
 	for j in range(0,len(ra_fin)):
 		print >>f,(("%3d   %6.2f    %6.2f  %6.2f  %6.2f #")% (j+1,ra_fin[j],dec_fin[j],rad_fin[j],rad_fin[j]+10.)),source[j]
 		
-def crearoi(infile,dist):
-
-	#pg_nome,pg_ra,pg_dec,sn,counts=readpgw_roi(infile)
-	data=read_data(infile)
-	pg_nome=data[0]
-	pg_ra=data[3]
-	pg_dec=data[4]
+#def crearoi(infile,dist):
+#	#pg_nome,pg_ra,pg_dec,sn,counts=readpgw_roi(infile)
+#	data=read_data(infile)
+#	pg_nome=data[0]
+#	pg_ra=data[3]
+#	pg_dec=data[4]
+def crearoi(pg_nome, pg_ra, pg_dec, dist, outfile):
 	tot=len(pg_ra)
 	#maxroi=len(pg_ra)/5
 	idd=range(1,tot+1)
@@ -228,16 +238,21 @@ def crearoi(infile,dist):
 			rad_fin.append(rad[j])
 			sour_fin.append(source[j])
 	
-	printRoi('rois.txt',ra_fin,dec_fin,rad_fin,sour_fin)
-	
-
+	printRoi(outfile,ra_fin,dec_fin,rad_fin,sour_fin)
 
 if __name__ == '__main__':
 	if len(sys.argv)<3:
-		print "usage: python crearoi.py pgwaveListFile radius"
+		print "usage: python crearoi.py pgwaveListFile radius [outfile]"
 		sys.exit()
+
 	infile=sys.argv[1]
 	radius=float(sys.argv[2])
-	crearoi(infile,radius)
-	
+        try:
+                outfile = sys.argv[3]
+        except:
+                outfile = 'rois.txt'
 
+        data = read_data(infile)
+        id, ra, dec = data[0], data[3], data[4]
+
+	crearoi(id, ra, dec ,radius, outfile)

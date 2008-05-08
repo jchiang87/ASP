@@ -202,6 +202,7 @@ def crearoi(infile,dist):
 		r_ra=r2_ra
 		r_dec=r2_dec
 	source=[]
+	idx1=numpy.zeros(len(pg_ra))
 	for j in range(0,len(r2_ra)):
 	   #print "ROI:",j+1,"XC=",r2_ra[j],"YC=",r2_dec[j]
 	   kk=0
@@ -210,23 +211,18 @@ def crearoi(infile,dist):
 		r1=r2_ra[j]
 		d1=r2_dec[j]
 		b=angDistance(pg_ra[i],pg_dec[i],r1,d1)
-		if(b<=(rad[j])):
+		if(b<=rad[j] and idx1[i]==0):
+			idx1[i]=1
 			inreg.append(pg_nome[i])
 			kk=kk+1
 	   source.append(inreg)
-	   
 	   #print "#sources in roi: ", kk,inreg	
-	idx=numpy.ones(len(r2_ra))
-	for j in range(0,len(r2_ra)):
-		for i in range(j+1,len(r2_ra)):
-		 if source[j]==source[i]:
-		        idx[i]=0
 	ra_fin=[]
 	dec_fin=[]
 	rad_fin=[]
 	sour_fin=[]
 	for j in range(0,len(r2_ra)):
-		if idx[j]==1 and len(source[j])>0:
+		if len(source[j])>0:
 			ra_fin.append(r2_ra[j])
 			dec_fin.append(r2_dec[j])
 			rad_fin.append(rad[j])

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Thu May  8 14:16:21 PDT 2008
+ASP/asp_pgwave/python
+
+Removed Files:
+	crearoi.py 
+Log Message:
+move crearoi.py to pyASP so that drpMonitoring can import it
+    *
+------------------------------------------------------------
 User: jchiang  Thu May  8 14:11:15 PDT 2008
 ASP/asp_pgwave/python
 

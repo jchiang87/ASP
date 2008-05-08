@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Thu May  8 07:37:27 PDT 2008
+ASP/asp_pgwave/python
+
+Added Files:
+	crearoi.py 
+Log Message:
+script to create ROIs list file from pgwave outputlist of sources
+    *
+------------------------------------------------------------
 User: jchiang  Mon May  5 22:18:44 PDT 2008
 ASP/asp_pgwave/python
 

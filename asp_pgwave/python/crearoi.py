@@ -226,7 +226,7 @@ def crearoi(infile,dist):
 	rad_fin=[]
 	sour_fin=[]
 	for j in range(0,len(r2_ra)):
-		if idx[j]:
+		if idx[j]==1 and len(source[j])>0:
 			ra_fin.append(r2_ra[j])
 			dec_fin.append(r2_dec[j])
 			rad_fin.append(rad[j])

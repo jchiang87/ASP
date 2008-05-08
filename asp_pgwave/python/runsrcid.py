@@ -182,7 +182,7 @@ def checkPointSource(pgwdata,dateinfo):
 	mydb=db.dbmanager()
         mydb.getPointSources()
         #mydb.close()
-	procid=int(os.environ['PIPELINE_PROCESSINSTANCE'])
+	procid=int(os.environ['PIPELINE_STREAM'])
 	ra=db._PointSourcesFields['RA'][1]
 	dec=db._PointSourcesFields['DEC'][1]
 	i=0
@@ -196,9 +196,9 @@ def checkPointSource(pgwdata,dateinfo):
 		  #print dis  
 	          if  dis<=1.:
 			index[i]=(db._PointSourcesFields['SOURCE_TYPE'][1])[k]+'_'+(db._PointSourcesFields['PTSRC_NAME'][1])[k]+','+index[i]
-			#print "trovata:",pgwdata.field('NAME')[i],(db._PointSourcesFields['PTSRC_NAME'][1])[k],dis
+			print "trovata:",pgwdata.field('NAME')[i],(db._PointSourcesFields['PTSRC_NAME'][1])[k],dis
 			source_name.append((db._PointSourcesFields['PTSRC_NAME'][1])[k])
-			mydb.insertFlareEvent((db._PointSourcesFields['PTSRC_NAME'][1])[k],dateinfo['tstart'],dateinfo['tstop'],pgwdata.field('Flux(E>100)')[i],pgwdata.field('errFlux')[i],pgwdata.field('CHI_2_VAR')[i],int(pgwdata.field('FLARING_FLAG')[i]),1,procid)
+			imydb.insertFlareEvent((db._PointSourcesFields['PTSRC_NAME'][1])[k],dateinfo['tstart'],dateinfo['tstop'],pgwdata.field('Flux(E>100)')[i],pgwdata.field('errFlux')[i],pgwdata.field('CHI_2_VAR')[i],int(pgwdata.field('FLARING_FLAG')[i]),1,procid)
 			flag=1
 			break
 		  k=k+1

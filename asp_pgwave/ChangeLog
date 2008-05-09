@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Fri May  9 16:29:01 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	pgw2fits.py runpgw.py 
+Log Message:
+now use GtApp to run pgwave2D and parameters are read from the DB
+    *
+------------------------------------------------------------
 User: tosti  Thu May  8 14:59:20 PDT 2008
 ASP/asp_pgwave/python
 

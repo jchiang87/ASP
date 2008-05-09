@@ -18,39 +18,6 @@ from drpDbAccess import findPointSources, defaultPtSrcXml
 from celgal import celgal, dist
 from SourceData import _monitoringBand as monitoringBand
 
-class Roi(object):
-    def __init__(self, ra, dec, rad, sr):
-        self.ra, self.dec = ra, dec
-        self.rad, self.sr = rad, sr
-
-class RoiIds(dict):
-    def __init__(self, roiFile='rois.txt'):
-        for id, ra, dec, rad, sr in zip(*read_data(roiFile)):
-            self[id] = Roi(ra, dec, rad, sr)
-    def __call__(self, ra, dec):
-        ids = self.keys()
-        myId = ids[0]
-        mindist = dist((self[myId].ra, self[myId].dec), (ra, dec))
-        for id in ids[1:]:
-            curDist = dist((self[id].ra, self[id].dec), (ra, dec))
-            if curDist < mindist:
-                myId = id
-                mindist = curDist
-        if mindist < self[myId].sr:
-            return myId
-        return None
-
-def assignNullRois():
-    roiIds = RoiIds()
-    sql = "select PTSRC_NAME, ra, dec from POINTSOURCES where ROI_ID IS NULL"
-    srcs = dbAccess.apply(sql, lambda curs : [entry[:3] for entry in curs])
-    for src in srcs:
-        id = roiIds(src[1], src[2])
-        if id is not None:
-            sql = ("update POINTSOURCES set ROI_ID=%i where PTSRC_NAME='%s'" 
-                   % (id, src[0]))
-            dbAccess.apply(sql)
-
 def getXmlModel():
     ptsrcs = findPointSources(0, 0, 180)
     xmlModel = """<?xml version="1.0" ?>
@@ -119,10 +86,6 @@ def sourceType(src):
 if __name__ == '__main__':
     os.chdir(os.environ['OUTPUTDIR'])
 
-    # Ensure every source in the POINTSOURCES table has an ROI_ID if
-    # it is in a source region.
-    assignNullRois()
-
     pgwaveSrcList = open('pgwaveFileList').readlines()[0].strip().strip('+')
 
     xmlModel = getXmlModel()
@@ -133,17 +96,6 @@ if __name__ == '__main__':
     output.close()
 
     srcModel = SourceModel(outfile)
-
-    pg_srcs = []
-
-## See how it goes without applying thresholding, so leave commented out.
-#    blim = 2.  # use higher threshold within blim degrees of Galactic plane
-#    threshold = 5
-#    for line in open(pgwaveSrcList):
-#        if line.find("#") == -1:
-#            pg_src = PgwaveSource(line)
-#            if abs(pg_src.b) > blim or pg_src.signif > threshold:
-#                pg_srcs.append(pg_src)
 
     pg_srcs = [PgwaveSource(line) for line in open(pgwaveSrcList) 
                if line.find("#")==-1]

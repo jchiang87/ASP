@@ -59,7 +59,7 @@ def eq2gal(r,d):
 		#print l0,b0
 	return num.array(l),num.array(b)
 
-def pgw2fits(pgwfile,flag):
+def pgw2fits(pgwfile,no,flag):
 	pgwfits=pgwfile.replace('.list','_pgw_out.fits')
 	filevt=pgwfile.replace('_map.list','.fits')
 	name_pgw,ra_pgw,dec_pgw,posErr,signi_pgw=readpgw(pgwfile)
@@ -72,14 +72,14 @@ def pgw2fits(pgwfile,flag):
 	print '---Variability check----'
 	#filevt=os.path.join(os.environ['INPUTFT1DIR'],os.environ['INPUTFT1FILE'])
 	chi=0.
-	nbins=5
+	nbins=no[0] #5
 	radius=3.0
 	print "NAME            RA       DEC    SIGNIF  COUNTS  CHI2"
 	for i in range(0,len(ra_pgw)):
 		if flag==1:
 			chi,cou,sd=lc.createLC(filevt,name_pgw[i],ra_pgw[i],dec_pgw[i],radius,nbins)
 			count.append(cou)
-			if chi>10. and cou/float(nbins)>=5.:
+			if chi>no[1] and cou/float(nbins)>=5.:
 				chi2.append(chi)
 				fla.append(1)
 				print name_pgw[i],'\t',ra_pgw[i],'\t',dec_pgw[i],'\t',signi_pgw[i],'\t',cou,'\t',chi
@@ -127,4 +127,4 @@ def pgw2fits(pgwfile,flag):
 if __name__=="__main__":
 	#os.environ['HOME'] = os.environ['output_dir']
 	pgwfile=sys.argv[1]
-	pgw2fits(pgwfile,1)
+	pgw2fits(pgwfile,[5,10],1)

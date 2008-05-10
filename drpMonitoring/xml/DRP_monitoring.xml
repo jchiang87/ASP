@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="6.1" type="Data">
+<task name="DRP_monitoring" version="7.1" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5p2"</var>
@@ -21,7 +21,6 @@
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>
     <prerequisite name="pgwave_streamId" type="integer"/>
-    <prerequisite name="num_RoIs" type="integer"/>
     <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="DRPMONITORINGROOT" type="string"/>
   </prerequisites>
@@ -77,22 +76,34 @@
 
   <process name="sourceSelection">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceSelection.sh"
-         batchOptions=" -q medium " allocationGroup="glastdata" />
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="getIntervalData" status="SUCCESS"/>
+    </depends>
+  </process>
+
+  <process name="assignRois">
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/assignRois.sh"
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
+    <depends>
+      <after process="sourceSelection" status="SUCCESS"/>
     </depends>
   </process>
 
   <process name="launchRoiAnalyses">
     <script language="python">
       <![CDATA[
-        for i in range(num_RoIs):
-            pipeline.createSubstream("roiAnalysis", i+1)
+        assignRois = pipeline.getProcessInstance("assignRois")
+        roi_ids = ("%s" % assignRois.getVariable("ROI_IDS")).split()
+        roi_ids = [int(x) for x in roi_ids]
+        print "number of ROIs", len(roi_ids)
+        for id in roi_ids:
+            pipeline.createSubstream("roiAnalysis", id)
       ]]>
     </script>
     <depends>
       <after process="diffuseResponses" status="SUCCESS"/>
-      <after process="sourceSelection" status="SUCCESS"/>
+      <after process="assignRois" status="SUCCESS"/>
     </depends>
     <createsSubtasks>
       <subtask>roiAnalysis</subtask>

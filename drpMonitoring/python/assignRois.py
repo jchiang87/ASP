@@ -65,8 +65,10 @@ def assignNullRois(roiIds):
 
 if __name__ == '__main__':
     import os
+    from read_data import read_data
     from readXml import SourceModel
     from crearoi import crearoi
+    import pipeline
 
     os.chdir(os.environ['OUTPUTDIR'])
 
@@ -100,5 +102,10 @@ if __name__ == '__main__':
 
     os.system('cat predefined_rois.txt new_rois.txt > rois.txt')
 
+    os.chmod('rois.txt', 0666)
 
+    rois = read_data('rois.txt')
+    nrois = len(rois[0])
+    roi_ids = ("%i "*nrois) % tuple(rois[0])
+    pipeline.setVariable('ROI_IDS', roi_ids)
 

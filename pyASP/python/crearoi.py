@@ -181,11 +181,12 @@ def getinside(r,d,pg_ra,pg_dec,dist,rad):
 	    reg.append(roi)
 	return kk,reg
 			
-def printRoi(outfile,ra_fin,dec_fin,rad_fin,source):
+def printRoi(outfile,ra_fin,dec_fin,rad_fin,source, roi_id_offset=0):
 	f=open(outfile,"w")
 	print >>f,"# ID   RA    Dec   ROI_radius  SR_radius"
 	for j in range(0,len(ra_fin)):
-		print >>f,(("%3d   %6.2f    %6.2f  %6.2f  %6.2f #")% (j+1,ra_fin[j],dec_fin[j],rad_fin[j],rad_fin[j]+10.)),source[j]
+                id = j + 1 + roi_id_offset
+		print >>f,(("%3d   %6.2f    %6.2f  %6.2f  %6.2f #")% (id,ra_fin[j],dec_fin[j],rad_fin[j],rad_fin[j]+10.)),source[j]
 		
 #def crearoi(infile,dist):
 #	#pg_nome,pg_ra,pg_dec,sn,counts=readpgw_roi(infile)
@@ -193,7 +194,7 @@ def printRoi(outfile,ra_fin,dec_fin,rad_fin,source):
 #	pg_nome=data[0]
 #	pg_ra=data[3]
 #	pg_dec=data[4]
-def crearoi(pg_nome, pg_ra, pg_dec, dist, outfile):
+def crearoi(pg_nome, pg_ra, pg_dec, dist, outfile, roi_id_offset=0):
 	tot=len(pg_ra)
 	#maxroi=len(pg_ra)/5
 	idd=range(1,tot+1)
@@ -238,7 +239,7 @@ def crearoi(pg_nome, pg_ra, pg_dec, dist, outfile):
 			rad_fin.append(rad[j])
 			sour_fin.append(source[j])
 	
-	printRoi(outfile,ra_fin,dec_fin,rad_fin,sour_fin)
+	printRoi(outfile,ra_fin,dec_fin,rad_fin,sour_fin, roi_id_offset)
 
 if __name__ == '__main__':
 	if len(sys.argv)<3:

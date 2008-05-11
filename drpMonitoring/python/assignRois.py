@@ -7,6 +7,7 @@ Generate ROIs for other sources found by pgwave.
 #
 # $Header$
 #
+from read_data import read_data
 import databaseAccess as dbAccess
 from celgal import dist
 
@@ -19,12 +20,17 @@ class Roi(object):
         return "%7.3f  %7.3f  %i  %i" % (self.ra, self.dec, self.rad, self.sr)
 
 class RoiIds(dict):
-    def __init__(self):
-        sql = "select ROI_ID, RA, DEC, RADIUS, SR_RADIUS from ROIS"
-        def readRoiTable(cursor):
-            for item in cursor:
-                self[item[0]] = Roi(*item[1:])
-        dbAccess.apply(sql, readRoiTable)
+    def __init__(self, infile=None):
+        if infile is None:
+            sql = "select ROI_ID, RA, DEC, RADIUS, SR_RADIUS from ROIS"
+            def readRoiTable(cursor):
+                for item in cursor:
+                    self[item[0]] = Roi(*item[1:])
+            dbAccess.apply(sql, readRoiTable)
+        else:
+            data = read_data(infile)
+            for line in zip(*data):
+                self[line[0]] = Roi(*line[1:])
     def __call__(self, ra, dec, offset=3):
         """Return the ROI with center closest to the given sky coordinate.
         The minimum distance from the ROI center for identifying a

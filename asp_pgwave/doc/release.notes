@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r4   12-May-08   JC   Perfrom position refinement using pointfit;
+                            run pgwave2D with GtApp
     v1r3   04-May-08   JC   use ST v9r5p2; check if ptsrc_name has already
                             been inserted in table; rename package to asp_pgwave
     v1r2   22-Apr-08   JC   propagate stream ids to drpMonitoring tasks;

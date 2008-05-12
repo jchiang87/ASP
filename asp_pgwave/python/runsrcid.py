@@ -198,7 +198,7 @@ def checkPointSource(pgwdata,dateinfo):
 			index[i]=(db._PointSourcesFields['SOURCE_TYPE'][1])[k]+'_'+(db._PointSourcesFields['PTSRC_NAME'][1])[k]+','+index[i]
 			print "trovata:",pgwdata.field('NAME')[i],(db._PointSourcesFields['PTSRC_NAME'][1])[k],dis
 			source_name.append((db._PointSourcesFields['PTSRC_NAME'][1])[k])
-			imydb.insertFlareEvent((db._PointSourcesFields['PTSRC_NAME'][1])[k],dateinfo['tstart'],dateinfo['tstop'],pgwdata.field('Flux(E>100)')[i],pgwdata.field('errFlux')[i],pgwdata.field('CHI_2_VAR')[i],int(pgwdata.field('FLARING_FLAG')[i]),1,procid)
+			mydb.insertFlareEvent((db._PointSourcesFields['PTSRC_NAME'][1])[k],dateinfo['tstart'],dateinfo['tstop'],pgwdata.field('Flux(E>100)')[i],pgwdata.field('errFlux')[i],pgwdata.field('CHI_2_VAR')[i],int(pgwdata.field('FLARING_FLAG')[i]),1,procid)
 			flag=1
 			break
 		  k=k+1

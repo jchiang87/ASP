@@ -98,6 +98,8 @@ def fitEnergyBand(emin, emax, srcModel, roi):
             print "computing upper limit for ", srcname
             flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
                                        renorm=True)
+            print "Upper limit: ", flux
+            print
             isUL = True
         try:
             results[srcname] = SourceData(srcname, flux, fluxerr, 

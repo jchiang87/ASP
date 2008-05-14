@@ -63,13 +63,13 @@ def afterglow_pars(infile):
     pars = Parfile(infile)
     return pars['name'], pars['ra'], pars['dec'], pars['tstart'], pars['tstop']
 
-def updateAnalysisVersion(name):
-    sql = "select * from GRB where GCN_NAME = '%s'" % name
+def updateProcessingLevel(name):
+    sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % name
     def cursorFunc(cursor):
         for item in cursor:
             return item[0]
     grb_id = dbAccess.apply(sql, cursorFunc)
-    dbAccess.updateGrb(grb_id, ANALYSIS_VERSION=1)
+    dbAccess.updateGrb(grb_id, ASP_PROCESSING_LEVEL=2)
 
 if __name__ == '__main__':
     import os, sys, shutil
@@ -84,7 +84,7 @@ if __name__ == '__main__':
 
     os.chdir(outputDir)
     grbName, ra, dec, tstart, tstop = afterglow_pars(os.environ['GRBPARS'])
-    updateAnalysisVersion(grbName)
+    updateProcessingLevel(grbName)
 
     config = grbAspConfig.find(tstart)
     print config

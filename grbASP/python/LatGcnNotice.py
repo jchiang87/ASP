@@ -161,8 +161,7 @@ class LatGcnNotice(object):
         # need to implement error radius estimate
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % self.name,
                            INITIAL_LAT_RA=self.ra, INITIAL_LAT_DEC=self.dec,
-                           INITIAL_ERROR_RADIUS=1, ANALYSIS_VERSION=0,
-                           L1_DATA_AVAILABLE=0)
+                           INITIAL_ERROR_RADIUS=1, ASP_PROCESSING_LEVEL=0)
         dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
                                  dbAccess.current_date(), self.met, 
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate))
@@ -210,7 +209,7 @@ if __name__ == '__main__':
     os.chdir(output_dir)
     grb_id = int(os.environ['GRB_ID'])
 
-    sql = "select TS_VALUE from GRB where GRB_ID=%i" % grb_id
+    sql = "select TS_VALUE from GRB where GRB_ID=%i and GCAT_FLAG=0" % grb_id
     def getTs(cursor):
         for entry in cursor:
             return entry[0]

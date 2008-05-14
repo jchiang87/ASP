@@ -113,7 +113,12 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
         Ts = like.Ts(name)
         ul = UpperLimits(like)
         upper_limit = ul[name].compute(renorm=True)
-        dbAccess.updateGrb(grb_id, TS_VALUE=Ts, UPPER_LIMIT=upper_limit)
+        dbAccess.updateGrb(grb_id, TS_VALUE=Ts, FLUX=upper_limit, 
+                           IS_UPPER_LIMIT=1)
+    else:
+        # Should set the default value to 0 in db table definition to
+        # avoid this.
+        dbAccess.updateGrb(grb_id, IS_UPPER_LIMIT=0)
 
     f30 = pl_energy_flux(like, 30, 3e5, name)
     fluence_30, f30_error = f30[0]*(tmax - tmin), f30[1]*(tmax - tmin)

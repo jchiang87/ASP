@@ -18,7 +18,7 @@ def convert_clob(clob):
 
 def haveGrb(grb_id):
     "Return true if desired GRB_ID is in the GRB table"
-    sql = "select GRB_ID from GRB where GRB_ID = %i" % grb_id
+    sql = "select GRB_ID from GRB where GRB_ID = %i and GCAT_FLAG=0" % grb_id
     def cursorFunc(cursor):
         for item in cursor:
             return True
@@ -26,14 +26,14 @@ def haveGrb(grb_id):
     return apply(sql, cursorFunc)
 
 def grbName(grb_id):
-    sql = "select GCN_NAME from GRB where GRB_ID=%i" % grb_id
+    sql = "select GCN_NAME from GRB where GRB_ID=%i and GCAT_FLAG=0" % grb_id
     def getName(cursor):
         for item in cursor:
             return item[0]
     return apply(sql, getName)
 
 def getGrbIds():
-    sql = "select GRB_ID from GRB"
+    sql = "select GRB_ID from GRB where GCAT_FLAG=0"
     def cursorFunc(cursor):
         grb_ids = []
         for item in cursor:
@@ -56,7 +56,7 @@ def deleteNotice(grb_id):
     apply(sql)
 
 def deleteAfterglow(grb_id):
-    sql = "delete from GRBAFTERGLOW where GRB_ID = %i" % grb_id
+    sql = "delete from GRB where GRB_ID = %i and GCAT_FLAG=1" % grb_id
     apply(sql)
 
 def deleteGrb(grb_id):
@@ -66,11 +66,11 @@ def deleteGrb(grb_id):
     apply(sql)
 
 def insertGrb(grb_id):
-    sql = "insert into GRB (GRB_ID) values (%i)" % grb_id
+    sql = "insert into GRB (GRB_ID, GCAT_FLAG) values (%i, 0)" % grb_id
     apply(sql)
 
 def insertAfterglow(grb_id):
-    sql = "insert into GRBAFTERGLOW (GRB_ID) values (%i)" % grb_id
+    sql = "insert into GRB (GRB_ID, GCAT_FLAG) values (%i, 1)" % grb_id
     apply(sql)
 
 def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
@@ -86,17 +86,17 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
         for entry in cursor:
             return entry[0]
     gcnnotice_id = apply(sql, getId)
-    sql = (("insert into GCNNOTICES (GRB_ID, GCN_NOTICE, NOTICEDATE, "
+    sql = (("insert into GCNNOTICES (GRB_ID, GCAT_FLAG, GCN_NOTICE, NOTICEDATE, "
             + "NOTICEMET, RA, DEC, ERROR, ISUPDATE, GCNNOTICE_ID) values "
             + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
             + "%.5f, %.5f, %.5f, %i, %i)")
-           % (grb_id, base64.encodestring(gcn_notice.tostring()), 
+           % (grb_id, 0, base64.encodestring(gcn_notice.tostring()), 
               met, ra, dec, error, isUpdate, gcnnotice_id))
     apply(sql)
 
 def updateGrb(grb_id, **kwds):
     assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
-    sql = ("update GRB set %s where GRB_ID = %i" 
+    sql = ("update GRB set %s where GRB_ID = %i and GCAT_FLAG=0" 
            % (','.join(assignments), grb_id))
     print "updateGrb sql = "
     print sql
@@ -104,7 +104,7 @@ def updateGrb(grb_id, **kwds):
 
 def updateAfterglow(grb_id, **kwds):
     assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
-    sql = ("update GRBAFTERGLOW set %s where GRB_ID = %i" 
+    sql = ("update GRBAFTERGLOW set %s where GRB_ID = %i and GCAT_FLAG=1" 
            % (','.join(assignments), grb_id))
     apply(sql)
 

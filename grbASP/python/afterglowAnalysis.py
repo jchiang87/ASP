@@ -67,12 +67,6 @@ spectrumFile = grbName + '_afterglow_spec.fits'
 like.writeCountsSpectra(spectrumFile)
 like.state(open(grbName + '_afterglow_analysis.py', 'w'))
 
-#sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % grbName
-#def getId(cursor):
-#    for item in cursor:
-#        return item[0]
-#    
-#grb_id = int(dbAccess.apply(sql, getId))
 grb_id = int(os.path.basename(os.getcwd()))
 
 try:

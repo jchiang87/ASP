@@ -98,10 +98,11 @@ def refinePosition(gcn_notice, ft1Input, ft2Input, config,
 def likelyUL(grb_id):
     """For 'zero' duration bursts, we could not extract a LAT light curve, 
     this is a likely upper limit candidate"""
-    sql = "select LAT_DURATION from GRB where GRB_ID=%i" % grb_id
+    sql = ("select LAT_FIRST_TIME, LAT_LAST_TIME from GRB " +
+           "where GRB_ID=%i and GCAT_FLAG=0" % grb_id)
     def getDuration(cursor):
         for entry in cursor:
-            return entry[0]
+            return entry[1] - entry[0]
     duration = dbAccess.apply(sql, getDuration)
     return duration == 0
 
@@ -149,7 +150,7 @@ if __name__ == '__main__':
                        INITIAL_LAT_RA=gcnNotice.RA, 
                        INITIAL_LAT_DEC=gcnNotice.DEC,
                        INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR,
-                       L1_DATA_AVAILABLE=1,
+                       ASP_PROCESSING_LEVEL=1,
                        FT1_FILE="'%s'" % absFilePath(gcnNotice.Name + 
                                                      '_LAT_2.fits'))
 

@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     pipeline.setVariable('GRB_ID', '%i' % grb_id)
     
-    sql = "select GCN_NAME from GRB where GRB_ID=%i" % grb_id
+    sql = "select GCN_NAME from GRB where GRB_ID=%i and GCAT_FLAG=0" % grb_id
     def getInfo(cursor):
         for entry in cursor:
             return entry[0]

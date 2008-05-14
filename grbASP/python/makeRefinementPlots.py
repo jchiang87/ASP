@@ -285,7 +285,8 @@ if __name__ == '__main__':
     grb_id = int(os.environ['GRB_ID'])
 
     sql = ("select GCN_NAME, INITIAL_LAT_RA, INITIAL_LAT_DEC, " + 
-           "INITIAL_ERROR_RADIUS from GRB where GRB_ID=%i" % grb_id)
+           "INITIAL_ERROR_RADIUS from GRB where GRB_ID=%i and GCAT_FLAG=0" 
+           % grb_id)
     def getInfo(cursor):
         for entry in cursor:
             return entry[0], float(entry[1]), float(entry[2]), float(entry[3])

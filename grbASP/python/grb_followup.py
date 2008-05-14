@@ -23,7 +23,7 @@ grbasproot = os.path.join(os.environ['ASP_PATH'], 'ASP', 'grbASP',
                           os.path.split(os.environ['GRBASPROOT'])[-1])
 
 def promptGrbs():
-    sql = "select GRB_ID from GRB where L1_DATA_AVAILABLE = 0"
+    sql = "select GRB_ID from GRB where GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=0"
     def cursorFunc(cursor):
         notices = {}
         for item in cursor:
@@ -34,7 +34,7 @@ def promptGrbs():
 
 def afterglows():
     sql = ("select GRB_ID, LAT_ALERT_TIME, LAT_DURATION from GRB where " + 
-           "L1_DATA_AVAILABLE = 1 AND ANALYSIS_VERSION = 0")
+           "GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=1")
     def cursorFunc(cursor):
         notices = {}
         for item in cursor:

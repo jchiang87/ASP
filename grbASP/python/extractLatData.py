@@ -46,17 +46,18 @@ def extractLatData(gcnNotice, ft1File, config):
         grb_id = int(os.environ['GRB_ID'])
         if len(x) == 2:
             # No change points found.  Flag this burst for upper limit
-            # calculation by setting LAT_DURATION = 0 and use nominal
-            # time window starting at trigger time.
-            dbAccess.updateGrb(grb_id, LAT_DURATION=0)
+            # calculation by setting LAT_FIRST_TIME=LAT_LAST_TIME = 0
+            # and use nominal time window starting at trigger time.
             tmin = gcnNotice.start_time
+            dbAccess.updateGrb(grb_id, LAT_FIRST_TIME=tmin, 
+                               LAT_LAST_TIME=tmin)
             try:
                 tmax = tmin + config.NOMINAL_WINDOW
             except AttributeError:
                 tmax = tmin + 60
         else:
             tmin, tmax = x[1], x[-2]
-            dbAccess.updateGrb(grb_id, LAT_DURATION=tmax-tmin)
+            dbAccess.updateGrb(grb_id, LAT_FIRST_TIME=tmin, LAT_LAST_TIME=tmax)
         gtselect['infile'] = gtselect['outfile']
         gtselect['outfile'] = gcnNotice.Name + '_LAT_2.fits'
         gtselect['tmin'] = tmin

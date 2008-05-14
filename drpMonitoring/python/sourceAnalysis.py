@@ -18,6 +18,9 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
 import databaseAccess as dbAccess
 from fitEnergyBand import fitEnergyBand, currentRoi
+from assignRois import RoiIds
+
+roiIds = RoiIds(os.path.join(os.environ['OUTPUTDIR'], 'rois.txt'))
 
 #
 # Move to working directory for the ROI of interest
@@ -43,7 +46,7 @@ gtdiffrsp.run()
 #
 srcModel = os.path.join(os.getcwd(), roi.name + '_model.xml')
 shutil.copy(srcModel, srcModel + '_input')
-results = fitEnergyBand(100, 300000, srcModel, roi)
+results = fitEnergyBand(100, 300000, srcModel, roi, roiIds)
 
 #
 # Query the db tables and write the energy bands that the pipeline

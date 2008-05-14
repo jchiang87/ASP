@@ -16,13 +16,14 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import pars, currentRoi
 import pyfits
 from SourceData import SourceData, SourceTypeError
+from assignRois import RoiIds
 
 from UpperLimits import UpperLimits
 import drpDbAccess
 
 gtselect = GtApp('gtselect')
 
-def fitEnergyBand(emin, emax, srcModel, roi):
+def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
     gtselect['infile'] = roi.name + '_events.fits'
     gtselect['outfile'] = 'events_%i_%i.fits' % (emin, emax)
     gtselect['rad'] = 180
@@ -112,7 +113,7 @@ def fitEnergyBand(emin, emax, srcModel, roi):
     # select only those sources to write for which this is the
     # principal ROI as given by its POINTSOURCES table ROI_ID entry.
     #
-    monitored_list = drpDbAccess.findPointSources(0, 0, 180).select(roi.id)
+    monitored_list = drpDbAccess.findPointSources(0, 0, 180, roiIds=roiIds).select(roi.id)
 
     print "Writing db table entries for "
     for src in monitored_list:
@@ -125,6 +126,8 @@ def fitEnergyBand(emin, emax, srcModel, roi):
     return results
 
 if __name__ == '__main__':
+    roiIds = RoiIds(os.path.join(os.environ['OUTPUTDIR'], 'rois.txt'))
+
     roi = currentRoi()
     os.chdir(roi.name)
 
@@ -135,6 +138,6 @@ if __name__ == '__main__':
     emin = float(os.environ['emin'])
     emax = float(os.environ['emax'])
 
-    fitEnergyBand(emin, emax, srcModel, roi)
+    fitEnergyBand(emin, emax, srcModel, roi, roiIds)
             
     os.system('chmod o+w *')

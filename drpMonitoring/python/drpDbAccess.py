@@ -75,14 +75,17 @@ def defaultPtSrcXml(name, ra, dec):
     return xml_template % (name, ra, dec)
 
 class PointSource(object):
-    def __init__(self, entry):
+    def __init__(self, entry, roiIds=None):
         self.name = entry[0]
-        self.roi_id = entry[2]
-        self.ra = entry[6]
-        self.dec = entry[7]
-        self.nhat = entry[10:13]
+        self.ra = entry[2]
+        self.dec = entry[3]
+        self.nhat = entry[4:7]
+        if roiIds is not None:
+            self.roi_id = roiIds(self.ra, self.dec)
+        else:
+            self.roi_id = entry[1]
         try:
-            self.xml = entry[13].read()
+            self.xml = entry[7].read()
         except AttributeError:
             # This entry has no xml definition, so use default
             self.xml = defaultPtSrcXml(self.name, self.ra, self.dec)
@@ -103,18 +106,17 @@ class PointSourceDict(dict):
                 my_sources.append(source)
         return my_sources
 
-def findPointSources(ra, dec, radius, srctype=None):
+def findPointSources(ra, dec, radius, srctype=None, roiIds=None):
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
-    sql = "select * from POINTSOURCES"
+    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, XML_MODEL " +
+           "from POINTSOURCES")
     if srctype:
         sql += " where SOURCE_TYPE = '%s'" % srctype
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
-#            if entry[4] == 'Other_FSP':  # skip Gino's test sources
-#                continue
-            src = PointSource(entry)
+            src = PointSource(entry, roiIds=roiIds)
             if src.cos_sep(nhat) > mincos:
                 srcs[entry[0]] = src
         return srcs

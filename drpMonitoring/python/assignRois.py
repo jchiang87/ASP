@@ -31,7 +31,7 @@ class RoiIds(dict):
             data = read_data(infile)
             for line in zip(*data):
                 self[line[0]] = Roi(*line[1:])
-    def __call__(self, ra, dec, offset=3):
+    def __call__(self, ra, dec, offset=0):
         """Return the ROI with center closest to the given sky coordinate.
         The minimum distance from the ROI center for identifying a
         valid ROI for a source at this location is roi_rad - offset"""
@@ -114,4 +114,3 @@ if __name__ == '__main__':
     nrois = len(rois[0])
     roi_ids = ("%i "*nrois) % tuple(rois[0])
     pipeline.setVariable('ROI_IDS', roi_ids)
-

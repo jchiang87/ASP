@@ -245,5 +245,6 @@ if __name__ == '__main__':
     
     outfile = pars['name'] + '_Notice.txt'
     notice.write(outfile)
-#    dbAccess.updateGrb(grb_id, 
-#                       GCN_NOTICE_FILE="'%s'"%os.path.join(output_dir,outfile))
+
+    outfile_location = "'%s'" % os.path.join(output_dir, outfile)
+    dbAccess.updateGrb(grb_id, ASP_GCN_NOTICE_DRAFT=outfile_location)

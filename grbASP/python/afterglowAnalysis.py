@@ -11,6 +11,7 @@ from parfile_parser import Parfile
 from UnbinnedAnalysis import *
 from GrbAspConfig import grbAspConfig
 import dbAccess
+import pyfits
 
 def absFilePath(filename):
     abspath = os.path.abspath(filename)
@@ -85,10 +86,15 @@ dec = like[grbName].funcs['Position'].params['DEC'].value()
 
 xmlfile = absFilePath(like.srcModel)
 
+ft1 = pyfits.open(pars['ft1File'])
+tstart = ft1[0].header['TSTART']
+tstop = ft1[0].header['TSTOP']
+
 dbAccess.updateAfterglow(grb_id, FLUX=flux, FLUX_ERROR=fluxerr,
                          PHOTON_INDEX=index, PHOTON_INDEX_ERROR=indexerr,
                          LAT_RA=ra, LAT_DEC=dec, XML_FILE="'%s'" % xmlfile,
-                         SPECTRUMFILE="'%s'" % spectrumFile)
+                         SPECTRUMFILE="'%s'" % spectrumFile, 
+                         LAT_FIRST_TIME=tstart, LAT_LAST_TIME=tstop)
 
 #
 # import GtApp here since it imports py_facilities which does not

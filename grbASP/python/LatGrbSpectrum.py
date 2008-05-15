@@ -19,6 +19,7 @@ from refinePosition import absFilePath, likelyUL
 from UnbinnedAnalysis import *
 import dbAccess
 from parfile_parser import Parfile
+from FitsNTuple import FitsNTuple
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
@@ -43,6 +44,10 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
     fractionalError = (spec.getParam('Integral').error()
                        /spec.getParam('Integral').getValue())
     return flux, flux*fractionalError
+
+def pl_fluence(like, emin, emax, srcname, tmin, tmax):
+    flux = pl_energy_flux(like, emin, emax, srcname)
+    return flux[0]*(tmax - tmin), flux[1]*(tmax - tmin)
 
 def createExpMap(ft1File, ft2File, name, config):
     gtexpmap.run(evfile=ft1File, scfile=ft2File, expcube="none",
@@ -73,6 +78,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
     src = funcFactory.PtSrc()
     src.spectrum.Integral.min = 0
     src.spectrum.Integral.max = 1e7
+    src.spectrum.LowerLimit.value = 100.
     src.spectrum.setAttributes()
     src.spatialModel.RA.value = ra
     src.spatialModel.DEC.value = dec
@@ -120,19 +126,34 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
         # avoid this.
         dbAccess.updateGrb(grb_id, IS_UPPER_LIMIT=0)
 
-    f30 = pl_energy_flux(like, 30, 3e5, name)
-    fluence_30, f30_error = f30[0]*(tmax - tmin), f30[1]*(tmax - tmin)
-    f100 = pl_energy_flux(like, 100, 3e5, name)
-    fluence_100, f100_error = f100[0]*(tmax - tmin), f100[1]*(tmax - tmin)
 
+    f30 = pl_fluence(like, 30, 3e5, name, tmin, tmax)
+    f100 = pl_fluence(like, 1e2, 3e5, name, tmin, tmax)
+    f1GeV = pl_fluence(like, 1e3, 3e5, name, tmin, tmax)
+    f10GeV = pl_fluence(like, 1e4, 3e5, name, tmin, tmax)
+
+    flux_par = like[name].funcs['Spectrum'].getParam('Integral')
     index_par = like[name].funcs['Spectrum'].getParam('Index')
+
     dbAccess.updateGrb(grb_id, SPECTRUMFILE="'%s'" % absFilePath(spectrumFile),
                        XML_FILE="'%s'" % absFilePath(srcModelFile),
                        FT1_FILE="'%s'" % absFilePath(name + '_LAT_3.fits'),
                        PHOTON_INDEX=index_par.getTrueValue(),
                        PHOTON_INDEX_ERROR=index_par.error(),
-                       FLUENCE_30=fluence_30, FLUENCE_30_ERROR=f30_error,
-                       FLUENCE_100=fluence_100, FLUENCE_100_ERROR=f100_error)
+                       FLUENCE_30=f30[0], FLUENCE_30_ERROR=f30[1],
+                       FLUENCE_100=f100[0], FLUENCE_100_ERROR=f100[1],
+                       FLUENCE_1GEV=f1GeV[0], FLUENCE_1GEV_ERROR=f1GeV[1],
+                       FLUENCE_10GEV=f10GeV[0], FLUENCE_10GEV_ERROR=f10GeV[1],
+                       FLUX=flux_par.getTrueValue(), 
+                       FLUX_ERROR=flux_par.error()*flux_par.getScale())
+
+    events = FitsNTuple(gtselect['outfile'])
+    soft_counts = float(len(num.where(events.ENERGY <= 1e3)[0]))
+    hard_counts = len(events.ENERGY) - soft_counts
+    if soft_counts > 0:
+        hardness_ratio = hard_counts/soft_counts
+        dbAccess.updateGrb(grb_id, HARDNESS_RATIO=hardness_ratio)
+
     return like
 
 def grbCoords(gcnNotice):

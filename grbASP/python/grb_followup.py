@@ -33,17 +33,17 @@ def promptGrbs():
     return apply(sql, cursorFunc)
 
 def afterglows():
-    sql = ("select GRB_ID, LAT_ALERT_TIME, LAT_DURATION from GRB where " + 
-           "GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=1")
+    sql = ("select GRB_ID, LAT_LAST_TIME " +
+           "from GRB where GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=1")
     def cursorFunc(cursor):
         notices = {}
         for item in cursor:
             grb_id = item[0]
             notices[grb_id] = GcnNotice(grb_id)
             try:
-                notices[grb_id].ag_time = item[1] + item[2]
+                notices[grb_id].ag_time = item[1]
             except TypeError:
-                # kluge. LAT_ALERT_TIME is null, so infer refinement
+                # kluge. LAT_LAST_TIME is null, so infer refinement
                 # task has not successfully run for this burst.
                 del notices[grb_id]
         return notices

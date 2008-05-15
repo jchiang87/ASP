@@ -88,9 +88,9 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
     gcnnotice_id = apply(sql, getId)
     sql = (("insert into GCNNOTICES (GRB_ID, GCAT_FLAG, GCN_NOTICE, NOTICEDATE, "
             + "NOTICEMET, RA, DEC, ERROR, ISUPDATE, GCNNOTICE_ID) values "
-            + "(%i, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
+            + "(%i, 0, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
             + "%.5f, %.5f, %.5f, %i, %i)")
-           % (grb_id, 0, base64.encodestring(gcn_notice.tostring()), 
+           % (grb_id, base64.encodestring(gcn_notice.tostring()), 
               met, ra, dec, error, isUpdate, gcnnotice_id))
     apply(sql)
 

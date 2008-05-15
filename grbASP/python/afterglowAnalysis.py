@@ -87,7 +87,7 @@ xmlfile = absFilePath(like.srcModel)
 
 dbAccess.updateAfterglow(grb_id, FLUX=flux, FLUX_ERROR=fluxerr,
                          PHOTON_INDEX=index, PHOTON_INDEX_ERROR=indexerr,
-                         RA=ra, DEC=dec, XML_FILE="'%s'" % xmlfile,
+                         LAT_RA=ra, LAT_DEC=dec, XML_FILE="'%s'" % xmlfile,
                          SPECTRUMFILE="'%s'" % spectrumFile)
 
 #

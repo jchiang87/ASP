@@ -104,7 +104,7 @@ def updateGrb(grb_id, **kwds):
 
 def updateAfterglow(grb_id, **kwds):
     assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]
-    sql = ("update GRBAFTERGLOW set %s where GRB_ID = %i and GCAT_FLAG=1" 
+    sql = ("update GRB set %s where GRB_ID = %i and GCAT_FLAG=1" 
            % (','.join(assignments), grb_id))
     apply(sql)
 

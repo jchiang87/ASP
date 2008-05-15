@@ -73,6 +73,7 @@ def launch_afterglow_streams(output_dir):
     for grb_id in notices:
         ag_time = notices[grb_id].ag_time
         grb_name = notices[grb_id].Name
+        print "launching afterglow for ", grb_name
         config = grbAspConfig.find(ag_time)
         dt = config.AGTIMESCALE
         args = {'logicalPath' : os.environ['logicalPath'],

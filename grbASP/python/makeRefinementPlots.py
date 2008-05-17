@@ -20,6 +20,7 @@ import pyfits
 from FitsNTuple import FitsNTuple
 import pyASP
 from SkyCone import makeCone
+from read_data import read_data
 
 def getAxisRange(header):
     naxis1 = header['naxis1']
@@ -125,7 +126,7 @@ def countsMap(grb_id, cmapfile, pos, init_pos, outfile=None):
     image = num.array(image)
     pylab.imshow(image, interpolation='nearest', 
                  cmap=pylab.cm.spectral_r, extent=axisRange)
-    pylab.colorbar()
+    pylab.colorbar(ticks=range(min(image.flat), max(image.flat)+2))
 
     coordSys = CoordSys(cmapfile)
 
@@ -213,15 +214,21 @@ def createHist(xvals, xmin, xmax, nx=50):
                 bins[-1] += 1
     return xx, bins
 
-def lightCurve(grb_id, ft1file, outfile=None):
+def lightCurve(grb_id, tstart, ft1file, outfile=None, bb_lc_file=None):
     ft1 = FitsNTuple(ft1file)
-    tvals = ft1.TIME - grb_id
+    tvals = ft1.TIME - int(tstart)
     xx, yy = createHist(tvals, min(tvals), max(tvals))
     pylab.plot(xx, yy, 'k-', ls='steps')
-    pylab.axis([xx[0], xx[-1], 0, max(yy)*1.1])
-    pylab.xlabel('MET - %i (s)' % grb_id)
+    axisRange = [xx[0], xx[-1], 0, max(yy)*1.1]
+    pylab.axis(axisRange)
+    pylab.xlabel('MET - %i (s)' % int(tstart))
     pylab.ylabel('entries / bin')
     pylab.title('Light Curve')
+    if bb_lc_file is not None:
+        x, y = read_data(bb_lc_file)
+        x -= int(tstart)
+        pylab.plot(x, y, 'k--')
+        pylab.axis(axisRange)
     if outfile is None:
         outfile = 'lightCurve_%i.png' % grb_id
     pylab.savefig(outfile)
@@ -294,13 +301,35 @@ if __name__ == '__main__':
     
     pars = Parfile(grbName + '_pars.txt')
 
-    ft1file = grbName + '_LAT_2.fits'
-    ft1 = FitsNTuple(ft1file)
-
+    #
+    # Re-extract the FT1 data using the best-fit position and Bayesian
+    # Block start and stop times.
+    #
     ra, dec = pars['ra'], pars['dec']
     error = pars['loc_err']
-
     rad = 10
+    tstart = pars['tstart']
+    tstop = pars['tstop']
+    duration = tstop - tstart
+
+    if duration < 200:
+        tmin = tstart - 10
+        tmax = tstop + 10
+    else:
+        tmin = tstart
+        tmax = tstop
+
+    ft1file = grbName + '_for_plots.fits'
+    gtselect = GtApp('gtselect')
+    gtselect.run(infile='FT1_merged.fits', outfile=ft1file,
+                 ra=ra, dec=dec, rad=rad*1.5, tmin=tmin, tmax=tmax,
+                 emin=30, emax=3e5, zmax=100)
+    lightCurve(grb_id, tstart, ft1file, bb_lc_file=grbName + '_BB_lc.dat')
+
+    #
+    # Use the FT1 file extracted for the time interval and best fit position
+    #
+    ft1file = grbName + '_LAT_3.fits'
     binsz = 0.5
     nxpix = int(2*rad/binsz)
     nypix = int(2*rad/binsz)
@@ -313,7 +342,6 @@ if __name__ == '__main__':
               coordsys='CEL', xref=ra, yref=dec, proj='STG')
 
     countsMap(grb_id, cmapfile, (ra, dec, error), (init_ra, init_dec, init_err))
-    lightCurve(grb_id, ft1file)
     countsSpectra(grb_id, grbName + '_grb_spec.fits')
     if not likelyUL(grb_id):
         tsMap(grb_id, grbName + '_tsmap.fits', ra, dec)

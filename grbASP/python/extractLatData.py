@@ -42,6 +42,11 @@ def extractLatData(gcnNotice, ft1File, config):
     lc = bb.lightCurve()
     x, y = lc.dataPoints()
 
+    output = open(gcnNotice.Name + '_BB_lc.dat', 'w')
+    for xx, yy in zip(x, y):
+        output.write("%.4f  %.4f\n" % (xx, yy))
+    output.close()
+
     try:
         grb_id = int(os.environ['GRB_ID'])
         if len(x) == 2:

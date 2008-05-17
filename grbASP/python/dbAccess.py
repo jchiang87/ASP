@@ -10,7 +10,7 @@ import datetime
 import time
 import array
 import base64
-from databaseAccess import apply, cx_Oracle
+from databaseAccess import apply, cx_Oracle, asp_default
 
 def convert_clob(clob):
     foo = array.array('l', base64.decodestring(clob.read()))
@@ -86,14 +86,28 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
         for entry in cursor:
             return entry[0]
     gcnnotice_id = apply(sql, getId)
-    sql = (("insert into GCNNOTICES (GRB_ID, GCAT_FLAG, GCN_NOTICE, "
-            + "NOTICETYPE, NOTICEDATE, "
-            + "NOTICEMET, RA, DEC, ERROR, ISUPDATE, GCNNOTICE_ID) values "
-            + "(%i, 0, '%s', '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
-            + "%.5f, %.5f, %.5f, %i, %i)")
-           % (grb_id, base64.encodestring(gcn_notice.tostring()), 
-              notice_type, met, ra, dec, error, isUpdate, gcnnotice_id))
-    apply(sql)
+    sql = ("insert into GCNNOTICES values(:gcnnotice_id, :grb_id, " + 
+           ":gcat_flag, :gcn_notice, :noticetype, :noticedate, :noticemet, " + 
+           ":ra, :dec, :error, :isupdate, :adv_comment, :adv_name)")
+    args = {"gcnnotice_id" : gcnnotice_id,
+            "grb_id" : grb_id,
+            "gcat_flag" : 0,
+            "gcn_notice" : base64.encodestring(gcn_notice.tostring()),
+            "noticetype" : notice_type,
+            "noticedate" : notice_date,
+            "noticemet" : met,
+            "ra" : ra,
+            "dec" : dec,
+            "error" : error, 
+            "isupdate" : isUpdate,
+            "adv_comment" : None,
+            "adv_name" : None}
+    my_connection = cx_Oracle.connect(*asp_default)
+    cursor = my_connection.cursor()
+    cursor.execute(sql, args)
+    cursor.close()
+    my_connection.commit()
+    my_connection.close()
 
 def updateGrb(grb_id, **kwds):
     assignments = ["%s=%s" % (key, kwds[key]) for key in kwds]

@@ -74,7 +74,7 @@ def insertAfterglow(grb_id):
     apply(sql)
 
 def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
-                    isUpdate=0):
+                    isUpdate=0, notice_type="None"):
     notices = readGcnNotices(grb_id)
     for notice in notices:
         if notice == gcn_notice:
@@ -86,12 +86,13 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
         for entry in cursor:
             return entry[0]
     gcnnotice_id = apply(sql, getId)
-    sql = (("insert into GCNNOTICES (GRB_ID, GCAT_FLAG, GCN_NOTICE, NOTICEDATE, "
+    sql = (("insert into GCNNOTICES (GRB_ID, GCAT_FLAG, GCN_NOTICE, "
+            + "NOTICETYPE, NOTICEDATE, "
             + "NOTICEMET, RA, DEC, ERROR, ISUPDATE, GCNNOTICE_ID) values "
-            + "(%i, 0, '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
+            + "(%i, 0, '%s', '%s', SYS_EXTRACT_UTC(current_timestamp), %i, "
             + "%.5f, %.5f, %.5f, %i, %i)")
            % (grb_id, base64.encodestring(gcn_notice.tostring()), 
-              met, ra, dec, error, isUpdate, gcnnotice_id))
+              notice_type, met, ra, dec, error, isUpdate, gcnnotice_id))
     apply(sql)
 
 def updateGrb(grb_id, **kwds):

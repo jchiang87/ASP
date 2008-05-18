@@ -175,7 +175,7 @@ class LatGcnNotice(object):
                            INITIAL_LAT_RA=self.ra, INITIAL_LAT_DEC=self.dec,
                            INITIAL_ERROR_RADIUS=1, ASP_PROCESSING_LEVEL=0)
         dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
-                                 dbAccess.current_date(), self.met, 
+                                 datetime.datetime.utcnow(), self.met, 
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate))
     def email_notification(self):
         import smtplib

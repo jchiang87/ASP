@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 """
-@brief Redirect GCN Notices to my account.  Write GCN messages to
-files, indexed by the mission and TRIGGER_NUM fields.
+@brief Redirect GCN Notices.  Write GCN messages to files, indexed by
+the mission and TRIGGER_NUM fields.  Since this is executed from a
+Sparc via procmail, it must be pure python, and cannot use third-party
+python modules.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -11,6 +13,7 @@ files, indexed by the mission and TRIGGER_NUM fields.
 import os
 import sys
 import smtplib
+import tempfile
 
 class GcnNoticeEmail(object):
     def __init__(self, lines):
@@ -38,7 +41,7 @@ class GcnNoticeEmail(object):
                 self.trignum = int(trig_value)
             if body:
                 self.lines.append(line)
-    def write(self, path):
+    def writeArchive(self, path):
         """Archive the notice under path, in a subdirectory given by the
         mission name and in a filename given by the trigger number."""
         output_dir = os.path.join(path, self.mission_name)
@@ -49,14 +52,17 @@ class GcnNoticeEmail(object):
             pass
         os.system("chmod go+rwx %s" % output_dir)
         outfile = os.path.join(output_dir, "%i" % self.trignum)
+        self.writeFile(outfile, add_delimiter=True)
+    def writeFile(self, outfile, add_delimiter=False):
         output = open(outfile, 'a')
         output.write("%s" % self.date)
         output.write("%s\n" % self.subject)
         for line in self.lines:
             output.write('%s' % line)
             pass
-        delimiter = '-'*80
-        output.write(delimiter + '\n')
+        if add_delimiter:
+            delimiter = '-'*80
+            output.write(delimiter + '\n')
         output.close()
         os.chmod(outfile, 0666)
     def resend(self, recipients):
@@ -79,11 +85,18 @@ def forwardErrorMessage(msg):
     mail.quit()
 
 if __name__ == '__main__':
+    import os, sys
     path = '/nfs/farm/g/glast/u33/jchiang/GCN_Archive'
+    queue_path = os.path.join(path, "NOTICE_QUEUE")
 
     try:
         my_notice = GcnNoticeEmail(sys.stdin.readlines())
-        my_notice.write(path)
+        my_notice.writeArchive(path)
+        fd, queued_file = tempfile.mkstemp(dir=queue_path)
+        os.close(fd)
+        my_notice.writeFile(queued_file)
+        os.chdir(queue_path)
+        os.system('chmod 666 *')
     except Exception, msg:
         forwardErrorMessage(msg)
 

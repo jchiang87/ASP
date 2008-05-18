@@ -8,6 +8,7 @@ ASP GCNNOTICES database.
 # $Header$
 #
 
+import string
 import array
 import dbAccess
 import pyASP
@@ -46,7 +47,24 @@ class Packet(object):
         self.start_time = (jd.seconds() -
                            pyASP.JulianDate_missionStart().seconds())
         year, month, day, hours = jd.gregorianDate()
-        return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, hours/24.*1000)
+        grb_name = 'GRB%02i%02i%02i' % (year % 100, month, day)
+
+        # Query for GCN_NAMEs with trigger times within the last day
+        # that have the same root name.
+        sql = ("select GCN_NAME from GRB where GRB_ID>=%i and GCAT_FLAG=0" 
+               % (self.MET - 8.64e4))
+        def gcnNames(cursor):
+            names = []
+            for entry in cursor:
+                if entry[0].find(grb_name) == 0:
+                    names.append(entry[0])
+            names.sort()
+            return names
+        recentNames = dbAccess.apply(sql, gcnNames)
+        #
+        # Apply the suffix for the next GRB
+        #
+        return grb_name + string.ascii_uppercase[len(recentNames)]
     def _MET(self):
         return int((self.TJD + 2440000.5)*8.64e4 + self.SOD
                    - self._JD_missionStart_seconds)

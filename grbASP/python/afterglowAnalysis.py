@@ -93,7 +93,7 @@ tstop = ft1[0].header['TSTOP']
 dbAccess.updateAfterglow(grb_id, FLUX=flux, FLUX_ERROR=fluxerr,
                          PHOTON_INDEX=index, PHOTON_INDEX_ERROR=indexerr,
                          LAT_RA=ra, LAT_DEC=dec, XML_FILE="'%s'" % xmlfile,
-                         SPECTRUMFILE="'%s'" % spectrumFile, 
+                         SPECTRUMFILE="'%s'" % absFilePath(spectrumFile), 
                          LAT_FIRST_TIME=tstart, LAT_LAST_TIME=tstop)
 
 #
@@ -122,8 +122,7 @@ gtexposure.run(lcfile=gtbin['outfile'], scfile=pars['ft2File'],
                rspfunc=config.IRFS, source_model_file=like.srcModel,
                target_source=grbName, emin=100, emax=3e5)
 
-
-dbAccess.updateAfterglow(grb_id, (LIGHTCURVEFILE="'%s'" %
-                                  absFilePath(gtbin['outfile'])))
-
+dbAccess.updateAfterglow(grb_id, 
+                         LIGHTCURVEFILE= "'%s'" % absFilePath(gtbin['outfile']))
+                                         
 os.system('chmod 777 *')

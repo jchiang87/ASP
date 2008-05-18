@@ -2,7 +2,7 @@
 """
 @brief Redirect GCN Notices.  Write GCN messages to files, indexed by
 the mission and TRIGGER_NUM fields.  Since this is executed from a
-Sparc via procmail, it must be pure python, and cannot use third-party
+Sparc via procmail, it must be pure python and cannot use third-party
 python modules.
 
 @author J. Chiang <jchiang@slac.stanford.edu>

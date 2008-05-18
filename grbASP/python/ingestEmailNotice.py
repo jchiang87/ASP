@@ -14,24 +14,55 @@ import dbAccess
 import pyASP
 import datetime
 
+_GCN_Notice_types = {"MILAGRO_POSITION" : 58,
+                     "SWIFT_BAT_POSITION" : 61,
+                     "SWIFT_SC_SLEW" : 66,
+                     "SWIFT_XRT_POSITION" : 67,
+                     "SWIFT_XRT_POSITION_NACK" : 71}
+
+_months = {}
+for i, item in enumerate(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']):
+    _months[item] = i + 1
+
 class Packet(object):
     _JD_missionStart_seconds = 211845067200
-    def __init__(self, RA, Dec, posError, TJD, SOD, MET=None, Name=None,
-                 notice_type=None, notice_date=None):
-        (self.RA, self.Dec, self.posError, self.TJD,
-         self.SOD, self.MET, self.Name)= (RA, Dec, posError, TJD, SOD, 
-                                          MET, Name)
-        self.notice_type = notice_type
-        self.notice_date = notice_date
-        if self.MET is None:
-            self.MET = self._MET()
-        if self.Name is None:
-            self.Name = self.candidateName()
-        if self.notice_type is None:
-            self.notice_type = "None"
-        if self.notice_date is None:
-            self.notice_date = datetime.datetime.utcnow()
+    def __init__(self, infile):
+        self._parseEmailNotice(infile)
+        self.MET = self._MET()
+        self.Name = self.candidateName()
         self._build_packet()
+    def _parseEmailNotice(self, infile):
+        self.notice_type = "None"
+        self.notice_date = datetime.datetime.utcnow()
+        for line in open(infile):
+            if line.find('GRB_RA:') == 0:
+                self.RA = float(line.split()[1].strip('d'))
+            elif line.find('GRB_DEC:') == 0:
+                self.Dec = float(line.split()[1].strip('d'))
+            elif line.find('GRB_ERROR:') == 0:
+                # Convert from arcmin to deg
+                self.posError = float(line.split()[1])/60. 
+            elif line.find('GRB_DATE:') == 0:
+                self.TJD = int(line.split()[1])
+            elif line.find('GRB_TIME:') == 0:
+                self.SOD = int(line.split()[1])
+            elif line.find('NOTICE_DATE') == 0:
+                self._parseNoticeDate(line)
+            elif line.find('Subject: GCN') == 0:
+                self.notice_type = line.split()[1].split('/')[-1]
+                self.mission = self.notice_type.split('_')[0]
+    def _parseNoticeDate(self, line):
+        tokens = line.split('DATE:')[-1].strip().split()
+        day = int(tokens[1])
+        month = _months[tokens[2]]
+        year = 2000 + int(tokens[3])
+        hh, mm, ss = tokens[4].split(':')
+        hours = int(hh)
+        mins = int(mm)
+        secs = int(ss)
+        self.notice_date = datetime.datetime(year, month, day, 
+                                             hours, mins, secs)
     def _build_packet(self):
         self.buffer = array.array("l", 40*(0,))
         self.buffer[7] = int(self.RA*1e4)
@@ -89,53 +120,10 @@ def registerWithDatabase(packet):
                              notice_type=packet.notice_type)
     return grb_id
 
-_GCN_Notice_types = {"MILAGRO_POSITION" : 58,
-                     "SWIFT_BAT_POSITION" : 61,
-                     "SWIFT_SC_SLEW" : 66,
-                     "SWIFT_XRT_POSITION" : 67,
-                     "SWIFT_XRT_POSITION_NACK" : 71}
-
-months = {}
-for i, item in enumerate(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']):
-    months[item] = i + 1
-
-def parseNoticeDate(line):
-    tokens = line.split('DATE:')[-1].strip().split()
-    day = int(tokens[1])
-    month = months[tokens[2]]
-    year = 2000 + int(tokens[3])
-    hh, mm, ss = tokens[4].split(':')
-    hours = int(hh)
-    mins = int(mm)
-    secs = int(ss)
-    return datetime.datetime(year, month, day, hours, mins, secs)
-
-def parseEmailNotice(infile):
-    notice_type = None
-    for line in open(infile):
-        if line.find('GRB_RA:') == 0:
-            ra = float(line.split()[1].strip('d'))
-        elif line.find('GRB_DEC:') == 0:
-            dec = float(line.split()[1].strip('d'))
-        elif line.find('GRB_ERROR:') == 0:
-            posError = float(line.split()[1])/60. # convert from arcmin to deg
-        elif line.find('GRB_DATE:') == 0:
-            TJD = int(line.split()[1])
-        elif line.find('GRB_TIME:') == 0:
-            SOD = int(line.split()[1])
-        elif line.find('NOTICE_DATE') == 0:
-            notice_date = parseNoticeDate(line)
-        elif line.find('Subject:') == 0:
-            notice_type = line.split()[1].split('/')[-1]
-    return ra, dec, posError, TJD, SOD, None, None, notice_type, notice_date
-
 if __name__ == '__main__':
     import sys
     import glob
 
-    infile = sys.argv[1]
-
-    packet = Packet(*parseEmailNotice(infile))
+    packet = Packet(sys.argv[1])
     registerWithDatabase(packet)
     print packet.MET, packet.Name

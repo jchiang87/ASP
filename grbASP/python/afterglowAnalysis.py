@@ -123,6 +123,7 @@ gtexposure.run(lcfile=gtbin['outfile'], scfile=pars['ft2File'],
                target_source=grbName, emin=100, emax=3e5)
 
 
-dbAccess.updateAfterglow(grb_id, LIGHTCURVEFILE="'%s'" % gtbin['outfile'])
+dbAccess.updateAfterglow(grb_id, (LIGHTCURVEFILE="'%s'" %
+                                  absFilePath(gtbin['outfile'])))
 
 os.system('chmod 777 *')

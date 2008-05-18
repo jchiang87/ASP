@@ -9,7 +9,7 @@
 
 import os
 import copy
-import time
+import datetime
 import array
 import celgal
 import pyASP
@@ -86,10 +86,22 @@ def time_string(secOfDay):
     return ("%.2f SOD {%02i:%02i:%02i.%02i} UT (trigger time)"
             % (secOfDay, hours, mins, int(secs), secs % 1))
 
+months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+weekdays = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+
+def notice_date():
+    "Return current date string using GCN Notice formatting"
+    utcnow = datetime.datetime.utcnow()
+    my_date = ("%3s %02i %3s %02i %02i:%02i:%02i UT" %
+               (weekdays[utcnow.weekday()], utcnow.day, months[utcnow.month],
+                utcnow.year % 2000, utcnow.hour, utcnow.minute, utcnow.second))
+    return my_date
+
 class LatGcnNotice(object):
     def __init__(self, burstTime, ra, dec):
         self.notice = LatGcnTemplate()
-        self.notice['NOTICE_DATE'] = time.asctime()
+        self.notice['NOTICE_DATE'] = notice_date()
         self._packet = array.array("l", 40*(0,))
         self.met = burstTime
         self.grb_id = int(self.met)

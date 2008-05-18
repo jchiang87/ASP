@@ -29,7 +29,7 @@ class Packet(object):
         if self.notice_type is None:
             self.notice_type = "None"
         if self.notice_date is None:
-            self.notice_date = datetime.datetime.now()
+            self.notice_date = datetime.datetime.utcnow()
         self._build_packet()
     def _build_packet(self):
         self.buffer = array.array("l", 40*(0,))

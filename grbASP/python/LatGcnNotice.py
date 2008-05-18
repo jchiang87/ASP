@@ -176,7 +176,8 @@ class LatGcnNotice(object):
                            INITIAL_ERROR_RADIUS=1, ASP_PROCESSING_LEVEL=0)
         dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
                                  datetime.datetime.utcnow(), self.met, 
-                                 self.ra, self.dec, 1, isUpdate=int(isUpdate))
+                                 self.ra, self.dec, 1, isUpdate=int(isUpdate),
+                                 notice_type="ASP_BLIND_SEARCH")
     def email_notification(self):
         import smtplib
 #        sql = "select * from GRB_EMAIL_LIST where ROLE = 'Advocate'"

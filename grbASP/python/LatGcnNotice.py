@@ -174,7 +174,7 @@ class LatGcnNotice(object):
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % self.name,
                            INITIAL_LAT_RA=self.ra, INITIAL_LAT_DEC=self.dec,
                            INITIAL_ERROR_RADIUS=1, ASP_PROCESSING_LEVEL=0)
-        dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
+        dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), "GLAST", grb_id,
                                  datetime.datetime.utcnow(), self.met, 
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate),
                                  notice_type="ASP_BLIND_SEARCH")

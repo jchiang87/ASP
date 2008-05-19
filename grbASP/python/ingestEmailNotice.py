@@ -54,6 +54,12 @@ class Packet(object):
             elif line.find('Subject: GCN') == 0:
                 self.notice_type = line.split()[1].split('/')[-1]
                 self.mission = self.notice_type.split('_')[0]
+            elif line.find("TRIGGER_NUM:") == 0:
+                # This line combines the trigger number and
+                # sequence/segment number and does not have canonical
+                # form, so we have this ugly parsing code:
+                trig_value = line[12:].split()[0].split(',')[0]
+                self.trigger_num = int(trig_value)
     def _parseNoticeDate(self, line):
         tokens = line.split('DATE:')[-1].strip().split()
         day = int(tokens[1])
@@ -115,8 +121,8 @@ def registerWithDatabase(packet):
     else:
         isUpdate = 1
 
-    dbAccess.insertGcnNotice(grb_id, packet.buffer, 
-                             packet.notice_date,
+    dbAccess.insertGcnNotice(grb_id, packet.buffer, packet.mission,
+                             packet.trigger_num, packet.notice_date,
                              packet.MET, packet.RA, packet.Dec,
                              packet.posError, isUpdate=isUpdate,
                              notice_type=packet.notice_type)

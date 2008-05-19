@@ -73,7 +73,8 @@ def insertAfterglow(grb_id):
     sql = "insert into GRB (GRB_ID, GCAT_FLAG) values (%i, 1)" % grb_id
     apply(sql)
 
-def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
+def insertGcnNotice(grb_id, gcn_notice, mission, trigger_num, 
+                    notice_date, met, ra, dec, error,
                     isUpdate=0, notice_type="None"):
     notices = readGcnNotices(grb_id)
     for notice in notices:
@@ -87,13 +88,16 @@ def insertGcnNotice(grb_id, gcn_notice, notice_date, met, ra, dec, error,
             return entry[0]
     gcnnotice_id = apply(sql, getId)
     sql = ("insert into GCNNOTICES values(:gcnnotice_id, :grb_id, " + 
-           ":gcat_flag, :gcn_notice, :noticetype, :noticedate, :noticemet, " + 
+           ":gcat_flag, :gcn_notice, :mission, :noticetype, :trigger_num, " +
+           ":noticedate, :noticemet, " + 
            ":ra, :dec, :error, :isupdate, :adv_comment, :adv_name)")
     args = {"gcnnotice_id" : gcnnotice_id,
             "grb_id" : grb_id,
             "gcat_flag" : 0,
             "gcn_notice" : base64.encodestring(gcn_notice.tostring()),
+            "mission" : mission,
             "noticetype" : notice_type,
+            "trigger_num" : trigger_num,
             "noticedate" : notice_date,
             "noticemet" : met,
             "ra" : ra,
@@ -148,7 +152,8 @@ if __name__ == '__main__':
         pass
 
     insertGrb(grb_id)
-    insertGcnNotice(grb_id, simple_packet(6), current_date(), 0, 
+    insertGcnNotice(grb_id, simple_packet(6), "GLAST", grb_id, 
+                    current_date(), 0, 
                     193.98, -5.82, 1)
 
     notices = readGcnNotices(grb_id)

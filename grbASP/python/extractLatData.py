@@ -88,6 +88,11 @@ def burst_interval(lc_file, minrate=30):
 
 if __name__ == '__main__':
     import os, shutil
+    import sys
+    for item in sys.path:
+        print item
+        print os.path.isdir(item)
+
     from GcnNotice import GcnNotice
     from FileStager import FileStager
     from getFitsData import getStagedFitsData

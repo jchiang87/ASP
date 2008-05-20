@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher" version="2.2" type="Data">
+<task name="AspLauncher" version="3.0" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="minimum_coverage">0.70</var>

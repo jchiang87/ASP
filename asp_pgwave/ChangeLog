@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon May 19 20:00:20 PDT 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+version change of xml task def
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r4, operation: add
 Package: asp_pgwave

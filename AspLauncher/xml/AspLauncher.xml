@@ -73,13 +73,13 @@
     ]]></script>
     <createsSubtasks>
       <subtask>insertIntervalsTask</subtask>
-    </createSubtasks>
+    </createsSubtasks>
   </process>
 
   <task name="insertIntervalsTask" version="1.0" type="Data">
     <prerequisites>
-      <prerequsite name="nMetStart" type="integer"/>
-      <prerequsite name="nMetStop" type="integer"/>
+      <prerequisite name="nMetStart" type="integer"/>
+      <prerequisite name="nMetStop" type="integer"/>
     </prerequisites>
     <process name="insertInterval">
       <job executable="${ASPLAUNCHERROOT}/${BINDIR}/insertIntervals.sh"

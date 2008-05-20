@@ -77,6 +77,7 @@ def launch_afterglow_streams(output_dir):
         config = grbAspConfig.find(ag_time)
         dt = config.AGTIMESCALE
         args = {'logicalPath' : os.environ['logicalPath'],
+                'GRB_ID' : grb_id,
                 'TSTART' : int(ag_time),
                 'TSTOP' : int(ag_time + dt),
                 'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),

@@ -62,7 +62,7 @@ def refinementStreams(tstart, tstop, logicalPath=None,
         command.run(debug=debug)
 
 def afterglowStreams(parfiles=None, output_dir=None, debug=False,
-                     logicalPath=None, 
+                     logicalPath=None, streamId=None,
                      datacatalog_imp="datacatalog"):
     os.chdir(output_dir)
     if parfiles is None:
@@ -85,7 +85,7 @@ def afterglowStreams(parfiles=None, output_dir=None, debug=False,
                 'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
-        command = PipelineCommand('GRB_afterglow', args)
+        command = PipelineCommand('GRB_afterglow', args, stream=streamId)
         command.run(debug=debug)
 
 if __name__ == '__main__':

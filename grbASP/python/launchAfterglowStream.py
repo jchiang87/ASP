@@ -20,8 +20,9 @@ gti = FitsNTuple(ft1, 'GTI')
 
 tstart = int(os.environ['TSTART'])
 tstop = int(os.environ['TSTOP'])
+grb_id = int(os.environ['GRB_ID'])
 
 if tstart >= min(gti.START) and tstop <= max(gti.STOP):
     afterglowStreams(logicalPath=os.environ['logicalPath'],
-                     output_dir=output_dir, 
+                     output_dir=output_dir, streamId=grb_id,
                      datacatalog_imp=os.environ['datacatalog_imp'])

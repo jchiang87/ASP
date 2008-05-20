@@ -20,7 +20,7 @@ from createGrbStreams import blindSearchStreams
 import databaseAccess as dbAccess
 
 def find_frequencies():
-   sql = "select FREQUENCY from FREQUENCIES"
+   sql = "select FREQUENCY from FREQUENCIES where TYPE=0"
    def getFrequencies(cursor):
        freqs = []
        for entry in cursor:
@@ -55,10 +55,16 @@ def find_intervals():
       print message
       print sql
 
+def resolve_nfs_path(path):
+    tokens = path.split(":")
+    for i in range(len(tokens)):
+        if tokens[i].find('g.glast.'):
+            tokens[i] = os.path.join('/nfs/farm/g/glast', 
+                                     tokens[i].split('g.glast.')[-1])
+    return ":".join(tokens)
+
 if __name__ == '__main__':
-    _asp_path = os.environ['ASP_PATH']
-    _version = os.path.split(os.environ['ASPLAUNCHERROOT'])[-1]
-    _aspLauncherRoot = os.path.join(_asp_path, 'ASP', 'AspLauncher', _version)
+    _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
 
     from PipelineCommand import PipelineCommand
 
@@ -66,7 +72,7 @@ if __name__ == '__main__':
     # Standard output directory for ASP results.  Will this be
     # replaced by a symlink as proposed?
     #
-    _output_dir = '/nfs/farm/g/glast/u33/ASP/OpsSim2Dev'
+    _output_dir = '/nfs/farm/g/glast/u33/ASP/'
 
     aspOutput = lambda x : os.path.join(_output_dir, x)
 

@@ -10,12 +10,6 @@ Two environment variables need to be provided:
 nDownlink = Downlink ID of the current L1Proc instance
 folder = Logical folder in the dataCatalog that contains the FT1/2 data
 
-The bash wrapper script requires two addtional environment variables:
-
-ST_INST = path to ST installation, e.g.,
-       /nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5
-ASP_PATH = path to ASP installation, e.g., /afs/slac/g/glast/ground/ASP/prod
-
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
 #

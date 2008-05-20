@@ -5,15 +5,15 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher" version="2.1" type="Data">
+<task name="AspLauncher" version="2.2" type="Data">
   <variables>
-    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r5p2"</var>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="minimum_coverage">0.70</var>
     <var name="datacatalog_imp">datacatalog</var>
   </variables>
   <prerequisites>
     <prerequisite name="folder" type="string"/>
+    <prerequisite name="nDownlink" type="integer"/>
     <prerequisite name="interval" type="integer"/>
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="nMetStart" type="integer"/>
@@ -21,7 +21,6 @@
     <prerequisite name="GRBOUTPUTDIR" type="string"/>
     <prerequisite name="DRPOUTPUTDIR" type="string"/>
     <prerequisite name="PGWAVEOUTPUTDIR" type="string"/>
-    <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="PIPELINESERVER" type="string"/>
     <prerequisite name="ASPLAUNCHERROOT" type="string"/>
   </prerequisites>
@@ -51,5 +50,41 @@
       <after process="catalogQueries" status="SUCCESS"/>
     </depends>
   </process>
-</task>
+
+  <process name="runInsertIntervals">
+    <script>
+      <![CDATA[
+        datacat = eval(datacatalog_imp)
+        query = 'DataType == \"FT1\" && nDownlink == %i' % nDownlink
+        datasetList = datacat.getDataSets(logicalPath, 0, 0, "FT1", 0, query,
+                                          (), ('nMetStart', 'nMetStop'), ())
+        it = datasetList.iterator()
+        #
+        # There should only be one dataset returned, but loop over
+        # all of the entries anyways.
+        #
+        while it.hasNext():
+            dataset = it.next()
+            nMetStart = dataset.getMetaValue('nMetStart')
+            nMetStop = dataset.getMetaValue('nMetStop')
+            pipeline.createSubstream("insertIntervalsTask", -1, 
+                                     "nMetStart=%i, nMetStop=%i"
+                                     % (nMetStart, nMetStop))
+    ]]></script>
+    <createsSubtasks>
+      <subtask>insertIntervalsTask</subtask>
+    </createSubtasks>
+  </process>
+
+  <task name="insertIntervalsTask" version="1.0" type="Data">
+    <prerequisites>
+      <prerequsite name="nMetStart" type="integer"/>
+      <prerequsite name="nMetStop" type="integer"/>
+    </prerequisites>
+    <process name="insertInterval">
+      <job executable="${ASPLAUNCHERROOT}/${BINDIR}/insertIntervals.sh"
+           batchOptions="-q short"/>
+    </process>
+  </task> <!--insertIntervalsTask-->
+</task><!--AspLauncher-->
 </pipeline>

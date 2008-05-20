@@ -1,13 +1,14 @@
 """
 @file aspLauncher.py
 
-@brief This script queries the TIMEINTERVALS db table and calculates the
-next set of intervals for which the associated ASP tasks are launched.
-This is intended to be launched as a subprocess of L1Proc.
+@brief This script queries the TIMEINTERVALS db table and calculates
+the next set of intervals for which the associated ASP tasks are
+launched.  The wrapped version of this script is intended to be
+launched as a subprocess of L1Proc.
 
 Two environment variables need to be provided:
 
-nDownlink = Downlink ID of the current L1Proc instance
+nDownlink = Data delivery ID of the current L1Proc instance
 folder = Logical folder in the dataCatalog that contains the FT1/2 data
 
 @author J. Chiang <jchiang@slac.stanford.edu>
@@ -19,42 +20,6 @@ import os
 from createGrbStreams import blindSearchStreams
 import databaseAccess as dbAccess
 
-def find_frequencies():
-   sql = "select FREQUENCY from FREQUENCIES where TYPE=0"
-   def getFrequencies(cursor):
-       freqs = []
-       for entry in cursor:
-           freqs.append(entry[0])
-       return freqs
-   return dbAccess.apply(sql, getFrequencies)
-
-class TimeInterval(object):
-   def __init__(self, entry):
-      self.interval = entry[0]
-      self.frequency = entry[1]
-      self.tstart = entry[2]
-      self.tstop = entry[3]
-      self.is_processed = entry[4]
-
-def find_intervals():
-   """Find unhandled intervals"""
-   sql = ("SELECT * from TIMEINTERVALS where IS_PROCESSED=0 "
-          + "order by interval_number asc")
-   frequencies = find_frequencies()
-   unhandled = {}
-   for freq in frequencies:
-      unhandled[freq] = []
-   def findUnhandled(cursor, unhandled=unhandled):
-      for entry in cursor:
-         timeInterval = TimeInterval(entry)
-         unhandled[timeInterval.frequency].append(timeInterval)
-      return unhandled
-   try:
-      return dbAccess.apply(sql, findUnhandled)
-   except dbAccess.cx_Oracle.DatabaseError, message:
-      print message
-      print sql
-
 def resolve_nfs_path(path):
     tokens = path.split(":")
     for i in range(len(tokens)):
@@ -64,9 +29,10 @@ def resolve_nfs_path(path):
     return ":".join(tokens)
 
 if __name__ == '__main__':
-    _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
-
+    from intervalAccess import unhandledIntervals
     from PipelineCommand import PipelineCommand
+
+    _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
 
     #
     # Standard output directory for ASP results.  Will this be
@@ -94,12 +60,9 @@ if __name__ == '__main__':
                        datacatalog_imp="datacatalog",
                        debug=False)
 
-    frequencies = find_intervals()
-    for offset, frequency in enumerate(frequencies):
-       intervals = frequencies[frequency]
-       if frequency == 'six_hours':
-          continue
-       for interval in intervals:
+    unhandled = unhandledIntervals()
+    for offset, frequency in enumerate(unhandled):
+       for interval in unhandled[frequency]:
           args = {'folder' : os.environ['folder'],
                   'interval' : interval.interval,
                   'frequency' : frequency,
@@ -108,9 +71,9 @@ if __name__ == '__main__':
                   'GRBOUTPUTDIR' : aspOutput('GRB'),
                   'DRPOUTPUTDIR' : aspOutput('DRP'),
                   'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
-                  'PIPELINESERVER' : 'DEV',
+                  'PIPELINESERVER' : 'PROD',
                   'ASPLAUNCHERROOT' : _aspLauncherRoot,
-                  'datacatalog_imp' : 'datacatalogPROD'}
+                  'datacatalog_imp' : 'datacatalog'}
 
           for item in args:
              print item, args[item]

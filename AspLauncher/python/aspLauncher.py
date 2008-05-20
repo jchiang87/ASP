@@ -64,6 +64,7 @@ if __name__ == '__main__':
     for offset, frequency in enumerate(unhandled):
        for interval in unhandled[frequency]:
           args = {'folder' : os.environ['folder'],
+                  'nDownlink' : nDownlink,
                   'interval' : interval.interval,
                   'frequency' : frequency,
                   'nMetStart' : interval.tstart,

@@ -52,24 +52,26 @@ if __name__ == '__main__':
     print "DataCatalog folder =", os.environ['folder']
     print "Downlink ID =", os.environ['nDownlink']
 
+    debug = False
+
     nDownlink = int(os.environ['nDownlink'])
     blindSearchStreams(downlinks=(nDownlink,),
                        logicalPath=os.environ['folder'],
                        grbroot_dir=aspOutput('GRB'),
                        streamId=nDownlink, 
                        datacatalog_imp="datacatalog",
-                       debug=False)
+                       debug=debug)
 
     args = {'folder' : os.environ['folder'],
             'nDownlink' : nDownlink,
-            'PIPELINESERVER' : 'PROD',
+            'PIPELINESERVER' : os.environ['PIPELINESERVER'],
             'ASPLAUNCHERROOT' : _aspLauncherRoot,
             'datacatalog_imp' : 'datacatalog'}
     inserter = PipelineCommand('AspInsertIntervals', args)
-    inserter.run(debug=False)
+    inserter.run(debug=debug)
 
     unhandled = unhandledIntervals()
-    for offset, frequency in enumerate(unhandled):
+    for frequency in unhandled:
        for interval in unhandled[frequency]:
           args = {'folder' : os.environ['folder'],
                   'interval' : interval.interval,
@@ -79,7 +81,7 @@ if __name__ == '__main__':
                   'GRBOUTPUTDIR' : aspOutput('GRB'),
                   'DRPOUTPUTDIR' : aspOutput('DRP'),
                   'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
-                  'PIPELINESERVER' : 'PROD',
+                  'PIPELINESERVER' : os.environ['PIPELINESERVER'],
                   'ASPLAUNCHERROOT' : _aspLauncherRoot,
                   'datacatalog_imp' : 'datacatalog'}
 
@@ -87,6 +89,5 @@ if __name__ == '__main__':
              print item, args[item]
           print "\n*******************\n"
     
-          stream_id = interval.tstart + offset
-          launcher = PipelineCommand('AspLauncher', args, stream=stream_id)
-          launcher.run(debug=False)
+          launcher = PipelineCommand('AspLauncher', args)
+          launcher.run(debug=debug)

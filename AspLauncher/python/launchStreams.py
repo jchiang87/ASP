@@ -61,7 +61,6 @@ if __name__ == '__main__':
     currentDir = os.getcwd()
     min_frac = float(os.environ['minimum_coverage'])
     process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-    streamId = int(os.environ['PIPELINE_STREAM'])
 
     #
     # Stage to local /scratch area and clean up on exit
@@ -71,8 +70,15 @@ if __name__ == '__main__':
 
     debug = False
 
+    offset = {'six_hours' : 0,
+              'daily' : 1,
+              'weekly' : 2}
+
     os.chdir(currentDir)
     interval, frequency, tstart, tstop = get_interval()
+
+    streamId = tstart + offset[frequency]
+
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList', 'Ft2FileList', 
                         fileStager=fileStager):

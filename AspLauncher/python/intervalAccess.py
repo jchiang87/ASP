@@ -69,7 +69,7 @@ def insertNewIntervals(nMetStart, nMetStop, freqtype=0):
             interval_number += 1
             tstart = tstop
             tstop += freqs[freq]
-#            insertInterval(interval_number, freq, tstart, tstop)
+            insertInterval(interval_number, freq, tstart, tstop)
             print "Inserting into TIMEINTERVALS table:", \
                 freq, interval_number, tstart, tstop
         print

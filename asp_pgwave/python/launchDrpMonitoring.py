@@ -10,10 +10,9 @@ time interval.
 # $Header$
 #
 import os
-from PipelineCommand import PipelineCommand, _asp_path
+from PipelineCommand import PipelineCommand, resolve_nfs_path
 
-_version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
-_drpRoot = os.path.join(_asp_path, 'ASP', 'drpMonitoring', _version)
+_drpRoot = resolve_nfs_path(os.environ['DRPMONITORINGROOT'])
 _datacatalog_imp = os.environ['datacatalog_imp']
 
 def launch_drp(interval, frequency, tstart, tstop, folder, output_dir,

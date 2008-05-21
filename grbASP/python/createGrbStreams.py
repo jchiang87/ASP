@@ -11,7 +11,7 @@ import os
 import glob
 import time
 from parfile_parser import Parfile
-from PipelineCommand import PipelineCommand, _asp_path
+from PipelineCommand import PipelineCommand, resolve_nfs_path
 
 # import these to ensure they are available for the various streams
 import grbASP
@@ -19,7 +19,7 @@ import pyIrfLoader
 import BayesBlocks
 
 _version = os.path.split(os.environ['GRBASPROOT'])[-1]
-_grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
+_grbAspRoot = resolve_nfs_path(os.environ['GRBASPROOT'])
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                        debug=False, streamId=None, 
@@ -35,7 +35,6 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                 'GRBROOTDIR' : grbroot_dir,
                 'GRBASPROOT' : _grbAspRoot,
                 'logicalPath' : '/DC2/Downlinks',
-                'ST_INST' : os.environ['ST_INST'],
                 'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
@@ -54,7 +53,6 @@ def refinementStreams(tstart, tstop, logicalPath=None,
                 'TSTART' : tstart,
                 'TSTOP' : tstop,
                 'logicalPath' : '/DC2/Downlinks',
-                'ST_INST' : os.environ['ST_INST'],
                 'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
@@ -81,7 +79,6 @@ def afterglowStreams(parfiles=None, output_dir=None, debug=False,
                 'OUTPUTDIR' : output_dir,
                 'GRBASPROOT' : _grbAspRoot,
                 'logicalPath' : '/DC2/Downlinks',
-                'ST_INST' : os.environ['ST_INST'],
                 'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath

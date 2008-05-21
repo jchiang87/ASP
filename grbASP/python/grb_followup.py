@@ -9,18 +9,12 @@ that execute the real tasks only if the L1 data are available.
 # $Header$
 #
 import os
-from PipelineCommand import PipelineCommand
+from PipelineCommand import PipelineCommand, resolve_nfs_path
 from GcnNotice import GcnNotice
 from databaseAccess import *
 from GrbAspConfig import grbAspConfig
 
-#
-# For nfs mounted disks, <package>ROOT is resolved to the
-# process-dependent mount point, so we must rebuild the path using
-# ASP_PATH
-#
-grbasproot = os.path.join(os.environ['ASP_PATH'], 'ASP', 'grbASP',
-                          os.path.split(os.environ['GRBASPROOT'])[-1])
+grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
 
 def promptGrbs():
     sql = "select GRB_ID from GRB where GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=0"
@@ -63,7 +57,6 @@ def launch_refinement_streams(output_dir):
                 'TSTART' : grb_met - dt,
                 'TSTOP' : grb_met + dt,
                 'logicalPath' : os.environ['logicalPath'],
-                'ST_INST' : os.environ['ST_INST'],
                 'datacatalog_imp' : os.environ['datacatalog_imp']}
         command = PipelineCommand('GRB_refinement_launcher', args)
         command.run()
@@ -82,7 +75,6 @@ def launch_afterglow_streams(output_dir):
                 'TSTOP' : int(ag_time + dt),
                 'OUTPUTDIR' : os.path.join(output_dir, `grb_id`),
                 'GRBASPROOT' : grbasproot,
-                'ST_INST' : os.environ['ST_INST'],
                 'datacatalog_imp' : os.environ['datacatalog_imp']}
         command = PipelineCommand('GRB_afterglow_launcher', args)
         command.run()

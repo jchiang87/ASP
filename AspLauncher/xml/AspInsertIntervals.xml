@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspInsertIntervals" version="1.0" type="Data">
+<task name="AspInsertIntervals" version="1.1" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -21,19 +21,17 @@
       <![CDATA[
         datacat = eval(datacatalog_imp)
         query = 'DataType == \"FT1\" && nDownlink == %i' % nDownlink
-        datasetList = datacat.getDataSets(folder, 0, 0, "FT1", 0, query, (),
+        print "query = ", query
+        datasetList = datacat.getDatasets(folder, 0, 0, "FT1", 0, query, (),
                                           ('nMetStart', 'nMetStop'), ())
         it = datasetList.iterator()
-        #
-        # There should only be one dataset returned, but loop over
-        # all of the entries anyways.
-        #
         while it.hasNext():
             dataset = it.next()
-            nMetStart = dataset.getMetaValue('nMetStart')
+            nMetStart = dataset.getMetaValue('nMetStart') 
             nMetStop = dataset.getMetaValue('nMetStop')
+            print "nMetStart, nMetStop = ", nMetStart, nMetStop
             pipeline.createSubstream("insertIntervalsTask", -1, 
-                                     "nMetStart=%i, nMetStop=%i"
+                                     "nMetStart=%s, nMetStop=%s"
                                      % (nMetStart, nMetStop))
     ]]></script>
     <createsSubtasks>
@@ -43,8 +41,8 @@
 
   <task name="insertIntervalsTask" version="1.0" type="Data">
     <prerequisites>
-      <prerequisite name="nMetStart" type="integer"/>
-      <prerequisite name="nMetStop" type="integer"/>
+      <prerequisite name="nMetStart" type="string"/>
+      <prerequisite name="nMetStop" type="string"/>
     </prerequisites>
     <process name="insertInterval">
       <job executable="${ASPLAUNCHERROOT}/${BINDIR}/insertIntervals.sh"

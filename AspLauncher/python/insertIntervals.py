@@ -12,7 +12,7 @@ import os
 
 from intervalAccess import insertNewIntervals
 
-nMetStart = int(os.environ['nMetStart'])
-nMetStop = int(os.environ['nMetStop'])
+nMetStart = int(float(os.environ['nMetStart']))
+nMetStop = int(float(os.environ['nMetStop']))
 
 insertNewIntervals(nMetStart, nMetStop)

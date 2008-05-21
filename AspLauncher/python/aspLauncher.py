@@ -60,11 +60,18 @@ if __name__ == '__main__':
                        datacatalog_imp="datacatalog",
                        debug=False)
 
+    args = {'folder' : os.environ['folder'],
+            'nDownlink' : nDownlink,
+            'PIPELINESERVER' : 'PROD',
+            'ASPLAUNCHERROOT' : _aspLauncherRoot,
+            'datacatalog_imp' : 'datacatalog'}
+    inserter = PipelineCommand('AspInsertIntervals', args)
+    inserter.run(debug=False)
+
     unhandled = unhandledIntervals()
     for offset, frequency in enumerate(unhandled):
        for interval in unhandled[frequency]:
           args = {'folder' : os.environ['folder'],
-                  'nDownlink' : nDownlink,
                   'interval' : interval.interval,
                   'frequency' : frequency,
                   'nMetStart' : interval.tstart,

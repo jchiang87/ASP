@@ -11,17 +11,23 @@ various ASP tasks
 import os
 import time
 
-_bindir = os.environ['BINDIR']
-_st_inst = os.environ['ST_INST']
-_asp_path = os.environ['ASP_PATH']
-_pipelineServer = os.environ['PIPELINESERVER']
+try:
+    _pipelineServer = os.environ['PIPELINESERVER']
+except KeyError:
+    _pipelineServer = 'PROD'
+    os.environ['PIPELINESERVER'] = _pipelineServer
 
-print "Using:\n"
-print "BINDIR = %s" % _bindir
-print "ST_INST = %s" % _st_inst
-print "ASP_PATH = %s" % _asp_path
+print "Using:"
 print "PIPELINESERVER = %s" % _pipelineServer
 print ""
+
+def resolve_nfs_path(path):
+    tokens = path.split(":")
+    for i in range(len(tokens)):
+        if tokens[i].find('g.glast.'):
+            tokens[i] = os.path.join('/nfs/farm/g/glast', 
+                                     tokens[i].split('g.glast.')[-1])
+    return ":".join(tokens)
 
 class PipelineError(EnvironmentError):
     "Pipeline stream creation failed"
@@ -55,10 +61,7 @@ class PipelineCommand(object):
         the default dictionary can be over-ridden by key-value pairs in
         the argDict.
         """
-        defaultDict = {'BINDIR' : _bindir,
-                       'ST_INST' : _st_inst,
-                       'ASP_PATH' : _asp_path,
-                       'PIPELINESERVER' : _pipelineServer}
+        defaultDict = {'PIPELINESERVER' : _pipelineServer}
         defaultDict.update(argDict)
         arg_string = ""
         for item in defaultDict:

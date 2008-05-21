@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue May 20 20:11:52 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	launchDrpMonitoring.py 
+Log Message:
+remove num_RoIs argument
+    *
+------------------------------------------------------------
 User: jchiang  Mon May 19 20:00:20 PDT 2008
 ASP/asp_pgwave/xml
 

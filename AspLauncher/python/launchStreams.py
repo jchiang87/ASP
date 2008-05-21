@@ -12,11 +12,10 @@ each one if the required data are available.
 #
 import os
 from checkLevelOneFiles import providesCoverage
-from PipelineCommand import PipelineCommand, _asp_path
+from PipelineCommand import PipelineCommand, resolve_nfs_path
 from FileStager import FileStager
 
-_version = os.path.split(os.environ['ASP_PGWAVEROOT'])[-1]
-_pgwaveRoot = os.path.join(_asp_path, 'ASP', 'asp_pgwave', _version)
+_pgwaveRoot = resolve_nfs_path(os.environ['ASP_PGWAVEROOT'])
 _datacatalog_imp = os.environ['datacatalog_imp']
 
 def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,

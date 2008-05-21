@@ -18,76 +18,66 @@ folder = Logical folder in the dataCatalog that contains the FT1/2 data
 #
 import os
 from createGrbStreams import blindSearchStreams
-import databaseAccess as dbAccess
+from intervalAccess import unhandledIntervals
+from PipelineCommand import PipelineCommand, resolve_nfs_path
 
-def resolve_nfs_path(path):
-    tokens = path.split(":")
-    for i in range(len(tokens)):
-        if tokens[i].find('g.glast.'):
-            tokens[i] = os.path.join('/nfs/farm/g/glast', 
-                                     tokens[i].split('g.glast.')[-1])
-    return ":".join(tokens)
+_aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
 
-if __name__ == '__main__':
-    from intervalAccess import unhandledIntervals
-    from PipelineCommand import PipelineCommand
+#
+# Standard output directory for ASP results.  Will this be
+# replaced by a symlink as proposed?
+#
+_output_dir = '/nfs/farm/g/glast/u33/ASP/AspSims/Results_140508'
 
-    _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
+aspOutput = lambda x : os.path.join(_output_dir, x)
 
-    #
-    # Standard output directory for ASP results.  Will this be
-    # replaced by a symlink as proposed?
-    #
-    _output_dir = '/nfs/farm/g/glast/u33/ASP/'
+try:
+   os.environ['folder'], os.environ['nDownlink']
+except KeyError:
+   os.environ['folder'] = '/Data/OpsSim2/Level1'
+   os.environ['nDownlink'] = '80302002'
 
-    aspOutput = lambda x : os.path.join(_output_dir, x)
+print "Using "
+print "DataCatalog folder =", os.environ['folder']
+print "Downlink ID =", os.environ['nDownlink']
 
-    try:
-       os.environ['folder'], os.environ['nDownlink']
-    except KeyError:
-       os.environ['folder'] = '/Data/OpsSim2/Level1'
-       os.environ['nDownlink'] = '80302002'
+#debug = True
+debug = False
 
-    print "Using "
-    print "DataCatalog folder =", os.environ['folder']
-    print "Downlink ID =", os.environ['nDownlink']
+nDownlink = int(os.environ['nDownlink'])
+blindSearchStreams(downlinks=(nDownlink,),
+                   logicalPath=os.environ['folder'],
+                   grbroot_dir=aspOutput('GRB'),
+                   streamId=nDownlink, 
+                   datacatalog_imp="datacatalog",
+                   debug=debug)
 
-    debug = False
+args = {'folder' : os.environ['folder'],
+        'nDownlink' : nDownlink,
+        'PIPELINESERVER' : os.environ['PIPELINESERVER'],
+        'ASPLAUNCHERROOT' : _aspLauncherRoot,
+        'datacatalog_imp' : 'datacatalog'}
+inserter = PipelineCommand('AspInsertIntervals', args)
+inserter.run(debug=debug)
 
-    nDownlink = int(os.environ['nDownlink'])
-    blindSearchStreams(downlinks=(nDownlink,),
-                       logicalPath=os.environ['folder'],
-                       grbroot_dir=aspOutput('GRB'),
-                       streamId=nDownlink, 
-                       datacatalog_imp="datacatalog",
-                       debug=debug)
+unhandled = unhandledIntervals()
+for frequency in unhandled:
+   for interval in unhandled[frequency]:
+      args = {'folder' : os.environ['folder'],
+              'interval' : interval.interval,
+              'frequency' : frequency,
+              'nMetStart' : interval.tstart,
+              'nMetStop' : interval.tstop,
+              'GRBOUTPUTDIR' : aspOutput('GRB'),
+              'DRPOUTPUTDIR' : aspOutput('DRP'),
+              'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
+              'PIPELINESERVER' : os.environ['PIPELINESERVER'],
+              'ASPLAUNCHERROOT' : _aspLauncherRoot,
+              'datacatalog_imp' : 'datacatalog'}
 
-    args = {'folder' : os.environ['folder'],
-            'nDownlink' : nDownlink,
-            'PIPELINESERVER' : os.environ['PIPELINESERVER'],
-            'ASPLAUNCHERROOT' : _aspLauncherRoot,
-            'datacatalog_imp' : 'datacatalog'}
-    inserter = PipelineCommand('AspInsertIntervals', args)
-    inserter.run(debug=debug)
+      for item in args:
+         print item, args[item]
+      print "\n*******************\n"
 
-    unhandled = unhandledIntervals()
-    for frequency in unhandled:
-       for interval in unhandled[frequency]:
-          args = {'folder' : os.environ['folder'],
-                  'interval' : interval.interval,
-                  'frequency' : frequency,
-                  'nMetStart' : interval.tstart,
-                  'nMetStop' : interval.tstop,
-                  'GRBOUTPUTDIR' : aspOutput('GRB'),
-                  'DRPOUTPUTDIR' : aspOutput('DRP'),
-                  'PGWAVEOUTPUTDIR' : aspOutput('PGWAVE'),
-                  'PIPELINESERVER' : os.environ['PIPELINESERVER'],
-                  'ASPLAUNCHERROOT' : _aspLauncherRoot,
-                  'datacatalog_imp' : 'datacatalog'}
-
-          for item in args:
-             print item, args[item]
-          print "\n*******************\n"
-    
-          launcher = PipelineCommand('AspLauncher', args)
-          launcher.run(debug=debug)
+      launcher = PipelineCommand('AspLauncher', args)
+      launcher.run(debug=debug)

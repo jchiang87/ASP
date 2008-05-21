@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed May 21 15:05:11 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	launchDrpMonitoring.py 
+Log Message:
+use resolve_nfs_path instead of building from _asp_path et al
+    *
+------------------------------------------------------------
 User: jchiang  Tue May 20 20:11:52 PDT 2008
 ASP/asp_pgwave/python
 

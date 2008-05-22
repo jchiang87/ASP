@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v4r1   22-May-08   JC   rewrite SQL to accommodate new db tables;
+                            improve light curve plotting; and scripts to
+                            ingest GCN Notices received via email
     v4r0p1 04-May-08   JC   mv to ST v9r5p2; track log-likelihood values as a 
                             function instead of time instead of histograms;
     v4     28-Apr-08   JC   add code to process GCN Notices received via email;

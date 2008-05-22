@@ -24,10 +24,10 @@ from PipelineCommand import PipelineCommand, resolve_nfs_path
 _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
 
 #
-# Standard output directory for ASP results.  Will this be
-# replaced by a symlink as proposed?
+# Standard output directory for ASP results.  This is a symlink to
+# a location on nfs.
 #
-_output_dir = '/nfs/farm/g/glast/u33/ASP/AspSims/Results_140508'
+_output_dir = '/afs/slac/g/glast/ground/links/data/ASP/Results'
 
 aspOutput = lambda x : os.path.join(_output_dir, x)
 

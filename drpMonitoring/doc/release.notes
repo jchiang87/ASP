@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r3p1 22-May-08   JC   refactor how ROI_IDs are assigned
     v1r3   12-May-08   JC   add assignRois.py and run pyASP/crearoi.py to
                             generate ROIs for non-DRP sources.
     v1r2p1 04-May-08   JC   mv to ST v9r5p2; omit distant sources from 

@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r3    22-May-08    JC   remove dependences on ASP_PATH, ST_INST in 
+                              aspLauncher, et al scripts; add code to
+                              generate time intervals in db table.
     v1r2    04-May-08    JC   move to ST v9r5p2
     v1r1    22-Apr-08    JC   set pgwave stream ids using nMetStart + offset,
                               where offset depends on the frequency;

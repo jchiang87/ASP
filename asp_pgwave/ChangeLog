@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Thu May 22 11:37:42 PDT 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+remove ST_INST from xml task def; tagging v1r4p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 11:37:42 PDT 2008
 ASP/asp_pgwave/doc
 
 Modified Files:

@@ -34,15 +34,20 @@ aspOutput = lambda x : os.path.join(_output_dir, x)
 try:
    os.environ['folder'], os.environ['nDownlink']
 except KeyError:
-   os.environ['folder'] = '/Data/OpsSim2/Level1'
-   os.environ['nDownlink'] = '80302002'
+   print "The following env vars must be set:"
+   print "folder = <datacatalog folder containing FT1/2 data>"
+   print "nDownlink = <metadata ID number for the desired data delivery>"
 
-print "Using "
+try:
+   debug = eval(os.environ['ASP_LAUNCHER_DEBUG'])
+except KeyError:
+   debug = False
+
+print "AspLauncher script, using: "
 print "DataCatalog folder =", os.environ['folder']
 print "Downlink ID =", os.environ['nDownlink']
-
-#debug = True
-debug = False
+print "debug mode =", debug
+print
 
 nDownlink = int(os.environ['nDownlink'])
 blindSearchStreams(downlinks=(nDownlink,),

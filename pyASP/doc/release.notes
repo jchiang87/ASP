@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v3r4   22-May-08   JC   add dev version of UpperLimits.py; add python
+                            function to resolve nfs paths
     v3r3   12-May-08   JC   add Gino's script to generate ROIs for a list
                             of source positions (crearoi.py)
     v3r2   28-Apr-08   JC   add dot and cross products to SkyDir

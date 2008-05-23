@@ -29,11 +29,12 @@ class SourceTypeError(RuntimeError):
 class SourceData(object):
     _upperThreshold = 2e-6
     _lowerThreshold = 2e-7
-    def __init__(self, name, flux, fluxerr, srcModel, isUL=False):
+    def __init__(self, name, flux, fluxerr, srcModel, TS, isUL=False):
         self.name = name
         self.flux, self.fluxerr = flux, fluxerr
         self.type = self._getSrcType()
         self.srcModel = srcModel
+        self.TS = TS
         self.isUL = isUL
         try:
             self.eband_id = int(os.environ['eband_id'])
@@ -51,6 +52,7 @@ class SourceData(object):
                        "FREQUENCY" : "'%s'" % self.frequency}
         self.rowDict = {"FLUX" : self.flux,
                         "ERROR" : self.fluxerr,
+                        "TEST_STATISTIC" : self.TS,
                         "IS_UPPER_LIMIT" : int(self.isUL),
                         "IS_MONITORED" : int(self.is_monitored),
                         "IS_FLARING" : 0,

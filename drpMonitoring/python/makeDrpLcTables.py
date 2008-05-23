@@ -43,12 +43,14 @@ class EpochData(object):
         self.ra, self.dec = ptsrcs[entry[0]].ra, ptsrcs[entry[0]].dec
         self.flux = {}
         self.error = {}
+        self.ts = {}
         self.ul = {}
     def addMeasurement(self, entry):
         eband = entry[1]
         self.flux[eband] = entry[4]
         self.error[eband] = entry[5]
-        self.ul[eband] = entry[6]
+        self.ts[eband] = entry[6]
+        self.ul[eband] = entry[7]
     def accept(self, tbounds):
         return (tbounds[0] <= self.tstart <= tbounds[1] or
                 tbounds[0] <= self.tstop <= tbounds[1])
@@ -78,7 +80,7 @@ def fmcmp(fm1, fm2):
 
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
     sql = ("select PTSRC_NAME, EBAND_ID, INTERVAL_NUMBER, FREQUENCY, " +
-           "FLUX, ERROR, IS_UPPER_LIMIT from LIGHTCURVES")
+           "FLUX, ERROR, TEST_STATISTIC, IS_UPPER_LIMIT from LIGHTCURVES")
     def getFluxes(cursor):
         fluxes = Fluxes(timeIntervals, ptsrcs, tbounds)
         for entry in cursor:
@@ -157,7 +159,11 @@ class FitsTemplate(object):
 
         duration = pyfits.Column(name="DURATION", format="E", unit='S',
                                  array=tstop-tstart)
-        columns.append(duration)
+
+        ts = pyfits.Column(name="TEST_STATISTIC", format="E",
+                           array=eband_info("ts", len(ebands)-1))
+
+        columns.extend([duration, ts])
 
         self.HDUList.append(pyfits.new_table(columns))
         self.HDUList[1].name = 'LIGHTCURVES'

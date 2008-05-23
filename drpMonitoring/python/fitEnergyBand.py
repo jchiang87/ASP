@@ -95,7 +95,8 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
         flux = integral.getTrueValue()
         fluxerr = integral.error()*integral.getScale()
         isUL = False
-        if like.Ts(srcname) < 25:
+        TS = like.Ts(srcname)
+        if TS < 25:
             print "computing upper limit for ", srcname
             flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
                                        renorm=True)
@@ -104,7 +105,7 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
             isUL = True
         try:
             results[srcname] = SourceData(srcname, flux, fluxerr, 
-                                          outputModel, isUL)
+                                          outputModel, TS, isUL)
         except SourceTypeError:
             pass
 

@@ -10,6 +10,10 @@ on the DRP and flaring souces.
 # $Header$
 #
 
+import os
+import datetime
+import numpy as num
+import pyfits
 import drpDbAccess
 import databaseAccess as dbAccess
 
@@ -22,7 +26,11 @@ class TimeIntervals(object):
                       'daily' : {},
                       'weekly' : {}}
             for entry in cursor:
-                myData[entry[1]][entry[0]] = (int(entry[2]), int(entry[3]))
+                try:
+                    myData[entry[1]][entry[0]] = (int(entry[2]), int(entry[3]))
+                except KeyError:
+                    # Do nothing for non-standard frequencies.
+                    pass
             return myData
         self.intervals = dbAccess.apply(sql, getIntervals)
     def __call__(self, freq, interval_num):
@@ -81,48 +89,136 @@ def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
 def extractArray(fluxes, attr):
     return [eval(x.attr) for x in fluxes]
 
-if __name__ == '__main__':
-    import numpy as num
-    from pyfits import Column, HDUList, PrimaryHDU, new_table
+class OrderedDict(dict):
+    def __init__(self):
+        dict.__init__(self)
+        self.ordered_keys = []
+    def __setitem__(self, key, value):
+        self.ordered_keys.append(key)
+        dict.__setitem__(self, key, value)
 
-    ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
-    timeIntervals = TimeIntervals()
-    tbounds = 257731200, 258336000
-    fluxes = getLightCurves(timeIntervals, ptsrcs, tbounds)
-    flux_list = fluxes.values()
-    flux_list.sort(fmcmp)
+class FitsTemplate(object):
+    def __init__(self, templateFile=None):
+        if templateFile is None:
+            templateFile = os.path.join(os.environ['DRPMONITORINGROOT'],
+                                        'data', 'ASP_light_curves.tpl')
+            input = open(templateFile, 'r')
+            PHDUKeys = self._readHDU(input)
+            self.LCHDU = self._readHDU(input)
+        self.HDUList = pyfits.HDUList()
+        self.HDUList.append(pyfits.PrimaryHDU())
+        self._fillKeywords(self.HDUList[0], PHDUKeys)
+    def readDbTables(self, tmin, tmax):
+        ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
+        timeIntervals = TimeIntervals()
+        fluxes = getLightCurves(timeIntervals, ptsrcs, (tmin, tmax))
+        flux_list = fluxes.values()
+        extract = lambda attr : num.array([eval('x.%s' % attr) for x in 
+                                           flux_list])
+        def eband_info(attr, i):
+            data = []
+            for item in flux_list:
+                foo = item.__dict__[attr]
+                try:
+                    value = foo[i]
+                except KeyError:
+                    value = -1     # null value
+                data.append(value)
+            return num.array(data)
+        
+        ebands = ["_100_300", "_300_1000", "_1000_3000", "_3000_10000", 
+                  "_10000_300000", "_100_300000"]
 
-    extract = lambda attr : num.array([eval('x.%s' % attr) for x in flux_list])
-    def eband_info(attr, i):
-        data = []
-        for item in flux_list:
-            foo = item.__dict__[attr]
+        tstart = extract("tstart")
+        start = pyfits.Column(name="START", format="D", unit='S', array=tstart)
+        tstop = extract("tstop")
+        stop = pyfits.Column(name="STOP", format="D", unit='S', array=tstop)
+        duration = pyfits.Column(name="DURATION", format="E", unit='S',
+                                 array=tstop-tstart)
+
+        names = pyfits.Column(name="SOURCE", format='20A', 
+                              array=extract("name"))
+        ras = pyfits.Column(name="RA", format='E', unit='DEGREES',
+                            array=extract("ra"))
+        decs = pyfits.Column(name="DEC", format='E', unit='DEGREES',
+                             array=extract("dec"))
+        columns = [start, stop, duration, names, ras, decs]
+        for i, band in enumerate(ebands):
+            columns.append(pyfits.Column(name="FLUX%s" % band, format="E",
+                                         unit="photons/cm^2/s",
+                                         array=eband_info("flux", i)))
+            columns.append(pyfits.Column(name="ERROR%s" % band, format="E", 
+                                         unit="photons/cm^2/s", 
+                                         array=eband_info("error", i)))
+            columns.append(pyfits.Column(name="UL%s" % band, format="L", 
+                                         array=eband_info("ul", i)))
+        self.HDUList.append(pyfits.new_table(columns))
+        self.HDUList[1].name = 'LIGHTCURVES'
+        self._fillKeywords(self.HDUList[1], self.LCHDU)
+    def writeto(self, outfile, clobber=True):
+        filename = os.path.basename(outfile)
+        self.HDUList[0].header.update('FILENAME', filename)
+        self.HDUList[1].header.update('FILENAME', filename)
+        self.HDUList.writeto(outfile, clobber=clobber)
+    def __getattr__(self, attrname):
+        return getattr(self.HDUList, attrname)
+    def _fillKeywords(self, hdu, header):
+        for key in header.ordered_keys:
+            if not hdu.header.has_key(key):
+                hdu.header.update(key, header[key][0], comment=header[key][1])
+        self._fillDate(hdu)
+        self._fillCreator(hdu)
+    def _fillDate(self, hdu):
+        now = datetime.datetime.utcnow()
+        date = ("%4i-%02i-%02iT%02i:%02i:%02i" % 
+                (now.year, now.month, now.day,now.hour, now.minute, now.second))
+        hdu.header.update("DATE", date)
+    def _fillCreator(self, hdu):
+        version = os.environ['DRPMONITORINGROOT'].split('/')[-1]
+        hdu.header.update("CREATOR", "makeDrpLcTables.py %s" % version)
+    def _readHDU(self, input):
+        my_dict = OrderedDict()
+        for line in input:
+            if line.find('END') == 0:
+                break
+            if (line.find('COMMENT') == 0 or 
+                line.find('HISTORY') == 0 or
+                line.find('#') == 0):
+                continue
             try:
-                value = foo[i]
-            except KeyError:
-                value = -1     # null value
-            data.append(value)
-        return num.array(data)
+                key, value, comment = self._parseLine(line)
+                my_dict[key] = value, comment
+            except IndexError:
+                # skip blank lines
+                pass
+        return my_dict
+    def _parseLine(self, line):
+        data = line.split('=')
+        key = data[0].strip()
+        data2 = data[1].split('/')
+        my_value = data2[0].strip()
+        comment = ' '.join(data2[1:]).strip()
+        if my_value in ('T', 'F'):
+            value = {'T' : True, 'F' : False}[my_value]
+        else:
+            try:
+                try:
+                    value = int(my_value)
+                except ValueError:
+                    value = float(my_value)
+            except:
+                value = my_value.strip("'")
+        return key, value, comment
 
-    ebands = ["_100_300", "_300_1000", "_1000_3000", "_3000_10000", 
-              "_10000_300000", "_100_300000"]
+if __name__ == '__main__':
+    from GtApp import GtApp
 
-    start = Column(name="START", format="D", array=extract("tstart"))
-    stop = Column(name="STOP", format="D", array=extract("tstop"))
-    names = Column(name="SOURCE", format='20A', array=extract("name"))
-    ras = Column(name="RA", format='E', array=extract("ra"))
-    decs = Column(name="DEC", format='E', array=extract("dec"))
-    columns = [start, stop, names, ras, decs]
-    for i, band in enumerate(ebands):
-        columns.append(Column(name="FLUX%s" % band, format="E", 
-                              array=eband_info("flux", i)))
-        columns.append(Column(name="ERROR%s" % band, format="E", 
-                              array=eband_info("error", i)))
-        columns.append(Column(name="UL%s" % band, format="L", 
-                              array=eband_info("ul", i)))
+    outfile = 'bar.fits'
 
-    output = HDUList()
-    output.append(PrimaryHDU())
-    output.append(new_table(columns))
-    output[1].name = "LIGHTCURVES"
-    output.writeto('bar.fits', clobber=True)
+    output = FitsTemplate()
+    tmin, tmax = 0, 86400*7
+    output.readDbTables(tmin, tmax)
+    output.writeto(outfile, clobber=True)
+    
+    fchecksum = GtApp('fchecksum')
+    fchecksum.run(infile=outfile, update='yes', datasum='yes', chatter=0)

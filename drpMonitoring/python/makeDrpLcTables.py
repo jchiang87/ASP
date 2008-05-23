@@ -131,18 +131,20 @@ class FitsTemplate(object):
 
         tstart = extract("tstart")
         start = pyfits.Column(name="START", format="D", unit='S', array=tstart)
+
         tstop = extract("tstop")
         stop = pyfits.Column(name="STOP", format="D", unit='S', array=tstop)
-        duration = pyfits.Column(name="DURATION", format="E", unit='S',
-                                 array=tstop-tstart)
 
-        names = pyfits.Column(name="SOURCE", format='20A', 
+        names = pyfits.Column(name="NAME", format='20A', 
                               array=extract("name"))
+
         ras = pyfits.Column(name="RA", format='E', unit='DEGREES',
                             array=extract("ra"))
+
         decs = pyfits.Column(name="DEC", format='E', unit='DEGREES',
                              array=extract("dec"))
-        columns = [start, stop, duration, names, ras, decs]
+
+        columns = [start, stop, names, ras, decs]
         for i, band in enumerate(ebands):
             columns.append(pyfits.Column(name="FLUX%s" % band, format="E",
                                          unit="photons/cm^2/s",
@@ -152,6 +154,11 @@ class FitsTemplate(object):
                                          array=eband_info("error", i)))
             columns.append(pyfits.Column(name="UL%s" % band, format="L", 
                                          array=eband_info("ul", i)))
+
+        duration = pyfits.Column(name="DURATION", format="E", unit='S',
+                                 array=tstop-tstart)
+        columns.append(duration)
+
         self.HDUList.append(pyfits.new_table(columns))
         self.HDUList[1].name = 'LIGHTCURVES'
         self._fillKeywords(self.HDUList[1], self.LCHDU)
@@ -166,6 +173,8 @@ class FitsTemplate(object):
         for key in header.ordered_keys:
             if not hdu.header.has_key(key):
                 hdu.header.update(key, header[key][0], comment=header[key][1])
+            else: # just append comment
+                hdu.header.update(key, hdu.header[key], comment=header[key][1])
         self._fillDate(hdu)
         self._fillCreator(hdu)
     def _fillDate(self, hdu):
@@ -175,7 +184,7 @@ class FitsTemplate(object):
         hdu.header.update("DATE", date)
     def _fillCreator(self, hdu):
         version = os.environ['DRPMONITORINGROOT'].split('/')[-1]
-        hdu.header.update("CREATOR", "makeDrpLcTables.py %s" % version)
+        hdu.header.update("CREATOR", "ASP/drpMonitoring %s" % version)
     def _readHDU(self, input):
         my_dict = OrderedDict()
         for line in input:

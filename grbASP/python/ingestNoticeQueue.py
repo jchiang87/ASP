@@ -14,6 +14,7 @@ import glob
 import smtplib
 from ingestEmailNotice import Packet, registerWithDatabase
 from GCN_Notice_processor import GcnNoticeEmail
+from PipelineCommand import resolve_nfs_path
 
 def forwardErrorMessage(msg):
     preamble = ("Subject: ingestNoticeQueue error\n" +
@@ -26,17 +27,23 @@ def forwardErrorMessage(msg):
 
 archive_path = "/afs/slac/g/glast/ground/ASP/GCN_Archive"
 
-os.chdir(sys.argv[1])
+if sys.argv[1:]:
+    os.chdir(sys.argv[1])
+else:
+    os.chdir("/nfs/farm/g/glast/u33/ASP/GCN_Archive/NOTICE_QUEUE")
 
 notices = glob.glob('tmp*')
 
 for notice in notices:
     try:
-        my_notice = GcnNoticeEmail(open(notice).readlines())
-        my_notice.writeArchive(archive_path)
         packet = Packet(notice)
-#        registerWithDatabase(packet)
-        os.remove(notice)
+        if packet.trigger_num==999999 and packet.mission=='GLAST':
+            pass
+        else:
+            my_notice = GcnNoticeEmail(open(notice).readlines())
+            outfile = my_notice.writeArchive(archive_path)
+            registerWithDatabase(packet, resolve_nfs_path(outfile))
+            os.remove(notice)
     except Exception, msg:
-        message = msg + ("\nnotice file %s" % notice)
+        message = str(msg) + ("\nfor notice file %s" % notice)
         forwardErrorMessage(message)

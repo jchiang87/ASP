@@ -108,7 +108,7 @@ class Packet(object):
         return int((self.TJD + 2440000.5)*8.64e4 + self.SOD
                    - self._JD_missionStart_seconds)
         
-def registerWithDatabase(packet):
+def registerWithDatabase(packet, notice_file):
     grb_id = int(packet.MET)
     if not dbAccess.haveGrb(grb_id):
         dbAccess.insertGrb(grb_id)
@@ -116,6 +116,7 @@ def registerWithDatabase(packet):
                            INITIAL_LAT_RA=packet.RA, 
                            INITIAL_LAT_DEC=packet.Dec,
                            INITIAL_ERROR_RADIUS=packet.posError, 
+                           GCN_NOTICE_FILE="'%s'" % notice_file,
                            ASP_PROCESSING_LEVEL=0)
         isUpdate = 0
     else:

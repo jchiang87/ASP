@@ -53,6 +53,7 @@ class GcnNoticeEmail(object):
         os.system("chmod go+rwx %s" % output_dir)
         outfile = os.path.join(output_dir, "%i" % self.trignum)
         self.writeFile(outfile, add_delimiter=True)
+        return outfile
     def writeFile(self, outfile, add_delimiter=False):
         output = open(outfile, 'a')
         output.write("%s" % self.date)

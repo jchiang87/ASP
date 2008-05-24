@@ -37,7 +37,7 @@ notices = glob.glob('tmp*')
 for notice in notices:
     try:
         packet = Packet(notice)
-        if packet.trigger_num==999999 and packet.mission=='GLAST':
+        if packet.trigger_num==99999 and packet.mission=='GLAST':
             pass
         else:
             my_notice = GcnNoticeEmail(open(notice).readlines())

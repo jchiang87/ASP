@@ -17,9 +17,9 @@ except KeyError:
     _pipelineServer = 'PROD'
     os.environ['PIPELINESERVER'] = _pipelineServer
 
-print "ASP/PipelineCommand, using:"
-print "PIPELINESERVER = %s" % _pipelineServer
-print 
+#print "ASP/PipelineCommand, using:"
+#print "PIPELINESERVER = %s" % _pipelineServer
+#print 
 
 def resolve_nfs_path(path):
     tokens = path.split(":")

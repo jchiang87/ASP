@@ -95,8 +95,17 @@ def notice_date():
     "Return current date string using GCN Notice formatting"
     utcnow = datetime.datetime.utcnow()
     my_date = ("%3s %02i %3s %02i %02i:%02i:%02i UT" %
-               (weekdays[utcnow.weekday()], utcnow.day, months[utcnow.month],
+               (weekdays[utcnow.weekday()], utcnow.day, months[utcnow.month-1],
                 utcnow.year % 2000, utcnow.hour, utcnow.minute, utcnow.second))
+    return my_date
+
+def utc_date(met):
+    missionStart = datetime.datetime(2001, 1, 1, 0, 0, 0)
+    dt = datetime.timedelta(0, met)
+    utc = missionStart + dt
+    my_date = ("%3s %02i %3s %02i %02i:%02i:%02i UT" %
+               (weekdays[utc.weekday()], utc.day, months[utc.month-1],
+                utc.year % 2000, utc.hour, utc.minute, utc.second))
     return my_date
 
 class LatGcnNotice(object):
@@ -113,6 +122,7 @@ class LatGcnNotice(object):
     def setLocErr(self, error):
         self.notice['GRB_ERROR'] = ('%.2f [arcmin radius, statistical only]'
                                     % (error*60))
+        self._packet[11] = error*100
     def setIntens(self, counts):
         foo = self.notice
         foo['GRB_INTEN1'] = '%i [0.0 < cnts < 0.1 (GeV)]' % counts[0]
@@ -153,7 +163,7 @@ class LatGcnNotice(object):
         # Query for GCN_NAMEs with trigger times within the last day
         # that have the same root name.
         sql = ("select GCN_NAME from GRB where GRB_ID>=%i and GCAT_FLAG=0" 
-               % (self.MET - 8.64e4))
+               % (self.met - 8.64e4))
         def gcnNames(cursor):
             names = []
             for entry in cursor:
@@ -217,8 +227,9 @@ class LatGcnNotice(object):
                    % (fromadr, address, subj))
             message = (hdr +
                        "ASP GRB_blind_search found a burst candidate at\n\n" +
-                       "%s, MET = %i\n" % (notice_date(), self.grb_id) + 
-                       "(RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
+                       "  (RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
+                       "with trigger time\n\n"
+                       "  %s\n  MET = %.3f\n\n"%(utc_date(self.met),self.met) + 
                        "http://glast-ground.slac.stanford.edu/ASPDataViewer/")
             mail.sendmail(fromadr, address, message)
         mail.quit()

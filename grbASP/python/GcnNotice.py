@@ -24,12 +24,20 @@ class GcnNotice(object):
         # precedence based on Notice type for determining best
         # position.
         #
-        notice = GcnPacket(readGcnNotices(grb_id)[-1].tostring())
-        self.packet = notice
-        self.RA = notice.RA
-        self.DEC = notice.Dec
-        self.LOC_ERR = notice.posError
-        self.start_time = notice.MET
+        print "GcnNotice._accessDb: grb_id = ", grb_id
+        notice_list = readGcnNotices(grb_id)
+        packet_list = [GcnPacket(x.tostring()) for x in notice_list]
+        my_packet = packet_list[0]
+        errMin = my_packet.posError
+        for item in packet_list:
+            if item.posError < errMin:
+                errMin = item.posError
+                my_packet = item
+        self.packet = my_packet
+        self.RA = my_packet.RA
+        self.DEC = my_packet.Dec
+        self.LOC_ERR = my_packet.posError
+        self.start_time = my_packet.MET
         self.Name = grbName(grb_id)
     def _parseTextFile(self, infile):
         self._create_dict(infile)

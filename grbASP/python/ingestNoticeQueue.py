@@ -25,7 +25,8 @@ def forwardErrorMessage(msg):
     mail.sendmail(fromaddr, toaddr, "%s%s" % (preamble, msg))
     mail.quit()
 
-archive_path = "/afs/slac/g/glast/ground/ASP/GCN_Archive"
+#archive_path = "/afs/slac/g/glast/ground/ASP/GCN_Archive"
+archive_path = "/nfs/farm/g/glast/u33/ASP/GCN_Archive"
 
 if sys.argv[1:]:
     os.chdir(sys.argv[1])
@@ -43,7 +44,8 @@ for notice in notices:
             my_notice = GcnNoticeEmail(open(notice).readlines())
             outfile = my_notice.writeArchive(archive_path)
             registerWithDatabase(packet, resolve_nfs_path(outfile))
-            os.remove(notice)
+        os.remove(notice)
     except Exception, msg:
+        os.rename(notice, "_" + notice)
         message = str(msg) + ("\nfor notice file %s" % notice)
         forwardErrorMessage(message)

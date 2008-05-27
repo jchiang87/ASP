@@ -326,6 +326,13 @@ if __name__ == '__main__':
             #
             notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
             #
+            # Use default location error of 1 deg based on analyses 
+            # of GRID 1 data:
+            #
+            notice.setLocErr(1.)
+            #
+            notice.email_notification()
+            #
             # Need better logic to check if this burst already has a
             # Notice from a different mission/instrument. Here we just
             # check that the grb_id (int(MET of burst)) hasn't already

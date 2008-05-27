@@ -47,10 +47,10 @@ class GcnNoticeEmail(object):
         output_dir = os.path.join(path, self.mission_name)
         try:
             os.mkdir(output_dir)
+            os.system("chmod go+rwx %s" % output_dir)
         except OSError:
-            # Assume the directory already exists.
+            # Assume the directory already exists and is write-accessible.
             pass
-        os.system("chmod go+rwx %s" % output_dir)
         outfile = os.path.join(output_dir, "%i" % self.trignum)
         self.writeFile(outfile, add_delimiter=True)
         return outfile

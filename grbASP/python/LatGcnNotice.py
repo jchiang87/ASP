@@ -9,6 +9,7 @@
 
 import os
 import copy
+import string
 import datetime
 import array
 import celgal
@@ -141,12 +142,31 @@ class LatGcnNotice(object):
         jd = pyASP.jd_from_MET(burstTime)
         year, month, day, hours = jd.gregorianDate()
         foo = self.notice
-#        foo['GRB_DATE'] = ('%i TJD; %i DOY; %s/%s/%s' %
-#                           (jd.tjd(), jd.dayOfYear(), year%100, month, day))
+#        foo['GRB_DATE'] = ('%i TJD; %i DOY; %2i/%2i/%2i' %
+#                           (jd.tjd(), jd.dayOfYear(),
+#                            int(year%100), int(month), int(day)))
         foo['GRB_DATE'] = ('%i TJD; %i DOY' % (jd.tjd(), jd.dayOfYear()))
         foo['GRB_TIME'] = time_string(hours*3600)
-        self.name = ('GRB%02i%02i%02i%03i' %
-                     (year % 100, month, day, hours/24.*1000))
+        
+        grb_name = 'GRB%02i%02i%02i' % (year % 100, month, day)
+        #
+        # Query for GCN_NAMEs with trigger times within the last day
+        # that have the same root name.
+        sql = ("select GCN_NAME from GRB where GRB_ID>=%i and GCAT_FLAG=0" 
+               % (self.MET - 8.64e4))
+        def gcnNames(cursor):
+            names = []
+            for entry in cursor:
+                if entry[0].find(grb_name) == 0:
+                    names.append(entry[0])
+            names.sort()
+            return names
+        recentNames = dbAccess.apply(sql, gcnNames)
+        #
+        # Apply the suffix for the next GRB
+        #
+        self.name = grb_name + string.ascii_uppercase[len(recentNames)]
+        
         JD_missionStart_seconds = 211845067200
         jd = (self.met + JD_missionStart_seconds)/8.64e4
         tjd = jd - 2440000.5
@@ -185,8 +205,8 @@ class LatGcnNotice(object):
 #            return [item[1] for item in cursor]
 #        recipients = dbAccess.apply(sql, cursorFunc)
         recipients = ['jchiang@slac.stanford.edu']
-        recipients.extend(['shiftslist@glast.stanford.edu', 
-                           'GRBslist@glast.stanford.edu'])
+#        recipients.extend(['shiftslist@glast.stanford.edu', 
+#                           'GRBslist@glast.stanford.edu'])
         print recipients
         fromadr = "solist@glast.stanford.edu"
         subj = "ASP blind search GRB candidate"
@@ -195,9 +215,11 @@ class LatGcnNotice(object):
             print "sending GCN Notice to %s" % address
             hdr = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" 
                    % (fromadr, address, subj))
-            message = ("%sASP GRB_blind_search found a burst candidate at\n\n"
-                       + "MET = %i, (RA, Dec) = (%.3f, %.3f)\n\n"
-                       + "See http://glast-ground.slac.stanford.edu/ASPDataViewer/") % (hdr, self.grb_id, self.ra, self.dec)
+            message = (hdr +
+                       "ASP GRB_blind_search found a burst candidate at\n\n" +
+                       "%s, MET = %i\n" % (notice_date(), self.grb_id) + 
+                       "(RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
+                       "http://glast-ground.slac.stanford.edu/ASPDataViewer/")
             mail.sendmail(fromadr, address, message)
         mail.quit()
 

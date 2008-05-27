@@ -23,7 +23,8 @@ _grbAspRoot = resolve_nfs_path(os.environ['GRBASPROOT'])
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                        debug=False, streamId=None, 
-                       datacatalog_imp="datacatalog"):
+                       datacatalog_imp="datacatalog",
+                       outputFolder=None):
     if downlinks is None:
         raise ValueError, "No downlink IDs specified"
     if grbroot_dir is None:
@@ -38,6 +39,8 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                 'datacatalog_imp' : datacatalog_imp}
         if logicalPath is not None:
             args['logicalPath'] = logicalPath
+        if outputFolder is not None:
+            args['outputFolder'] = outputFolder
         command = PipelineCommand('GRB_blind_search', args, stream=streamId)
         command.run(debug=debug)
 

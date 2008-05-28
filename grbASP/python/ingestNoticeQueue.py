@@ -25,20 +25,22 @@ def forwardErrorMessage(msg):
     mail.sendmail(fromaddr, toaddr, "%s%s" % (preamble, msg))
     mail.quit()
 
-#archive_path = "/afs/slac/g/glast/ground/ASP/GCN_Archive"
-archive_path = "/nfs/farm/g/glast/u33/ASP/GCN_Archive"
+archive_path = "/nfs/farm/g/glast/u52/ASP/GCN_Archive"
 
 if sys.argv[1:]:
     os.chdir(sys.argv[1])
 else:
-    os.chdir("/nfs/farm/g/glast/u33/ASP/GCN_Archive/NOTICE_QUEUE")
+    os.chdir(os.path.join(archive_path, "NOTICE_QUEUE"))
 
 notices = glob.glob('tmp*')
+
+skipped_notice_types = ('SWIFT_SC_SLEW',)
 
 for notice in notices:
     try:
         packet = Packet(notice)
-        if packet.trigger_num==99999 and packet.mission=='GLAST':
+        if ((packet.trigger_num==99999 and packet.mission=='GLAST') or
+            packet.notice_type in skipped_notice_types):
             pass
         else:
             my_notice = GcnNoticeEmail(open(notice).readlines())

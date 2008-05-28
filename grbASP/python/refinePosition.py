@@ -65,7 +65,7 @@ def refinePosition(gcn_notice, ft1Input, ft2Input, config,
         pos_error = celgal.dist((ra, dec), (notice.RA, notice.DEC))
     if tsmap:
         npix = 20
-        mapsize = 4*pos_error
+        mapsize = 6*pos_error
         gttsmap = GtApp('gttsmap', 'Likelihood')
         gttsmap['evfile'] = gtfindsrc['evfile']
         gttsmap['scfile'] = gtfindsrc['scfile']

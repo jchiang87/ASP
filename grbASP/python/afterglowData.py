@@ -65,10 +65,12 @@ def afterglow_pars(infile):
 
 def updateProcessingLevel(name):
     sql = "select GRB_ID from GRB where GCN_NAME = '%s'" % name
+    print sql
     def cursorFunc(cursor):
         for item in cursor:
             return item[0]
     grb_id = dbAccess.apply(sql, cursorFunc)
+    print "grb_id = ", grb_id
     dbAccess.updateGrb(grb_id, ASP_PROCESSING_LEVEL=2)
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@ class Roi(object):
 class RoiIds(dict):
     def __init__(self, infile=None):
         if infile is None:
-            sql = "select ROI_ID, RA, DEC, RADIUS, SR_RADIUS from ROIS"
+            sql = "select ROI_ID, RA, DEC, RADIUS, SR_RADIUS from ROIS where group_id=0"
             def readRoiTable(cursor):
                 for item in cursor:
                     self[item[0]] = Roi(*item[1:])

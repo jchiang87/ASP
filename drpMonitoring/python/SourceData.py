@@ -14,8 +14,8 @@ import databaseAccess as dbAccess
 cx_Oracle = dbAccess.cx_Oracle
 
 def getMonitoringBand(emin=100, emax=300000):
-    sql = ("select eband_id from ENERGYBANDS where emin=%i and emax=%i"
-           % (emin, emax))
+    sql = ("select eband_id from ENERGYBANDS where emin=%i and emax=%i "
+           % (emin, emax) + "and group_id=0")
     def getBand(cursor):
         for entry in cursor:
             return entry[0]

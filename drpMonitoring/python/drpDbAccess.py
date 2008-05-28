@@ -20,7 +20,7 @@ def dircos(ra, dec):
     return num.array((nx, ny, nz))
 
 def insertRoi(id, ra, dec, radius, sr_rad):
-    sql = ("insert into ROIS (ROI_ID, RA, DEC, RADIUS, SR_RADIUS) "
+    sql = ("insert into ROIS (ROI_ID, RA, DEC, RADIUS, SR_RADIUS, 0) "
            + "values (%i, %.3f, %.3f, %i, %i)" % (id, ra, dec, radius, sr_rad))
     apply(sql)
 
@@ -33,7 +33,7 @@ def updateRoi(id, **kwds):
 
 def readRois(outfile='rois.txt'):
     output = open(outfile, 'w')
-    sql = "select * from ROIS order by ROI_ID ASC"
+    sql = "select * from ROIS where group_id=0 order by ROI_ID ASC"
     def cursorFunc(cursor):
         for entry in cursor:
             pars = tuple([x for x in entry])

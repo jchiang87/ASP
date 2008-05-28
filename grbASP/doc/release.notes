@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v4r1p1 28-May-08   JC   improve ingest code for GCN Notices
     v4r1   22-May-08   JC   rewrite SQL to accommodate new db tables;
                             improve light curve plotting; and scripts to
                             ingest GCN Notices received via email

@@ -10,7 +10,8 @@ tables for the flare detection and source monitoring applications.
 import databaseAccess as dbAccess
 
 def getFrequencies(freqtype=0):
-   sql = "select FREQUENCY, DURATION from FREQUENCIES where TYPE=%i" % freqtype
+   sql = ("select FREQUENCY, DURATION from FREQUENCIES where GROUP_ID=%i" 
+          % freqtype)
    def getFreqs(cursor):
        freqs = {}
        for entry in cursor:

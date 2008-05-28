@@ -33,7 +33,7 @@ def updateRoi(id, **kwds):
 
 def readRois(outfile='rois.txt'):
     output = open(outfile, 'w')
-    sql = "select * from ROIS where group_id=0 order by ROI_ID ASC"
+    sql = "select ROI_ID, RA, DEC, RADIUS, SR_RADIUS from ROIS where group_id=0 order by ROI_ID ASC"
     def cursorFunc(cursor):
         for entry in cursor:
             pars = tuple([x for x in entry])

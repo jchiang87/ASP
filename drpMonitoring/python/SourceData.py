@@ -11,6 +11,7 @@ methods for updating the LIGHTCURVES database tables.
 #
 import os
 import databaseAccess as dbAccess
+from PipelineCommand import resolve_nfs_path
 cx_Oracle = dbAccess.cx_Oracle
 
 def getMonitoringBand(emin=100, emax=300000):
@@ -56,7 +57,7 @@ class SourceData(object):
                         "IS_UPPER_LIMIT" : int(self.isUL),
                         "IS_MONITORED" : int(self.is_monitored),
                         "IS_FLARING" : 0,
-                        "XMLFILE" : "'%s'" % self.srcModel}
+                        "XMLFILE" : "'%s'" % resolve_nfs_path(self.srcModel)}
     def _getSrcType(self):
         sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
                self.name)

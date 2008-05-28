@@ -52,7 +52,7 @@ results = fitEnergyBand(100, 300000, srcModel, roi, roiIds)
 # Query the db tables and write the energy bands that the pipeline
 # needs to dispatch for subsequent analyses.
 #
-sql = "select eband_id, emin, emax from ENERGYBANDS"
+sql = "select eband_id, emin, emax from ENERGYBANDS where GROUP_ID=0"
 def getEnergyBands(cursor):
     ids, emins, emaxs = [], [], []
     for entry in cursor:

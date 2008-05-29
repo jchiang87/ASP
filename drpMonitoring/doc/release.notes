@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r3p2 29-May-08   JC   add group_id conditions on db table queries;
+                            update script to produce light curves data product
+                            for GSSC
     v1r3p1 22-May-08   JC   refactor how ROI_IDs are assigned
     v1r3   12-May-08   JC   add assignRois.py and run pyASP/crearoi.py to
                             generate ROIs for non-DRP sources.

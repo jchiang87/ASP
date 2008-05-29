@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r3p1  29-May-08    JC   use new group_id condition when querying 
+                              FREQUENCIES db tables to get just ASP values.
     v1r3    22-May-08    JC   remove dependences on ASP_PATH, ST_INST in 
                               aspLauncher, et al scripts; add code to
                               generate time intervals in db table.

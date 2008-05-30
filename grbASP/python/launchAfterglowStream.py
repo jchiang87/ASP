@@ -14,7 +14,9 @@ from createGrbStreams import afterglowStreams
 
 output_dir = os.environ['OUTPUTDIR']
 
-ft1, ft2 = getStagedFitsData()
+fileStager = FileStager('stagingDir', stageArea=output_dir, 
+                        messageLevel='INFO')
+ft1, ft2 = getStagedFitsData(fileStager)
 
 gti = FitsNTuple(ft1, 'GTI')
 
@@ -26,3 +28,5 @@ if tstart >= min(gti.START) and tstop <= max(gti.STOP):
     afterglowStreams(logicalPath=os.environ['logicalPath'],
                      output_dir=output_dir, streamId=grb_id,
                      datacatalog_imp=os.environ['datacatalog_imp'])
+
+fileStager.finish()

@@ -23,7 +23,9 @@ except OSError:
     else:
         raise OSError, "Error creating directory: " + output_dir
 
-ft1, ft2 = getStagedFitsData()
+fileStager = FileStager('stagingDir', stageArea=output_dir, 
+                        messageLevel='INFO')
+ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 
 print 'reading FT1 files:'
 for item in ft1:
@@ -44,3 +46,4 @@ if True:
                       streamId=grb_id, 
                       datacatalog_imp=os.environ['datacatalog_imp'])
 
+fileStager.finish()

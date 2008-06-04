@@ -110,7 +110,7 @@ class Packet(object):
         
 def registerWithDatabase(packet, notice_file):
     grb_id = int(packet.MET)
-    triggerTimes = dbAccess.gcnTriggerTimes(packet)
+    triggerTimes = dbAccess.gcnTriggerTimes(packet.mission, packet.trigger_num)
     if not dbAccess.haveGrb(grb_id) and not triggerTimes:
         dbAccess.insertGrb(grb_id)
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.Name,
@@ -121,6 +121,7 @@ def registerWithDatabase(packet, notice_file):
                            ASP_PROCESSING_LEVEL=0)
         isUpdate = 0
     else:
+        grb_id = triggerTimes[0][0]
         isUpdate = 1
 
     dbAccess.insertGcnNotice(grb_id, packet.buffer, packet.mission,

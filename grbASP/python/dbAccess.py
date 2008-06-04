@@ -25,13 +25,13 @@ def haveGrb(grb_id):
         return False
     return apply(sql, cursorFunc)
 
-def gcnTriggerTimes(packet):
+def gcnTriggerTimes(mission, trigger_num):
     """Find the GCN notices with matching mission and trigger number fields
     and return the sorted "trigger" times."""
-    sql = ("select NOTICEMET from GCNNOTICES " +
-           "where MISSION='%s' " % packet.mission +
-           "and TRIGGER_NUM=%i" % packet.trigger_num)
-    noticemets = apply(sql, lambda curs : [x[0] for x in curs])
+    sql = ("select GRB_ID, NOTICEMET from GCNNOTICES " +
+           "where MISSION='%s' " % mission +
+           "and TRIGGER_NUM=%i" % trigger_num)
+    noticemets = apply(sql, lambda curs : [x for x in curs])
     noticemets.sort()
     return noticemets
 
@@ -52,8 +52,9 @@ def getGrbIds():
     return apply(sql, cursorFunc)
 
 def readGcnNotices(grb_id):
-    """Return the stored packet buffers from the GCNNOTICES table"""
-    sql = "select GCN_NOTICE from GCNNOTICES where GRB_ID = %i" % grb_id
+    """Return the stored packet buffers from the GCNNOTICES table, with
+    the initial notice being returned first in the list."""
+    sql = "select GCN_NOTICE from GCNNOTICES where GRB_ID = %i order by ISUPDATE ASC" % grb_id
     def cursorFunc(cursor):
         notices = []
         for entry in cursor:

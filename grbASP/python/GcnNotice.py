@@ -19,15 +19,17 @@ class GcnNotice(object):
         self.ft2 = None
     def _accessDb(self, grb_id):
         #
-        # Retrieve the last Notice that was inserted for this burst,
-        # assuming it has the best position. @todo Implement
-        # precedence based on Notice type for determining best
-        # position.
+        # Use trigger time from initial notice and best position 
+        # based on error circle radius.
         #
         print "GcnNotice._accessDb: grb_id = ", grb_id
         notice_list = readGcnNotices(grb_id)
         packet_list = [GcnPacket(x.tostring()) for x in notice_list]
         my_packet = packet_list[0]
+        #
+        # Use MET of initial notice as burst start time.
+        #
+        self.start_time = my_packet.MET
         errMin = my_packet.posError
         for item in packet_list:
             if item.posError < errMin:
@@ -37,7 +39,6 @@ class GcnNotice(object):
         self.RA = my_packet.RA
         self.DEC = my_packet.Dec
         self.LOC_ERR = my_packet.posError
-        self.start_time = my_packet.MET
         self.Name = grbName(grb_id)
     def _parseTextFile(self, infile):
         self._create_dict(infile)

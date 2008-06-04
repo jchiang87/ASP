@@ -110,7 +110,8 @@ class Packet(object):
         
 def registerWithDatabase(packet, notice_file):
     grb_id = int(packet.MET)
-    if not dbAccess.haveGrb(grb_id):
+    triggerTimes = dbAccess.gcnTriggerTimes(packet)
+    if not dbAccess.haveGrb(grb_id) and not triggerTimes:
         dbAccess.insertGrb(grb_id)
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % packet.Name,
                            INITIAL_LAT_RA=packet.RA, 

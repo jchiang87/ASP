@@ -25,6 +25,16 @@ def haveGrb(grb_id):
         return False
     return apply(sql, cursorFunc)
 
+def gcnTriggerTimes(packet):
+    """Find the GCN notices with matching mission and trigger number fields
+    and return the sorted "trigger" times."""
+    sql = ("select NOTICEMET from GCNNOTICES " +
+           "where MISSION='%s' " % packet.mission +
+           "and TRIGGER_NUM=%i" % packet.trigger_num)
+    noticemets = apply(sql, lambda curs : [x[0] for x in curs])
+    noticemets.sort()
+    return noticemets
+
 def grbName(grb_id):
     sql = "select GCN_NAME from GRB where GRB_ID=%i and GCAT_FLAG=0" % grb_id
     def getName(cursor):

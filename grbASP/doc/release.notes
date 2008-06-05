@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r2   05-Jun-08   JC   use mission and trigger number for identifying
+                            update Notices; use combination of initial trigger
+                            time and best source position as inputs to 
+                            refinement task
     v4r1p2 31-May-08   JC   clean up staged files in launcher scripts
     v4r1p1 28-May-08   JC   improve ingest code for GCN Notices
     v4r1   22-May-08   JC   rewrite SQL to accommodate new db tables;

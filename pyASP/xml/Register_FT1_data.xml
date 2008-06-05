@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pipeline xmlns="http://glast-ground.slac.stanford.edu/pipeline" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
-  <task name="RegisterData" type="Data" version="0.8">
-    <notation>Registering DC2 data</notation>
+  <task name="RegisterAspSims" type="Data" version="2.0">
+    <notation>Registering ASP simulation data</notation>
     <variables>
-      <var name="PYASPROOT">/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v1</var>
-      <var name="BINDIR">rh9_gcc32</var>
+      <var name="filePathRoot">/nfs/farm/g/glast/u33/ASP/AspSims/TestData</var>
+      <var name="baseName">newSims_part</var>
     </variables>
-    <prerequisites>
-      <prerequisite name="numFiles" type="integer"/>
-    </prerequisites>
     <process name="computeFileInfo">
-      <job executable="${PYASPROOT}/${BINDIR}/computeFileInfo.sh" maxCPU="60"/>
+      <job executable="${PYASPROOT}/${BINDIR}/computeFileInfo.sh"
+           batchOptions="-q glastdataq " allocationGroup="glastdata"/>
     </process>
-    <process name="registerDataset">
-      <script language="python">
-        <![CDATA[
-        fileInfo = pipeline.getProcessInstance("computeFileInfo")
-        downlinkDir = fileInfo.getVariable("downlinkDir")
-        downlinkFile = fileInfo.getVariable("downlinkFile")
-        tstart = fileInfo.getVariable("tstart")
-        tstop = fileInfo.getVariable("tstop")
-        print downlinkDir, downlinkFile, tstart, tstop
-        #dataType = "MC"
-        #logicalPath = "/DC2/FT1:" + downlinkFile
-        #filePath = downlinkDir + "/" + downlinkFile
-        #attributes = "tstart=%s:tstop=%s" % (tstart, tstop)
-        #print dataType, logicalPath, filePath, attributes
-        #datacatalog.registerDataset(dataType, logicalPath, filePath,
-        #                            attributes)
+    <process name="launchRegistrationTasks">
+      <script><![CDATA[
+         computeFileInfo = pipeline.getProcessInstance("computeFileInfo")
+         fileList = computeFileInfo.getVariable("fileList")
+         numFt1Files = int("%s" % computeFileInfo.getVariable("numFt1Files"))
+         for i in range(numFt1Files):
+             pipeline.createSubstream("registerDatasetTask", i, 
+                                      "fileList=%s,fileEntry=%i,"%(fileList, i))
+      ]]</script>
+      <depends>
+        <after process="computeFileInfo" status="STATUS"/>
+      </depends>
+    </process>
+    <task name="registerDatasetTask" version="1.0" type="Data">
+      <prerequisites>
+        <prerequisite name="fileList" type="string"/>
+        <prerequisite name="fileEntry" type="integer"/>
+      </prerequisites>
+      <process name="readFileInfo">
+        <job executable="${PYASPROOT}/${BINDIR}/readFileInfo"
+             batchOptions="-q glastdataq " allocationGroup="glastdata"/>
+      </process>
+      <process name="registerDataset">
+        <script><![CDATA[
+          fileInfo = pipeline.getProcessInstance("readFileInfo")
+          fileName = fileInfo.getVariable("fileName")
+          basename = fileName.split('/')[-1]
+          nDownlink = fileInfo.getVariable("nDownlink")
+          tstart = fileInfo.getVariable("tstart")
+          tstop = fileInfo.getVariable("tstop")
+          print fileName, nDownlink, tstart, tstop
+          attributes = ('nDownlink=%s:nMetStart=%s:nMetStop=%s'
+                        % (nDownlink, tstart, tstop))
+          logicalPath = '/ASP/TestSims2/FT1:%s' % basename
+          datacatalog.registerDataset('FT1', logicalPath, fileName,
+                                      attributes)
         ]]>
       </script>
       <depends>
-        <after process="computeFileInfo" status="SUCCESS"/>
+        <after process="readFileInfo" status="SUCCESS"/>
       </depends>
     </process>
   </task>

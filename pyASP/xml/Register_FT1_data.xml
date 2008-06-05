@@ -22,6 +22,9 @@
       <depends>
         <after process="computeFileInfo" status="STATUS"/>
       </depends>
+      <createsSubtasks>
+        <subtask>registerDatasetTask</subtask>
+      </createsSubtasks>
     </process>
     <task name="registerDatasetTask" version="1.0" type="Data">
       <prerequisites>
@@ -47,11 +50,11 @@
           datacatalog.registerDataset('FT1', logicalPath, fileName,
                                       attributes)
         ]]>
-      </script>
-      <depends>
-        <after process="readFileInfo" status="SUCCESS"/>
-      </depends>
-    </process>
+        </script>
+        <depends>
+          <after process="readFileInfo" status="SUCCESS"/>
+        </depends>
+      </process>
+    </task>
   </task>
 </pipeline>
-

@@ -10,7 +10,7 @@ import datetime
 import time
 import array
 import base64
-from databaseAccess import apply, cx_Oracle, asp_default
+from databaseAccess import apply, cx_Oracle, asp_default, glastgen
 
 def convert_clob(clob):
     foo = array.array('l', base64.decodestring(clob.read()))
@@ -153,6 +153,22 @@ def simple_packet(type):
     my_packet = array.array("l", (type,) + 39*(0,))
     my_packet.byteswap()
     return my_packet
+
+def grbAdvocateEmails():
+    sql = """select u.first_name,u.last_name,u.email from profile_user u
+         join profile_ug ug on ug.user_id=u.user_name 
+         where group_id in
+         (select group_name from profile_group 
+          left outer join profile_gg on parent_id = group_name 
+          start with group_name='GRBAdvocate' 
+          connect by prior group_name = child_id)
+         group by u.first_name,u.last_name,u.email"""
+    try:
+        email_list = apply(sql, lambda curs : [x[2] for x in curs], 
+                           connection=glastgen)
+    except:
+        email_list = ['jchiang@slac.stanford.edu']
+    return email_list
 
 if __name__ == '__main__':
     grb_id = 1234

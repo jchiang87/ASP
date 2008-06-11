@@ -9,12 +9,22 @@
 import os
 import cx_Oracle
 
-db_config = open(os.environ['ASP_DB_CONFIG'], 'r')
-lines = db_config.readlines()
-
-glastgen = lines[0].strip().encode('rot13').split()
-asp_prod = lines[1].strip().encode('rot13').split()
-asp_dev = lines[2].strip().encode('rot13').split()
+if os.environ['ORACLE_HOME'] == '/usr/oracle':
+    #
+    # Use encoded passwords from config file.
+    #
+    db_config = open(os.environ['ASP_DB_CONFIG'], 'r')
+    lines = db_config.readlines()
+    glastgen = lines[0].strip().encode('rot13').split()
+    asp_prod = lines[1].strip().encode('rot13').split()
+    asp_dev = lines[2].strip().encode('rot13').split()
+else:
+    # 
+    # Use Oracle wallet.
+    #
+    glastgen = ('/@glastgenprod',)
+    asp_prod = ('/@asp',)
+    asp_dev = ('/@asp-dev',)
 
 asp_default = asp_dev
 #asp_default = asp_prod

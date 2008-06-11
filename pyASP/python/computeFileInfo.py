@@ -20,10 +20,16 @@ def getObsTimes(ft1File):
 filePathRoot = os.environ['filePathRoot']
 baseName = os.environ['baseName']
 
-files = glob.glob(os.path.join(filePathRoot, baseName, '*.fits'))
+print filePathRoot
+print baseName
+
+glob_string = os.path.join(filePathRoot, baseName + '*.fits')
+print glob_string
+
+files = glob.glob(glob_string)
 files.sort()
 
-fileList = 'ft1FileList.txt'
+fileList = os.path.join(filePathRoot, 'ft1FileList.txt')
 
 output = open(fileList, 'w')
 for ft1File in files:

@@ -3,6 +3,7 @@ version v3r4p1
 
 # $Id$
 
+use AspPolicy v* ASP
 use SwigPolicy v*
 use astro v*
 
@@ -18,3 +19,6 @@ macro source *.cxx WIN32 "*.h *.cxx"
 library pyASP $(source)
 
 apply_pattern swig_module name="pyASP"
+
+apply_pattern wrapper_scripts
+

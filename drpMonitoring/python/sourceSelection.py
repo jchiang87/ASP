@@ -128,7 +128,8 @@ if __name__ == '__main__':
 
     tstart = int(os.environ['TSTART'])
     tstop = int(os.environ['TSTOP'])
-    interval_time = (tstart + tstop)/2.
+#    interval_time = (tstart + tstop)/2.
+    interval_time = tstart
 
     #
     # Loop over sources in model and keep only DRP, pgwave, and monitored

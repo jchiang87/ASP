@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v4r2p1 13-Jun-08   JC   query GroupManager for GRBAdvocate email addresses;
+                            improve handling for filtering GCN Notice email;
+                            bug-fixes for launcher scripts
     v4r2   05-Jun-08   JC   use mission and trigger number for identifying
                             update Notices; use combination of initial trigger
                             time and best source position as inputs to 

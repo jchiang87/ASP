@@ -40,6 +40,9 @@ class Packet(object):
                 self.RA = float(line.split()[1].strip('d'))
             elif line.find('GRB_DEC:') == 0:
                 self.Dec = float(line.split()[1].strip('d'))
+            elif line.find('Subject: GCN') == 0:
+                self.notice_type = line.split()[1].split('/')[-1]
+                self.mission = self.notice_type.split('_')[0]
             elif line.find('GRB_ERROR:') == 0:
                 # Convert from arcmin to deg
                 self.posError = float(line.split()[1])/60. 
@@ -51,9 +54,6 @@ class Packet(object):
                 self.SOD = int(float(line.split()[1]))
             elif line.find('NOTICE_DATE') == 0:
                 self._parseNoticeDate(line)
-            elif line.find('Subject: GCN') == 0:
-                self.notice_type = line.split()[1].split('/')[-1]
-                self.mission = self.notice_type.split('_')[0]
             elif line.find("TRIGGER_NUM:") == 0:
                 # This line combines the trigger number and
                 # sequence/segment number and does not have canonical
@@ -75,7 +75,10 @@ class Packet(object):
         self.buffer = array.array("l", 40*(0,))
         self.buffer[7] = int(self.RA*1e4)
         self.buffer[8] = int(self.Dec*1e4)
-        self.buffer[11] = int(self.posError*1e4)
+        try:
+            self.buffer[11] = int(self.posError*1e4)
+        except AttributeError:
+            pass
         self.buffer[5] = self.TJD
         self.buffer[6] = self.SOD*100
         self.buffer.byteswap()

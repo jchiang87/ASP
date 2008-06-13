@@ -40,7 +40,7 @@ for notice in notices:
     try:
         packet = Packet(notice)
         if ((packet.trigger_num==99999 and packet.mission=='GLAST') or
-            packet.notice_type in skipped_notice_types):
+            (packet.notice_type in skipped_notice_types)):
             pass
         else:
             my_notice = GcnNoticeEmail(open(notice).readlines())

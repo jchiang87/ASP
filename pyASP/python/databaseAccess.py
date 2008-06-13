@@ -26,6 +26,8 @@ else:
     glastgen = ('/@glastgenprod',)
     asp_prod = ('/@asp',)
     asp_dev = ('/@asp-dev',)
+    rsp_prod = ('/@rsp',)
+    rsp_dev = ('/@rsp-dev',)
 
 #
 # Set the default default to point to the dev tables.

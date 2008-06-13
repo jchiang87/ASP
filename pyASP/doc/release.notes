@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v3r5   13-Jun-08   JC   use connections strings appropriate for 
+                            Oracle wallet use
     v3r4p1 29-May-08   JC   suppress info message from PipelineCommand
     v3r4   22-May-08   JC   add dev version of UpperLimits.py; add python
                             function to resolve nfs paths

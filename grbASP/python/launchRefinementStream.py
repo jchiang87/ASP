@@ -12,6 +12,7 @@ from FitsNTuple import FitsNTuple
 from getFitsData import getStagedFitsData
 import dbAccess
 from createGrbStreams import refinementStreams
+from FileStager import FileStager
 
 output_dir = os.environ['OUTPUTDIR']
 try:

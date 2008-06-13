@@ -11,12 +11,13 @@ import os
 from FitsNTuple import FitsNTuple
 from getFitsData import getStagedFitsData
 from createGrbStreams import afterglowStreams
+from FileStager import FileStager
 
 output_dir = os.environ['OUTPUTDIR']
 
 fileStager = FileStager('stagingDir', stageArea=output_dir, 
                         messageLevel='INFO')
-ft1, ft2 = getStagedFitsData(fileStager)
+ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 
 gti = FitsNTuple(ft1, 'GTI')
 

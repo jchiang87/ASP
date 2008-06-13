@@ -331,7 +331,8 @@ if __name__ == '__main__':
             #
             notice.setLocErr(1.)
             #
-            notice.email_notification()
+            if os.environ['PIPELINESERVER'] == 'PROD':
+                notice.email_notification(['jchiang@slac.stanford.edu'])
             #
             # Need better logic to check if this burst already has a
             # Notice from a different mission/instrument. Here we just

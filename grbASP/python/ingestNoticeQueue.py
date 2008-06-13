@@ -34,7 +34,7 @@ else:
 
 notices = glob.glob('tmp*')
 
-skipped_notice_types = ('SWIFT_SC_SLEW',)
+skipped_notice_types = ('SWIFT_SC_SLEW', 'SWIFT_UVOT_POSITION_NACK')
 
 for notice in notices:
     try:

@@ -22,13 +22,15 @@ except KeyError:
 # according to the value of the PIPELINE_FROMADDRESS env var.
 #
 try:
-    if os.environ['PIPELINE_FROMADDRESS'].find('pipeline-prod') == 0:
+    fromaddress = os.environ['PIPELINE_FROMADDRESS']
+    if fromaddress.find('pipeline-prod') == 0:
         _pipelineServer = 'PROD'
-    elif os.environ['PIPELINE_FROMADDRESS'].find('pipeline-dev') == 0:
+    elif fromaddress.find('pipeline-dev') == 0:
         _pipelineServer = 'DEV'
-    elif os.environ['PIPELINE_FROMADDRESS'].find('pipeline-test') == 0:
+    elif fromaddress.find('pipeline-test') == 0:
         _pipelineServer = 'TEST'
     os.environ['PIPELINESERVER'] = _pipelineServer
+    print "overriding using pipeline_fromaddress: ", fromaddress
 except KeyError:
     # This is not being launched from a pipeline task.
     pass

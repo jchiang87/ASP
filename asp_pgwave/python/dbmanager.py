@@ -1,6 +1,6 @@
 import cx_Oracle
 from datetime import datetime
-from databaseAccess import asp_default, glastgen
+from databaseAccess import apply,asp_default, glastgen
 import astroUtil as ast
 from math import *
 _dbtables={'LightCurves':'LightCurves', \
@@ -187,7 +187,7 @@ def FAdvocateEmails():
         	email_list = apply(sql, lambda curs : [x[2] for x in curs], 
                            connection=glastgen)
     	    except:
-		print "test"
+		#print "test"
         	email_list = ['tosti@pg.infn.it']
     	    return email_list
 if __name__=="__main__":

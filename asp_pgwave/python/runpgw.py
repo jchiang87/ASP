@@ -1,4 +1,5 @@
 import os,sys
+from gtutil import *
 from GtApp import GtApp
 import pyfits
 import numarray as num
@@ -9,9 +10,9 @@ from FitsNTuple import FitsNTuple
 from refinePositions import refinePositions
 from dbmanager import *
 
-gtselect = GtApp('gtselect')
+"""gtselect = GtApp('gtselect')
 gtbin = GtApp('gtbin')
-gtexposure = GtApp('gtexposure')
+gtexposure = GtApp('gtexposure')"""
 pgw=GtApp('pgwave2D','pgwave')
 def getpgwConfig():
         err=0
@@ -28,7 +29,7 @@ def getpgwConfig():
 
 #pgwaveprog=os.path.join(os.environ['PGWAVEROOT'], os.environ['BINDIR'])+'/pgwave2D.exe'
 #pgwaveprog='pgwave'
-def makeMap(infile,mapPar,outfil):
+"""def makeMap(infile,mapPar,outfil):
 	gtbin.debug=False
 	gtbin['algorithm']='CMAP'
 	gtbin['evfile']=infile
@@ -59,7 +60,7 @@ def calcExposure(lcfile,infileft2,irf):
 	gtexposure['scfile']=infileft2
 	gtexposure['rspfunc']=irf
 	gtexposure['spectral_index']=-2.1
-	gtexposure.run()
+	gtexposure.run()"""
 
 #def createMap(infil,mapPar,outf):
 #	makeMap(infil,mapPar,outf)
@@ -116,13 +117,16 @@ def runpgw(infile):
 	ra=180.
 	dec=0.
 	rad=180.
-	mapPar=[ra,dec,'CAR',sizex,sizey,scale,rad,'CEL']
+	#mapPar=[ra,dec,'CAR',sizex,sizey,scale,rad,'CEL']
+	mapPar=[ra,dec,'CAR',sizex,sizey,scale,'CEL']
 	inmap1=infile.replace('.fits','_map.fits')  
 	if os.path.exists(inmap1)==False:
 		makeMap(infile,mapPar,inmap1)
 	aitmap=infile.replace('.fits','_map_ait.fits')
-	mapParAit=[0.,0.,'AIT',720,360,0.5,rad,'GAL']
+	#mapParAit=[0.,0.,'AIT',720,360,0.5,rad,'GAL']
+	mapParAit=[0.,0.,'AIT',720,360,0.5,'GAL']
 	makeMap(infile,mapParAit,aitmap)
+	#sys.exit()
 	no=getpgwConfig()
         pgwave(inmap1,no)
 	outf=inmap1.replace('.fits','.list')

@@ -220,7 +220,10 @@ def checkPointSource(pgwdata,dateinfo):
 
 def inviaMail(testo):
 	_fromaddress="tosti@slac.stanford.edu"
-        _toaddress=db.FAdvocateEmails()
+	if debug==0:
+        	_toaddress=db.FAdvocateEmails()
+	else:
+		_toaddress=['tosti@pg.infn.it']
         subject='LAT SkyMonitor report:'+(' %s'%dt.datetime.utcnow().isoformat())
         smail.sendFAmail(_fromaddress,_toaddress,subject,testo)
 

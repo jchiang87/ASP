@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Sun Jun 15 14:46:54 PDT 2008
+ASP/asp_pgwave/python
+
+Added Files:
+	gtutil.py 
+Log Message:
+ST utility funcions previously in runpgw.py
+    *
+------------------------------------------------------------
 User: tosti  Sun Jun 15 14:43:43 PDT 2008
 ASP/asp_pgwave/python
 

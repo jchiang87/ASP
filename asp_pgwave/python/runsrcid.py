@@ -13,6 +13,7 @@ ddec=[]
 rra=[]
 sunFlag=0
 sunSunId=-1
+debug=0
 def loadpgwRow(pgwfits):
 	hdulist  = pyfits.open(pgwfits)
 	nrows=hdulist[1].header['NAXIS2']
@@ -163,9 +164,11 @@ def SaveAssoc(pgwfile,pgwdata,sourceName):
 
         c9=pyfits.Column(name='CHI_2_VAR', format='5F', unit=' ',array=pgwdata.field('CHI_2_VAR'))
         c10=pyfits.Column(name='FLARING_FLAG', format='1F', unit=' ',array=pgwdata.field('FLARING_FLAG'))
-	c11=pyfits.Column(name='COUNTERPART', format='100A', unit=' ',array=index)
+	c11=pyfits.Column(name='K_SIGN', format='1F', unit=' ',array=pgwdata.field('K_SIGN'))
 
-	x = pyfits.ColDefs([c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11])
+	c12=pyfits.Column(name='COUNTERPART', format='100A', unit=' ',array=index)
+
+	x = pyfits.ColDefs([c0,c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12])
 	tbhdu=pyfits.new_table(x)
 	tbhdu.writeto('temp.fits',clobber='yes')
         #UCD 
@@ -182,7 +185,8 @@ def checkPointSource(pgwdata,dateinfo):
 	mydb=db.dbmanager()
         mydb.getPointSources()
         #mydb.close()
-	procid=int(os.environ['PIPELINE_STREAM'])
+	if debug==0:
+		procid=int(os.environ['PIPELINE_STREAM'])
 	ra=db._PointSourcesFields['RA'][1]
 	dec=db._PointSourcesFields['DEC'][1]
 	i=0
@@ -195,32 +199,40 @@ def checkPointSource(pgwdata,dateinfo):
 		  dis=a.difference(SkyDir(rr,dd))*180./3.1415 
 		  #print dis  
 	          if  dis<=1.:
-			index[i]=(db._PointSourcesFields['SOURCE_TYPE'][1])[k]+'_'+(db._PointSourcesFields['PTSRC_NAME'][1])[k]+','+index[i]
-			print "trovata:",pgwdata.field('NAME')[i],(db._PointSourcesFields['PTSRC_NAME'][1])[k],dis
-			source_name.append((db._PointSourcesFields['PTSRC_NAME'][1])[k])
+		      index[i]=(db._PointSourcesFields['SOURCE_TYPE'][1])[k]+'_'+(db._PointSourcesFields['PTSRC_NAME'][1])[k]+','+index[i]
+		      print "trovata:",pgwdata.field('NAME')[i],(db._PointSourcesFields['PTSRC_NAME'][1])[k],dis
+		      source_name.append((db._PointSourcesFields['PTSRC_NAME'][1])[k])
+	              if debug==0:
 			mydb.insertFlareEvent((db._PointSourcesFields['PTSRC_NAME'][1])[k],dateinfo['tstart'],dateinfo['tstop'],pgwdata.field('Flux(E>100)')[i],pgwdata.field('errFlux')[i],pgwdata.field('CHI_2_VAR')[i],int(pgwdata.field('FLARING_FLAG')[i]),1,procid)
-			flag=1
-			break
+		      flag=1
+		      break
 		  k=k+1
 		if flag==0:
+	           if debug==0:
 			name=mydb.insertPointSource(idpix[i],r,de,1.)
 			source_name.append(name)
 			mydb.insertFlareEvent(name,dateinfo['tstart'],dateinfo['tstop'],pgwdata.field('Flux(E>100)')[i],pgwdata.field('errFlux')[i],pgwdata.field('CHI_2_VAR')[i],int(pgwdata.field('FLARING_FLAG')[i]),1,procid)
+		   else:
+                        source_name.append('Test')
 		i=i+1
-
 	mydb.close()
 	return source_name
 
 def inviaMail(testo):
 	_fromaddress="tosti@slac.stanford.edu"
-        _toaddress=['tosti@pg.infn.it']
-        subject='test FA mail'
+        _toaddress=db.FAdvocateEmails()
+        subject='LAT SkyMonitor report:'+(' %s'%dt.datetime.utcnow().isoformat())
         smail.sendFAmail(_fromaddress,_toaddress,subject,testo)
 
-def faMessage(source,sunpos):
+def faMessage(source,sunpos,dateinfo):
         flag=num.array(source['FLARING_FLAG'])
-        testo="Flaring Source Pipeline Report\n"
-	testo=testo+("UTC DATE:%s\n" % (dt.datetime.utcnow().isoformat()))
+        testo="LAT SkyMonitor: Source Detection task report\n"
+	testo=testo+("UTC DATE:%s\n\n" % (dt.datetime.utcnow().isoformat()))
+	testo=testo+('Analized Time Interval:[%d,%d]\n'%(dateinfo['tstart'],dateinfo['tstop']))
+	testo=testo+('Found %d sources\n' % len(flag)) 
+	for i in range(0,len(flag)):
+	   testo=testo+('%03d %s'%(i+1,source['NAME'][i]))+(" at RA=%f, DEC=%f\n"% (source['RAJ2000'][i],source['DECJ2000'][i]))	
+	testo=testo+'\n'
 	if len(flag)>0:
            for i in range(0,len(flag)):
                 if flag[i]>0:
@@ -228,6 +240,7 @@ def faMessage(source,sunpos):
 	else:
 	   testo=testo+'NO FLARING SOURCE DETECTED\n' 	
 	ss= ("Sun (RA,DEC): %7.4f,%7.4f \nSun (l,b): %7.4f,%7.4f\n" % (sunpos.ra(), sunpos.dec(),sunpos.l(),sunpos.b()))
+	testo=testo+'\n'
 	testo=testo+ss+'\nData Products at: http://glast-ground.slac.stanford.edu/ASPDataViewer/\n'
 	return (testo)
 
@@ -244,7 +257,7 @@ def runsrcid(pgwfile,prob):
 	sun=checkSun(pgwdata,dateinfo)
 	sourceName=checkPointSource(pgwdata,dateinfo)
 	source = SaveAssoc(pgwfile,pgwdata,sourceName)
-	testo=faMessage(source,sun)
+	testo=faMessage(source,sun,dateinfo)
 	inviaMail(testo)
 	os.system('rm temp.fits assoc.fits')
 

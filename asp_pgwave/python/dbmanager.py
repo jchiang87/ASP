@@ -1,6 +1,6 @@
 import cx_Oracle
 from datetime import datetime
-from databaseAccess import asp_default
+from databaseAccess import asp_default, glastgen
 import astroUtil as ast
 from math import *
 _dbtables={'LightCurves':'LightCurves', \
@@ -76,8 +76,8 @@ _FlareEventsFields={
   'HEALPIX_ID':('healpix_id',[])}
 
 class dbmanager:
-	def __init__(self):
-		self.conn= cx_Oracle.connect(*asp_default)
+	def __init__(self,connect=asp_default):
+		self.conn= cx_Oracle.connect(*connect)
 	def close(self):
 		self.conn.close()
 	def getPointSources(self):
@@ -174,17 +174,35 @@ class dbmanager:
                         self.conn.commit()
 		cursor.close()	
 		return nome1
+def FAdvocateEmails():
+    	    sql = """select u.first_name,u.last_name,u.email from profile_user u join profile_ug ug on ug.user_id=u.user_name 
+         where group_id in
+         (select group_name from profile_group 
+          left outer join profile_gg on parent_id = group_name 
+          start with group_name='FlareAdvocate' 
+          connect by prior group_name = child_id)
+         group by u.first_name,u.last_name,u.email"""
+	 
+            try:
+        	email_list = apply(sql, lambda curs : [x[2] for x in curs], 
+                           connection=glastgen)
+    	    except:
+		print "test"
+        	email_list = ['tosti@pg.infn.it']
+    	    return email_list
 if __name__=="__main__":
 
 	#d=datetime.now()
-	db=dbmanager()
+	#db=dbmanager()
 	#db.getPointSources()
 	#n=db.insertFlareEvent('3C 279',2555000,2500000,3e-7,3e-8,2.6,0)
 	#no=db.getPointSourcesFSP()
 	#if len(no)>0:
 	#	print no
 	#db.setPgwaveConfigDef()
-	no=db.getPgwaveConfig()
-	print no[3]
-	db.close()
+	#no=db.getPgwaveConfig()
+	#print no[3]
+	#db.close()
+	email=FAdvocateEmails()
+	print email
 	#print _PointSourcesFields['HEALPIX_ID'][1]

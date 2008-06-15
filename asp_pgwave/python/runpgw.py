@@ -103,9 +103,16 @@ def runpgw(infile):
 #        except OSError:
 #                pass
 #	os.system(cmd) 
-	sizex=720
-	sizey=360
-	scale=0.5
+	header = pyfits.open(infile)['GTI'].header
+    	ontime= header['ONTIME']
+	print ontime
+	iscale=2
+    	if ontime>43000:
+		iscale=4
+	print iscale
+	sizex=360*iscale
+	sizey=180*iscale
+	scale=1./iscale
 	ra=180.
 	dec=0.
 	rad=180.
@@ -114,7 +121,7 @@ def runpgw(infile):
 	if os.path.exists(inmap1)==False:
 		makeMap(infile,mapPar,inmap1)
 	aitmap=infile.replace('.fits','_map_ait.fits')
-	mapParAit=[0.,0.,'AIT',sizex,sizey,scale,rad,'GAL']
+	mapParAit=[0.,0.,'AIT',720,360,0.5,rad,'GAL']
 	makeMap(infile,mapParAit,aitmap)
 	no=getpgwConfig()
         pgwave(inmap1,no)
@@ -125,7 +132,7 @@ def runpgw(infile):
         refinePositions(pgwave_list=outf, ft1File=infile)
 	lcpar=no[6:8]
 	outfits=pgw2fits(outf,lcpar,1)
-	runsrcid(outfits,.01)
+	runsrcid(outfits,.1)
 	#print 'PGWave FITS output file:',outfits 
 
 if __name__=="__main__":

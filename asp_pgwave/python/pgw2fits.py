@@ -107,7 +107,9 @@ def pgw2fits(pgwfile,no,flag):
 
 	c9=pyfits.Column(name='CHI_2_VAR', format='5F', unit=' ',array=num.array(chi2))
 	c10=pyfits.Column(name='FLARING_FLAG', format='1F', unit=' ',array=num.array(fla))
-	x = pyfits.ColDefs([c1,c2,c3,c4,c5,c6,c7,c8,c9,c10])
+	c11=pyfits.Column(name='K_SIGN', format='1F', unit=' ',array=num.array(signi_pgw))
+
+	x = pyfits.ColDefs([c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11])
 	tbhdu=pyfits.new_table(x)
 	tbhdu.writeto('temp.fits',clobber='yes')
 	hd=(pyfits.open(filevt))[0].header   

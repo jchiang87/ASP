@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Sun Jun 15 14:43:43 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py runpgw.py runsrcid.py 
+Log Message:
+fixed a bug in retriving the FA emails list
+    *
+------------------------------------------------------------
 User: tosti  Sun Jun 15 09:40:43 PDT 2008
 ASP/asp_pgwave/python
 

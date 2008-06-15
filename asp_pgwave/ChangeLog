@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Sun Jun 15 09:40:43 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py pgw2fits.py runpgw.py runsrcid.py 
+Log Message:
+added access to the FA emails,source detection signif. in the final output fits file, scaling of the cmaps size with time interval
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r4p1, operation: add
 Package: asp_pgwave

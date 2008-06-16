@@ -44,8 +44,14 @@ class Packet(object):
                 self.notice_type = line.split()[1].split('/')[-1]
                 self.mission = self.notice_type.split('_')[0]
             elif line.find('GRB_ERROR:') == 0:
-                # Convert from arcmin to deg
-                self.posError = float(line.split()[1])/60. 
+                self.posError = float(line.split()[1])
+                #
+                # Convert to degrees, if necessary
+                #
+                if line.find('arcmin') > 0:
+                    self.posError /= 60. 
+                elif line.find('arcsec') > 0:
+                    self.posError /= (60.*60.)
             elif (line.find('GRB_DATE:') == 0 or 
                   line.find('IMG_START_DATE') == 0):
                 self.TJD = int(line.split()[1])
@@ -139,5 +145,5 @@ if __name__ == '__main__':
     import glob
 
     packet = Packet(sys.argv[1])
-    registerWithDatabase(packet)
+    registerWithDatabase(packet, '/foo')
     print packet.MET, packet.Name

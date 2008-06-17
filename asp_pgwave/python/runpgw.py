@@ -3,7 +3,7 @@ from gtutil import *
 from GtApp import GtApp
 import pyfits
 import numarray as num
-from pgw2fits import *
+from newpgw2fits import *
 from runsrcid import *
 from creaXimageGif import *
 from FitsNTuple import FitsNTuple
@@ -120,8 +120,8 @@ def runpgw(infile):
 	#mapPar=[ra,dec,'CAR',sizex,sizey,scale,rad,'CEL']
 	mapPar=[ra,dec,'CAR',sizex,sizey,scale,'CEL']
 	inmap1=infile.replace('.fits','_map.fits')  
-	if os.path.exists(inmap1)==False:
-		makeMap(infile,mapPar,inmap1)
+	#if os.path.exists(inmap1)==False:
+	makeMap(infile,mapPar,inmap1)
 	aitmap=infile.replace('.fits','_map_ait.fits')
 	#mapParAit=[0.,0.,'AIT',720,360,0.5,rad,'GAL']
 	mapParAit=[0.,0.,'AIT',720,360,0.5,'GAL']
@@ -137,7 +137,7 @@ def runpgw(infile):
 	lcpar=no[6:8]
 	outfits=pgw2fits(outf,lcpar,1)
 	runsrcid(outfits,.1)
-	#print 'PGWave FITS output file:',outfits 
+	print 'PGWave FITS output file:',outfits 
 
 if __name__=="__main__":
         from syncDataViewer import syncDataViewer

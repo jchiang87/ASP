@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Tue Jun 17 03:56:53 PDT 2008
+ASP/asp_pgwave/python
+
+Added Files:
+	aperPhotLC.py 
+Log Message:
+new aperture phot alghorithm for variability check, use of gtexposure to evaluate exposure, plot of the lightcurve
+    *
+------------------------------------------------------------
 User: tosti  Sun Jun 15 14:46:54 PDT 2008
 ASP/asp_pgwave/python
 

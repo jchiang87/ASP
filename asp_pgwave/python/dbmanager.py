@@ -174,6 +174,7 @@ class dbmanager:
                         self.conn.commit()
 		cursor.close()	
 		return nome1
+
 def FAdvocateEmails():
     	    sql = """select u.first_name,u.last_name,u.email from profile_user u join profile_ug ug on ug.user_id=u.user_name 
          where group_id in
@@ -190,6 +191,23 @@ def FAdvocateEmails():
 		#print "test"
         	email_list = ['tosti@pg.infn.it']
     	    return email_list
+
+def getSMIrf(tstart):
+    sql = "select * from SOURCEMONITORINGCONFIG"
+    def findConfig(cursor):
+        for entry in cursor:
+            startdate, enddate = entry[1], entry[2]
+	    #print entry[1], entry[2],entry[3]
+            if startdate <= tstart and tstart <= enddate:
+                return entry[3]
+        message = 'SourceMonitoring configuration not found for %i MET' % tstart
+        raise RuntimeError, message
+    irfs =apply(sql, findConfig)
+    return irfs
+
+
+
+
 if __name__=="__main__":
 
 	#d=datetime.now()
@@ -205,4 +223,5 @@ if __name__=="__main__":
 	#db.close()
 	email=FAdvocateEmails()
 	print email
+	#getSMIrf()
 	#print _PointSourcesFields['HEALPIX_ID'][1]

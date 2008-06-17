@@ -135,6 +135,8 @@ def creaXimageGif(nomefile,l,b):
 	x,y=aitoff1(l,b)
 	plotCircle(x,y,6)
 	pl.savefig(outgif1,dpi=72)
+	pl.clf()
+	pl.close('all')
 	outgif=nomefile.replace('.fits','.gif')
 	#comando="ximage @temp.xco" 
 	#comando1= ("convert %s -crop 575x285+180+165 %s\n" % (outgif,outgif1))

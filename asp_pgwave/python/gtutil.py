@@ -60,6 +60,7 @@ def lcExposure(lcfile,ft2file,irf):
 	gtexposure['scfile']=ft2file
 	gtexposure['rspfunc']=irf
 	gtexposure['spectral_index'] = -2.1
+	gtexposure['emin']=100.
 	gtexposure.run()
 
 def getFileTimeInfo(infile):

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Tue Jun 17 04:01:41 PDT 2008
+ASP/asp_pgwave/python
+
+Added Files:
+	newlc.py newpgw2fits.py 
+Log Message:
+new versions of lc.py and pgw2fits.py used by runpgw.py
+    *
+------------------------------------------------------------
 User: tosti  Tue Jun 17 03:59:04 PDT 2008
 ASP/asp_pgwave/python
 

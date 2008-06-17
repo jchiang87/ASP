@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Tue Jun 17 04:07:13 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	runpgw.py 
+Log Message:
+now use newpgw2fits.py
+    *
+------------------------------------------------------------
 User: tosti  Tue Jun 17 04:06:18 PDT 2008
 ASP/asp_pgwave/python
 

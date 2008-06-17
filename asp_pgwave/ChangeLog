@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Tue Jun 17 04:06:18 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py 
+Log Message:
+added possible use of the DB to retrive the irfs to be used in newlc.py
+    *
+------------------------------------------------------------
 User: tosti  Tue Jun 17 04:04:25 PDT 2008
 ASP/asp_pgwave/python
 

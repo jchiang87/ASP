@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Tue Jun 17 03:59:04 PDT 2008
+ASP/asp_pgwave/python
+
+Added Files:
+	statUtil.py 
+Log Message:
+added functions to estimate the varibility statistical significance
+    *
+------------------------------------------------------------
 User: tosti  Tue Jun 17 03:56:53 PDT 2008
 ASP/asp_pgwave/python
 

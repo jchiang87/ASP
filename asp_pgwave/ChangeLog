@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Tue Jun 24 14:31:07 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py newlc.py newpgw2fits.py 
+Log Message:
+now use pass6 irfs, code cleaned
+    *
+------------------------------------------------------------
 User: tosti  Tue Jun 17 04:07:13 PDT 2008
 ASP/asp_pgwave/python
 

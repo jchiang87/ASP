@@ -85,13 +85,13 @@ def pgw2fits(pgwfile,no,flag):
 	errflux=[]
 	print "NAME            RA       DEC    SIGNIF  Flux  CHI2"
 	for i in range(0,len(ra_pgw)):
-		if flag==1 and signi_pgw[i]>8.0:
+		if flag==1 and signi_pgw[i]>7.0:
 			llcpar[0]=ra_pgw[i]
 		        llcpar[1]=dec_pgw[i]
 			fl,errfl,chi,V=newlc.createLC(llcpar,nbins,name_pgw[i])
 			flux.append(fl)
 			errflux.append(errfl)
-			if chi>1. and V >1.:
+			if chi>=1. and V >1.:
 				chi2.append(chi)
 				fla.append(1)
 				print name_pgw[i],'\t',ra_pgw[i],'\t',dec_pgw[i],'\t',signi_pgw[i],'\t',fl,'\t',chi

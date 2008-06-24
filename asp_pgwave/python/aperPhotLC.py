@@ -118,9 +118,9 @@ def plotLC(x,xerr,y,yerr,tit='Light curve',outplot='lc.png'):
 	print 'Light curve plot saved in: ',outplot
 
 if __name__=='__main__':
-	infile='region_evt.fits'
-	ft2file='ft2test.fits'
-	irf='P5_v13_0_source'
+	infile='Filtered_evt.fits'
+	ft2file='FT2_merged.fits'
+	irf='P6_V1_SOURCE'
 	#selpar=[ra,dec,rad,tmin,tmax,emin,emax,zmax,evclass]
 	tmin,tstop=gtutil.getFileTimeInfo(infile)
 	tmax=tmin+86400
@@ -135,7 +135,7 @@ if __name__=='__main__':
 	r1bg=5.
 	r2bg=7.
 	lcpar=[ra,dec,rsrc,r1bg,r2bg,tmin,tmax,emin,emax,zmax,evclass]
-	res=getApPhotLC(infile,ft2file,irf,nbin,lcpar)
-	lcStat(res[4],res[5])
+	res=getApPhotLC(infile,ft2file,irf,nbin,lcpar,'Vela')
+	lcStat(res[4],res[5],res[8])
 	outplot='lc.png'
 	plotLC(res[0],res[1],res[4],res[5],'Vela',outplot)

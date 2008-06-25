@@ -1,7 +1,19 @@
 import gtutil
 import aperPhotLC
 import sys
-def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.fits',irf='P6_V1_SOURCE'):
+import databaseAccess as dbAccess
+
+def smconfig_irf(ft1file):
+        tstart, tstop = gtutil.getFileTimeInfo(ft1file)
+        sql = "select IRFS from SOURCEMONITORINGCONFIG where %i>=STARTDATE and %i<=ENDDATE" % (tstart, tstart)
+        irfs = dbAccess.apply(sql, lambda curs: [x[0] for x in curs])
+        return irfs[0]
+
+def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.fits',irf=None):
+        if irf is None:
+                irf = 'P6_V1_SOURCE'
+        else:
+                irf = smconfig_irf(infile)
 	outf='pgw_lc.dat'
 	regfile='pgw_lc_variable.reg'
 	mean=0.

@@ -42,7 +42,7 @@ gtdiffresp['irfs'] = pars['rspfunc']
 gtdiffresp['srcmdl'] = srcModel.filename
 
 if debug:
-    print "Skipping the gtdiffresp command until it is parallized."
+    print "Skipping the gtdiffresp command until it is parallelized."
     print "The needed diffuse response information will be computed in "
     print "sourceAnalysis.py"
     print gtdiffresp.command()

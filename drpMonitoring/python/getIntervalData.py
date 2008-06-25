@@ -47,7 +47,8 @@ shutil.copy('pgwaveFileList', os.environ['OUTPUTDIR'])
 
 output_dir = os.environ['OUTPUTDIR']
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-fileStager = FileStager(process_id, stageArea=output_dir, cleanup=False)
+#fileStager = FileStager(process_id, stageArea=output_dir, cleanup=False)
+fileStager = FileStager(process_id, stageArea=output_dir)
 
 ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 

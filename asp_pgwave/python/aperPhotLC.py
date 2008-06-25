@@ -1,3 +1,9 @@
+import os
+#
+# Need to set this so that pylab can write .matplotlib
+#
+os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
+
 import sys,commands
 import gtutil
 import FitsNTuple

@@ -24,6 +24,7 @@ os.chdir(output_dir)
 start_time = float(os.environ['TSTART'])
 stop_time = float(os.environ['TSTOP'])
 
+gtmktime = GtApp('gtmktime')
 gtselect = GtApp('gtselect')
 
 print "Using downlink files: ", ft1
@@ -33,6 +34,9 @@ ft1merge(ft1, ft1Merged)
 
 ft2Merged = 'FT2_merged.fits'
 ft2merge(ft2, ft2Merged)
+
+gtmktime.run(scfile=ft2Merged, evfile=ft1Merged, outfile='foo.fits')
+shutil.copy('foo.fits', ft1Merged)
 
 gti = FitsNTuple(ft1Merged, 'GTI')
 

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Jun 25 09:37:27 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py getPgwInputData.py 
+Log Message:
+set MPLCONFIGDIR for .matplotlib in aperPhotLc.py; run gtmktime on merged FT1 file in getPgwInputData
+    *
+------------------------------------------------------------
 User: tosti  Tue Jun 24 14:31:07 PDT 2008
 ASP/asp_pgwave/python
 

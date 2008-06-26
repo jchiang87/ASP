@@ -114,6 +114,7 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
     # Write the updated list in its place.
     #
     srclist.write(pgwave_list, glat_cutoff, TS_cutoff)
-
+    rows=open(pgwave_list).readlines()
+    return len(rows)-1
 if __name__ == '__main__':
     refinePositions()

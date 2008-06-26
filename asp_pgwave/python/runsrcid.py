@@ -17,6 +17,9 @@ debug=0
 def loadpgwRow(pgwfits):
 	hdulist  = pyfits.open(pgwfits)
 	nrows=hdulist[1].header['NAXIS2']
+	if nrows==0:
+		print "no source found:exit program"
+		sys.exit()
 	data1    = hdulist[1].data
 	decData = num.array(data1.field('DECJ2000'), dtype=num.float)  
 	raData=num.array(data1.field('RAJ2000'), dtype=num.float)

@@ -60,7 +60,7 @@ def eq2gal(r,d):
 		#print l0,b0
 	return num.array(l),num.array(b)
 
-def pgw2fits(pgwfile,no,flag):
+def pgw2fits(pgwfile,no,flag,nsource):
 	pgwfits=pgwfile.replace('.list','_pgw_out.fits')
 	filevt=pgwfile.replace('_map.list','.fits')
 	name_pgw,ra_pgw,dec_pgw,posErr,signi_pgw=readpgw(pgwfile)

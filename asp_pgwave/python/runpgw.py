@@ -133,10 +133,14 @@ def runpgw(infile):
         #
         # Perform position refinement. This updates the positions in outf.
         #
-        refinePositions(pgwave_list=outf, ft1File=infile)
+	rows=open(outf).readlines()
+	if len(rows)>1:
+        	nsource=refinePositions(pgwave_list=outf, ft1File=infile)
 	lcpar=no[6:8]
-	outfits=pgw2fits(outf,lcpar,1)
-	runsrcid(outfits,.1)
+	outfits=pgw2fits(outf,lcpar,1,nsource)
+	if nsource>0:
+		runsrcid(outfits,.1)
+	print 'No source found'
 	print 'PGWave FITS output file:',outfits 
 
 if __name__=="__main__":

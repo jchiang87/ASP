@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Thu Jun 26 15:04:37 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	newpgw2fits.py refinePositions.py runpgw.py runsrcid.py 
+Log Message:
+fixed a bug when no source are detected
+    *
+------------------------------------------------------------
 User: jchiang  Wed Jun 25 11:32:54 PDT 2008
 ASP/asp_pgwave/python
 

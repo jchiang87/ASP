@@ -134,6 +134,7 @@ def runpgw(infile):
         # Perform position refinement. This updates the positions in outf.
         #
 	rows=open(outf).readlines()
+        nsource = 0
 	if len(rows)>1:
         	nsource=refinePositions(pgwave_list=outf, ft1File=infile)
 	lcpar=no[6:8]

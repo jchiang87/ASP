@@ -5,6 +5,11 @@
     $Id$
 
     @verbatim
+    v1r5   26-Jun-08   JC   use GroupManager for FA mailing list; adjust count
+                            map resolution for longer time intervals; use
+                            gtexposure in light curve calculation; bug fix for
+                            runpgw crashes when no sources are found 
+                            (asp-6@jira)
     v1r4p1 22-May-08   JC   remove unneeded num_Rois from launchDrpMonitoring 
                             command
     v1r4   12-May-08   JC   Perfrom position refinement using pointfit;

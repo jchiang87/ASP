@@ -298,7 +298,14 @@ if __name__ == '__main__':
 
     for imin, imax in zip(imins, imaxs):
         events = package(imin, imax)
+
+        if len(events.TIME) < 2:
+            continue
+
         grbConfig = grbAspConfig.find(min(events.TIME))
+
+        print "imin, imax = ", imin, imax
+        print "# events = ", len(events.TIME)
 
         blindSearch = BlindSearch(events, clusterAlg, 
                                   dn=grbConfig.PARTITIONSIZE,

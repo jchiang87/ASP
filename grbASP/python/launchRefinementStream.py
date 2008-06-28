@@ -7,7 +7,7 @@
 #
 # $Header$
 #
-import os
+import os, sys
 from FitsNTuple import FitsNTuple
 from getFitsData import getStagedFitsData
 import dbAccess
@@ -27,6 +27,10 @@ except OSError:
 fileStager = FileStager('stagingDir', stageArea=output_dir, 
                         messageLevel='INFO')
 ft1, ft2 = getStagedFitsData(fileStager=fileStager)
+
+if not ft1:
+    print "No FT1 files returned for the requested time interval. Exiting."
+    sys.exit()
 
 print 'reading FT1 files:'
 for item in ft1:

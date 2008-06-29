@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Sun Jun 29 16:56:23 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	runpgw.py 
+Log Message:
+restore to prod values
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r5, operation: add
 Package: asp_pgwave

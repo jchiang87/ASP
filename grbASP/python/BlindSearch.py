@@ -275,6 +275,11 @@ if __name__ == '__main__':
 
     os.chdir(grbroot_dir)  # move to the working directory
 
+    print "FT1 files:", downlink_files
+    if not downlink_files:
+        print "No FT1 files found. Exiting."
+        sys.exit()
+
     raw_events = FitsNTuple(downlink_files)
     nMetStart = int(min(raw_events.TIME))
     nMetStop = int(max(raw_events.TIME))

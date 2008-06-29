@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r3   28-Jun-08   JC   check for empty FT1 file list in 
+                            launchRefinementStream; empty event selection in
+                            BlindSearch; raise informative exception if
+                            burst is outside of FOV and no events are returned
     v4r2p1 13-Jun-08   JC   query GroupManager for GRBAdvocate email addresses;
                             improve handling for filtering GCN Notice email;
                             bug-fixes for launcher scripts

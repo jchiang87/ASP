@@ -77,8 +77,10 @@ def pgwave(filein,no):
         pgw['circ_square']= 's'
         pgw['N_iterations'] = 1
         pgw['SN_ratio'] = 0
-        pgw['n_sigma'] = 3
-        pgw['median_box'] = 5
+#        pgw['n_sigma'] = 3
+#        pgw['median_box'] = 5
+        pgw['n_sigma'] = 7
+        pgw['median_box'] = 9
         pgw['border_size'] = 4
         pgw['fitsio_choice'] = 'n'
         pgw['recursive_choice'] = 'n'

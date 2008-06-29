@@ -7,6 +7,7 @@
 #
 
 import numpy as num
+import pyfits
 from FitsNTuple import FitsNTuple
 from BayesBlocks import BayesBlocks
 from GtApp import GtApp
@@ -27,6 +28,10 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect['tmax'] = gcnNotice.start_time + duration
     gtselect['zmax'] = 100 # need to retrieve this from db table
     gtselect.run()
+
+    ft1 = pyfits.open(gtselect['outfile'])
+    if ft1['EVENTS'].size() == 0:
+        raise ValueError, "No events were found for this burst"
 
     gtbin['evfile'] = gtselect['outfile']
     gtbin['outfile'] = gcnNotice.Name + '_LAT_lc.fits'
@@ -119,6 +124,14 @@ if __name__ == '__main__':
     for item in ft2:
         print item
     ft2merge(ft2, ft2Merged)
+
+    if gcnNotice.offAxisAngle(ft2Merged) > 70:
+        print "********************"
+        print "WARNING:"
+        print ("Burst off-axis angle (from GCN position) "
+               + "> 70 degrees and so lies outside the "
+               + "nominal LAT FOV.")
+        print "********************"
 
     config = grbAspConfig.find(gcnNotice.start_time)
     ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, config)

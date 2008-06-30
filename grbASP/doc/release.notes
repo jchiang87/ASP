@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r3p1 30-Jun-08   JC   check for files with zero events remaining after
+                            zenith_angle < 100 deg cut (this occurred for nadir
+                            pointing run);  skip data registration if 
+                            blind_search process produced on logprob file.
     v4r3   28-Jun-08   JC   check for empty FT1 file list in 
                             launchRefinementStream; empty event selection in
                             BlindSearch; raise informative exception if

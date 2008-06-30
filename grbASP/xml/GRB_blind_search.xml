@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="3.7" type="Data">
+<task name="GRB_blind_search" version="3.8" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -47,15 +47,17 @@
       nMetStart = blind_search.getVariable('nMetStart')
       nMetStop = blind_search.getVariable('nMetStop')
       filepath = blind_search.getVariable('filepath')
-      filename = filepath.split('/')[-1]
-      dataType = "HISTOGRAM"
-      logical_path = ('%s/%s:%s' % (outputFolder, dataType, filename))
-      attributes = ('nDownlink=%i:nMetStart=%s:nMetStop=%s' 
-                    % (DownlinkId, nMetStart, nMetStop))
-      print logical_path
-      print filepath
-      print attributes
-      datacat.registerDataset(dataType, logical_path, filepath, attributes)
+      if filepath is not None:
+          # blind_search generated a log-probability file, so register it.
+          filename = filepath.split('/')[-1]
+          dataType = "HISTOGRAM"
+          logical_path = ('%s/%s:%s' % (outputFolder, dataType, filename))
+          attributes = ('nDownlink=%i:nMetStart=%s:nMetStop=%s' 
+                        % (DownlinkId, nMetStart, nMetStop))
+          print logical_path
+          print filepath
+          print attributes
+          datacat.registerDataset(dataType, logical_path, filepath, attributes)
     ]]></script>
     <depends>
       <after process="blind_search" status="SUCCESS"/>

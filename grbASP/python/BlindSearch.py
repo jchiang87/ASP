@@ -6,12 +6,16 @@
 #
 # $Header$
 #
+import os
 import pipeline
 import numpy as num
 import pyfits
+from GtApp import GtApp
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
+
+gtselect = GtApp('gtselect')
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -246,6 +250,18 @@ def mkdir(new_dir):
         else:
             raise OSError, "Error creating directory: " + new_dir
 
+def apply_zmaxcut(infiles, zmax=100):
+    outfiles = []
+    for infile in infiles:
+        outfile = infile.replace('.', '_zmax100.')
+        outfile = os.path.basename(outfile)
+        gtselect.run(infile=infile, outfile=outfile, zmax=zmax, 
+                     emin=0, emax=3e6, rad=180)
+        ft1 = pyfits.open(outfile)
+        if ft1['EVENTS'].size() != 0:
+            outfiles.append(outfile)
+    return outfiles
+
 if __name__ == '__main__':
     import os, shutil
     import sys
@@ -280,17 +296,30 @@ if __name__ == '__main__':
         print "No FT1 files found. Exiting."
         sys.exit()
 
-    raw_events = FitsNTuple(downlink_files)
+    #
+    # Apply zenith_angle cut to each file, return only those filtered 
+    # files with events remaining.
+    # 
+    zencut_files = apply_zmaxcut(downlink_files)
+
+    if not zencut_files:
+        print "No events pass zenith angle cut. Exiting."
+        sys.exit()
+
+#    raw_events = FitsNTuple(downlink_files)
+    raw_events = FitsNTuple(zencut_files)
     nMetStart = int(min(raw_events.TIME))
     nMetStop = int(max(raw_events.TIME))
-    pipeline.setVariable('nMetStart', '%i' % nMetStart)
-    pipeline.setVariable('nMetStop', '%i' % nMetStop)
+#    pipeline.setVariable('nMetStart', '%i' % nMetStart)
+#    pipeline.setVariable('nMetStop', '%i' % nMetStop)
 
     print "Number of events read: ", len(raw_events.TIME)
-    print "from FT1 files: ", downlink_files
-    raw_events = zenmax_filter(raw_events)
+#    print "from FT1 files: ", downlink_files
+    print "from FT1 files: ", zencut_files
+#    raw_events = zenmax_filter(raw_events)
 
-    gtis = read_gtis(downlink_files)
+#    gtis = read_gtis(downlink_files)
+    gtis = read_gtis(zencut_files)
     clusterAlg = EventClusters(gtis)
 
     imins, imaxs = gti_bounds(raw_events, gtis)
@@ -356,7 +385,8 @@ if __name__ == '__main__':
             grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
             mkdir(grb_output)
             notice.setTriggerNum(tpeak)
-            notice.addComment(', '.join(downlink_files))
+#            notice.addComment(', '.join(downlink_files))
+            notice.addComment(', '.join(zencut_files))
             print grb_dir.ra(), grb_dir.dec(), tpeak
             
 

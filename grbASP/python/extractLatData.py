@@ -163,6 +163,7 @@ if __name__ == '__main__':
         dbAccess.updateGrb(grb_id, ASP_PROCESSING_LEVEL=1, 
                            LAT_ALERT_TIME=grb_id, LAT_RA=gcnNotice.RA,
                            LAT_DEC=gcnNotice.DEC, 
+                           LAT_FIRST_TIME=grb_id, LAT_LAST_TIME=grb_id,
                            ERROR_RADIUS=gcnNotice.LOC_ERR,
                            INITIAL_LAT_RA=gcnNotice.RA, 
                            INITIAL_LAT_DEC=gcnNotice.DEC,

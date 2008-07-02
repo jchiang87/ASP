@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v4r3p3 02-Jul-08   JC   need to set LAT_[FIRST,LAST]_TIME for zero event
+                            results in GRB_refinement so that GRB_afterglow can
+                            proceed
     v4r3p2 01-Jul-08   JC   increment ASP_PROCESSING_LEVEL even if zero events
                             found in GRB_refinement
     v4r3p1 30-Jun-08   JC   check for files with zero events remaining after

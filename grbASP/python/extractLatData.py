@@ -12,6 +12,10 @@ from FitsNTuple import FitsNTuple
 from BayesBlocks import BayesBlocks
 from GtApp import GtApp
 import dbAccess
+from parfile_parser import Parfile
+
+class NoFT1EventsError(ValueError):
+    "No FT1 events were found."
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtbin = GtApp('gtbin', 'evtbin')
@@ -31,7 +35,7 @@ def extractLatData(gcnNotice, ft1File, config):
 
     ft1 = pyfits.open(gtselect['outfile'])
     if ft1['EVENTS'].size() == 0:
-        raise ValueError, "No events were found for this burst"
+        raise NoFT1EventsError, "No events were found for this burst"
 
     gtbin['evfile'] = gtselect['outfile']
     gtbin['outfile'] = gcnNotice.Name + '_LAT_lc.fits'
@@ -111,7 +115,25 @@ if __name__ == '__main__':
     ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 
     os.chdir(output_dir)
-    gcnNotice = GcnNotice(int(os.environ['GRB_ID']))
+    grb_id = int(os.environ['GRB_ID'])
+    gcnNotice = GcnNotice(grb_id)
+
+    #
+    # Write out parfile used by downstream processing (including afterglow
+    # analysis) with GCN notice parameters to start out
+    #
+    config = grbAspConfig.find(gcnNotice.start_time)
+    print config
+
+    parfile = '%s_pars.txt' % gcnNotice.Name
+    pars = Parfile(parfile, fixed_keys=False)
+    pars['name'] = gcnNotice.Name
+    pars['ra'] = gcnNotice.RA
+    pars['dec'] = gcnNotice.DEC
+    pars['loc_err'] = gcnNotice.LOC_ERR
+    pars['tstart'] = gcnNotice.start_time
+    pars['tstop'] = gcnNotice.start_time + config.NOMINAL_WINDOW
+    pars.write()
 
     ft1Merged = 'FT1_merged.fits'
     print "merging FT1 files:"
@@ -133,8 +155,23 @@ if __name__ == '__main__':
                + "nominal LAT FOV.")
         print "********************"
 
-    config = grbAspConfig.find(gcnNotice.start_time)
-    ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, config)
+    try:
+        ft1_extracted, lcFile = extractLatData(gcnNotice, ft1Merged, config)
+    except NoFT1EventsError:
+        # Promote the asp_processing_level and fill the db table with the
+        # original Notice values
+        dbAccess.updateGrb(grb_id, ASP_PROCESSING_LEVEL=1, 
+                           LAT_ALERT_TIME=grb_id, LAT_RA=gcnNotice.RA,
+                           LAT_DEC=gcnNotice.DEC, 
+                           ERROR_RADIUS=gcnNotice.LOC_ERR,
+                           INITIAL_LAT_RA=gcnNotice.RA, 
+                           INITIAL_LAT_DEC=gcnNotice.DEC,
+                           INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR)
+        #
+        # re-raise the exception
+        #
+        raise
+        
     outfile = open('%s_files' % gcnNotice.Name, 'w')
     outfile.write('%s\n%s\n' % (ft1_extracted, ft2Merged))
     outfile.close()

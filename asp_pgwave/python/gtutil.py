@@ -27,7 +27,7 @@ def fsel(infile,cut,outfile):
 	fselect['infile']=infile
 	fselect['outfile']=outfile
 	fselect['expr']=cut
-	fselect['clobber']='yes'
+	fselect['clobber']="yes"
 	fselect.run()	
 
 def select(infileft1,selPar,outfil):

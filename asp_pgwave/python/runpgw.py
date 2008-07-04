@@ -14,6 +14,7 @@ from dbmanager import *
 gtbin = GtApp('gtbin')
 gtexposure = GtApp('gtexposure')"""
 pgw=GtApp('pgwave2D','pgwave')
+debug=0
 def getpgwConfig():
         err=0
         try:
@@ -27,43 +28,6 @@ def getpgwConfig():
                 db.close()
         return no
 
-#pgwaveprog=os.path.join(os.environ['PGWAVEROOT'], os.environ['BINDIR'])+'/pgwave2D.exe'
-#pgwaveprog='pgwave'
-"""def makeMap(infile,mapPar,outfil):
-	gtbin.debug=False
-	gtbin['algorithm']='CMAP'
-	gtbin['evfile']=infile
-	gtbin['outfile']=outfil
-	gtbin['scfile']='NONE'
-	gtbin['coordsys']=mapPar[7]
-	gtbin['nxpix']=mapPar[3]
-	gtbin['nypix']=mapPar[4]
-	gtbin['proj']=mapPar[2]
-	gtbin['xref']=mapPar[0]
-	gtbin['yref']=mapPar[1]
-	gtbin['binsz']=mapPar[5]
-	gtbin.run()
-
-def makeLC(infileft1,infileft2,lcPar,outfil):	
-	gtbin['algorithm']='LC'
-	gtbin['evfile']=infileft1
-	gtbin['outfile']=outfil
-	gtbin['scfile']=infileft2
-	gtbin['timebinalg']='LIN'
-	gtbin['tstart']=lcPar[0]
-	gtbin['tstop']=lcPar[1]
-	gtbin['deltatime']=lcPar[2]
-	gtbin.run()
-
-def calcExposure(lcfile,infileft2,irf):	
-	gtexposure['lcfile']=lcfile
-	gtexposure['scfile']=infileft2
-	gtexposure['rspfunc']=irf
-	gtexposure['spectral_index']=-2.1
-	gtexposure.run()"""
-
-#def createMap(infil,mapPar,outf):
-#	makeMap(infil,mapPar,outf)
 
 def pgwave(filein,no):
 	"""param='bgk_choise=n circ_square=s N_scale=1 scala=\"3.0\" otpix=\"10\" n_sigma=3 median_box=5 kappa=3 min_pix=3 border_size=4 fitsio_choice=n recursive_choice=n verbose_level=0'
@@ -97,15 +61,6 @@ def pgwave(filein,no):
 
 def runpgw(infile):
 	workdir=os.getcwd()
-	#print 'Running PGWave in dir: ',workdir
-#	tmp=infile
-#	cmd='fcopy \"'+infile+'[EVENTS][CTBCLASSLEVEL>1]\"'+' Filtered.fits'
-#        # fcopy has no clobber option, so we remove by hand.
-#        try:
-#                os.remove('Filtered.fits')
-#        except OSError:
-#                pass
-#	os.system(cmd) 
 	header = pyfits.open(infile)['GTI'].header
     	ontime= header['ONTIME']
 	print ontime
@@ -151,6 +106,7 @@ if __name__=="__main__":
         from renameOutFiles import renameOutFiles
 	os.chdir(os.environ['OUTPUTDIR'])
 	runpgw('Filtered_evt.fits')
-	os.system('chmod 777 *')
-        syncDataViewer()
-        renameOutFiles()
+	if debug==0:
+		os.system('chmod 777 *')
+        	syncDataViewer()
+        	renameOutFiles()

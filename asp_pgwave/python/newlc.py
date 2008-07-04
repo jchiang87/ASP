@@ -30,8 +30,8 @@ def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.f
 	if chi2>1. and V>1.:
 		print >>f1,('fk5;circle(%f,%f,%f)'%(lcpar[0],lcpar[1],lcpar[2]))
 		print >>f1,('fk5;annulus(%f,%f,%f,%f)'%(lcpar[0],lcpar[1],lcpar[3],lcpar[4]))
-		outpl=srcname+'_lc.png'
-		aperPhotLC.plotLC(res[0],res[1],res[4],res[5],outplot=outpl)
+	outpl=srcname+'_lc.png'
+	aperPhotLC.plotLC(res[0],res[1],res[4],res[5],outplot=outpl)
 	f1.close()
 	return res[6],res[7],chi2,V
 

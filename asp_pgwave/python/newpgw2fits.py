@@ -61,11 +61,13 @@ def eq2gal(r,d):
 	return num.array(l),num.array(b)
 
 def pgw2fits(pgwfile,no,flag,nsource):
+	debug=0
 	pgwfits=pgwfile.replace('.list','_pgw_out.fits')
 	filevt=pgwfile.replace('_map.list','.fits')
 	name_pgw,ra_pgw,dec_pgw,posErr,signi_pgw=readpgw(pgwfile)
 	l_pgw,b_pgw=eq2gal(ra_pgw,dec_pgw)
-	creaXimageGif('Filtered_evt_map_ait.fits',l_pgw,b_pgw)
+	if debug==0:
+		creaXimageGif('Filtered_evt_map_ait.fits',l_pgw,b_pgw)
 	#posErr=[]
 	count=[]
 	chi2=[]
@@ -79,19 +81,20 @@ def pgw2fits(pgwfile,no,flag,nsource):
         emax=2e5
         tmin,tmax=gtutil.getFileTimeInfo('Filtered_evt.fits')
 	if (tmax-tmin)>40000:
-		nbins=8
+		nbins=6
         llcpar=[0.,0.,radius,5.,7.,tmin,tmax,100,2e5]
 	flux=[]
 	errflux=[]
 	print "NAME            RA       DEC    SIGNIF  Flux  CHI2"
 	for i in range(0,len(ra_pgw)):
-		if flag==1 and signi_pgw[i]>7.0:
+		#print "NAME            RA       DEC    SIGNIF  Flux  CHI2"
+		if flag==1: # and signi_pgw[i]>7.0:
 			llcpar[0]=ra_pgw[i]
 		        llcpar[1]=dec_pgw[i]
 			fl,errfl,chi,V=newlc.createLC(llcpar,nbins,name_pgw[i])
 			flux.append(fl)
 			errflux.append(errfl)
-			if chi>=1. and V >1.:
+			if chi>=2. and V >1.:
 				chi2.append(chi)
 				fla.append(1)
 				print name_pgw[i],'\t',ra_pgw[i],'\t',dec_pgw[i],'\t',signi_pgw[i],'\t',fl,'\t',chi
@@ -142,4 +145,6 @@ def pgw2fits(pgwfile,no,flag,nsource):
 if __name__=="__main__":
 	#os.environ['HOME'] = os.environ['output_dir']
 	pgwfile=sys.argv[1]
-	pgw2fits(pgwfile,[5,10],1)
+	nrows=open(pgwfile).readlines()
+	nsrc=len(nrows)-1
+	pgw2fits(pgwfile,[5,10],1,nsrc)

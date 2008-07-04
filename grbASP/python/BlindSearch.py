@@ -310,8 +310,8 @@ if __name__ == '__main__':
     raw_events = FitsNTuple(zencut_files)
     nMetStart = int(min(raw_events.TIME))
     nMetStop = int(max(raw_events.TIME))
-#    pipeline.setVariable('nMetStart', '%i' % nMetStart)
-#    pipeline.setVariable('nMetStop', '%i' % nMetStop)
+    pipeline.setVariable('nMetStart', '%i' % nMetStart)
+    pipeline.setVariable('nMetStop', '%i' % nMetStop)
 
     print "Number of events read: ", len(raw_events.TIME)
 #    print "from FT1 files: ", downlink_files

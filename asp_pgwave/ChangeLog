@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Fri Jul  4 06:16:11 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py gtutil.py newlc.py newpgw2fits.py runpgw.py 
+Log Message:
+removed cut on source significance now flux is estimanted for all sources (Jira ASP-16)
+    *
+------------------------------------------------------------
 User: jchiang  Sun Jun 29 16:56:23 PDT 2008
 ASP/asp_pgwave/python
 

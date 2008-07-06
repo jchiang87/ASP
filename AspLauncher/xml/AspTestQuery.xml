@@ -7,7 +7,7 @@
 -->
 <task name="AspTestQuery" version="0.1" type="Data">
   <variables>
-    <var name="folder">/ASP/TestSims</var>
+    <var name="folder">/Data/OpsSim2/Level1</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <process name="catalogQueries">
@@ -20,11 +20,13 @@
             opt3='(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
             query = ('DataType == \"%s\" && (%s || %s || %s)' 
                      % (path, opt1, opt2, opt3))
-            datasetList = datacatalog.getDatasets(folder+'/*', query)
+            datasetList = datacatalogPROD.getDatasets(folder+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
-        query("Ft1FileList", "FT1", 0, 86400)
-        query("Ft2FileList", "FT2", 0, 86400)
+        tstart = 257835904
+        tstop = 258274304
+        query("Ft1FileList", "FT1", tstart, tstop)
+        query("Ft2FileList", "FT2", tstart, tstop)
     ]]></script>
   </process>
 </task>

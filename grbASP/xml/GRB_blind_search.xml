@@ -23,6 +23,17 @@
     <script><![CDATA[
       print "using datacatalog implementation: ", datacatalog_imp
       datacat = eval(datacatalog_imp)
+      #
+      # Find the FT2 file first.
+      #
+      query = 'DataType == \"FT2\" && nDownlink == %i' % DownlinkId
+      print "dataCatalog query: ", query
+      datasetList = datacat.getDatasets(logicalPath + "/*", query)
+      output = pipeline.createFile('Ft2FileList')
+      datasetList.writeToFile(output, 1)
+      pipeline.writeFile(output)
+      #
+      # Find the correspon
       query = 'DataType == \"FT1\" && nDownlink == %i' % DownlinkId
       print "dataCatalog query: ", query
       datasetList = datacat.getDatasets(logicalPath + "/*", query)

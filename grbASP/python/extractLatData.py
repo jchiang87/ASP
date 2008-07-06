@@ -13,6 +13,7 @@ from BayesBlocks import BayesBlocks
 from GtApp import GtApp
 import dbAccess
 from parfile_parser import Parfile
+import pipeline
 
 class NoFT1EventsError(ValueError):
     "No FT1 events were found."
@@ -98,9 +99,9 @@ def burst_interval(lc_file, minrate=30):
 if __name__ == '__main__':
     import os, shutil
     import sys
-    for item in sys.path:
-        print item
-        print os.path.isdir(item)
+#    for item in sys.path:
+#        print item
+#        print os.path.isdir(item)
 
     from GcnNotice import GcnNotice
     from FileStager import FileStager
@@ -169,9 +170,14 @@ if __name__ == '__main__':
                            INITIAL_LAT_DEC=gcnNotice.DEC,
                            INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR)
         #
-        # re-raise the exception
+        # Cleanup and exit the process, thereby leaving found_events unset.
         #
-        raise
+        fileStager.finish()
+        os.system('chmod 777 *')
+        sys.exit()
+
+    print "setting found_data to True"
+    pipeline.setVariable('found_data', 'foo')
         
     outfile = open('%s_files' % gcnNotice.Name, 'w')
     outfile.write('%s\n%s\n' % (ft1_extracted, ft2Merged))

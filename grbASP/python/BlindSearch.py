@@ -136,6 +136,15 @@ class BlindSearch(object):
         events = self.events
         grb_dirs = []
         for tpeak, ll in zip(self.tpeaks, self.ll):
+            #
+            # If this peak value occurs in a data gap greater than
+            # +/-50 sec, then imin, imax below will satisfy imax =
+            # imin + 1 and will correspond to an empty tuple.
+            # convert(...) will raise an exception and this candidate
+            # value will be skipped.  This is the desired behavior,
+            # but the peak value will still be retained in the logProb
+            # output file.
+            #
             time = num.array(events.TIME)
             imin = min(num.where(time > tpeak-50)[0])
             imax = max(num.where(time < tpeak+50)[0])
@@ -304,6 +313,8 @@ if __name__ == '__main__':
 
     if not zencut_files:
         print "No events pass zenith angle cut. Exiting."
+        for item in zencut_files:
+            os.remove(item)
         sys.exit()
 
 #    raw_events = FitsNTuple(downlink_files)
@@ -340,6 +351,8 @@ if __name__ == '__main__':
 
         print "imin, imax = ", imin, imax
         print "# events = ", len(events.TIME)
+
+        print "using threshold ", grbConfig.THRESHOLD
 
         blindSearch = BlindSearch(events, clusterAlg, 
                                   dn=grbConfig.PARTITIONSIZE,
@@ -385,10 +398,12 @@ if __name__ == '__main__':
             grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
             mkdir(grb_output)
             notice.setTriggerNum(tpeak)
-#            notice.addComment(', '.join(downlink_files))
-            notice.addComment(', '.join(zencut_files))
+            notice.addComment(', '.join(downlink_files))
+#            notice.addComment(', '.join(zencut_files))
             print grb_dir.ra(), grb_dir.dec(), tpeak
             
+    for item in zencut_files:
+        os.remove(item)
 
     downlink_dir = os.path.join(grbroot_dir, 'Downlinks')
     mkdir(downlink_dir)

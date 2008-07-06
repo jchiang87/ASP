@@ -317,7 +317,6 @@ if __name__ == '__main__':
             os.remove(item)
         sys.exit()
 
-#    raw_events = FitsNTuple(downlink_files)
     raw_events = FitsNTuple(zencut_files)
     nMetStart = int(min(raw_events.TIME))
     nMetStop = int(max(raw_events.TIME))
@@ -325,11 +324,8 @@ if __name__ == '__main__':
     pipeline.setVariable('nMetStop', '%i' % nMetStop)
 
     print "Number of events read: ", len(raw_events.TIME)
-#    print "from FT1 files: ", downlink_files
     print "from FT1 files: ", zencut_files
-#    raw_events = zenmax_filter(raw_events)
 
-#    gtis = read_gtis(downlink_files)
     gtis = read_gtis(zencut_files)
     clusterAlg = EventClusters(gtis)
 
@@ -399,7 +395,6 @@ if __name__ == '__main__':
             mkdir(grb_output)
             notice.setTriggerNum(tpeak)
             notice.addComment(', '.join(downlink_files))
-#            notice.addComment(', '.join(zencut_files))
             print grb_dir.ra(), grb_dir.dec(), tpeak
             
     for item in zencut_files:

@@ -14,8 +14,10 @@ from GtApp import GtApp
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
+from ft1merge import ft2merge
 
 gtselect = GtApp('gtselect')
+gtmktime = GtApp('gtmktime')
 
 def convert(events, imin=0, imax=None):
     if imax is None:
@@ -259,12 +261,17 @@ def mkdir(new_dir):
         else:
             raise OSError, "Error creating directory: " + new_dir
 
-def apply_zmaxcut(infiles, zmax=100):
+def apply_zmaxcut(infiles, ft2files, zmax=100):
+    ft2Merged = 'FT2_merged.fits'
+    tmpfile = 'filtered.fits'
+    ft2merge(ft2files, ft2Merged)
     outfiles = []
     for infile in infiles:
+        gtmktime.run(scfile=ft2Merged, filter='IN_SAA!=T && LIVETIME>0',
+                     evfile=infile, outfile=tmpfile)
         outfile = infile.replace('.', '_zmax100.')
         outfile = os.path.basename(outfile)
-        gtselect.run(infile=infile, outfile=outfile, zmax=zmax, 
+        gtselect.run(infile=tmpfile, outfile=outfile, zmax=zmax, 
                      emin=0, emax=3e6, rad=180)
         ft1 = pyfits.open(outfile)
         if ft1['EVENTS'].size() != 0:
@@ -291,12 +298,16 @@ if __name__ == '__main__':
                             messageLevel='CRITICAL')
 
     ft1_files = [x.strip().strip('+') for x in open('Ft1FileList')]
-    print ft1_files
-    ft1_files = filter_versions(ft1_files)
-    print "staging files:"
+    print "staging FT1 files:"
     for item in ft1_files:
         print item
     downlink_files = fileStager.infiles(ft1_files)
+
+    ft2_files = [x.strip().strip('+') for x in open('Ft2FileList')]
+    print "staging FT2 files:"
+    for item in ft2_files:
+        print item
+    ft2_files = fileStager.infiles(ft2_files)
 
     os.chdir(grbroot_dir)  # move to the working directory
 
@@ -306,10 +317,10 @@ if __name__ == '__main__':
         sys.exit()
 
     #
-    # Apply zenith_angle cut to each file, return only those filtered 
-    # files with events remaining.
+    # Apply gtmktime and zenith_angle cut to each file, return only those 
+    # filtered files with events remaining.
     # 
-    zencut_files = apply_zmaxcut(downlink_files)
+    zencut_files = apply_zmaxcut(downlink_files, ft2_files)
 
     if not zencut_files:
         print "No events pass zenith angle cut. Exiting."

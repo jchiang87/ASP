@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="6.4" type="Data">
+<task name="GRB_refinement" version="6.5" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -54,7 +54,7 @@
          extractLatData = pipeline.getProcessInstance("extractLatData")
          found_data = "%s" % extractLatData.getVariable("found_data")
          print "found_data = ", found_data
-         if found_data == "foo"
+         if found_data == "foo":
              print "Launching refinementAnalysis substream"
              pipeline.createSubstream("refinementAnalysis", 0)
        ]]>

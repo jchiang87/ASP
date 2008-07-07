@@ -329,6 +329,12 @@ if __name__ == '__main__':
 
     if not zencut_files:
         print "No events pass zenith angle cut. Exiting."
+
+        try:
+            os.remove('FT2_merged.fits')
+        except OSError:
+            pass
+
         for item in zencut_files:
             os.remove(item)
         sys.exit()
@@ -413,6 +419,11 @@ if __name__ == '__main__':
             notice.addComment(', '.join(downlink_files))
             print grb_dir.ra(), grb_dir.dec(), tpeak
             
+    try:
+        os.remove('FT2_merged.fits')
+    except OSError:
+        pass
+
     for item in zencut_files:
         os.remove(item)
 

@@ -264,11 +264,15 @@ def mkdir(new_dir):
 def apply_zmaxcut(infiles, ft2files, zmax=100):
     ft2Merged = 'FT2_merged.fits'
     tmpfile = 'filtered.fits'
-    ft2merge(ft2files, ft2Merged)
+    if ft2files:
+        ft2merge(ft2files, ft2Merged)
     outfiles = []
     for infile in infiles:
-        gtmktime.run(scfile=ft2Merged, filter='IN_SAA!=T && LIVETIME>0',
-                     evfile=infile, outfile=tmpfile)
+        if ft2files:
+            gtmktime.run(scfile=ft2Merged, filter='IN_SAA!=T && LIVETIME>0',
+                         evfile=infile, outfile=tmpfile)
+        else:
+            tmpfile = infile
         outfile = infile.replace('.', '_zmax100.')
         outfile = os.path.basename(outfile)
         gtselect.run(infile=tmpfile, outfile=outfile, zmax=zmax, 
@@ -276,6 +280,8 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
         ft1 = pyfits.open(outfile)
         if ft1['EVENTS'].size() != 0:
             outfiles.append(outfile)
+        if ft2files:
+            os.remove(tmpfile)
     return outfiles
 
 if __name__ == '__main__':
@@ -311,7 +317,6 @@ if __name__ == '__main__':
 
     os.chdir(grbroot_dir)  # move to the working directory
 
-    print "FT1 files:", downlink_files
     if not downlink_files:
         print "No FT1 files found. Exiting."
         sys.exit()

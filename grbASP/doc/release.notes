@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v4r4   06-Jul-08   JC   run gtmktime on FT1 files for GRB_blind_search;
+                            re-write GRB_refinement task def so that stream
+                            can end successfully if no events are found
     v4r3p3 02-Jul-08   JC   need to set LAT_[FIRST,LAST]_TIME for zero event
                             results in GRB_refinement so that GRB_afterglow can
                             proceed

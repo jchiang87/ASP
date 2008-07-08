@@ -44,8 +44,8 @@ grb_id = int(os.environ['GRB_ID'])
 
 print "TSTART, TSTOP =", tstart, tstop
 print "min(gti.START), max(gti.STOP) =", min(gti.START), max(gti.STOP)
-#if tstart >= min(gti.START) and tstop <= max(gti.STOP):
-if True:
+if tstart >= min(gti.START) and tstop <= max(gti.STOP):
+#if True:
     refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
                       output_dir=output_dir, grb_ids=(grb_id, ),
                       streamId=grb_id, 

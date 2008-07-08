@@ -13,6 +13,7 @@ from getFitsData import getStagedFitsData
 import dbAccess
 from createGrbStreams import refinementStreams
 from FileStager import FileStager
+from check_grb_runs import ok_to_launch
 
 output_dir = os.environ['OUTPUTDIR']
 try:
@@ -24,31 +25,48 @@ except OSError:
     else:
         raise OSError, "Error creating directory: " + output_dir
 
-fileStager = FileStager('stagingDir', stageArea=output_dir, 
-                        messageLevel='INFO')
-ft1, ft2 = getStagedFitsData(fileStager=fileStager)
-
-if not ft1:
-    print "No FT1 files returned for the requested time interval. Exiting."
-    sys.exit()
-
-print 'reading FT1 files:'
-for item in ft1:
-    print item
-
-gti = FitsNTuple(ft1, 'GTI')
-
 tstart = int(float(os.environ['TSTART']))
 tstop = int(float(os.environ['TSTOP']))
 grb_id = int(os.environ['GRB_ID'])
 
-print "TSTART, TSTOP =", tstart, tstop
-print "min(gti.START), max(gti.STOP) =", min(gti.START), max(gti.STOP)
-if tstart >= min(gti.START) and tstop <= max(gti.STOP):
-#if True:
-    refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
-                      output_dir=output_dir, grb_ids=(grb_id, ),
-                      streamId=grb_id, 
-                      datacatalog_imp=os.environ['datacatalog_imp'])
+if os.environ['PIPELINESERVER'] == 'PROD':
+    #
+    # In PROD, we can use the info in the RUN table to determine if
+    # the needed runs are available.
+    #
+    runstatus, runs = ok_to_launch((tstart+tstop)/2., (tstop - tstart)/2.)
 
-fileStager.finish()
+    if runstatus:
+        refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
+                          output_dir=output_dir, grb_ids=(grb_id, ),
+                          streamId=grb_id, 
+                          datacatalog_imp=os.environ['datacatalog_imp'])
+else:
+    #
+    # Use the output from the catalog query and examine the time range
+    # that is covered.
+    #
+    fileStager = FileStager('stagingDir', stageArea=output_dir, 
+                            messageLevel='INFO')
+    ft1, ft2 = getStagedFitsData(fileStager=fileStager)
+
+    if not ft1:
+        print "No FT1 files returned for the requested time interval. Exiting."
+        sys.exit()
+
+    print 'reading FT1 files:'
+    for item in ft1:
+        print item
+
+    gti = FitsNTuple(ft1, 'GTI')
+
+    print "TSTART, TSTOP =", tstart, tstop
+    print "min(gti.START), max(gti.STOP) =", min(gti.START), max(gti.STOP)
+
+    if tstart >= min(gti.START) and tstop <= max(gti.STOP):
+        refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
+                          output_dir=output_dir, grb_ids=(grb_id, ),
+                          streamId=grb_id, 
+                          datacatalog_imp=os.environ['datacatalog_imp'])
+
+    fileStager.finish()

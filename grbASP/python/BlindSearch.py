@@ -339,6 +339,7 @@ if __name__ == '__main__':
             os.remove(item)
         sys.exit()
 
+    zencut_files.sort()
     raw_events = FitsNTuple(zencut_files)
     nMetStart = int(min(raw_events.TIME))
     nMetStop = int(max(raw_events.TIME))

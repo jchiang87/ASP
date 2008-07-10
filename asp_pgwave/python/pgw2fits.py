@@ -64,7 +64,7 @@ def pgw2fits(pgwfile,no,flag):
 	filevt=pgwfile.replace('_map.list','.fits')
 	name_pgw,ra_pgw,dec_pgw,posErr,signi_pgw=readpgw(pgwfile)
 	l_pgw,b_pgw=eq2gal(ra_pgw,dec_pgw)
-	creaXimageGif('Filtered_evt_map_ait.fits',l_pgw,b_pgw)
+	#creaXimageGif('Filtered_evt_map_ait.fits',l_pgw,b_pgw)
 	#posErr=[]
 	count=[]
 	chi2=[]

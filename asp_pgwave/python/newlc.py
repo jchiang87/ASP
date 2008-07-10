@@ -16,6 +16,8 @@ def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.f
 	chi2=0.
         V=0.
 	res=aperPhotLC.getApPhotLC(infile,ft2file,irf,nbin,lcpar,srcname,outf)
+	if len(res)<2:
+		return 0,0,0,0
 	if len(res[4]>nbin/2):
 		mean,sig,chi2,findex,V=aperPhotLC.lcStat(res[4],res[5],res[8])
 	f=open(outf,'a')

@@ -33,7 +33,12 @@ def getApPhotLC(infile,ft2file,irf,nbin,lcpar,srcname,outfile='lc.dat'):
 	nevtsr=(pyfits.open(srcsel)['EVENTS']).header['NAXIS2']
 	bgevt=((pyfits.open(bgsel)['EVENTS']).header['NAXIS2'])*factor
 	netevt=(nevtsr-bgevt)
+	if netevt<=0 or nevtsr<=0:
+		return [0]
 	snr=netevt/num.sqrt(nevtsr)
+	print 'S/N', snr
+	if snr<=5:
+		return [0]
 	dt=(lcpar[6]-lcpar[5])
 	if dt<40000:
 		nbin=2
@@ -54,7 +59,7 @@ def getApPhotLC(infile,ft2file,irf,nbin,lcpar,srcname,outfile='lc.dat'):
 	esp=sr.EXPOSURE[idx]
 	
 	if len(esp)==1:
-		return 0,0,0
+		return [0]
 	srerr=num.sqrt(cn)
 	bg=FitsNTuple.FitsNTuple(outlcbg)
 	bgg=bg.COUNTS[idx]

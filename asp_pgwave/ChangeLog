@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Thu Jul 10 06:20:43 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py newlc.py newpgw2fits.py pgw2fits.py 
+Log Message:
+fixed a bug in flux calculation and added new checks on S/N, sources that will not pass these checks are removed form the list
+    *
+------------------------------------------------------------
 User: tosti  Fri Jul  4 06:16:11 PDT 2008
 ASP/asp_pgwave/python
 

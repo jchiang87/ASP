@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri Jul 11 13:07:16 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	gtutil.py refinePositions.py 
+Log Message:
+use new gtexposure parameter names; set TS_cutoff to 9 for pointfit v5r6p1
+    *
+------------------------------------------------------------
 User: tosti  Thu Jul 10 06:20:43 PDT 2008
 ASP/asp_pgwave/python
 

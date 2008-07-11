@@ -64,7 +64,8 @@ class PgwaveData(list):
 
 def refinePositions(pgwave_list='Filtered_evt_map.list',
                     ft1File='Filtered_evt.fits', glat_cutoff=5,
-                    TS_cutoff=1e-5, use_bg=True):
+                    TS_cutoff=9, use_bg=True):
+#                    TS_cutoff=1e-5, use_bg=True):
     irfs = getIrfs(ft1File)
 
     srclist = PgwaveData(pgwave_list)

@@ -56,10 +56,10 @@ def makeLC(ft1file,lcpar,outfile,ft2file='NONE'):
 	gtbin.run()
 
 def lcExposure(lcfile,ft2file,irf):
-	gtexposure['lcfile']=lcfile
+	gtexposure['infile']=lcfile
 	gtexposure['scfile']=ft2file
-	gtexposure['rspfunc']=irf
-	gtexposure['spectral_index'] = -2.1
+	gtexposure['irfs']=irf
+	gtexposure['specin'] = -2.1
 	gtexposure['emin']=100.
 	gtexposure.run()
 

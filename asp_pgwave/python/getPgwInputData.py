@@ -35,7 +35,8 @@ ft1merge(ft1, ft1Merged)
 ft2Merged = 'FT2_merged.fits'
 ft2merge(ft2, ft2Merged)
 
-gtmktime.run(scfile=ft2Merged, evfile=ft1Merged, outfile='foo.fits')
+gtmktime.run(scfile=ft2Merged, evfile=ft1Merged, outfile='foo.fits', 
+             filter="IN_SAA!=T && LIVETIME>0")
 shutil.copy('foo.fits', ft1Merged)
 
 gti = FitsNTuple(ft1Merged, 'GTI')

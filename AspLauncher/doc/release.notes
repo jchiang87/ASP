@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r3p2  12-Jul-08    JC   issue warning about coverage of FT1 by FT2
+                              instead of leaving exception unhandled
     v1r3p1  29-May-08    JC   use new group_id condition when querying 
                               FREQUENCIES db tables to get just ASP values.
     v1r3    22-May-08    JC   remove dependences on ASP_PATH, ST_INST in 

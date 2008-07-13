@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v3r5p2 12-Jul-08   JC   cross-check run numbers for FT1/FT2 data when
+                            running on L1Proc data
     v3r5p1 14-Jun-08   JC   ensure pipeline server mode is inherited when
                             top-level tasks are launched by other top-level
                             tasks.

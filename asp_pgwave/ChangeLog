@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:20:51 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	getPgwInputData.py 
+Log Message:
+add LIVETIME>0 condition to gtmktime filtering
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r6, operation: add
 Package: asp_pgwave

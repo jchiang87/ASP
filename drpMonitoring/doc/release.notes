@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r3p3 12-Jul-08   JC   add LIVETIME>0 condition to gtmktime filter string
     v1r3p2 29-May-08   JC   add group_id conditions on db table queries;
                             update script to produce light curves data product
                             for GSSC

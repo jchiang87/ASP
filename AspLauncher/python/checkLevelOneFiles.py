@@ -66,7 +66,12 @@ def providesCoverage(tstart, tstop, min_frac=0.70, ft1List='Ft1FileList',
     if not ft1 or not ft2:  # at least one file list is empty
         return False
     gtis = FitsNTuple(ft1, 'GTI')
-    check_ft2(gtis, ft2)
+    try:
+        check_ft2(gtis, ft2)
+    except RuntimeError, message:
+        print "WARNING"
+        print message
+        print 'gtmktime filter="LIVETIME>0" should be run on these data'
     print "Requested tstart, tstop: ", tstart, tstop
     print "GTI range: ", min(gtis.START), max(gtis.STOP)
     total = 0

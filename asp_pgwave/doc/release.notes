@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r6p2 14-Jul-08   JC   direct FA email to developers when not running
+                            in prod
     v1r6p1 12-Jul-08   JC   add LIVETIME>0 condition to gtmktime filtering.
     v1r6   11-Jul-08   JC   Gino's fixes to compute flux estimates for all 
                             sources.  Mods to use pointfit v5r6p1 and ST v9r6p1

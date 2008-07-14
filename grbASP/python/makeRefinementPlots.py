@@ -214,10 +214,18 @@ def createHist(xvals, xmin, xmax, nx=50):
                 bins[-1] += 1
     return xx, bins
 
+def getTimeKeywords(fitsfile):
+    foo = pyfits.open(fitsfile)
+    return foo[1].header['TSTART'], foo[1].header['TSTOP'], foo
+
 def lightCurve(grb_id, tstart, ft1file, outfile=None, bb_lc_file=None):
-    ft1 = FitsNTuple(ft1file)
-    tvals = ft1.TIME - int(tstart)
-    xx, yy = createHist(tvals, min(tvals), max(tvals))
+    tmin, tmax, ft1_pyfits = getTimeKeywords(ft1file)
+    if ft1_pyfits['EVENTS'].size() != 0:
+        ft1 = FitsNTuple(ft1file)
+        tvals = ft1.TIME - int(tstart)
+    else:
+        tvals = []
+    xx, yy = createHist(tvals, tmin - tstart, tmax - tstart)
     pylab.plot(xx, yy, 'k-', ls='steps')
     axisRange = [xx[0], xx[-1], 0, max(yy)*1.1]
     pylab.axis(axisRange)

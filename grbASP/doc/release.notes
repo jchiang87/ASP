@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v4r4p2 14-Jul-08   JC   bug fix for light curve generation for zero or one
+                            event; update gtexposure parameters for ST v9r6p1
     v4r4p1 11-Jul-08   JC   sort ft1 files before concatenating in BlindSearch
     v4r4   06-Jul-08   JC   run gtmktime on FT1 files for GRB_blind_search;
                             re-write GRB_refinement task def so that stream

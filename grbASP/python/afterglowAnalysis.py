@@ -118,9 +118,9 @@ gtbin.run(evfile=gtselect['outfile'], scfile=pars['ft2File'],
           dtime=config.AGTIMESCALE/100)
 
 gtexposure = GtApp('gtexposure')
-gtexposure.run(lcfile=gtbin['outfile'], scfile=pars['ft2File'],
-               rspfunc=config.IRFS, source_model_file=like.srcModel,
-               target_source=grbName, emin=100, emax=3e5)
+gtexposure.run(infile=gtbin['outfile'], scfile=pars['ft2File'],
+               irfs=config.IRFS, srcmdl=like.srcModel,
+               target=grbName, emin=100, emax=3e5)
 
 dbAccess.updateAfterglow(grb_id, 
                          LIGHTCURVEFILE= "'%s'" % absFilePath(gtbin['outfile']))

@@ -132,32 +132,32 @@ class FitsTemplate(object):
                   "_10000_300000", "_100_300000"]
 
         tstart = extract("tstart")
-        start = pyfits.Column(name="START", format="D", unit='S', array=tstart)
+        start = pyfits.Column(name="START", format="D", unit='s', array=tstart)
 
         tstop = extract("tstop")
-        stop = pyfits.Column(name="STOP", format="D", unit='S', array=tstop)
+        stop = pyfits.Column(name="STOP", format="D", unit='s', array=tstop)
 
         names = pyfits.Column(name="NAME", format='20A', 
                               array=extract("name"))
 
-        ras = pyfits.Column(name="RA", format='E', unit='DEGREES',
+        ras = pyfits.Column(name="RA", format='E', unit='deg',
                             array=extract("ra"))
 
-        decs = pyfits.Column(name="DEC", format='E', unit='DEGREES',
+        decs = pyfits.Column(name="DEC", format='E', unit='deg',
                              array=extract("dec"))
 
         columns = [start, stop, names, ras, decs]
         for i, band in enumerate(ebands):
             columns.append(pyfits.Column(name="FLUX%s" % band, format="E",
-                                         unit="photons/cm^2/s",
+                                         unit="photons/cm**2/s",
                                          array=eband_info("flux", i)))
             columns.append(pyfits.Column(name="ERROR%s" % band, format="E", 
-                                         unit="photons/cm^2/s", 
+                                         unit="photons/cm**2/s", 
                                          array=eband_info("error", i)))
             columns.append(pyfits.Column(name="UL%s" % band, format="L", 
                                          array=eband_info("ul", i)))
 
-        duration = pyfits.Column(name="DURATION", format="E", unit='S',
+        duration = pyfits.Column(name="DURATION", format="E", unit='s',
                                  array=tstop-tstart)
 
         ts = pyfits.Column(name="TEST_STATISTIC", format="E",
@@ -171,7 +171,7 @@ class FitsTemplate(object):
     def writeto(self, outfile, clobber=True):
         filename = os.path.basename(outfile)
         self.HDUList[0].header.update('FILENAME', filename)
-        self.HDUList[1].header.update('FILENAME', filename)
+        #self.HDUList[1].header.update('FILENAME', filename)
         self.HDUList.writeto(outfile, clobber=clobber)
     def __getattr__(self, attrname):
         return getattr(self.HDUList, attrname)

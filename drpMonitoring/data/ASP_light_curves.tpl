@@ -54,7 +54,6 @@ GPS_OUT = F                        / whether GPS time was unavailable
 MJDREFI = 51910.0                  / Int. part of MJD of SC clock start
 MJDREFF =     7.428703703703703D-4 / Frac. part of MJD of SC clock start
 OBSERVER= 'Peter Michelson'        / LAT PI name 
-FILENAME= '???????????????'        / name of this file
 ORIGIN  = 'LISOC'                  / name of organization making file
 CREATOR =                          / software and version creating file
 VERSION = 1                        / release version of the file

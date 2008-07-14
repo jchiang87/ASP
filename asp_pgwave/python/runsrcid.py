@@ -264,7 +264,19 @@ def runsrcid(pgwfile,prob):
 	sourceName=checkPointSource(pgwdata,dateinfo)
 	source = SaveAssoc(pgwfile,pgwdata,sourceName)
 	testo=faMessage(source,sun,dateinfo)
-	inviaMail(testo)
+        try:
+                pipelineserver = os.environ['PIPELINESERVER']
+                if pipelineserver == 'PROD':
+                        inviaMail(testo)
+                else:
+                        raise KeyError
+        except KeyError:
+                smail.sendFAmail('tosti@slac.stanford.edu',
+                                 ['tosti@slac.stanford.edu', 
+                                  'jchiang@slac.stanford.edu'],
+                                 'LAT SkyMonitor report: %s' 
+                                 % dt.datetime.utcnow().isoformat(),
+                                 testo)
 	os.system('rm temp.fits assoc.fits')
 
 

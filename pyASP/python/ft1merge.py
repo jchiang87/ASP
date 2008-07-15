@@ -42,6 +42,17 @@ def _getTimeKeywords(infiles, extnum=1):
             tstop = header['TSTOP']
     return tstart, tstop
 
+def updateTimeKeywords(fitsfile, tstart, tstop):
+    foo = pyfits.open(fitsfile)
+    foo[0].header['FILENAME'] = os.path.basename(fitsfile)
+    for i in range(len(foo)):
+        try:
+            foo[i].header['TSTART'] = tstart
+            foo[i].header['TSTOP'] = tstop
+        except KeyError:
+            pass
+    foo.writeto(fitsfile, clobber=True)
+
 def ft1merge(infiles, outfile):
     tstart, tstop = _getTimeKeywords(infiles)
     fmerge['infiles'] = '@' + _fileList(infiles)
@@ -107,6 +118,7 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
     if not infiles_arg:
         raise RuntimeError, "FT2 file list is empty"
     infiles = infiles_arg
+    tstart, tstop = _getTimeKeywords(infiles)
     if filter_zeros:
         infiles = UnpaddedFT2Files(infiles_arg)
     tmpfile = "ft2_file_list"
@@ -121,6 +133,7 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
     fmerge['mextname'] = ' '
     fmerge['lastkey'] = ' '
     fmerge.run()
+    updateTimeKeywords(outfile, tstart, tstop)
     try:
         os.remove(tmpfile)
     except OSError:
@@ -131,7 +144,7 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
         pass
 
 if __name__ == '__main__':
-    L1DataPath = '/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks'
-    infiles = [os.path.join(L1DataPath, 'downlink_%04i.fits' % i)
-               for i in range(4)]
-    ft1merge(infiles, 'foo.fits')
+    ft1_files = [x.strip() for x in open('ft1_list')]
+    ft2_files = [x.strip() for x in open('ft2_list')]
+    ft1merge(ft1_files, 'FT1_merged.fits')
+    ft2merge(ft2_files, 'FT2_merged.fits')

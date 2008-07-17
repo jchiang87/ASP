@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: tosti  Thu Jul 17 16:26:54 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py astroUtil.py newlc.py newpgw2fits.py 
+	refinePositions.py runsrcid.py 
+Log Message:
+removed the cut on SNR in aperPhotLC.py, added met2date in astroUtil.py, included utc time interval and (L,B) coordinates in the text of the e-mail sent to FA
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r6p2, operation: add
 Package: asp_pgwave

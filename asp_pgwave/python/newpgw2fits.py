@@ -85,6 +85,8 @@ def pgw2fits(pgwfile,no,flag,nsource):
         tmin,tmax=gtutil.getFileTimeInfo('Filtered_evt.fits')
 	if (tmax-tmin)>40000:
 		nbins=6
+	if (tmax-tmin)>86400:
+		nbins=7
         llcpar=[0.,0.,radius,5.,7.,tmin,tmax,100,2e5]
 	flux=[]
 	errflux=[]

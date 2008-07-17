@@ -146,14 +146,15 @@ def SaveAssoc(pgwfile,pgwdata,sourceName):
 		id.append(pix.index())        
 
 	source={'NAME':sourceName,
-		'HEALPIX_ID':id,
+		'L':pgwdata.field('L'),
 		'RAJ2000':pgwdata.field('RAJ2000'),
 		'DECJ2000':pgwdata.field('DECJ2000'),
 		'Theta95':pgwdata.field('Theta95'),
 		'flux':pgwdata.field('Flux(E>100)'),
 		'errFlux':pgwdata.field('errFlux'),
-		'chi2':pgwdata.field('CHI_2_VAR'),
-		'FLARING_FLAG':pgwdata.field('FLARING_FLAG')
+		'B':pgwdata.field('B'),
+		'FLARING_FLAG':pgwdata.field('FLARING_FLAG'),
+		'COUNTERPART':index
 		}
 	c0=pyfits.Column(name='HEALPIX_ID',format='D', unit=' ',array=num.array(id,dtype=num.int))		
 	c1=pyfits.Column(name='NAME',format='30A', unit=' ',array=sourceName)
@@ -234,15 +235,17 @@ def faMessage(source,sunpos,dateinfo):
         flag=num.array(source['FLARING_FLAG'])
         testo="LAT SkyMonitor: Source Detection task report\n"
 	testo=testo+("UTC DATE:%s\n\n" % (dt.datetime.utcnow().isoformat()))
-	testo=testo+('Analized Time Interval:[%d,%d]\n'%(dateinfo['tstart'],dateinfo['tstop']))
+	testo=testo+('Analized Time Interval (MET):[%d,%d]\n'%(dateinfo['tstart'],dateinfo['tstop']))
+	testo=testo+('Analized Time Interval (UTC):[%s,%s]\n'%(dateinfo['utcs'],dateinfo['utcst']))
 	testo=testo+('Found %d sources\n' % len(flag)) 
+	testo=testo+"ID   NAME     RA    DEC   L      B\n"
 	for i in range(0,len(flag)):
-	   testo=testo+('%03d %s'%(i+1,source['NAME'][i]))+(" at RA=%f, DEC=%f\n"% (source['RAJ2000'][i],source['DECJ2000'][i]))	
-	testo=testo+'\n'
+	   testo=testo+('%03d %20s'%(i+1,source['NAME'][i]))+("%12.4f%12.4f%12.4f%12.4f"% (source['RAJ2000'][i],source['DECJ2000'][i],source['L'][i],source['B'][i]))	
+	   testo=testo+'\n'
 	if len(flag)>0:
            for i in range(0,len(flag)):
                 if flag[i]>0:
-                  testo=testo+"Flaring source found:"+source['NAME'][i]+(" at RA=%f, DEC=%f\n"% (source['RAJ2000'][i],source['DECJ2000'][i]))
+                  testo=testo+"Flaring source found:"+source['NAME'][i]
 	else:
 	   testo=testo+'NO FLARING SOURCE DETECTED\n' 	
 	ss= ("Sun (RA,DEC): %7.4f,%7.4f \nSun (l,b): %7.4f,%7.4f\n" % (sunpos.ra(), sunpos.dec(),sunpos.l(),sunpos.b()))

@@ -32,24 +32,34 @@ def getApPhotLC(infile,ft2file,irf,nbin,lcpar,srcname,outfile='lc.dat'):
 	gtutil.fsel(infile,cut,bgsel)
 	nevtsr=(pyfits.open(srcsel)['EVENTS']).header['NAXIS2']
 	bgevt=((pyfits.open(bgsel)['EVENTS']).header['NAXIS2'])*factor
+	ontime=(pyfits.open(srcsel)['GTI']).header['ONTIME']
 	netevt=(nevtsr-bgevt)
-	if netevt<=0 or nevtsr<=0:
+	if netevt<=0. or nevtsr<=0.:
 		return [0]
 	snr=netevt/num.sqrt(nevtsr)
-	print 'S/N', snr
-	if snr<=5:
-		return [0]
+	print 'S/N', snr, nevtsr, bgevt, netevt,netevt/ontime
+	"""if snr<=2:
+		return [0]"""
 	dt=(lcpar[6]-lcpar[5])
 	if dt<40000:
-		nbin=2
+		nbin=3
 	tbin=dt/float(nbin)
 	#print "S/N ==", snr,"tbin=",tbin,"(s)" 
 	parlc=[lcpar[5],lcpar[6],tbin]
 	outlcsrc='vv_lc.fits'
 	gtutil.makeLC(srcsel,parlc,outlcsrc)
-	gtutil.lcExposure(outlcsrc,ft2file,irf)
+	ncols=pyfits.open(outlcsrc)[1].header['NAXIS2']
+	print ncols 
+	try:
+		gtutil.lcExposure(outlcsrc,ft2file,irf)
+	except:
+		print "Exposure calculation error"
+		return [0]
 	outlcbg='vv_bg_lc.fits'
         gtutil.makeLC(bgsel,parlc,outlcbg)
+	ncol=pyfits.open(outlcsrc)[1].header['TFIELDS']
+	if ncol<4:
+		return [0]
 	sr=FitsNTuple.FitsNTuple(outlcsrc)
 	idx=num.where(sr.EXPOSURE>0.)
 	id0=num.where(sr.EXPOSURE==0.)
@@ -120,7 +130,7 @@ def lcStat(lc,lcerr,cn):
 	return mean,sig,chi2/(len(lc)-1),fluct_ind,McVag
 
 def plotLC(x,xerr,y,yerr,tit='Light curve',outplot='lc.png'):
-	fig_width_pt = 400.0  # Get this from LaTeX using \showthe\columnwidth
+	fig_width_pt = 550.0  # Get this from LaTeX using \showthe\columnwidth
 	inches_per_pt = 1.0/72.27               # Convert pt to inch
 	golden_mean = (pylab.sqrt(5)-1.0)/2.0         # Aesthetic ratio
 	fig_width = fig_width_pt*inches_per_pt  # width in inches
@@ -144,10 +154,15 @@ def plotLC(x,xerr,y,yerr,tit='Light curve',outplot='lc.png'):
 	yer=yerr[idx]*1e6
 	pylab.figure(2)
 	pylab.clf()
-	pylab.errorbar(t,f,xerr=xer,yerr=yer,fmt='bo',ecolor='black', ms=4,mfc='black',mec='black')
+	#pylab.errorbar(t,f,xerr=xer,yerr=yer,fmt='bo',ecolor='black', ms=4,mfc='black',mec='black')
+	pylab.errorbar(t,f,xerr=xer,yerr=yer,linewidth=0.4,fmt='bo',ecolor='black', ms=3,mfc='black',mec='black',antialiased='False', capsize=0.001)
+
 	pylab.xlabel('MET (T-%i)[s]'%int(x[0]))
-	pylab.ylabel('F(E$>$100~MeV)~[10$^{-6}$~cm$^{-2}$~s$^{-1}$]')
-	#tit=tit.replace('-',' ')
+	#pylab.ylabel('F(E$>$100~MeV)~[10$^{-6}$~cm$^{-2}$~s$^{-1}$]')
+	#pylab.xlabel(r"$\rm{MET}\  \rm{[s]}$",fontsize=13)
+        pylab.ylabel(r"$\rm{Flux\ (E\ } > 100\ \rm{MeV)} \ \ \ \  [\times 10^{-6}\ \rm{ph}\ \  \rm{cm}^{-2}\ \rm{s}^{-1}]$",fontsize=12)
+
+	tit=tit.replace('_',' ')
 	pylab.title(tit)
 	pylab.savefig(outplot)
 	pylab.close('all')

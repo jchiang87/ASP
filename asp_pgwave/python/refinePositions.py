@@ -50,14 +50,15 @@ class PgwaveData(list):
             self[-1].ksignif = ksignif
     def write(self, outfile, glat_cutoff=5, TS_cutoff=0):
         output = open(outfile, 'w')
+	self.header=self.header.replace('SNR','TS ')
         output.write(self.header)
         for irow, source in enumerate(self):
             if saveSource(source, glat_cutoff, TS_cutoff):
                 output.write("%4i" % self.data[0][irow])
                 output.write("%8.1f %8.1f" % (self.data[1][irow],
                                               self.data[2][irow]))
-                output.write("%12.4f%12.4f" % (source.ra, source.dec))
-                for icol in range(5, len(self.data)):
+                output.write("%12.4f%12.4f%12.4f%12.4f" % (source.ra, source.dec,self.data[5][irow],source.TS))
+                for icol in range(7, len(self.data)):
                     output.write("%10s" % self.data[icol][irow])
                 output.write("\n")
         output.close()
@@ -67,7 +68,7 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
                     TS_cutoff=9, use_bg=True):
 #                    TS_cutoff=1e-5, use_bg=True):
     irfs = getIrfs(ft1File)
-
+     
     srclist = PgwaveData(pgwave_list)
     data = photonmap(ft1File, pixeloutput=None, eventtype=-1)
     
@@ -104,8 +105,8 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
                 fit = Fitter(source, data, background=bg(), verbose=0)
                 print "fitted values: ", fit.ra, fit.dec
                 source.ra, source.dec, source.TS = fit.ra, fit.dec, fit.TS
-        output.write(("  %8.3f"*5 + "\n") % 
-                     (source.ra, source.dec, fit.delta, fit.TS, source.ksignif))
+        output.write(("  %8.3f"*6 + "\n") % 
+                     (source.ra, source.dec, fit.sigma,fit.delta, fit.TS, source.ksignif))
     output.close()
     #
     # Move original list out of the way.

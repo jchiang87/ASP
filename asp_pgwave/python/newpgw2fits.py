@@ -167,6 +167,8 @@ def pgw2fits(pgwfile,no,flag,nsource):
 	tmppgw.close()
 	cmd='mv tmplist.list '+pgwfile
 	commands.getoutput(cmd)
+	cmd='mv pgw_lc_variable.reg Filtered_evt_map.reg'
+	commands.getoutput(cmd)
 	return pgwfits	
 if __name__=="__main__":
 	#os.environ['HOME'] = os.environ['output_dir']

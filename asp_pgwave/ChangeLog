@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Fri Jul 18 07:39:01 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	newpgw2fits.py 
+Log Message:
+updating pgwave ds9 region file after pointfit
+    *
+------------------------------------------------------------
 User: tosti  Thu Jul 17 16:26:54 PDT 2008
 ASP/asp_pgwave/python
 

@@ -5,12 +5,13 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="7.4" type="Data">
+<task name="DRP_monitoring" version="8.0" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="pgwave_folder">/ASP/Results/pgwave</var>
+    <var name="xrootd_folder">/ASP/DRP/dev</var>
   </variables>
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
@@ -182,6 +183,45 @@
       </createsSubtasks>
     </process>
 
+    <process name="createArchive">
+      <job executable="${DRPMONITORINGROOT}/${BINDIR}/createTarBall.sh"
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
+      <depends>
+        <after process="launchEnergyBandAnalysis.energyBandAnalysis" />
+      </depends>
+    </process>
+
+    <process name="registerArchive">
+      <script language="python">
+        <![CDATA[
+          createArchive = pipeline.getProcessInstance("createArchive")
+          dataType = "DRP_ARCHIVE"
+
+          filePath = createArchive.getVariable("tarball_name")
+          print filePath
+
+          attributes = ('nMetStart=%s:nMetStop=%s:sFrequency=%s:nInterval=%i' %
+                        (TSTART, TSTOP, frequency, interval))
+          print attributes
+
+          outfile = filePath.split('/')[-1]
+          logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
+          print logicalPath
+
+          datacatalog.registerDataset(dataType, logicalPath, filePath,
+                                      attributes)
+        ]]>
+      </script>
+    </process>
+
+    <process name="clean_up_files">
+      <job executable="${DRPMONITORING}/${BINDIR}/clean_up_files.sh"
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
+      <depends>
+        <after process="registerArchive" />
+      </depends>
+    </process>
+    
     <task name="exposureSubMap" version="1.0" type="Data">
       <prerequisites>
         <prerequisite name="ROI_ID" type="string"/>

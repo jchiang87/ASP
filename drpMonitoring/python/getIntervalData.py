@@ -117,4 +117,9 @@ pars.write()
 
 drpDbAccess.readRois()
 
+#
+# This should be called by FileStager.__del__, but it seems not to be, so...
+#
+fileStager.finish()
+
 os.system('chmod 777 *')

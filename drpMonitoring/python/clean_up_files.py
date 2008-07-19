@@ -10,6 +10,10 @@
 import os
 import glob
 
+output_dir = os.environ['OUTPUTDIR']
+
+os.chdir(output_dir)
+
 targets = ('*.par', 'FT1_merged.fits', '*.xml', 'pgwaveFileList',
            '*rois.txt', '*filtered*.fits', 'drp_pars.txt')
 

@@ -17,6 +17,9 @@ from FileStager import FileStager
 xrootdGlast = 'root://glast-rdr.slac.stanford.edu//glast'
 
 output_dir = os.environ['OUTPUTDIR']
+
+os.chdir(output_dir)
+
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
 xrootd_folder = os.environ['xrootd_folder']
 

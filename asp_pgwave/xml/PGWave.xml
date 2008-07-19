@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="6.3" type="Data">
+<task name="PGWave" version="7.0" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -52,19 +52,11 @@
     </depends>
   </process>
 
-  <process name="makeHealPixMaps">
-    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/makeHealPixMaps.sh"
-         batchOptions="-q medium"/>
-    <depends>
-      <after process="getPgwInputData" status="SUCCESS"/>
-    </depends>
-  </process>
-
   <process name="runpgw">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runpgw.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
-      <after process="makeHealPixMaps" status="SUCCESS"/>
+      <after process="getPgwInputData" status="SUCCESS"/>
     </depends>
   </process>
 
@@ -80,10 +72,8 @@
     exts = ('.fits', '_map.fits', '_map.list', '_map.reg', 
             '_map_pgw_out.fits', '_map_ait.gif')
     files = [filename(ext, suffix) for ext in exts]
-    files.append('counts_%s.fits' % suffix)
-    files.append('exposure_%s.fits' % suffix)
     dataTypes = ('EVENTS', 'SKYMAP', 'PGWAVESOURCELIST', 'DS9REGIONS', 
-                 'PGWAVESUMMARY', 'SKYMAP', 'COUNTSMAP', 'EXPOSUREMAP')
+                 'PGWAVESUMMARY', 'SKYMAP')
     streamId = pipeline.getStream()
     print "registering with stream ID = ", streamId
     for outfile, dataType in zip(files, dataTypes):

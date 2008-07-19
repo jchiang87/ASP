@@ -5,23 +5,7 @@ from math import *
 from readpgw import *
 import newlc
 import gtutil
-from AspHealPix import CountsArray, ExposureArray, SkyDir
 from creaXimageGif import *
-
-def getFlux(ra,dec,counts):
-	outdir=output_dir = os.environ['OUTPUTDIR']
-	suff=os.path.basename(outdir)
-	emapfile='exposure_'+suff+'.fits'
-	#emapfile='exposure_00001.fits'
-	emap = ExposureArray(emapfile)
-	flux=num.zeros(len(ra),dtype=num.float)
-	errflux=num.zeros(len(ra),dtype=num.float)
-	for i in range(0,len(ra)):
-		exposure_value=(emap[SkyDir(ra[i], dec[i])])
-		if exposure_value>0 and counts[i]>0:
-			flux[i]=counts[i]/exposure_value
-			errflux[i]=num.sqrt(counts[i])/exposure_value
-	return flux,errflux
 
 def eqgal(ra,dec):
 

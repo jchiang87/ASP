@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Sat Jul 19 15:06:21 PDT 2008
+ASP/asp_pgwave/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+remove sourceDet (not needed without healpix maps)
+    *
+------------------------------------------------------------
 User: jchiang  Sat Jul 19 15:05:37 PDT 2008
 ASP/asp_pgwave/xml
 

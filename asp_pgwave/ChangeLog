@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Sat Jul 19 14:38:34 PDT 2008
+ASP/asp_pgwave/python
+
+Removed Files:
+	build_lc_db.py makeHealPixMaps.py 
+Log Message:
+remove old healpix code
+    *
+------------------------------------------------------------
 User: jchiang  Sat Jul 19 14:32:12 PDT 2008
 ASP/asp_pgwave/python
 

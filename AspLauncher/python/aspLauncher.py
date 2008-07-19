@@ -16,10 +16,10 @@ folder = Logical folder in the dataCatalog that contains the FT1/2 data
 #
 # $Header$
 #
-import os
+import os, sys
 from createGrbStreams import blindSearchStreams
 from intervalAccess import unhandledIntervals
-from PipelineCommand import PipelineCommand, resolve_nfs_path
+from PipelineCommand import PipelineCommand, resolve_nfs_path, PipelineError
 
 _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
 
@@ -49,13 +49,22 @@ print "Downlink ID =", os.environ['nDownlink']
 print "debug mode =", debug
 print
 
+duplicateStreamException = False
+
 nDownlink = int(os.environ['nDownlink'])
-blindSearchStreams(downlinks=(nDownlink,),
-                   logicalPath=os.environ['folder'],
-                   grbroot_dir=aspOutput('GRB'),
-                   streamId=nDownlink, 
-                   datacatalog_imp="datacatalog",
-                   debug=debug)
+
+try:
+   blindSearchStreams(downlinks=(nDownlink,),
+                      logicalPath=os.environ['folder'],
+                      grbroot_dir=aspOutput('GRB'),
+                      streamId=nDownlink, 
+                      datacatalog_imp="datacatalog",
+                      debug=debug)
+except PipelineError, message:
+   if message.message("DuplicateStreamException"):
+      duplicateStreamException = True
+   else:
+      raise
 
 args = {'folder' : os.environ['folder'],
         'nDownlink' : nDownlink,
@@ -86,3 +95,6 @@ for frequency in unhandled:
 
       launcher = PipelineCommand('AspLauncher', args)
       launcher.run(debug=debug)
+
+if duplicateStreamException:
+   sys.exit(160)

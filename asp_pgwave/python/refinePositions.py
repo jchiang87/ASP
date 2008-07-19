@@ -53,7 +53,10 @@ class PgwaveData(list):
 	self.header=self.header.replace('SNR','TS ')
         output.write(self.header)
         for irow, source in enumerate(self):
-            if saveSource(source, glat_cutoff, TS_cutoff):
+            save_source = saveSource(source, glat_cutoff, TS_cutoff)
+            ll, bb = converter.gal((source.ra, source.dec))
+            print source.name, ll, bb, save_source
+            if save_source:
                 output.write("%4i" % self.data[0][irow])
                 output.write("%8.1f %8.1f" % (self.data[1][irow],
                                               self.data[2][irow]))

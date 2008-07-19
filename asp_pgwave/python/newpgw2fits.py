@@ -61,6 +61,9 @@ def eq2gal(r,d):
 	return num.array(l),num.array(b)
 
 def pgw2fits(pgwfile,no,flag,nsource):
+        print "***************"
+        print "inside pgw2fits"
+        print "***************"
 	debug=0
 	pgwfits=pgwfile.replace('.list','_pgw_out.fits')
 	filevt=pgwfile.replace('_map.list','.fits')
@@ -105,6 +108,7 @@ def pgw2fits(pgwfile,no,flag,nsource):
 			llcpar[0]=ra_pgw[i]
 		        llcpar[1]=dec_pgw[i]
 			fl,errfl,chi,V=newlc.createLC(llcpar,nbins,name_pgw[i])
+                        print i+1, fl, errfl
 			if fl==0:
 			  continue
 			tmppgw.write(lines[i+1])	

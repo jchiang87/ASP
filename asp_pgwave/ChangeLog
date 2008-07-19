@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Sat Jul 19 15:05:37 PDT 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+remove makeHealPixMaps from task
+    *
+------------------------------------------------------------
 User: jchiang  Sat Jul 19 14:38:34 PDT 2008
 ASP/asp_pgwave/python
 

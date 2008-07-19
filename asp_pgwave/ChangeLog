@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: jchiang  Sat Jul 19 14:32:12 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	newpgw2fits.py refinePositions.py 
+Removed Files:
+	lc.py pgw2fits.py 
+Log Message:
+remove obsolete files
+    *
+------------------------------------------------------------
 User: tosti  Fri Jul 18 07:39:01 PDT 2008
 ASP/asp_pgwave/python
 

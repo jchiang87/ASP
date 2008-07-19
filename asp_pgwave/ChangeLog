@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Sat Jul 19 15:31:41 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	newpgw2fits.py 
+Log Message:
+clean up AspHealpix-related dependencies
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 19 15:31:41 PDT 2008
 ASP/asp_pgwave/cmt
 
 Modified Files:

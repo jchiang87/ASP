@@ -8,6 +8,7 @@ reproducing/refining the analysis off-line and copy it to xrootd.
 # $Header$
 #
 
+import os
 import glob
 import shutil
 import pipeline
@@ -18,12 +19,19 @@ xrootdGlast = 'root://glast-rdr.slac.stanford.edu//glast'
 
 output_dir = os.environ['OUTPUTDIR']
 
+print "output_dir: ", output_dir
+
 os.chdir(output_dir)
+
+pipeline_server = os.environ['PIPELINESERVER']
 
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
 xrootd_folder = os.environ['xrootd_folder']
 
-xrootd_dir = os.path.join(xrootdGlast, xrootd_folder)
+xrootd_dir = os.path.join(xrootdGlast, xrootd_folder.strip('/'), 
+                          pipeline_server)
+
+print "xrootd_dir: ", xrootd_dir
 
 fileStager = FileStager(process_id, stageArea=output_dir)
 
@@ -31,7 +39,11 @@ archive_name = 'DRP_%s_%s.tar' % tuple(os.getcwd().split('/')[-2:])
 
 outfile = os.path.join(xrootd_dir, archive_name + '.gz')
 
+print "attempting to stage output file to ", outfile
+
 staged_name = fileStager.output(outfile)
+
+print "local staged file name ", staged_name
 
 targets = ('rois.txt', 
            'point_sources.xml',

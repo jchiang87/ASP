@@ -7,6 +7,7 @@
 # $Header$
 #
 import os
+import shutil
 import pipeline
 import numpy as num
 import pyfits
@@ -15,6 +16,7 @@ from GtApp import GtApp
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
 from ft1merge import ft2merge
+from FileStager import FileStager
 
 gtselect = GtApp('gtselect')
 gtmktime = GtApp('gtmktime')
@@ -284,14 +286,30 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
             os.remove(tmpfile)
     return outfiles
 
+def moveToXrootd(basename):
+    xrootdGlast = 'root://glast-rdr.slac.stanford.edu//glast'
+    xrootd_folder = os.environ['xrootd_folder']
+    pipeline_server = os.environ['PIPELINESERVER']
+    xrootd_dir = os.path.join(xrootdGlast, xrootd_folder.strip('/'),
+                              pipeline_server)
+
+    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
+    output_dir = os.environ['OUTPUTDIR']
+    fileStager = FileStager(process_id, stageArea=output_dir)
+
+    outfile = os.path.join(xrootd_dir, basename)
+    staged_name = fileStager.output(outfile)
+
+    shutil.move(basename, staged_name)
+    fileStager.finish()
+    return outfile
+
 if __name__ == '__main__':
-    import os, shutil
     import sys
     from LatGcnNotice import LatGcnNotice
     from GrbAspConfig import grbAspConfig
     import grb_followup
     import dbAccess
-    from FileStager import FileStager
     from getFitsData import filter_versions
     import grbASP
 
@@ -438,6 +456,9 @@ if __name__ == '__main__':
     filepath = os.path.join(logprob_dir, filename)
     writeTimeHistory(times, logdts, logdists, filepath)
 
-    pipeline.setVariable('filepath', filepath)
+    outfile_location = moveToXrootd(filename)
+
+#    pipeline.setVariable('filepath', filepath)
+    pipeline.setVariable('filepath', outfile_location)
         
     grb_followup.handle_unprocessed_events(grbroot_dir)

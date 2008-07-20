@@ -5,11 +5,12 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="4.0" type="Data">
+<task name="GRB_blind_search" version="4.1" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/GRB/BlindSearch</var>
+    <var name="xrootd_folder">/ASP/GRB/BlindSearch</var>
   </variables>
   <prerequisites>
      <prerequisite name="logicalPath" type="string"/>

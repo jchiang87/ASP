@@ -208,7 +208,7 @@ class LatGcnNotice(object):
                                  datetime.datetime.utcnow(), self.met, 
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate),
                                  notice_type="ASP_BLIND_SEARCH")
-    def email_notification(self, recipients=None):
+    def email_notification(self, recipients=None, files=None):
         import smtplib
         if recipients is None:
             recipients = dbAccess.grbAdvocateEmails()
@@ -226,6 +226,10 @@ class LatGcnNotice(object):
                        "with trigger time\n\n"
                        "  %s\n  MET = %.3f\n\n"%(utc_date(self.met),self.met) + 
                        "http://glast-ground.slac.stanford.edu/ASPDataViewer/")
+            if files is not None:
+                message += "\nFiles used:\n"
+                for item in files:
+                    message += (item + "\n")
             mail.sendmail(fromadr, address, message)
         mail.quit()
 

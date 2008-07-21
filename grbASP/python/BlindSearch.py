@@ -286,24 +286,24 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
             os.remove(tmpfile)
     return outfiles
 
-def moveToXrootd(infile):
-    xrootdGlast = 'root://glast-rdr.slac.stanford.edu//glast'
-    xrootd_folder = os.environ['xrootd_folder']
-    pipeline_server = os.environ['PIPELINESERVER']
-    xrootd_dir = os.path.join(xrootdGlast, xrootd_folder.strip('/'),
-                              pipeline_server)
-
-    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-    output_dir = os.environ['GRBROOTDIR']
-    fileStager = FileStager(process_id, stageArea=output_dir)
-
-    basename = os.path.basename(infile)
-    outfile = os.path.join(xrootd_dir, basename)
-    staged_name = fileStager.output(outfile)
-
-    shutil.move(infile, staged_name)
-    fileStager.finish()
-    return outfile
+#def moveToXrootd(infile):
+#    xrootdGlast = 'root://glast-rdr.slac.stanford.edu//glast'
+#    xrootd_folder = os.environ['xrootd_folder']
+#    pipeline_server = os.environ['PIPELINESERVER']
+#    xrootd_dir = os.path.join(xrootdGlast, xrootd_folder.strip('/'),
+#                              pipeline_server)
+#
+#    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
+#    output_dir = os.environ['GRBROOTDIR']
+#    fileStager = FileStager(process_id, stageArea=output_dir)
+#
+#    basename = os.path.basename(infile)
+#    outfile = os.path.join(xrootd_dir, basename)
+#    staged_name = fileStager.output(outfile)
+#
+#    shutil.move(infile, staged_name)
+#    fileStager.finish()
+#    return outfile
 
 if __name__ == '__main__':
     import sys
@@ -313,6 +313,7 @@ if __name__ == '__main__':
     import dbAccess
     from getFitsData import filter_versions
     import grbASP
+    from moveToXrootd import moveToXrootd
 
     grbASP.Event_enableFPE()
     
@@ -457,7 +458,7 @@ if __name__ == '__main__':
     filepath = os.path.join(grbroot_dir, filename)
     writeTimeHistory(times, logdts, logdists, filepath)
 
-    outfile_location = moveToXrootd(filepath)
+    outfile_location = moveToXrootd(filepath, grbroot_dir)
 
 #    pipeline.setVariable('filepath', filepath)
     pipeline.setVariable('filepath', outfile_location)

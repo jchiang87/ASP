@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="4.1" type="Data">
+<task name="GRB_blind_search" version="4.2" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -68,6 +68,8 @@
           attributes = ('nDownlink=%i:nMetStart=%s:nMetStop=%s' 
                         % (DownlinkId, nMetStart, nMetStop))
           print logical_path
+          if filepath.find('root') == 0:
+              filepath += "@SLAC_XROOT"
           print filepath
           print attributes
           datacat.registerDataset(dataType, logical_path, filepath, attributes)

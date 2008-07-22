@@ -11,7 +11,7 @@ for the GCN Notice draft and *.png files.
 import os
 import glob
 
-os.chdir(os.environ['GRBROOTDIR'])
+os.chdir(os.environ['OUTPUTDIR'])
 
 files = glob.glob('*')
 

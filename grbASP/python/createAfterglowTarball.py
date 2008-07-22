@@ -13,6 +13,7 @@ import pipeline
 from TarBall import TarBall
 from moveToXrootd import moveToXrootd
 import databaseAccess as dbAccess
+from parfile_parser import Parfile
 
 output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)

@@ -13,7 +13,7 @@ import pipeline
 from TarBall import TarBall
 from moveToXrootd import moveToXrootd
 
-output_dir = os.environ['GRBROOTDIR']
+output_dir = os.environ['OUTPUTDIR']
 os.chdir(output_dir)
 
 archive_name = "GRB_afterglow_%s.tar" % os.getcwd().split('/')[-1]
@@ -22,7 +22,8 @@ targets = ('GRB*_L1.fits',
            'FT2_merged.fits',
            'exp*_GRB*.fits',
            'GRB*_afterglow_*',
-           'GRB*_model.xml')
+           'GRB*_model.xml',
+           '*afterglow*.png')
 
 my_tarball = TarBall(archive_name)
 for target in targets:

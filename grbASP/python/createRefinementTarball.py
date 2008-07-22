@@ -26,7 +26,12 @@ targets = ('GRB*_BB_lc.dat',
            'GRB*_exp*.fits',
            'GRB*_grb_spec.fits',
            'GRB*_model.xml',
-           'GRB*_pars.txt')
+           'GRB*_pars.txt',
+           'GRB*_findSrc.txt',
+           'countsMap_*.png',
+           'countsSpectra_*.png',
+           'errorContours_*.png',
+           'lightCurve_*.png')
 
 my_tarball = TarBall(archive_name)
 for target in targets:

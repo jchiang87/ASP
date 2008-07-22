@@ -66,11 +66,10 @@ for interval in zip(gti.START, gti.STOP):
         break
 
 if is_covered:
-    print "launching stream"
-#    refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
-#                      output_dir=output_dir, grb_ids=(grb_id, ),
-#                      streamId=grb_id, 
-#                      datacatalog_imp=os.environ['datacatalog_imp'])
+    refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
+                      output_dir=output_dir, grb_ids=(grb_id, ),
+                      streamId=grb_id, 
+                      datacatalog_imp=os.environ['datacatalog_imp'])
 
 fileStager.finish()
 

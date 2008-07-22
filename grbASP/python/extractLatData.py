@@ -119,6 +119,26 @@ if __name__ == '__main__':
     grb_id = int(os.environ['GRB_ID'])
     gcnNotice = GcnNotice(grb_id)
 
+    if len(ft1) == 0:
+        # We have no FT1 files, so no events.
+        #
+        # Promote the asp_processing_level and fill the db table with the
+        # original Notice values
+        dbAccess.updateGrb(grb_id, ASP_PROCESSING_LEVEL=1, 
+                           LAT_ALERT_TIME=grb_id, LAT_RA=gcnNotice.RA,
+                           LAT_DEC=gcnNotice.DEC, 
+                           LAT_FIRST_TIME=grb_id, LAT_LAST_TIME=grb_id,
+                           ERROR_RADIUS=gcnNotice.LOC_ERR,
+                           INITIAL_LAT_RA=gcnNotice.RA, 
+                           INITIAL_LAT_DEC=gcnNotice.DEC,
+                           INITIAL_ERROR_RADIUS=gcnNotice.LOC_ERR)
+        #
+        # Cleanup and exit the process, thereby leaving found_events unset.
+        #
+        fileStager.finish()
+        os.system('chmod 777 *')
+        sys.exit()
+
     #
     # Write out parfile used by downstream processing (including afterglow
     # analysis) with GCN notice parameters to start out

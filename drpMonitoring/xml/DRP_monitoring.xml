@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="8.2" type="Data">
+<task name="DRP_monitoring" version="8.3" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -126,9 +126,6 @@
         dataType = "DRP_ARCHIVE"
 
         filePath = createArchive.getVariable("tarball_name")
-        if filePath.find('root') == 0:
-            filePath += "@SLAC_XROOT"
-        print filePath
 
         attributes = ('nMetStart=%s:nMetStop=%s:sFrequency=%s:nInterval=%i' %
                       (TSTART, TSTOP, frequency, interval))
@@ -137,6 +134,10 @@
         outfile = filePath.split('/')[-1]
         logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
         print logicalPath
+
+        if filePath.find('root') == 0:
+            filePath += "@SLAC_XROOT"
+        print filePath
 
         datacatalog.registerDataset(dataType, logicalPath, filePath,
                                     attributes)

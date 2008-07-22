@@ -245,7 +245,7 @@ def faMessage(source,sunpos,dateinfo):
 	if len(flag)>0:
            for i in range(0,len(flag)):
                 if flag[i]>0:
-                  testo=testo+"Flaring source found:"+source['NAME'][i]
+                  testo=testo+"\nFlaring source found: "+source['NAME'][i]
 	else:
 	   testo=testo+'NO FLARING SOURCE DETECTED\n' 	
 	ss= ("Sun (RA,DEC): %7.4f,%7.4f \nSun (l,b): %7.4f,%7.4f\n" % (sunpos.ra(), sunpos.dec(),sunpos.l(),sunpos.b()))

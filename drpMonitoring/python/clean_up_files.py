@@ -27,7 +27,8 @@ region_targets = ('events_*.fits',
                   'region???_events_no_zen.fits',
                   'region???_model.xml_input',
                   'region???_ptsrcs_model.xml',
-                  'gtexpmap_subdir_01')
+                  'gtexpmap_subdir_01',
+                  'expCube.fits')
 
 regions = glob.glob('region???')
 

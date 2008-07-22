@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Tue Jul 22 10:20:14 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	runsrcid.py 
+Log Message:
+improve formatting of email for flaring sources
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7, operation: add
 Package: asp_pgwave

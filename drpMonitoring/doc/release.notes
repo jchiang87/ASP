@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r4   22-Jul-08   JC   create DRP_ARCHIVEs, store on xrootd, clean up
+                            most files
     v1r3p4 14-Jul-08   JC   modify makeDrpLcTables to set tunit keyword values
                             according to HEASARC standards
     v1r3p3 12-Jul-08   JC   add LIVETIME>0 condition to gtmktime filter string

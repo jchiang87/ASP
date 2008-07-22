@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v1r7   21-Jul-08   JC   Gino's improvements on aperture photometry cut
+                            so as not to remove too many significant sources;
+                            clean up dependences on AspHealPix; remove several
+                            obsolete scripts
     v1r6p2 14-Jul-08   JC   direct FA email to developers when not running
                             in prod
     v1r6p1 12-Jul-08   JC   add LIVETIME>0 condition to gtmktime filtering.

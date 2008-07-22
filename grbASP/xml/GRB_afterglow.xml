@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="7.0" type="Data">
+<task name="GRB_afterglow" version="7.1" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -129,9 +129,10 @@
         createArchive = pipeline.getProcessInstance("createArchive")
         dataType = "GRB_AFTERGLOW_ARCH"
 
+        grb_id = createArchive.getVariable("grb_id")
         filePath = createArchive.getVariable("tarball_name")
 
-        attributes = 'nGrbId=%i' % GRB_ID
+        attributes = 'nGrbId=%s' % grb_id
         print attributes
 
         outfile = filePath.split('/')[-1]

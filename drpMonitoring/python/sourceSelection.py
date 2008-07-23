@@ -14,12 +14,12 @@ from read_data import read_data
 from readXml import SourceModel, Source
 from cleanXml import cleanXml
 import databaseAccess as dbAccess
-from drpDbAccess import findPointSources, defaultPtSrcXml
+from drpDbAccess import findUniquePointSources, defaultPtSrcXml
 from celgal import celgal, dist
 from SourceData import _monitoringBand as monitoringBand
 
 def getXmlModel():
-    ptsrcs = findPointSources(0, 0, 180)
+    ptsrcs = findUniquePointSources(0, 0, 180)
     xmlModel = """<?xml version="1.0" ?>
 <source_library title="Likelihood model">
 </source_library>

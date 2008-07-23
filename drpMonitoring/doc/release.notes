@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r4p1 23-Jul-08   JC   filter out duplicate sources inserted by PGWave into
+                            POINTSOURCES table when building xml model
     v1r4   22-Jul-08   JC   create DRP_ARCHIVEs, store on xrootd, clean up
                             most files
     v1r3p4 14-Jul-08   JC   modify makeDrpLcTables to set tunit keyword values

@@ -69,12 +69,18 @@ def match_runs(ft1_files, ft2_files):
     #
     # klugey test to see if we are looking at data from L1Proc
     #
-    if ft1_files[0].find('ph_r') == -1:
+    try:
+        if ft1_files[0].find('ph_r') == -1:
+            #
+            # If not, then just return the input filename lists.
+            #
+            print "skipping filename matching for FT1/2 files"
+            return ft1_files, ft2_files
+    except IndexError:
         #
-        # If not, then just return the input filename lists.
+        # We have no FT1 files from the query, so just return empty lists
         #
-        print "skipping filename matching for FT1/2 files"
-        return ft1_files, ft2_files
+        return [], []
     #
     # Extract run id from filename (and neglect file version since
     # those need not match)

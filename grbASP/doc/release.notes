@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v4r5p2 24-Jul-08   JC   revert to GRBYYMMDDFFF naming convention; append
+                            this to resent GCN Notice email subject lines;
+                            check for out-of-order events in BlindSearch.py
     v4r5p1 22-Jul-08   JC   inspect GTIs to determine if GRB time window is
                             covered for refinement launching
     v4r5   21-Jul-08   JC   create xrootd archives for tasks; purge files

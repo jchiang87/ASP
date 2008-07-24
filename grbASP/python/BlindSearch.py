@@ -294,7 +294,7 @@ def check_event_order(ft1_files):
         if min(dt) < 0:
             out_of_order.append(item)
     if out_of_order:
-        message = "Out-of-order events in \n"
+        message = "Out-of-order events found in \n"
         for item in out_of_order:
             message += item + "\n"
     raise ValueError(message)

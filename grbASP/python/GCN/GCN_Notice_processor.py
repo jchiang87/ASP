@@ -2,7 +2,7 @@
 """
 @brief Redirect GCN Notices.  Write GCN messages to files, indexed by
 the mission and TRIGGER_NUM fields.  Since this is executed from a
-Sparc via procmail, it must be pure python and cannot use third-party
+Sparc via procmail, it must be pure python, and cannot use third-party
 python modules.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
@@ -14,6 +14,33 @@ import os
 import sys
 import smtplib
 import tempfile
+
+def gregorianDate(TJD, SOD):
+    """ Convert TJD, SOD to Gregorian Dates (year, month, day, hours).
+    This inscrutable code is stolen from astro::JulianDate.cxx
+    """
+    julianDate = TJD + 2440000.5 + SOD/8.64e4
+    
+    jd = int(julianDate)
+    frac = julianDate - jd + 0.5
+
+    if frac >= 1:
+        frac -= 1.
+        jd += 1
+
+    hr = frac*24
+    l = int(jd +  + 68569)
+    n = 4*l / 146097L
+    l = l - (146097*n + 3L) / 4
+    yr = 4000*(l+1) / 1461001
+    l = l - 1461*yr / 4 + 31
+    mn = 80*l / 2447
+    day = l - 2447*mn / 80
+    l = mn/11
+    mn = mn + 2 - 12*l
+    yr = 100*(n-49) + yr + l
+    
+    return yr, mn, day, hr
 
 class GcnNoticeEmail(object):
     def __init__(self, lines):
@@ -39,6 +66,12 @@ class GcnNoticeEmail(object):
                 # form, so we have this ugly parsing code:
                 trig_value = line[12:].split()[0].split(',')[0]
                 self.trignum = int(trig_value)
+            if (line.find('GRB_DATE:') == 0 or
+                line.find('IMG_START_DATE:') == 0):
+                self.TJD = int(line.split()[1])
+            if (line.find('GRB_TIME:') == 0 or
+                line.find('IMG_START_TIME:') == 0):
+                self.SOD = int(float(line.split()[1]))
             if body:
                 self.lines.append(line)
     def writeArchive(self, path):
@@ -47,13 +80,17 @@ class GcnNoticeEmail(object):
         output_dir = os.path.join(path, self.mission_name)
         try:
             os.mkdir(output_dir)
-            os.system("chmod go+rwx %s" % output_dir)
         except OSError:
-            # Assume the directory already exists and is write-accessible.
+            # Assume the directory already exists.
             pass
+        os.system("chmod go+rwx %s" % output_dir)
         outfile = os.path.join(output_dir, "%i" % self.trignum)
         self.writeFile(outfile, add_delimiter=True)
-        return outfile
+    def grbName(self):
+        year, month, day, hour = gregorianDate(self.TJD, self.SOD)
+        grb_name = "GRB%02i%02i%02i%03i" % (year % 2000, month, day, 
+                                            1000*hour/24.)
+        return grb_name
     def writeFile(self, outfile, add_delimiter=False):
         output = open(outfile, 'a')
         output.write("%s" % self.date)
@@ -70,7 +107,8 @@ class GcnNoticeEmail(object):
         mail = smtplib.SMTP('smtpunix.slac.stanford.edu')
         fromaddr = 'glastgcn@slac.stanford.edu'
         message = ''.join(self.lines)
-        message = self.subject + "\n" + message
+        self.subject = self.subject.strip() + " - %s" % self.grbName()
+        message = self.subject + "\n\n" + message
         message += "\nThis message resent by GCN_Notice_processor.py\n"
         for toaddr in recipients:
             mail.sendmail(fromaddr, toaddr, message)
@@ -87,12 +125,11 @@ def forwardErrorMessage(msg):
 
 if __name__ == '__main__':
     import os, sys
-    path = '/nfs/farm/g/glast/u33/jchiang/GCN_Archive'
+    path = '/nfs/farm/g/glast/u52/ASP/GCN_Archive'
     queue_path = os.path.join(path, "NOTICE_QUEUE")
 
     try:
         my_notice = GcnNoticeEmail(sys.stdin.readlines())
-        my_notice.writeArchive(path)
         fd, queued_file = tempfile.mkstemp(dir=queue_path)
         os.close(fd)
         my_notice.writeFile(queued_file)
@@ -102,6 +139,8 @@ if __name__ == '__main__':
         forwardErrorMessage(msg)
 
     try:
-        my_notice.resend(('jchiang@slac.stanford.edu',))
+        if my_notice.mission_name != "GLAST" or my_notice.trignum != 99999:
+            my_notice.resend(('jchiang@slac.stanford.edu', 
+                              'balist@glast.stanford.edu'))
     except Exception, msg:
         forwardErrorMessage(msg)

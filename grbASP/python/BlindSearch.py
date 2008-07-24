@@ -286,24 +286,18 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
             os.remove(tmpfile)
     return outfiles
 
-#def moveToXrootd(infile):
-#    xrootdGlast = 'root://glast-rdr.slac.stanford.edu//glast'
-#    xrootd_folder = os.environ['xrootd_folder']
-#    pipeline_server = os.environ['PIPELINESERVER']
-#    xrootd_dir = os.path.join(xrootdGlast, xrootd_folder.strip('/'),
-#                              pipeline_server)
-#
-#    process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-#    output_dir = os.environ['GRBROOTDIR']
-#    fileStager = FileStager(process_id, stageArea=output_dir)
-#
-#    basename = os.path.basename(infile)
-#    outfile = os.path.join(xrootd_dir, basename)
-#    staged_name = fileStager.output(outfile)
-#
-#    shutil.move(infile, staged_name)
-#    fileStager.finish()
-#    return outfile
+def check_event_order(ft1_files):
+    out_of_order = []
+    for item in ft1_files:
+        ft1 = FitsNTuple(item)
+        dt = ft1.TIME[1:] - ft1.TIME[:-1]
+        if min(dt) < 0:
+            out_of_order.append(item)
+    if out_of_order:
+        message = "Out-of-order events in \n"
+        for item in out_of_order:
+            message += item + "\n"
+    raise ValueError(message)
 
 if __name__ == '__main__':
     import sys
@@ -328,6 +322,8 @@ if __name__ == '__main__':
     for item in ft1_files:
         print item
     downlink_files = fileStager.infiles(ft1_files)
+
+    check_event_order(downlink_files)
 
     ft2_files = [x.strip().strip('+') for x in open('Ft2FileList')]
     print "staging FT2 files:"

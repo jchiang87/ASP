@@ -80,12 +80,13 @@ class GcnNoticeEmail(object):
         output_dir = os.path.join(path, self.mission_name)
         try:
             os.mkdir(output_dir)
+            os.system("chmod go+rwx %s" % output_dir)
         except OSError:
-            # Assume the directory already exists.
+            # Assume the directory already exists and is write-accessible.
             pass
-        os.system("chmod go+rwx %s" % output_dir)
         outfile = os.path.join(output_dir, "%i" % self.trignum)
         self.writeFile(outfile, add_delimiter=True)
+        return outfile
     def grbName(self):
         year, month, day, hour = gregorianDate(self.TJD, self.SOD)
         grb_name = "GRB%02i%02i%02i%03i" % (year % 2000, month, day, 

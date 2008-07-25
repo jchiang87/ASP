@@ -297,7 +297,7 @@ def check_event_order(ft1_files):
         message = "Out-of-order events found in \n"
         for item in out_of_order:
             message += item + "\n"
-    raise ValueError(message)
+        raise ValueError(message)
 
 if __name__ == '__main__':
     import sys

@@ -421,7 +421,8 @@ if __name__ == '__main__':
             notice.setLocErr(1.)
             #
             if os.environ['PIPELINESERVER'] == 'PROD':
-                notice.email_notification(['jchiang@slac.stanford.edu'])
+                notice.email_notification(['jchiang@slac.stanford.edu'],
+                                          files=ft1_files)
             #
             # Need better logic to check if this burst already has a
             # Notice from a different mission/instrument. Here we just

@@ -17,6 +17,7 @@ import pyASP
 import dbAccess
 import numpy as num
 from FitsNTuple import FitsNTuple
+from MultiPartMailer import MultiPartMailer
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
@@ -208,31 +209,29 @@ class LatGcnNotice(object):
                                  datetime.datetime.utcnow(), self.met, 
                                  self.ra, self.dec, 1, isUpdate=int(isUpdate),
                                  notice_type="ASP_BLIND_SEARCH")
-    def email_notification(self, recipients=None, files=None):
-        import smtplib
+    def email_notification(self, logProbValue, threshold, 
+                           recipients=None, files=None, figures=()):
         if recipients is None:
             recipients = dbAccess.grbAdvocateEmails()
         print recipients
-        fromadr = "solist@glast.stanford.edu"
-        subj = "ASP blind search GRB candidate"
-        mail = smtplib.SMTP('smtpunix.slac.stanford.edu')
-        for address in recipients:
-            print "sending GCN Notice to %s" % address
-            hdr = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" 
-                   % (fromadr, address, subj))
-            message = (hdr +
-                       "ASP GRB_blind_search found a burst candidate at\n\n" +
-                       "  (RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
-                       "with trigger time\n\n"
-                       "  %s\n  MET = %.3f\n\n"%(utc_date(self.met),self.met) + 
-                       "http://glast-ground.slac.stanford.edu/ASPDataViewer/")
-            if files is not None:
-                message += "\nFiles used:\n"
-                for item in files:
-                    message += (item + "\n")
-            mail.sendmail(fromadr, address, message)
-        mail.quit()
 
+        mailer = MultiPartMailer("ASP blind search GRB candidate")
+        message = ("ASP GRB_blind_search found a burst candidate at\n\n" +
+                   "  (RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
+                   "with trigger time\n\n"
+                   "  %s\n  MET = %.3f\n\n" % (utc_date(self.met), self.met) + 
+                   "and log-probability / threshold : " + 
+                   "  %.1f / %.1f \n" % (logProbValue, threshold))
+        if files is not None:
+            message += "\nFiles used:\n"
+            for item in files:
+                message += (item + "\n")
+        message += "\nhttp://glast-ground.slac.stanford.edu/ASPDataViewer/\n"
+        mailer.add_text(message)
+        for item in figures:
+            mailer.add_image(item)
+        mailer.finish()
+        mailer.send('solist@glast.stanford.edu', recipients)
 def latCounts(ft1File):
     ebounds = (1e2, 1e3, 1e4)
     ft1 = FitsNTuple(ft1File)

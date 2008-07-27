@@ -6,6 +6,7 @@
 #
 # $Header$
 #
+from logProbPlots import createPlots
 import os
 import shutil
 import pipeline
@@ -376,6 +377,8 @@ if __name__ == '__main__':
     logdts = num.array([])
     logdists = num.array([])
 
+    grb_candidates = []
+
     for imin, imax in zip(imins, imaxs):
         events = package(imin, imax)
 
@@ -400,42 +403,59 @@ if __name__ == '__main__':
         logdists = num.concatenate((logdists, blindSearch.logdists))
 
         grbDirs = blindSearch.grbDirs()
-        for item in grbDirs:
-            grb_dir, tpeak, ll = item
-            #
-            # Use GCNNOTICES db table to keep track of GRBs found via
-            # blind search.  This will likely occur after all other
-            # instruments/missions (GBM, Swift) have already sent out
-            # their GCN Notices, so the blind search result will
-            # automatically be the position used in the refinement
-            # task.  Need to sort out Notice type precedence for this.
-            #
-            # Do not write this Notice out, since the ASP Notice will
-            # be generated after the GRB_refinement task.
-            #
-            notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
-            #
-            # Use default location error of 1 deg based on analyses 
-            # of GRID 1 data:
-            #
-            notice.setLocErr(1.)
-            #
-            if os.environ['PIPELINESERVER'] == 'PROD':
-                notice.email_notification(['jchiang@slac.stanford.edu'],
-                                          files=ft1_files)
-            #
-            # Need better logic to check if this burst already has a
-            # Notice from a different mission/instrument. Here we just
-            # check that the grb_id (int(MET of burst)) hasn't already
-            # been used by an entry in the GRB database table.
-            #
-            isUpdate = dbAccess.haveGrb(notice.grb_id)
-            notice.registerWithDatabase(isUpdate=isUpdate)
-            grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
-            mkdir(grb_output)
-            notice.setTriggerNum(tpeak)
-            notice.addComment(', '.join(downlink_files))
-            print grb_dir.ra(), grb_dir.dec(), tpeak
+        grb_candidates.extend(grbDirs)
+
+    filename = 'logProbs_%s.fits' % os.environ['DownlinkId']
+
+    filepath = os.path.join(grbroot_dir, filename)
+    writeTimeHistory(times, logdts, logdists, filepath)
+
+    figures = createPlots(filename, os.environ['DownlinkId'],
+                          -grbConfig.THRESHOLD)
+
+    for item in grb_candidates:
+        grb_dir, tpeak, logProb = item
+        #
+        # Use GCNNOTICES db table to keep track of GRBs found via
+        # blind search.  This will likely occur after all other
+        # instruments/missions (GBM, Swift) have already sent out
+        # their GCN Notices, so the blind search result will
+        # automatically be the position used in the refinement
+        # task.  Need to sort out Notice type precedence for this.
+        #
+        # Do not write this Notice out, since the ASP Notice will
+        # be generated after the GRB_refinement task.
+        #
+        notice = LatGcnNotice(tpeak, grb_dir.ra(), grb_dir.dec())
+        #
+        # Use default location error of 1 deg based on analyses 
+        # of GRID 1 data:
+        #
+        notice.setLocErr(1.)
+        #
+        if os.environ['PIPELINESERVER'] == 'PROD':
+            #notice.email_notification(logProb, files=ft1_files)
+            notice.email_notification(logProb, grbConfig.THRESHOLD,
+                                      ['jchiang@slac.stanford.edu'],
+                                      files=ft1_files, figures=figures)
+        else:
+            notice.email_notification(logProb, grbConfig.THRESHOLD,
+                                      ['jchiang@slac.stanford.edu',
+                                       'jchiang87@slac.stanford.edu'],
+                                      files=ft1_files, figures=figures)
+        #
+        # Need better logic to check if this burst already has a
+        # Notice from a different mission/instrument. Here we just
+        # check that the grb_id (int(MET of burst)) hasn't already
+        # been used by an entry in the GRB database table.
+        #
+        isUpdate = dbAccess.haveGrb(notice.grb_id)
+        notice.registerWithDatabase(isUpdate=isUpdate)
+        grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
+        mkdir(grb_output)
+        notice.setTriggerNum(tpeak)
+        notice.addComment(', '.join(downlink_files))
+        print grb_dir.ra(), grb_dir.dec(), tpeak
             
     try:
         os.remove('FT2_merged.fits')
@@ -444,20 +464,8 @@ if __name__ == '__main__':
 
     for item in zencut_files:
         os.remove(item)
-
-#    downlink_dir = os.path.join(grbroot_dir, 'Downlinks')
-#    mkdir(downlink_dir)
-#    logprob_dir = os.path.join(downlink_dir, os.environ['DownlinkId'])
-#    mkdir(logprob_dir)
-
-    filename = 'logProbs_%s.fits' % os.environ['DownlinkId']
-
-    filepath = os.path.join(grbroot_dir, filename)
-    writeTimeHistory(times, logdts, logdists, filepath)
-
-    outfile_location = moveToXrootd(filepath, grbroot_dir)
-
-#    pipeline.setVariable('filepath', filepath)
-    pipeline.setVariable('filepath', outfile_location)
         
-    grb_followup.handle_unprocessed_events(grbroot_dir)
+    outfile_location = moveToXrootd(filepath, grbroot_dir)
+    pipeline.setVariable('filepath', outfile_location)
+
+#    grb_followup.handle_unprocessed_events(grbroot_dir)

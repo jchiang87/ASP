@@ -468,4 +468,4 @@ if __name__ == '__main__':
     outfile_location = moveToXrootd(filepath, grbroot_dir)
     pipeline.setVariable('filepath', outfile_location)
 
-#    grb_followup.handle_unprocessed_events(grbroot_dir)
+    grb_followup.handle_unprocessed_events(grbroot_dir)

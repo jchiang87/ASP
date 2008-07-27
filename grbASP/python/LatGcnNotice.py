@@ -159,24 +159,9 @@ class LatGcnNotice(object):
         foo['GRB_DATE'] = ('%i TJD; %i DOY' % (jd.tjd(), jd.dayOfYear()))
         foo['GRB_TIME'] = time_string(hours*3600)
         
-        grb_name = 'GRB%02i%02i%02i' % (year % 100, month, day)
-        #
-        # Query for GCN_NAMEs with trigger times within the last day
-        # that have the same root name.
-        sql = ("select GCN_NAME from GRB where GRB_ID>=%i and GCAT_FLAG=0" 
-               % (self.met - 8.64e4))
-        def gcnNames(cursor):
-            names = []
-            for entry in cursor:
-                if entry[0].find(grb_name) == 0:
-                    names.append(entry[0])
-            names.sort()
-            return names
-        recentNames = dbAccess.apply(sql, gcnNames)
-        #
-        # Apply the suffix for the next GRB
-        #
-        self.name = grb_name + string.ascii_uppercase[len(recentNames)]
+        grb_name = 'GRB%02i%02i%02i%03i' % (year % 100, month, day, 
+                                            1000*hours/24.)
+        self.name = grb_name
         
         JD_missionStart_seconds = 211845067200
         jd = (self.met + JD_missionStart_seconds)/8.64e4
@@ -221,7 +206,8 @@ class LatGcnNotice(object):
                    "with trigger time\n\n"
                    "  %s\n  MET = %.3f\n\n" % (utc_date(self.met), self.met) + 
                    "and log-probability / threshold : " + 
-                   "  %.1f / %.1f \n" % (logProbValue, threshold))
+                   "  %.1f / %.1f \n" % (logProbValue, threshold) +
+                   "Plots of log-probabilty distributions are attached.\n")
         if files is not None:
             message += "\nFiles used:\n"
             for item in files:

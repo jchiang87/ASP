@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v4r5p3 27-Jul-08   JC   add plots of log-probabilities to email messages
+                            revert naming convention for ASP-burst candidates
     v4r5p2 24-Jul-08   JC   revert to GRBYYMMDDFFF naming convention; append
                             this to resent GCN Notice email subject lines;
                             check for out-of-order events in BlindSearch.py

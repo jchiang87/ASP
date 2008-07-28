@@ -24,17 +24,18 @@ def create_parfile(tstart, parfilename='drp_pars.txt'):
     infile = os.path.join(resolve_nfs_path(os.environ['DRPMONITORINGROOT']), 
                           'data', parfilename)
     shutil.copy(infile, 'drp_pars.txt')
-    sql = "select * from SOURCEMONITORINGCONFIG"
+    sql = "select startdate, enddate, irfs, ft1_filter from SOURCEMONITORINGCONFIG"
     def findConfig(cursor):
         for entry in cursor:
-            startdate, enddate = entry[1], entry[2]
+            startdate, enddate = entry[0], entry[1]
             if startdate <= tstart and tstart <= enddate:
-                return entry[3]
+                return entry[2], entry[3]
         message = 'SourceMonitoring configuration not found for %i MET' % tstart
         raise RuntimeError, message
-    irfs = dbAccess.apply(sql, findConfig)
+    irfs, ft1_filter = dbAccess.apply(sql, findConfig)
     pars = Parfile(parfilename)
     pars['rspfunc'] = irfs
+    pars['ft1_filter'] = ft1_filter
     pars.write()
     return pars
 

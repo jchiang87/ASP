@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v3r5p4 28-Jul-08   JC   add MultiPartMailer class and add try/except 
+                            block in getFitsData in case no files are 
+                            returned by catalog query
     v3r5p3 21-Jul-08   JC   add TarBall class and moveToXrootd function 
                             for archiving
     v3r5p2 12-Jul-08   JC   cross-check run numbers for FT1/FT2 data when

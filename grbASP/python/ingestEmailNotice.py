@@ -92,31 +92,17 @@ class Packet(object):
         tjd = self.TJD
         sod = self.SOD
         jd = pyASP.JulianDate(tjd + 2440000.5 + sod/8.64e4)
+        # Add a leap second for the one added Dec 31, 2005.
+        # Another will be needed after Dec 31, 2008.
         self.start_time = (jd.seconds() -
-                           pyASP.JulianDate_missionStart().seconds())
+                           pyASP.JulianDate_missionStart().seconds() + 1)
         year, month, day, hours = jd.gregorianDate()
         return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, hours/24.*1000)
-#        grb_name = 'GRB%02i%02i%02i' % (year % 100, month, day)
-#
-#        # Query for GCN_NAMEs with trigger times within the last day
-#        # that have the same root name.
-#        sql = ("select GCN_NAME from GRB where GRB_ID>=%i and GCAT_FLAG=0" 
-#               % (self.MET - 8.64e4))
-#        def gcnNames(cursor):
-#            names = []
-#            for entry in cursor:
-#                if entry[0].find(grb_name) == 0:
-#                    names.append(entry[0])
-#            names.sort()
-#            return names
-#        recentNames = dbAccess.apply(sql, gcnNames)
-#        #
-#        # Apply the suffix for the next GRB
-#        #
-#        return grb_name + string.ascii_uppercase[len(recentNames)]
     def _MET(self):
+        # Add a leap second for the one added Dec 31, 2005.
+        # Another will be needed after Dec 31, 2008.
         return int((self.TJD + 2440000.5)*8.64e4 + self.SOD
-                   - self._JD_missionStart_seconds)
+                   - self._JD_missionStart_seconds + 1)
         
 def registerWithDatabase(packet, notice_file):
     grb_id = int(packet.MET)

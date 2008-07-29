@@ -89,6 +89,11 @@ class GcnNoticeEmail(object):
         return outfile
     def grbName(self):
         year, month, day, hour = gregorianDate(self.TJD, self.SOD)
+        #
+        # Add a leap second for Dec 31, 2005 event. Another will be needed
+        # after Dec 31, 2008
+        #
+        hour += 1./3600.
         grb_name = "GRB%02i%02i%02i%03i" % (year % 2000, month, day, 
                                             1000*hour/24.)
         return grb_name

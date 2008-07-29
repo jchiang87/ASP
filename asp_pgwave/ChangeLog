@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue Jul 29 13:22:38 PDT 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+use glastdataq for getPgwInputData process
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7p1, operation: add
 Package: asp_pgwave

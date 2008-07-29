@@ -35,8 +35,8 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect.run()
 
     ft1 = pyfits.open(gtselect['outfile'])
-    if ft1['EVENTS'].size() == 0:
-        raise NoFT1EventsError, "No events were found for this burst"
+    if ft1['EVENTS'].size() < 2:
+        raise NoFT1EventsError, "Only one or zero events were extracted for the nominal time window and acceptance cone for this burst candidate."
 
     gtbin['evfile'] = gtselect['outfile']
     gtbin['outfile'] = gcnNotice.Name + '_LAT_lc.fits'

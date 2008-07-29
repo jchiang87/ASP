@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r5p4 28-Jul-08   JC   add leap second for Dec 31, 2005 event; raise
+                            FT1NoEventsError in extractLatData if initial
+                            extraction has 1 or 0 events, thereby preventing 
+                            further processing
     v4r5p3 27-Jul-08   JC   add plots of log-probabilities to email messages
                             revert naming convention for ASP-burst candidates
     v4r5p2 24-Jul-08   JC   revert to GRBYYMMDDFFF naming convention; append

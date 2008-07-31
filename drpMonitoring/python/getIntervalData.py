@@ -14,7 +14,7 @@ from GtApp import GtApp
 from FitsNTuple import FitsNTuple
 from getFitsData import getStagedFitsData
 from FileStager import FileStager
-from ft1merge import ft1merge, ft2merge
+from ft1merge import ft2merge, ft1_filter_merge
 from parfile_parser import Parfile
 from PipelineCommand import resolve_nfs_path
 import drpDbAccess
@@ -48,7 +48,6 @@ shutil.copy('pgwaveFileList', os.environ['OUTPUTDIR'])
 
 output_dir = os.environ['OUTPUTDIR']
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-#fileStager = FileStager(process_id, stageArea=output_dir, cleanup=False)
 fileStager = FileStager(process_id, stageArea=output_dir)
 
 ft1, ft2 = getStagedFitsData(fileStager=fileStager)
@@ -65,7 +64,12 @@ gtselect = GtApp('gtselect')
 print "Using downlink files: ", ft1
 
 ft1Merged = 'FT1_merged.fits'
-ft1merge(ft1, ft1Merged)
+
+#
+# Prefilter on zenith angle to get rid of most of albedo photons before
+# merging. Additional cuts will be applied downstream.
+#
+ft1_filter_merge(ft1, ft1Merged, zmax=105)
 
 ft2Merged = 'FT2_merged.fits'
 ft2merge(ft2, ft2Merged)

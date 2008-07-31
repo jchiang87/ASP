@@ -18,6 +18,7 @@ from GtApp import GtApp
 fcopy = GtApp('fcopy')
 fmerge = GtApp('fmerge')
 fchecksum = GtApp('fchecksum')
+gtselect = GtApp('gtselect')
 
 def _fileList(infiles, extnum=1):
     filelist = 'ft1merge_file_list'
@@ -142,6 +143,39 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
         infiles.cleanup()
     except AttributeError:
         pass
+
+def ft1_filter_merge(ft1files, outfile, filter=None, zmax=105):
+    """Prefilter the input FT1 files with a minimal filter string designed
+    to remove most albedo photons.  This is useful for merging data
+    from pointed observations.
+    """
+    if filter is not None and filter.find("ZENITH_ANGLE") != -1:
+        message = ("A zenith angle cut of < 105 deg is applied by default.\n" +
+                   "Use the zmax keyword argument to modify this or " +
+                   "make additional zenith angle cuts using gtselect.")
+        raise ValueError(message)
+
+    filter_string = "ZENITH_ANGLE < %f" % zmax
+    if filter is not None:
+        filter_string += " && %s" % filter
+
+    ft1files.sort()
+
+    outfiles = []
+    for i, item in enumerate(ft1files):
+        outfiles.append('ft1_temp_%03i.fits' % i)
+        infile = '%s[%s]' % (item, filter_string)
+        fcopy.run(infile=infile, outfile=outfiles[-1])
+
+    ft1_temp = 'FT1_merged_temp.fits'
+    ft1merge(outfiles, ft1_temp)
+
+    gtselect.run(infile=ft1_temp, outfile=outfile, zmax=zmax, rad=180)
+
+    for item in outfiles:
+        os.remove(item)
+
+    os.remove(ft1_temp)
 
 if __name__ == '__main__':
     ft1_files = [x.strip() for x in open('ft1_list')]

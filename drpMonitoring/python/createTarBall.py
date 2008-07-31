@@ -14,6 +14,8 @@ import pipeline
 from TarBall import TarBall
 from moveToXrootd import moveToXrootd
 
+os.chdir(os.environ['OUTPUTDIR'])
+
 archive_name = 'DRP_%s_%s.tar' % tuple(os.getcwd().split('/')[-2:])
 
 targets = ('rois.txt', 

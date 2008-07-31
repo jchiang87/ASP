@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Jul 30 20:12:53 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	getPgwInputData.py refinePositions.py runpgw.py runsrcid.py 
+Log Message:
+break runpgw up into parts; use ft1_filter_merge in getPgwInputData
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7p2, operation: add
 Package: asp_pgwave

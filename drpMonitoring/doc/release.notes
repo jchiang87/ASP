@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r4p4 31-Jul-08   JC   bug-fix for createTarBall.py script
     v1r4p3 30-Jul-08   JC   use ft1_filter_merge to handle large datasets
     v1r4p2 28-Jul-08   JC   obtain ft1_filter string from SOURCEMONITORINGCONFIG
                             db table so that different configurations can

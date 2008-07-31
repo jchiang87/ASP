@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Jul 30 20:12:54 PDT 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+break runpgw up into parts; use ft1_filter_merge in getPgwInputData
+    *
+------------------------------------------------------------
 User: jchiang  Wed Jul 30 20:12:53 PDT 2008
 ASP/asp_pgwave/python
 

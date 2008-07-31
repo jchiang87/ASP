@@ -87,26 +87,17 @@ def runpgw(infile):
 	no=getpgwConfig()
         pgwave(inmap1,no)
 	outf=inmap1.replace('.fits','.list')
-        #
-        # Perform position refinement. This updates the positions in outf.
-        #
-	rows=open(outf).readlines()
-        nsource = 0
-	if len(rows)>1:
-        	nsource=refinePositions(pgwave_list=outf, ft1File=infile)
-	lcpar=no[6:8]
-	outfits=pgw2fits(outf,lcpar,1,nsource)
-	if nsource>0:
-		runsrcid(outfits,.1)
-	print 'No source found'
-	print 'PGWave FITS output file:',outfits 
 
-if __name__=="__main__":
+if __name__ == "__main__":
+        from parfile_parser import Parfile
         from syncDataViewer import syncDataViewer
         from renameOutFiles import renameOutFiles
+
 	os.chdir(os.environ['OUTPUTDIR'])
-	runpgw('Filtered_evt.fits')
-	if debug==0:
-		os.system('chmod 777 *')
-        	syncDataViewer()
-        	renameOutFiles()
+
+        pars = Parfile('pgwave_pars.txt', fixed_keys=False)
+        pars['ft1File'] = 'Filtered_evt.fits'
+        pars['pgwave_list'] = 'Filtered_evt_map.list'
+        pars.write()
+
+	runpgw(pars['ft1File'])

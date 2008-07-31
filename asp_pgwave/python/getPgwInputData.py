@@ -9,9 +9,19 @@ query made by the PGWave task.
 import os, shutil
 from GtApp import GtApp
 from getFitsData import getStagedFitsData
-from ft1merge import ft1merge, ft2merge
+from ft1merge import ft2merge, ft1_filter_merge
 from FitsNTuple import FitsNTuple
 from FileStager import FileStager
+
+fcopy = GtApp('fcopy')
+gtselect = GtApp('gtselect')
+
+def filter_string(ft1file):
+    my_filter = "ENERGY > 0"  # do nothing default
+    foo = FitsNTuple(ft1file)
+    if 'CTBCLASSLEVEL' in foo.names:
+        my_filter += " && CTBCLASSLEVEL>1"
+    return my_filter
 
 output_dir = os.environ['OUTPUTDIR']
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
@@ -30,7 +40,7 @@ gtselect = GtApp('gtselect')
 print "Using downlink files: ", ft1
 
 ft1Merged ='FT1_merged.fits'
-ft1merge(ft1, ft1Merged)
+ft1_filter_merge(ft1, ft1Merged, filter_string(ft1[0]))
 
 ft2Merged = 'FT2_merged.fits'
 ft2merge(ft2, ft2Merged)

@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="7.1" type="Data">
+<task name="PGWave" version="8.0" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -60,6 +60,22 @@
     </depends>
   </process>
 
+  <process name="refinePositions">
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/refinePositions.sh"
+         batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
+    <depends>
+      <after process="runpgw" status="SUCCESS"/>
+    </depends>
+  </process>
+
+  <process name="runsrcid">
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runsrcid.sh"
+         batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
+    <depends>
+      <after process="refinePositions" status="SUCCESS"/>
+    </depends>
+  </process>
+
   <process name="registerData">
     <script><![CDATA[
     print "using datacatalog implementation: ", datacatalog_imp
@@ -105,7 +121,7 @@
                                  "pgwave_streamId=%i" % streamId)
     ]]></script>
     <depends>
-      <after process="runpgw" status="SUCCESS"/>
+      <after process="runsrcid" status="SUCCESS"/>
     </depends>
     <createsSubtasks>
       <subtask>drpMonitoring</subtask>

@@ -69,7 +69,6 @@ class PgwaveData(list):
 def refinePositions(pgwave_list='Filtered_evt_map.list',
                     ft1File='Filtered_evt.fits', glat_cutoff=5,
                     TS_cutoff=9, use_bg=True):
-#                    TS_cutoff=1e-5, use_bg=True):
     irfs = getIrfs(ft1File)
      
     srclist = PgwaveData(pgwave_list)
@@ -109,7 +108,8 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
                 print "fitted values: ", fit.ra, fit.dec
                 source.ra, source.dec, source.TS = fit.ra, fit.dec, fit.TS
         output.write(("  %8.3f"*6 + "\n") % 
-                     (source.ra, source.dec, fit.sigma,fit.delta, fit.TS, source.ksignif))
+                     (source.ra, source.dec, fit.sigma, fit.delta, 
+                      fit.TS, source.ksignif))
     output.close()
     #
     # Move original list out of the way.
@@ -119,7 +119,22 @@ def refinePositions(pgwave_list='Filtered_evt_map.list',
     # Write the updated list in its place.
     #
     srclist.write(pgwave_list, glat_cutoff, TS_cutoff)
-    rows=open(pgwave_list).readlines()
-    return len(rows)-1
+    rows = open(pgwave_list).readlines()
+    return len(rows) - 1
+
 if __name__ == '__main__':
-    refinePositions()
+    import os
+    from parfile_parser import Parfile
+    os.chdir(os.environ['OUTPUTDIR'])
+
+    pars = Parfile('pgwave_pars.txt', fixed_keys=False)
+
+    nsource = 0
+    rows = open(pars['pgwave_list']).readlines()
+    if len(rows) > 1:
+        nsource = refinePositions(pars['pgwave_list'], pars['ft1File'])
+
+    pars['nsource'] = nsource
+    pars.write()
+
+    

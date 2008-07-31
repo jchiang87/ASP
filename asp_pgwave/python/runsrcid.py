@@ -289,7 +289,26 @@ def loadCatFileName():
 	return files
 
 if __name__=="__main__":
-	
-	pgwfile=sys.argv[1]
-	prob=sys.argv[2]
-	runsrcid(pgwfile,prob)
+        from parfile_parser import Parfile
+        from newpgw2fits import pgw2fits
+        from syncDataViewer import syncDataViewer
+        from renameOutFiles import renameOutFiles
+        try:
+                pgwfile=sys.argv[1]
+                prob=sys.argv[2]
+                runsrcid(pgwfile,prob)
+        except:
+                os.chdir(os.environ['OUTPUTDIR'])
+                dbManager = db.dbmanager()
+                config = dbManager.getPgwaveConfig()
+                dbManager.close()
+                
+                pars = Parfile('pgwave_pars.txt', fixed_keys=False)
+                outfits = pgw2fits(pars['pgwave_list'], config[6:8],
+                                   1, pars['nsource'])
+                if pars['nsource'] > 0:
+                        runsrcid(outfits, 0.1)
+
+		os.system('chmod 777 *')
+        	syncDataViewer()
+        	renameOutFiles()

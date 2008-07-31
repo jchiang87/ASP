@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r7p4 31-Jul-08   JC   implement archiving and clean up scripts
     v1r7p3 30-Jul-08   JC   break runpgw into runpgw->refinePositions->runsrcid;
                             use ft1_filter_merge
     v1r7p2 29-Jul-08   JC   use glastdataq for getPgwInputData process since

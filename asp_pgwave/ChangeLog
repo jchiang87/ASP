@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Thu Jul 31 11:16:33 PDT 2008
+ASP/asp_pgwave/python
+
+Added Files:
+	clean_up_files.py createTarBall.py 
+Log Message:
+create tarball archive and clean up files
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7p3, operation: add
 Package: asp_pgwave

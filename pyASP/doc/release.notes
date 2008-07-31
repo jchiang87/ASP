@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v3r5p5 30-Jul-08   JC   add ft1_filter_merge function
     v3r5p4 28-Jul-08   JC   add MultiPartMailer class and add try/except 
                             block in getFitsData in case no files are 
                             returned by catalog query

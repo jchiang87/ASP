@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug  4 08:43:03 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	clean_up_files.py 
+Log Message:
+fix typo in filename
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7p4, operation: add
 Package: asp_pgwave

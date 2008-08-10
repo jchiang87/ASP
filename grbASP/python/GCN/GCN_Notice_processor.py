@@ -15,6 +15,12 @@ import sys
 import smtplib
 import tempfile
 
+def round(x):
+    frac = x % 1
+    if frac > 0.5:
+        return int(x) + 1
+    return int(x)
+
 def gregorianDate(TJD, SOD):
     """ Convert TJD, SOD to Gregorian Dates (year, month, day, hours).
     This inscrutable code is stolen from astro::JulianDate.cxx
@@ -95,7 +101,7 @@ class GcnNoticeEmail(object):
         #
         hour += 1./3600.
         grb_name = "GRB%02i%02i%02i%03i" % (year % 2000, month, day, 
-                                            1000*hour/24.)
+                                            round(1000*hour/24.))
         return grb_name
     def writeFile(self, outfile, add_delimiter=False):
         output = open(outfile, 'a')

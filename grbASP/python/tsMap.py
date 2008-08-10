@@ -18,9 +18,9 @@ grb_id = int(os.environ['GRB_ID'])
 
 if likelyUL(grb_id):
     print "Likely upper limit candidate.  Skipping TS map calculation."
-    pipeline.setVariable('LIKELY_UPPER_LIMIT', 'true')
+    pipeline.setVariable('LIKELY_UPPER_LIMIT', 'IS_UPPER_LIMIT')
 else:
-    pipeline.setVariable('LIKELY_UPPER_LIMIT', 'false')
+    pipeline.setVariable('LIKELY_UPPER_LIMIT', 'NOT_AN_UPPERLIMIT')
     gttsmap = GtApp('gttsmap', 'Likelihood')
     gttsmap.run() # Use par file written by refinePosition.py
     dbAccess.updateGrb(grb_id, TS_MAP="'%s'" % absFilePath(gttsmap['outfile']))

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Sun Aug 10 16:40:58 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	newlc.py 
+Log Message:
+fixed a bug in the production of the ds9 region file
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7p5, operation: add
 Package: asp_pgwave

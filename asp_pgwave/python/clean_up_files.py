@@ -28,4 +28,5 @@ targets = glob.glob('*')
 
 for target in targets:
     if target not in saved:
+        print "deleting %s" % target
         os.system('rm -f %s' % target)

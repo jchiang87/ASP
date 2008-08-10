@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="8.3" type="Data">
+<task name="PGWave" version="8.5" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -89,6 +89,8 @@
     <script><![CDATA[
     print "using datacatalog implementation: ", datacatalog_imp
     datacat = eval(datacatalog_imp)
+    streamId = pipeline.getStream()
+    print "registering with stream ID = ", streamId
     #
     #  Register the archive file
     #
@@ -97,8 +99,9 @@
 
     filePath = createArchive.getVariable("tarball_name")
 
-    attributes = ('nMetStart=%s:nMetStop=%s:sFrequency=%s:nInterval=%i' %
-                  (TSTART, TSTOP, frequency, interval))
+    attributes = (('nDatasetId=%s:nMetStart=%s:nMetStop=%s:' + 
+                   'sFrequency=%s:nInterval=%i') %
+                  (streamId, TSTART, TSTOP, frequency, interval))
     print attributes
 
     outfile = filePath.split('/')[-1]
@@ -120,12 +123,10 @@
         return tokens[0] + '_' + suffix + '.' + tokens[1]
     suffix = OUTPUTDIR.split('/')[-1]
     exts = ('.fits', '_map.fits', '_map.list', '_map.reg', 
-            '_map_pgw_out.fits', '_map_ait.gif')
+            '_map_pgw_out.fits', '_map_ait.gif', '_map_ait.png')
     files = [filename(ext, suffix) for ext in exts]
     dataTypes = ('EVENTS', 'SKYMAP', 'PGWAVESOURCELIST', 'DS9REGIONS', 
-                 'PGWAVESUMMARY', 'SKYMAP')
-    streamId = pipeline.getStream()
-    print "registering with stream ID = ", streamId
+                 'PGWAVESUMMARY', 'SKYMAP', 'SKYMAP')
     for outfile, dataType in zip(files, dataTypes):
         logicalPath = ('%s/%s/%s:%s' 
                        % (outputFolder, frequency, dataType, outfile))

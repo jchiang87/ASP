@@ -21,6 +21,7 @@ saved = ('Filtered_evt_%s.fits' % suffix,
          'Filtered_evt_map_%s.reg' % suffix, 
          'Filtered_evt_map_pgw_out_%s.fits' % suffix, 
          'Filtered_evt_map_ait_%s.gif' % suffix, 
+         'Filtered_evt_map_ait_%s.png' % suffix, 
          'FT2_%s.fits' % suffix)
 
 targets = glob.glob('*')

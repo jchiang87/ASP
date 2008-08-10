@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v4r5p5 10-Aug-08   JC   setup upper limit flag using non-convertable string
+                            to avoid pipeline type conversions
     v4r5p4 28-Jul-08   JC   add leap second for Dec 31, 2005 event; raise
                             FT1NoEventsError in extractLatData if initial
                             extraction has 1 or 0 events, thereby preventing 

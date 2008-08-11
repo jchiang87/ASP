@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r7p6 11-Aug-08   JC   delete old flareevents table entries values are 
+                            recomputed from rollbacks.
     v1r7p5 10-Aug-08   JC   add png file to datacatalog output
     v1r7p4 31-Jul-08   JC   implement archiving and clean up scripts
     v1r7p3 30-Jul-08   JC   break runpgw into runpgw->refinePositions->runsrcid;

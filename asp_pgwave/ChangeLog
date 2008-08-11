@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Sun Aug 10 17:22:38 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py runsrcid.py 
+Log Message:
+added a check to avoid to insert duplicate data in case of rollback see JIRA ASP-40
+    *
+------------------------------------------------------------
 User: tosti  Sun Aug 10 16:40:58 PDT 2008
 ASP/asp_pgwave/python
 

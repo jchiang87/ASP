@@ -128,6 +128,12 @@ class dbmanager:
 		nrec=cursor.fetchone()
 		cursor.close()
 		return nrec[0]
+   	def deleteDuplicateFE(self,procid):
+		sql = ("delete * from flareevents where process_id=%i" % procid)
+		cursor=self.conn.cursor()
+		res=cursor.execute(sql)
+		self.conn.commit()
+		cursor.close()
 	def insertFlareEvent(self,nome,tstart,tstop,flux,err,chi,ff,confid,procid):
                 if err != err:
                         # Have nan from pgwave so return without trying to insert

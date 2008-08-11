@@ -191,6 +191,7 @@ def checkPointSource(pgwdata,dateinfo):
         #mydb.close()
 	if debug==0:
 		procid=int(os.environ['PIPELINE_STREAM'])
+		mydb.deleteDuplicateFE(procid)
 	ra=db._PointSourcesFields['RA'][1]
 	dec=db._PointSourcesFields['DEC'][1]
 	i=0

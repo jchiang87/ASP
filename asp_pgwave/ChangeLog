@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Mon Aug 11 12:40:35 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py 
+Log Message:
+fixed an error in sql delete statment sintax
+    *
+------------------------------------------------------------
 User: tosti  Sun Aug 10 17:22:38 PDT 2008
 ASP/asp_pgwave/python
 

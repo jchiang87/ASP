@@ -129,7 +129,7 @@ class dbmanager:
 		cursor.close()
 		return nrec[0]
    	def deleteDuplicateFE(self,procid):
-		sql = ("delete * from flareevents where process_id=%i" % procid)
+		sql = ("delete from flareevents where process_id=%i" % procid)
 		cursor=self.conn.cursor()
 		res=cursor.execute(sql)
 		self.conn.commit()

@@ -80,6 +80,7 @@ gtselect['tmin'] = start_time
 gtselect['tmax'] = stop_time
 gtselect['rad'] = 180.
 gtselect['zmax'] = pars['zenmax']
+gtselect['emax'] = 3e5
 
 if debug:
     print gtselect.command()

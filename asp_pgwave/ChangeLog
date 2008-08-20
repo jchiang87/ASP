@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Aug 20 11:06:24 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	getPgwInputData.py 
+Log Message:
+set emax=3e5
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r7p6, operation: add
 Package: asp_pgwave

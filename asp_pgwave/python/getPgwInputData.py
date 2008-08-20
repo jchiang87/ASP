@@ -59,7 +59,7 @@ gtselect['ra'] = 180.
 gtselect['dec'] = 0.
 gtselect['rad'] = 180
 gtselect['emin'] = 30
-gtselect['emax'] = 2e5
+gtselect['emax'] = 3e5
 gtselect.run()
 
 try:

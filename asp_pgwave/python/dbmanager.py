@@ -177,6 +177,11 @@ class dbmanager:
                         sql4=sql2+sql3
         	        #print sql4
                         res=cursor.execute(sql4)
+                        #
+                        # insert subtype into pointsourcetypeset table
+                        #
+                        sql = "insert into pointsourcetypeset (ptsrc_name, sourcesub_type) values ('%s', 'PGWAVE')" % ptsrc_name
+                        cursor.execute(sql)
                         self.conn.commit()
 		cursor.close()	
 		return nome1

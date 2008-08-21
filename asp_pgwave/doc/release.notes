@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r7p7 21-Aug-08   JC   insert sources into pointsourcetypeset table
+                            because of db table changes forced by web apps
+                            and RSP
     v1r7p6 11-Aug-08   JC   delete old flareevents table entries values are 
                             recomputed from rollbacks.
     v1r7p5 10-Aug-08   JC   add png file to datacatalog output

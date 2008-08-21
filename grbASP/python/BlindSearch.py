@@ -465,6 +465,9 @@ if __name__ == '__main__':
     for item in zencut_files:
         os.remove(item)
         
+    for item in figures:
+        os.remove(figures)
+
     outfile_location = moveToXrootd(filepath, grbroot_dir)
     pipeline.setVariable('filepath', outfile_location)
 

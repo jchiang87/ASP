@@ -111,10 +111,17 @@ def findPointSources(ra, dec, radius, srctype=None, roiIds=None,
                      connection=asp_default):
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
-    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, XML_MODEL " +
-           "from POINTSOURCES")
+    sql = """select pointsources.ptsrc_name, pointsources.roi_id,
+             pointsources.ra, pointsources.dec,
+             pointsources.nx, pointsources.ny, pointsources.nz,
+             pointsources.xml_model
+             from PointSources
+             left join pointsourcetypeset on (pointsources.ptsrc_name =
+             pointsourcetypeset.ptsrc_name)"""
+#    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, XML_MODEL " +
+#           "from POINTSOURCES")
     if srctype:
-        sql += " where SOURCE_TYPE = '%s'" % srctype
+        sql += " where pointsourcetypeset.SOURCESUB_TYPE = '%s'" % srctype
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
@@ -132,8 +139,19 @@ def findUniquePointSources(ra, dec, radius, roiIds=None, tol=0.5,
     """
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
-    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, "
-           + "XML_MODEL, SOURCE_TYPE from POINTSOURCES")
+    sql = """select pointsources.ptsrc_name, pointsources.roi_id,
+             pointsources.ra, pointsources.dec,
+             pointsources.nx, pointsources.ny, pointsources.nz,
+             pointsources.xml_model,
+             pointsourcetypeset.sourcesub_type from PointSources
+             left join pointsourcetypeset on (pointsources.ptsrc_name =
+             pointsourcetypeset.ptsrc_name)
+             where pointsourcetypeset.sourcesub_type = 'DRP' or
+             pointsourcetypeset.sourcesub_type = 'BLZRGRPSRC' or
+             pointsourcetypeset.sourcesub_type = 'KNOWNPSR' or
+             pointsourcetypeset.sourcesub_type = 'PGWAVE'"""
+#    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, "
+#           + "XML_MODEL, SOURCE_TYPE from POINTSOURCES")
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
@@ -144,8 +162,11 @@ def findUniquePointSources(ra, dec, radius, roiIds=None, tol=0.5,
         return srcs
     my_dict = apply(sql, getSources, connection=connection)
 
+#    known_list = [srcName for srcName in my_dict 
+#                  if my_dict[srcName].sourceType in ('DRP', 'Blazar', 'Pulsar')]
     known_list = [srcName for srcName in my_dict 
-                  if my_dict[srcName].sourceType in ('DRP', 'Blazar', 'Pulsar')]
+                  if my_dict[srcName].sourceType in ('DRP', 'BLZRGRPSRC', 
+                                                     'KNOWNPSR')]
 
     ok_pgwave_sources = []
     cos_tol = num.cos(tol*num.pi/180.)

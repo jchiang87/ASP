@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r5   21-Aug-08   JC   more db table changes for web apps and RSP
+                            that force rewriting SQL for pointsources table
+                            access                              
     v1r4p4 31-Jul-08   JC   bug-fix for createTarBall.py script
     v1r4p3 30-Jul-08   JC   use ft1_filter_merge to handle large datasets
     v1r4p2 28-Jul-08   JC   obtain ft1_filter string from SOURCEMONITORINGCONFIG

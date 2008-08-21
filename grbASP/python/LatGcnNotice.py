@@ -197,7 +197,8 @@ class LatGcnNotice(object):
     def email_notification(self, logProbValue, threshold, 
                            recipients=None, files=None, figures=()):
         if recipients is None:
-            recipients = dbAccess.grbAdvocateEmails()
+#            recipients = dbAccess.grbAdvocateEmails()
+            recipients = ['balist@glast.stanford.edu']
         print recipients
 
         mailer = MultiPartMailer("ASP blind search GRB candidate")

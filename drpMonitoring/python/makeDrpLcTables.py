@@ -99,6 +99,18 @@ class OrderedDict(dict):
         self.ordered_keys.append(key)
         dict.__setitem__(self, key, value)
 
+def getDrpEnergyBands():
+    sql = "select group_id from taskgrouplist where group_name='ASP'"
+    group_id = dbAccess.apply(sql, lambda curs : [x[0] for x in curs][0])
+    sql = "select eband_id, name from energybands where group_id=%i" % group_id
+    def getEbands(curs):
+        foo = {}
+        for entry in curs:
+            suffix = entry[1].split('x')[-1]
+            foo[suffix] = entry[0]
+        return foo
+    return dbAccess.apply(sql, getEbands)
+
 class FitsTemplate(object):
     def __init__(self, templateFile=None):
         if templateFile is None:
@@ -117,51 +129,53 @@ class FitsTemplate(object):
         flux_list = fluxes.values()
         extract = lambda attr : num.array([eval('x.%s' % attr) for x in 
                                            flux_list])
-        def eband_info(attr, i):
+        def eband_info(attr, i, minval=None):
             data = []
             for item in flux_list:
                 foo = item.__dict__[attr]
                 try:
                     value = foo[i]
+                    if minval is not None:
+                        value = max(minval, value)
                 except KeyError:
                     value = -1     # null value
                 data.append(value)
             return num.array(data)
-        
-        ebands = ["_100_300", "_300_1000", "_1000_3000", "_3000_10000", 
-                  "_10000_300000", "_100_300000"]
+
+        ebands = getDrpEnergyBands()
 
         tstart = extract("tstart")
-        start = pyfits.Column(name="START", format="D", unit='S', array=tstart)
+        start = pyfits.Column(name="START", format="D", unit='s', array=tstart)
 
         tstop = extract("tstop")
-        stop = pyfits.Column(name="STOP", format="D", unit='S', array=tstop)
+        stop = pyfits.Column(name="STOP", format="D", unit='s', array=tstop)
 
         names = pyfits.Column(name="NAME", format='20A', 
                               array=extract("name"))
 
-        ras = pyfits.Column(name="RA", format='E', unit='DEGREES',
+        ras = pyfits.Column(name="RA", format='E', unit='deg',
                             array=extract("ra"))
 
-        decs = pyfits.Column(name="DEC", format='E', unit='DEGREES',
+        decs = pyfits.Column(name="DEC", format='E', unit='deg',
                              array=extract("dec"))
 
         columns = [start, stop, names, ras, decs]
-        for i, band in enumerate(ebands):
+        for band in ebands:
+            i = ebands[band]
             columns.append(pyfits.Column(name="FLUX%s" % band, format="E",
-                                         unit="photons/cm^2/s",
+                                         unit="photons/cm**2/s",
                                          array=eband_info("flux", i)))
             columns.append(pyfits.Column(name="ERROR%s" % band, format="E", 
-                                         unit="photons/cm^2/s", 
+                                         unit="photons/cm**2/s", 
                                          array=eband_info("error", i)))
             columns.append(pyfits.Column(name="UL%s" % band, format="L", 
                                          array=eband_info("ul", i)))
 
-        duration = pyfits.Column(name="DURATION", format="E", unit='S',
+        duration = pyfits.Column(name="DURATION", format="E", unit='s',
                                  array=tstop-tstart)
 
         ts = pyfits.Column(name="TEST_STATISTIC", format="E",
-                           array=eband_info("ts", len(ebands)-1))
+                           array=eband_info("ts", ebands["_100_300000"], 0))
 
         columns.extend([duration, ts])
 
@@ -171,7 +185,7 @@ class FitsTemplate(object):
     def writeto(self, outfile, clobber=True):
         filename = os.path.basename(outfile)
         self.HDUList[0].header.update('FILENAME', filename)
-        self.HDUList[1].header.update('FILENAME', filename)
+        #self.HDUList[1].header.update('FILENAME', filename)
         self.HDUList.writeto(outfile, clobber=clobber)
     def __getattr__(self, attrname):
         return getattr(self.HDUList, attrname)

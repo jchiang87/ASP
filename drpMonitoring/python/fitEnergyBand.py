@@ -98,8 +98,14 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
         TS = like.Ts(srcname)
         if TS < 25:
             print "computing upper limit for ", srcname
-            flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
-                                       renorm=True)
+            try:
+                flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
+                                           renorm=True)
+            except RuntimeError, message:
+                print message
+                # Probable error in setting parameter outside existing bounds;
+                # just skip this one and do the others.
+                continue
             print "Upper limit: ", flux
             print
             isUL = True

@@ -8,7 +8,8 @@
 # $Header$
 #
 import sys
-from databaseAccess import apply, cx_Oracle, getDbObjects
+from databaseAccess import apply, cx_Oracle, getDbObjects, asp_default
+import databaseAccess as dbAccess
 import numarray as num
 from xml.dom import minidom
 from cleanXml import cleanXml
@@ -106,13 +107,21 @@ class PointSourceDict(dict):
                 my_sources.append(source)
         return my_sources
 
-def findPointSources(ra, dec, radius, srctype=None, roiIds=None):
+def findPointSources(ra, dec, radius, srctype=None, roiIds=None,
+                     connection=asp_default):
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
-    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, XML_MODEL " +
-           "from POINTSOURCES")
+    sql = """select pointsources.ptsrc_name, pointsources.roi_id,
+             pointsources.ra, pointsources.dec,
+             pointsources.nx, pointsources.ny, pointsources.nz,
+             pointsources.xml_model
+             from PointSources
+             left join pointsourcetypeset on (pointsources.ptsrc_name =
+             pointsourcetypeset.ptsrc_name)"""
+#    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, XML_MODEL " +
+#           "from POINTSOURCES")
     if srctype:
-        sql += " where SOURCE_TYPE = '%s'" % srctype
+        sql += " where pointsourcetypeset.SOURCESUB_TYPE = '%s'" % srctype
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
@@ -120,7 +129,67 @@ def findPointSources(ra, dec, radius, srctype=None, roiIds=None):
             if src.cos_sep(nhat) > mincos:
                 srcs[entry[0]] = src
         return srcs
-    return apply(sql, getSources)
+    return apply(sql, getSources, connection=connection)
+
+def findUniquePointSources(ra, dec, radius, roiIds=None, tol=0.5,
+                           connection=asp_default):
+    """Screen by SOURCE_TYPE, giving precedence to known sources
+    (e.g., DRP, Blazar, Pulsar) over tentative IDs from pgwave that may
+    duplicate these known sources.    
+    """
+    nhat = dircos(ra, dec)
+    mincos = num.cos(radius*num.pi/180.)
+    sql = """select pointsources.ptsrc_name, pointsources.roi_id,
+             pointsources.ra, pointsources.dec,
+             pointsources.nx, pointsources.ny, pointsources.nz,
+             pointsources.xml_model,
+             pointsourcetypeset.sourcesub_type from PointSources
+             left join pointsourcetypeset on (pointsources.ptsrc_name =
+             pointsourcetypeset.ptsrc_name)
+             where pointsourcetypeset.sourcesub_type = 'DRP' or
+             pointsourcetypeset.sourcesub_type = 'BLZRGRPSRC' or
+             pointsourcetypeset.sourcesub_type = 'KNOWNPSR' or
+             pointsourcetypeset.sourcesub_type = 'PGWAVE'"""
+#    sql = ("select PTSRC_NAME, ROI_ID, RA, DEC, NX, NY, NZ, "
+#           + "XML_MODEL, SOURCE_TYPE from POINTSOURCES")
+    def getSources(cursor):
+        srcs = PointSourceDict()
+        for entry in cursor:
+            src = PointSource(entry, roiIds=roiIds)
+            src.sourceType = entry[-1]
+            if src.cos_sep(nhat) > mincos:
+                srcs[entry[0]] = src
+        return srcs
+    my_dict = apply(sql, getSources, connection=connection)
+
+#    known_list = [srcName for srcName in my_dict 
+#                  if my_dict[srcName].sourceType in ('DRP', 'Blazar', 'Pulsar')]
+    known_list = [srcName for srcName in my_dict 
+                  if my_dict[srcName].sourceType in ('DRP', 'BLZRGRPSRC', 
+                                                     'KNOWNPSR')]
+
+    ok_pgwave_sources = []
+    cos_tol = num.cos(tol*num.pi/180.)
+    for srcName in my_dict:
+#        if my_dict[srcName].sourceType == 'Other_FSP':
+       if my_dict[srcName].sourceType == 'PGWAVE':
+            addSource = True
+            for knownSource in known_list:
+                nhat = num.array(my_dict[knownSource].nhat)
+                cos_sep = my_dict[srcName].cos_sep(nhat)
+                if cos_sep > cos_tol:
+                    addSource = False
+                    print srcName, cos_sep
+                    continue
+            if addSource:
+                ok_pgwave_sources.append(srcName)
+    
+    known_list.extend(ok_pgwave_sources)
+    uniq_dict = PointSourceDict()
+    for item in known_list:
+        uniq_dict[item] = my_dict[item]
+
+    return uniq_dict
 
 class DiffuseSource(object):
     def __init__(self, entry):

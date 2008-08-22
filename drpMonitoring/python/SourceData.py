@@ -59,7 +59,9 @@ class SourceData(object):
                         "IS_FLARING" : 0,
                         "XMLFILE" : "'%s'" % resolve_nfs_path(self.srcModel)}
     def _getSrcType(self):
-        sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
+#        sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
+#               self.name)
+        sql = ("select SOURCESUB_TYPE from POINTSOURCETYPESET where PTSRC_NAME='%s'" %
                self.name)
         try:
             type = dbAccess.apply(sql, lambda curs : [x[0] for x in curs][0])

@@ -470,7 +470,7 @@ if __name__ == '__main__':
         os.remove(figures)
         
     for item in figures:
-        os.remove(figures)
+        os.remove(item)
 
     outfile_location = moveToXrootd(filepath, grbroot_dir)
     pipeline.setVariable('filepath', outfile_location)

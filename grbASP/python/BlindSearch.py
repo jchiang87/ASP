@@ -467,9 +467,6 @@ if __name__ == '__main__':
         os.remove(item)
 
     for item in figures:
-        os.remove(figures)
-        
-    for item in figures:
         os.remove(item)
 
     outfile_location = moveToXrootd(filepath, grbroot_dir)

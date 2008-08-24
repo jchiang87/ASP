@@ -14,6 +14,7 @@ import os
 import datetime
 import numpy as num
 import pyfits
+from GtApp import GtApp
 import drpDbAccess
 import databaseAccess as dbAccess
 
@@ -192,7 +193,11 @@ class FitsTemplate(object):
     def __getattr__(self, attrname):
         return getattr(self.HDUList, attrname)
     def _deleteEGRETPulsars(self, ptsrcs):
-        egretPulsars = ('Vela Pulsar', 'Geminga', 'Crab Pulsar', 'PSR J1706-44')
+        """Delete EGRET Pulsars from output and TeV blazars that do not
+        have "confirmed" LAT detection"""
+        egretPulsars = ('Vela Pulsar', 'Geminga', 'Crab Pulsar', 
+                        'PSR J1706-44', 'W Comae', '1ES 1959+650', 
+                        '1ES 2344+514', 'H 1426+428')
         for item in egretPulsars:
             try:
                 del ptsrcs[item]
@@ -249,13 +254,22 @@ class FitsTemplate(object):
         return key, value, comment
 
 def getLastUpdateTime():
-    sql = "select tstop from timeintervals where is_processed=1 and (frequency='weekly' or frequency='daily') order by tstop desc"
+    sql = """select tstop from timeintervals where is_processed=1 and 
+          (frequency='weekly' or frequency='daily') order by tstop desc"""
     return dbAccess.apply(sql, lambda curs : [x[0] for x in curs][0])
+
+def filterULs(infile, outfile='gll_asp_filtered.fits'):
+    """Remove all sources that have upper limits reported for 
+    100MeV-300GeV band."""
+    fcopy = GtApp('fcopy')
+    fcopy.run(infile=infile+"[UL_100_300000!=T]", outfile="!"+outfile)
+    os.rename(outfile, infile)
         
 if __name__ == '__main__':
     import sys
     from GtApp import GtApp
     from fastCopy import fastCopy
+    import date2met
 
     dest = 'GSSC'
     try:
@@ -268,6 +282,16 @@ if __name__ == '__main__':
 
     tmin = 0
     tmax = getLastUpdateTime()
+    print "Most recent processed TSTOP in TIMEINTERVALS table: ", tmax
+
+    #
+    # Require at least 2 day latency for deliveries
+    #
+    latency = 86400*2.
+    utc_now = date2met.date2met()
+
+    tmax = min(utc_now - latency, tmax)
+    print "UTC now minus 2 day latency: ", utc_now - latency
 
     outfile = 'gll_asp_%010i_v%02i.fits' % (tmax, version)
 
@@ -275,6 +299,8 @@ if __name__ == '__main__':
 
     output.readDbTables(tmin, tmax)
     output.writeto(outfile, clobber=True)
+
+    filterULs(outfile)
     
     fchecksum = GtApp('fchecksum')
     fchecksum.run(infile=outfile, update='yes', datasum='yes', chatter=0)

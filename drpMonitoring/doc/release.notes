@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r6   24-Aug-08   JC   implement fastcopy export of source monitoring
+                            fluxes
     v1r5   21-Aug-08   JC   more db table changes for web apps and RSP
                             that force rewriting SQL for pointsources table
                             access                              

@@ -9,22 +9,27 @@
 # $Header$
 #
 import datetime
+import time
 
 _missionStart = datetime.datetime(2001, 1, 1, 0, 0, 0)
 
-def date2met(datestring="2008-05-16 00:00:00"):
-    year = int(datestring[0:4])
-    month = int(datestring[5:7])
-    day = int(datestring[8:10])
-    try:
-        hours = int(datestring[11:13])
-        mins = int(datestring[14:16])
-        secs = int(datestring[17:19])
-    except ValueError:
-        hours = 0
-        mins = 0
-        secs = 0
-        pass
+def date2met(datestring=None):
+    if datestring is None:
+        data = time.gmtime()
+        year, month, day, hours, mins, secs = data[:6]
+    else:
+        year = int(datestring[0:4])
+        month = int(datestring[5:7])
+        day = int(datestring[8:10])
+        try:
+            hours = int(datestring[11:13])
+            mins = int(datestring[14:16])
+            secs = int(datestring[17:19])
+        except ValueError:
+            hours = 0
+            mins = 0
+            secs = 0
+            pass
     mydate = datetime.datetime(year, month, day, hours, mins, secs)
     diff = mydate - _missionStart
     return diff.days*86400. + diff.seconds

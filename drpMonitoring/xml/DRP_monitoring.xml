@@ -5,12 +5,14 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="7.4" type="Data">
+<task name="DRP_monitoring" version="8.3" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="pgwave_folder">/ASP/Results/pgwave</var>
+    <var name="outputFolder">/ASP/Results/DRP</var>
+    <var name="xrootd_folder">/ASP/DRP</var>
   </variables>
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
@@ -109,6 +111,51 @@
     </createsSubtasks>
   </process>
 
+  <process name="createArchive">
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/createTarBall.sh"
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
+    <depends>
+      <after process="roiAnalysis.dummyProcess" status="SUCCESS"/>
+    </depends>
+  </process>
+
+  <process name="registerArchive">
+    <script language="python">
+      <![CDATA[
+        createArchive = pipeline.getProcessInstance("createArchive")
+        dataType = "DRP_ARCHIVE"
+
+        filePath = createArchive.getVariable("tarball_name")
+
+        attributes = ('nMetStart=%s:nMetStop=%s:sFrequency=%s:nInterval=%i' %
+                      (TSTART, TSTOP, frequency, interval))
+        print attributes
+
+        outfile = filePath.split('/')[-1]
+        logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
+        print logicalPath
+
+        if filePath.find('root') == 0:
+            filePath += "@SLAC_XROOT"
+        print filePath
+
+        datacatalog.registerDataset(dataType, logicalPath, filePath,
+                                    attributes)
+      ]]>
+    </script>
+    <depends>
+      <after process="createArchive" status="SUCCESS"/>
+    </depends>
+  </process>
+
+  <process name="clean_up_files">
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/clean_up_files.sh"
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
+    <depends>
+      <after process="registerArchive" status="SUCCESS"/>
+    </depends>
+  </process>
+    
   <task name="roiAnalysis" version="1.0" type="Data">
     <process name="getRoiData">
       <variables>
@@ -182,6 +229,17 @@
       </createsSubtasks>
     </process>
 
+    <process name="dummyProcess">
+      <script language="python">
+        <![CDATA[
+           print "energyBandAnalysis.fitEnergyBand processes finished"
+        ]]>
+      </script>
+      <depends>
+        <after process="energyBandAnalysis.fitEnergyBand" status="SUCCESS"/>
+      </depends>
+    </process> 
+
     <task name="exposureSubMap" version="1.0" type="Data">
       <prerequisites>
         <prerequisite name="ROI_ID" type="string"/>
@@ -206,10 +264,10 @@
         <job executable="${DRPMONITORINGROOT}/${BINDIR}/fitEnergyBand.sh"
              batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       </process>
-    </task>
+    </task> <!--energyBandAnalysis-->
 
-  </task><!--roiAnalysis-->
+  </task> <!--roiAnalysis-->
 
-</task><!--DRP_monitoring-->
+</task> <!--DRP_monitoring-->
 
 </pipeline>

@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v4r5p7 24-Aug-08   JC   typo fix in BlindSearch.py
     v4r5p6 21-Aug-08   JC   send GRB alerts to balist@glast.stanford.edu
     v4r5p5 10-Aug-08   JC   setup upper limit flag using non-convertable string
                             to avoid pipeline type conversions

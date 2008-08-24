@@ -84,7 +84,8 @@ def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
     def getFluxes(cursor):
         fluxes = Fluxes(timeIntervals, ptsrcs, tbounds)
         for entry in cursor:
-            fluxes.ingest(entry)
+            if entry[0] in ptsrcs:
+                fluxes.ingest(entry)
         return fluxes
     return dbAccess.apply(sql, getFluxes)
 
@@ -124,6 +125,7 @@ class FitsTemplate(object):
         self._fillKeywords(self.HDUList[0], PHDUKeys)
     def readDbTables(self, tmin, tmax):
         ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
+        self._deleteEGRETPulsars(ptsrcs)
         timeIntervals = TimeIntervals()
         fluxes = getLightCurves(timeIntervals, ptsrcs, (tmin, tmax))
         flux_list = fluxes.values()
@@ -185,10 +187,17 @@ class FitsTemplate(object):
     def writeto(self, outfile, clobber=True):
         filename = os.path.basename(outfile)
         self.HDUList[0].header.update('FILENAME', filename)
-        #self.HDUList[1].header.update('FILENAME', filename)
+        self.HDUList[1].header.update('FILENAME', filename)
         self.HDUList.writeto(outfile, clobber=clobber)
     def __getattr__(self, attrname):
         return getattr(self.HDUList, attrname)
+    def _deleteEGRETPulsars(self, ptsrcs):
+        egretPulsars = ('Vela Pulsar', 'Geminga', 'Crab Pulsar', 'PSR J1706-44')
+        for item in egretPulsars:
+            try:
+                del ptsrcs[item]
+            except KeyError:
+                pass
     def _fillKeywords(self, hdu, header):
         for key in header.ordered_keys:
             if not hdu.header.has_key(key):
@@ -239,15 +248,37 @@ class FitsTemplate(object):
                 value = my_value.strip("'")
         return key, value, comment
 
+def getLastUpdateTime():
+    sql = "select tstop from timeintervals where is_processed=1 and (frequency='weekly' or frequency='daily') order by tstop desc"
+    return dbAccess.apply(sql, lambda curs : [x[0] for x in curs][0])
+        
 if __name__ == '__main__':
+    import sys
     from GtApp import GtApp
+    from fastCopy import fastCopy
 
-    outfile = 'bar.fits'
+    dest = 'GSSC'
+    try:
+        if '-d' in sys.argv[1:]:
+            dest = None
+    except:
+        pass
+
+    version = 0
+
+    tmin = 0
+    tmax = getLastUpdateTime()
+
+    outfile = 'gll_asp_%010i_v%02i.fits' % (tmax, version)
 
     output = FitsTemplate()
-    tmin, tmax = 0, 86400*7
+
     output.readDbTables(tmin, tmax)
     output.writeto(outfile, clobber=True)
     
     fchecksum = GtApp('fchecksum')
     fchecksum.run(infile=outfile, update='yes', datasum='yes', chatter=0)
+
+    fastCopy(outfile, dest=dest)
+
+    os.remove(outfile)

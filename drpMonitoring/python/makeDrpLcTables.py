@@ -293,7 +293,7 @@ if __name__ == '__main__':
     tmax = min(utc_now - latency, tmax)
     print "UTC now minus 2 day latency: ", utc_now - latency
 
-    outfile = 'gll_asp_%010i_v%02i.fits' % (tmax, version)
+    outfile = 'gll_asp_%010i_v%02i.fit' % (tmax, version)
 
     output = FitsTemplate()
 

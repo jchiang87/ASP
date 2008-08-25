@@ -101,7 +101,7 @@ class GcnNoticeEmail(object):
         #
         hour += 1./3600.
         grb_name = "GRB%02i%02i%02i%03i" % (year % 2000, month, day, 
-                                            round(1000*hour/24.))
+                                            round(self.SOD/86400.))
         return grb_name
     def writeFile(self, outfile, add_delimiter=False):
         output = open(outfile, 'a')

@@ -14,6 +14,12 @@ import dbAccess
 import pyASP
 import datetime
 
+def round(x):
+    frac = x % 1
+    if frac > 0.5:
+        return int(x) + 1
+    return int(x)
+
 _GCN_Notice_types = {"MILAGRO_POSITION" : 58,
                      "SWIFT_BAT_POSITION" : 61,
                      "SWIFT_SC_SLEW" : 66,
@@ -97,7 +103,9 @@ class Packet(object):
         self.start_time = (jd.seconds() -
                            pyASP.JulianDate_missionStart().seconds() + 1)
         year, month, day, hours = jd.gregorianDate()
-        return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, hours/24.*1000)
+#        return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, hours/24.*1000)
+        return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, 
+                                        round(sod/86400.*1000))
     def _MET(self):
         # Add a leap second for the one added Dec 31, 2005.
         # Another will be needed after Dec 31, 2008.

@@ -280,14 +280,14 @@ if __name__ == '__main__':
 
     version = 0
 
-    tmin = 0
+    tmin = 240105600  # 2008 Aug 11
     tmax = getLastUpdateTime()
     print "Most recent processed TSTOP in TIMEINTERVALS table: ", tmax
 
     #
-    # Require at least 2 day latency for deliveries
+    # Require at least 3 day latency for deliveries
     #
-    latency = 86400*2.
+    latency = 86400*3.
     utc_now = date2met.date2met()
 
     tmax = min(utc_now - latency, tmax)

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue Sep  2 10:31:45 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	newlc.py refinePositions.py 
+Log Message:
+check in Gino's modifications for more recent pointfit/pointlike interface in refinePositions.py
+    *
+------------------------------------------------------------
 User: jchiang  Tue Sep  2 10:31:44 PDT 2008
 ASP/asp_pgwave/cmt
 

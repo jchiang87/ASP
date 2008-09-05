@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r6p1 04-Sep-08   JC   use new gtmktime interface for ROI-based zenangle
+                            cut; use correct filenaming convention in
+                            makeDrpLcTables.py
     v1r6   24-Aug-08   JC   implement fastcopy export of source monitoring
                             fluxes
     v1r5   21-Aug-08   JC   more db table changes for web apps and RSP

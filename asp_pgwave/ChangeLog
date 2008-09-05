@@ -1,4 +1,44 @@
 ------------------------------------------------------------
+TAG
+Tag name: v1r8, operation: add
+Package: asp_pgwave
+User: jchiang  Thu Sep  4 20:47:49 2008
+Files:
+  asp_pgwave/.cvsignore  1.1.1.1
+  asp_pgwave/ChangeLog  1.1.1.121
+  asp_pgwave/cmt/requirements  1.23
+  asp_pgwave/doc/release.notes  1.17
+  asp_pgwave/python/start_pipe.py  1.1.1.1
+  asp_pgwave/python/sendFAmail.py  1.1.1.1
+  asp_pgwave/python/runsrcid.py  1.11
+  asp_pgwave/python/getPgwInputData.py  1.5
+  asp_pgwave/python/newpgw2fits.py  1.9
+  asp_pgwave/python/angdist.py  1.1.1.1
+  asp_pgwave/python/astroUtil.py  1.2
+  asp_pgwave/python/readFT.py  1.1.1.1
+  asp_pgwave/python/launchDrpMonitoring.py  1.3
+  asp_pgwave/python/aperPhotLC.py  1.6
+  asp_pgwave/python/renameOutFiles.py  1.2
+  asp_pgwave/python/readpgw.py  1.1.1.1
+  asp_pgwave/python/newlc.py  1.9
+  asp_pgwave/python/creaXimageGif.py  1.2
+  asp_pgwave/python/runpgw.py  1.12
+  asp_pgwave/python/clean_up_files.py  1.4
+  asp_pgwave/python/createPgwStreams.py  1.2
+  asp_pgwave/python/runPipe.py  1.1.1.1
+  asp_pgwave/python/createTarBall.py  1.1
+  asp_pgwave/python/statUtil.py  1.1
+  asp_pgwave/python/refinePositions.py  1.9
+  asp_pgwave/python/gtutil.py  1.4
+  asp_pgwave/python/dbmanager.py  1.11
+  asp_pgwave/python/syncDataViewer.py  1.1.1.1
+  asp_pgwave/python/pgw2xml.py  1.1.1.1
+  asp_pgwave/python/startpgw.py  1.1.1.1
+  asp_pgwave/python/getLightCurves.py  1.1.1.1
+  asp_pgwave/xml/PGWave.xml  1.10
+
+    *
+------------------------------------------------------------
 User: jchiang  Thu Sep  4 20:47:29 PDT 2008
 ASP/asp_pgwave/doc
 

@@ -146,15 +146,14 @@ def SaveAssoc(pgwfile,pgwdata,sourceName):
 		id.append(pix.index())        
 
 	source={'NAME':sourceName,
-		'L':pgwdata.field('L'),
+		'HEALPIX_ID':id,
 		'RAJ2000':pgwdata.field('RAJ2000'),
 		'DECJ2000':pgwdata.field('DECJ2000'),
 		'Theta95':pgwdata.field('Theta95'),
 		'flux':pgwdata.field('Flux(E>100)'),
 		'errFlux':pgwdata.field('errFlux'),
-		'B':pgwdata.field('B'),
-		'FLARING_FLAG':pgwdata.field('FLARING_FLAG'),
-		'COUNTERPART':index
+		'chi2':pgwdata.field('CHI_2_VAR'),
+		'FLARING_FLAG':pgwdata.field('FLARING_FLAG')
 		}
 	c0=pyfits.Column(name='HEALPIX_ID',format='D', unit=' ',array=num.array(id,dtype=num.int))		
 	c1=pyfits.Column(name='NAME',format='30A', unit=' ',array=sourceName)
@@ -191,7 +190,6 @@ def checkPointSource(pgwdata,dateinfo):
         #mydb.close()
 	if debug==0:
 		procid=int(os.environ['PIPELINE_STREAM'])
-		mydb.deleteDuplicateFE(procid)
 	ra=db._PointSourcesFields['RA'][1]
 	dec=db._PointSourcesFields['DEC'][1]
 	i=0
@@ -236,17 +234,15 @@ def faMessage(source,sunpos,dateinfo):
         flag=num.array(source['FLARING_FLAG'])
         testo="LAT SkyMonitor: Source Detection task report\n"
 	testo=testo+("UTC DATE:%s\n\n" % (dt.datetime.utcnow().isoformat()))
-	testo=testo+('Analized Time Interval (MET):[%d,%d]\n'%(dateinfo['tstart'],dateinfo['tstop']))
-	testo=testo+('Analized Time Interval (UTC):[%s,%s]\n'%(dateinfo['utcs'],dateinfo['utcst']))
+	testo=testo+('Analized Time Interval:[%d,%d]\n'%(dateinfo['tstart'],dateinfo['tstop']))
 	testo=testo+('Found %d sources\n' % len(flag)) 
-	testo=testo+"ID   NAME     RA    DEC   L      B\n"
 	for i in range(0,len(flag)):
-	   testo=testo+('%03d %20s'%(i+1,source['NAME'][i]))+("%12.4f%12.4f%12.4f%12.4f"% (source['RAJ2000'][i],source['DECJ2000'][i],source['L'][i],source['B'][i]))	
-	   testo=testo+'\n'
+	   testo=testo+('%03d %s'%(i+1,source['NAME'][i]))+(" at RA=%f, DEC=%f\n"% (source['RAJ2000'][i],source['DECJ2000'][i]))	
+	testo=testo+'\n'
 	if len(flag)>0:
            for i in range(0,len(flag)):
                 if flag[i]>0:
-                  testo=testo+"\nFlaring source found: "+source['NAME'][i]
+                  testo=testo+"Flaring source found:"+source['NAME'][i]+(" at RA=%f, DEC=%f\n"% (source['RAJ2000'][i],source['DECJ2000'][i]))
 	else:
 	   testo=testo+'NO FLARING SOURCE DETECTED\n' 	
 	ss= ("Sun (RA,DEC): %7.4f,%7.4f \nSun (l,b): %7.4f,%7.4f\n" % (sunpos.ra(), sunpos.dec(),sunpos.l(),sunpos.b()))
@@ -290,26 +286,7 @@ def loadCatFileName():
 	return files
 
 if __name__=="__main__":
-        from parfile_parser import Parfile
-        from newpgw2fits import pgw2fits
-        from syncDataViewer import syncDataViewer
-        from renameOutFiles import renameOutFiles
-        try:
-                pgwfile=sys.argv[1]
-                prob=sys.argv[2]
-                runsrcid(pgwfile,prob)
-        except:
-                os.chdir(os.environ['OUTPUTDIR'])
-                dbManager = db.dbmanager()
-                config = dbManager.getPgwaveConfig()
-                dbManager.close()
-                
-                pars = Parfile('pgwave_pars.txt', fixed_keys=False)
-                outfits = pgw2fits(pars['pgwave_list'], config[6:8],
-                                   1, pars['nsource'])
-                if pars['nsource'] > 0:
-                        runsrcid(outfits, 0.1)
-
-		os.system('chmod 777 *')
-        	syncDataViewer()
-        	renameOutFiles()
+	
+	pgwfile=sys.argv[1]
+	prob=sys.argv[2]
+	runsrcid(pgwfile,prob)

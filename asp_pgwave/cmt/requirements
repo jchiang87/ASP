@@ -1,13 +1,13 @@
 package asp_pgwave
-version v1r8p1
+version v1r6p2
 
 # $Id$
 
 use pgwave *
-use pointlike v*
+use py_pointlike v*
 use AspPolicy v* ASP
-use pyASP v* ASP 
-use AspHealPix v* ASP
+use pyASP v* ASP
+use sourceDet v* ASP -no_auto_imports
 use drpMonitoring v* ASP -no_auto_imports
 use sane v* -no_auto_imports
 

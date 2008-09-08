@@ -1,6 +1,5 @@
 import pyfits
 import sys,pyASP
-import  datetime
 
 def d2dms(degree):
     "This function translates from degree to (degree , minute, second)"
@@ -62,20 +61,6 @@ def getMoonPos(jdd):
 	moon=pyASP.SolarSystem(pyASP.SolarSystem.MOON)
 	dd=moon.direction(jd)
 	return dd
-
-def computeDate(MET):
-    metdate  = datetime.datetime(2001, 1, 1,0,0,0)
-    dt=datetime.timedelta(seconds=MET)
-    utc_date=metdate + dt
-    yy=utc_date.year
-    mm=utc_date.month
-    dd=utc_date.day
-    hr=utc_date.hour
-    mi=utc_date.minute
-    ss=utc_date.second
-    utc= '%04i-%02i-%02i %02i:%02i:%02i' %(yy,mm,dd,hr,mi,ss)
-    return utc
-
 def getEventTimeInterval(infile):
 	ft1=pyfits.open(infile)
 	gti=ft1[2].data
@@ -92,9 +77,7 @@ def getEventTimeInterval(infile):
 	mjdstart=tjd2jd(mstart.tjd())
 	mjdstop=mjdstart+(stop-start)/86400.
 	midjd=(mjdstart+mjdstop)/2.
-	utcs=computeDate(float(start))
-	utcst=computeDate(float(stop))
-	d={"utcs":utcs,"utcst":utcst,"tstart":start,"tstop":stop,"date":dateobs,"jdstart":mjdstart,"jdstop":mjdstop,"tdiff":dt,"midjd":midjd}
+	d={"tstart":start,"tstop":stop,"date":dateobs,"jdstart":mjdstart,"jdstop":mjdstop, "tdiff":dt,"midjd":midjd}
 	return d
 
 if __name__=='__main__':

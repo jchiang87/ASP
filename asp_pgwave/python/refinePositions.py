@@ -94,8 +94,8 @@ def refinePositions(pgwave_list,
     k=1
     print>>output,"#Pgw_Ra pgw_Dec RA DEC Delta TS pgw_ksignif"
     for source in srclist:
-	output.write( ("%5s  %8.3f%8.3f") % ((source.name),(source.dir.ra()),
-                                             source.dir.dec()))
+	output.write( ("%5s  %8.3f%8.3f") % ((source.name),(source.dir().ra()),
+                                             source.dir().dec()))
         fit = PointSourceLikelihood(data.map(), source.name, source.dir)
         source.dir, source.TS = fit.dir, fit.TS
 	sigma = fit.localize(2)
@@ -111,12 +111,11 @@ def refinePositions(pgwave_list,
                 dists = num.array(dists)
                 indx = num.where(dists < 3)
                 norm = sum(events.ENERGY[indx]**2)
-                source.ra = sum(events.RA[indx]*events.ENERGY[indx]**2)/norm
-                source.dc = sum(events.DEC[indx]*events.ENERGY[indx]**2)/norm
-                source.sdir = SkyDir(source.ra, source.dec)
+                ra1 = sum(events.RA[indx]*events.ENERGY[indx]**2)/norm
+                dec1 = sum(events.DEC[indx]*events.ENERGY[indx]**2)/norm
+                source.dir = SkyDir(ra1, dec1)
                 print "calling Fitter with ", source.dir().ra(), source.dir().dec()
-                fit = PointSourceLikelihood(source, data, background=bg(), 
-                                            verbose=0)
+                fit = PointSourceLikelihood(data.map(), source.name, source.dir)
                 print "fitted values: ", fit.dir().ra(), fit.dir().dec()
                 source.dir, source.TS = fit.dir, fit.TS
 	#print k,source.dir.ra(), source.dir.dec() #fit.dir().ra(), fit.dir().dec(), fit.TS()

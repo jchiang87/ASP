@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: tosti  Mon Sep  8 06:32:47 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	refinePositions.py 
+Log Message:
+fixed a bug 
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r8, operation: add
 Package: asp_pgwave

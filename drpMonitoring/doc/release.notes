@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r6p2 08-Sep-08   JC   use Jean's recommended gtmktime filter string
+                            for ROIs near the orbital poles.
     v1r6p1 04-Sep-08   JC   use new gtmktime interface for ROI-based zenangle
                             cut; use correct filenaming convention in
                             makeDrpLcTables.py

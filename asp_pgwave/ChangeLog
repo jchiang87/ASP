@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Mon Sep  8 13:48:35 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	refinePositions.py 
+Log Message:
+comment out special source fitting for galactic plane
+
+    *
+------------------------------------------------------------
 User: jchiang  Mon Sep  8 10:15:19 PDT 2008
 ASP/asp_pgwave/python
 

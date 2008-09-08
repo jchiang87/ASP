@@ -24,10 +24,10 @@ from pointlike import SkyDir,SourceList, Source, PointSourceLikelihood, Backgrou
 converter = celgal.celgal()
 
 def saveSource(source, glat_cutoff, TS_cutoff):
-    ll, bb = converter.gal((source.dir().ra(), source.dir().dec()))
+    ll, bb = converter.gal((source.dir.ra(), source.dir.dec()))
     tts=source.TS()
     if num.abs(bb) > glat_cutoff and tts <= TS_cutoff:
-        print source.name, source.dir().ra(), source.dir().dec()
+        print source.name, source.dir.ra(), source.dir.dec()
     if num.abs(bb) > glat_cutoff or tts > TS_cutoff:
         return True
     return False
@@ -57,7 +57,7 @@ class PgwaveData(list):
                 output.write("%8.1f %8.1f" % (self.data[1][irow],
                                               self.data[2][irow]))
                 output.write("%12.4f%12.4f%12.4f%12.4f" % 
-                             (source.dir().ra(), source.dir().dec(),
+                             (source.dir.ra(), source.dir.dec(),
                               source.sigma,source.TS()))
                 for icol in range(7, len(self.data)):
                     output.write("%10s" % self.data[icol][irow])
@@ -94,33 +94,33 @@ def refinePositions(pgwave_list,
     k=1
     print>>output,"#Pgw_Ra pgw_Dec RA DEC Delta TS pgw_ksignif"
     for source in srclist:
-	output.write( ("%5s  %8.3f%8.3f") % ((source.name),(source.dir().ra()),
-                                             source.dir().dec()))
+	output.write( ("%5s  %8.3f%8.3f") % ((source.name),(source.dir.ra()),
+                                             source.dir.dec()))
         fit = PointSourceLikelihood(data.map(), source.name, source.dir)
-        source.dir, source.TS = fit.dir, fit.TS
+        source.dir, source.TS = fit.dir(), fit.TS
 	sigma = fit.localize(2)
 	source.sigma=sigma 
-	print source.name,source.dir().ra(),source.dir().dec(),sigma,source.TS()
+	print source.name,source.dir.ra(),source.dir.dec(),sigma,source.TS()
         if source.TS() < TS_cutoff:
-            ll, bb = converter.gal((source.dir().ra(), source.dir().dec()))
+            ll, bb = converter.gal((source.dir.ra(), source.dir.dec()))
             if num.abs(bb) > glat_cutoff:
                 dists = []
                 for coord in zip(events.RA, events.DEC):
-                    dists.append(celgal.dist(coord, (source.dir().ra(), 
-                                                     source.dir().dec())))
+                    dists.append(celgal.dist(coord, (source.dir.ra(), 
+                                                     source.dir.dec())))
                 dists = num.array(dists)
                 indx = num.where(dists < 3)
                 norm = sum(events.ENERGY[indx]**2)
                 ra1 = sum(events.RA[indx]*events.ENERGY[indx]**2)/norm
                 dec1 = sum(events.DEC[indx]*events.ENERGY[indx]**2)/norm
                 source.dir = SkyDir(ra1, dec1)
-                print "calling Fitter with ", source.dir().ra(), source.dir().dec()
+                print "calling Fitter with ", source.dir.ra(), source.dir.dec()
                 fit = PointSourceLikelihood(data.map(), source.name, source.dir)
                 print "fitted values: ", fit.dir().ra(), fit.dir().dec()
-                source.dir, source.TS = fit.dir, fit.TS
+                source.dir, source.TS = fit.dir(), fit.TS
 	#print k,source.dir.ra(), source.dir.dec() #fit.dir().ra(), fit.dir().dec(), fit.TS()
 	#k=k+1
-        output.write(("  %8.3f"*5 + "\n") % (source.dir().ra(), source.dir().dec(),sigma, fit.TS(), source.ksignif))
+        output.write(("  %8.3f"*5 + "\n") % (source.dir.ra(), source.dir.dec(),sigma, fit.TS(), source.ksignif))
     output.close()
     #
     # Move original list out of the way.

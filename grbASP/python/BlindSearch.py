@@ -272,8 +272,14 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
     outfiles = []
     for infile in infiles:
         if ft2files:
-            gtmktime.run(scfile=ft2Merged, filter='IN_SAA!=T && LIVETIME>0',
-                         evfile=infile, outfile=tmpfile)
+            try:
+                gtmktime.run(scfile=ft2Merged, filter='IN_SAA!=T && LIVETIME>0',
+                             evfile=infile, outfile=tmpfile)
+            except RuntimeError:
+                # Probably encountered single 30 fragment for this run,
+                # with incorrect start and stop times in corresponding FT2 file
+                # filled by L1Proc.  Just pass it on unfiltered.
+                tmpfile = infile
         else:
             tmpfile = infile
         outfile = infile.replace('.', '_zmax100.')

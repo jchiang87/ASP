@@ -13,6 +13,7 @@ from PipelineCommand import PipelineCommand, resolve_nfs_path
 from GcnNotice import GcnNotice
 from databaseAccess import *
 from GrbAspConfig import grbAspConfig
+from date2met import date2met
 
 grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
 
@@ -79,6 +80,24 @@ def launch_afterglow_streams(output_dir):
         command = PipelineCommand('GRB_afterglow_launcher', args)
         command.run()
 
+def purge_old_notices():
+    """Unprocessed Notices older than 1 week either have trigger times
+    during an SAA passage or do not have data from the MOC, so skip
+    prompt processing by setting the ASP_PROCESSING_LEVEL to 1.
+    Notices at processing level 1 that are older than 8 days should
+    have had afterglow processing finished; if not, skip them by
+    setting ASP_PROCESSING_LEVEL to 2.
+    """
+    right_now = int(date2met())
+    sql = ("update GRB set ASP_PROCESSING_LEVEL=1 where GRB_ID<%i" 
+           % (right_now - 86400*7) + " and ASP_PROCESSING_LEVEL=0")
+    apply(sql)
+
+    sql = ("update GRB set ASP_PROCESSING_LEVEL=2 where GRB_ID<%i"
+           % (right_now - 86400*8) + " and ASP_PROCESSING_LEVEL=1")
+    apply(sql)
+
 def handle_unprocessed_events(output_dir):
+    purge_old_notices()
     launch_refinement_streams(output_dir)
     launch_afterglow_streams(output_dir)

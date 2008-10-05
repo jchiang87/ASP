@@ -440,15 +440,11 @@ if __name__ == '__main__':
         notice.setLocErr(1.)
         #
         if os.environ['PIPELINESERVER'] == 'PROD':
-            notice.email_notification(logProb, files=ft1_files,
-                                      figures=figures)
-#            notice.email_notification(logProb, grbConfig.THRESHOLD,
-#                                      ['jchiang@slac.stanford.edu'],
-#                                      files=ft1_files, figures=figures)
+            notice.email_notification(logProb, grbConfig.THRESHOLD,
+                                      files=ft1_files, figures=figures)
         else:
             notice.email_notification(logProb, grbConfig.THRESHOLD,
-                                      ['jchiang@slac.stanford.edu',
-                                       'jchiang87@slac.stanford.edu'],
+                                      recipients=['jchiang@slac.stanford.edu'],
                                       files=ft1_files, figures=figures)
         #
         # Need better logic to check if this burst already has a

@@ -17,6 +17,7 @@ folder = Logical folder in the dataCatalog that contains the FT1/2 data
 # $Header$
 #
 import os, sys
+from date2met import date2met
 from createGrbStreams import blindSearchStreams
 from intervalAccess import unhandledIntervals
 from PipelineCommand import PipelineCommand, resolve_nfs_path, PipelineError
@@ -74,9 +75,14 @@ args = {'folder' : os.environ['folder'],
 inserter = PipelineCommand('AspInsertIntervals', args)
 inserter.run(debug=debug)
 
+right_now = date2met()
+
 unhandled = unhandledIntervals()
 for frequency in unhandled:
    for interval in unhandled[frequency]:
+      if interval.tstop < right_now:
+         # Skip this interval if the current time still precedes the stop time.
+         continue
       args = {'folder' : os.environ['folder'],
               'interval' : interval.interval,
               'frequency' : frequency,

@@ -30,13 +30,16 @@ class SourceTypeError(RuntimeError):
 class SourceData(object):
     _upperThreshold = 2e-6
     _lowerThreshold = 2e-7
-    def __init__(self, name, flux, fluxerr, srcModel, TS, isUL=False):
+    def __init__(self, name, flux, fluxerr, srcModel, TS, isUL=False,
+                 index=None, indexerr=None):
         self.name = name
         self.flux, self.fluxerr = flux, fluxerr
         self.type = self._getSrcType()
         self.srcModel = srcModel
         self.TS = TS
         self.isUL = isUL
+        self.index = index
+        self.indexerr = indexerr
         try:
             self.eband_id = int(os.environ['eband_id'])
         except KeyError:
@@ -58,9 +61,11 @@ class SourceData(object):
                         "IS_MONITORED" : int(self.is_monitored),
                         "IS_FLARING" : 0,
                         "XMLFILE" : "'%s'" % resolve_nfs_path(self.srcModel)}
+        if self.index is not None:
+            self.rowDict["SPECTRAL_INDEX"] = self.index
+        if self.indexerr is not None:
+            self.rowDict["SPECTRAL_INDEX_ERROR"] = self.indexerr
     def _getSrcType(self):
-#        sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
-#               self.name)
         sql = ("select SOURCESUB_TYPE from POINTSOURCETYPESET where PTSRC_NAME='%s'" %
                self.name)
         try:

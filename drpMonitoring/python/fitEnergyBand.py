@@ -94,6 +94,13 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
         integral = spec.getParam('Integral')
         flux = integral.getTrueValue()
         fluxerr = integral.error()*integral.getScale()
+        try:
+            index_param = spec.getParam('Index')
+            index = index_param.getValue()
+            indexerr = index_param.error()
+        except:
+            index = None
+            indexerr = None
         isUL = False
         TS = like.Ts(srcname)
         if TS < 25:
@@ -111,7 +118,8 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
             isUL = True
         try:
             results[srcname] = SourceData(srcname, flux, fluxerr, 
-                                          outputModel, TS, isUL)
+                                          outputModel, TS, isUL, 
+                                          index=index, indexerr=indexerr)
         except SourceTypeError:
             pass
 

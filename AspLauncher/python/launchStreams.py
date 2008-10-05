@@ -14,7 +14,6 @@ import os
 from checkLevelOneFiles import providesCoverage
 from PipelineCommand import PipelineCommand, resolve_nfs_path
 from FileStager import FileStager
-from launchRspStreams import launch_RspPulsar
 
 _pgwaveRoot = resolve_nfs_path(os.environ['ASP_PGWAVEROOT'])
 _datacatalog_imp = os.environ['datacatalog_imp']
@@ -84,7 +83,6 @@ if __name__ == '__main__':
                         fileStager=fileStager):
         if frequency in ('daily', 'weekly'):
             createSubDir(interval, frequency, os.environ['DRPOUTPUTDIR'])
-            launch_RspPulsar(frequency, tstart, tstop, folder, debug=debug)
         output_dir = createSubDir(interval, frequency,
                                   os.environ['PGWAVEOUTPUTDIR'])
         launch_pgwave(interval, frequency, tstart, tstop, folder, 

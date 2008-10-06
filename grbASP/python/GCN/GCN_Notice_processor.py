@@ -152,7 +152,8 @@ if __name__ == '__main__':
 
     try:
 #        if my_notice.mission_name != "GLAST" or my_notice.trignum != 99999:
-        if my_notice.mission_name != "Fermi" or my_notice.trignum != 99999:
+        if (my_notice.mission_name.lower() != "fermi" or 
+            my_notice.trignum != 99999):
             my_notice.resend(('jchiang@slac.stanford.edu', 
                               'balist@glast.stanford.edu'))
     except Exception, msg:

@@ -18,24 +18,31 @@ import FuncFactory
 import dbAccess
 
 gtselect = GtApp('gtselect', 'dataSubselector')
+fcopy = GtApp('fcopy')
 
-def getData(time, ra, dec, srcName, ft1, ft2, duration=5*3600, radius=15):
+def getData(time, ra, dec, srcName, ft1, ft2, duration=5*3600, radius=15,
+            FT1_filter=None):
     ft1Merged = 'FT1_merged.fits'
     ft1merge(ft1, ft1Merged)
 
     ft2Merged = 'FT2_merged.fits'
     ft2merge(ft2, ft2Merged)
 
-    gtselect['infile'] =  ft1Merged
+    if FT1_filter is not None:
+        fcopy.run(infile=ft1Merged + '[%s]' % FT1_filter, 
+                  outfile='!FT1_filtered.fits')
+        gtselect['infile'] = fcopy['outfile'].strip('!')
+    else:
+        gtselect['infile'] =  ft1Merged
+
     gtselect['outfile'] = srcName + '_L1.fits'
     gtselect['ra'] = ra
     gtselect['dec'] = dec
     gtselect['rad'] = radius
     gtselect['tmin'] = time
     gtselect['tmax'] = time + duration
-#    gtselect['emin'] = 30
     gtselect['emin'] = 100
-    gtselect['emax'] = 2e5
+    gtselect['emax'] = 3e5
     gtselect['zmax'] = 100
     gtselect.run()
 
@@ -75,7 +82,7 @@ def updateProcessingLevel(name):
 
 if __name__ == '__main__':
     import os, sys, shutil
-    from GrbAspConfig import grbAspConfig
+    from GrbAspConfig import grbAspConfig, irf_config
     from FileStager import FileStager
 
     outputDir = os.environ['OUTPUTDIR']
@@ -91,9 +98,14 @@ if __name__ == '__main__':
     config = grbAspConfig.find(tstart)
     print config
 
+    irfs, ft1_filter = irf_config(tstart)
+    print "irfs = ", irfs
+    print "ft1_filter = ", ft1_filter
+
     srcModel, ft1, ft2 = getData(tstop, ra, dec, grbName, ft1, ft2,
                                  duration=config.AGTIMESCALE,
-                                 radius=config.AGRADIUS)
+                                 radius=config.AGRADIUS,
+                                 FT1_filter=ft1_filter)
     outfile = open('%s_afterglow_files' % grbName, 'w')
     outfile.write('ft1File = %s\n' % ft1)
     outfile.write('ft2File = %s\n' % ft2)

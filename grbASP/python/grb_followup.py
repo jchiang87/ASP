@@ -88,6 +88,8 @@ def purge_old_notices():
     have had afterglow processing finished; if not, skip them by
     setting ASP_PROCESSING_LEVEL to 2.
     """
+    if os.environ['PIPELINESERVER'] == 'DEV':
+        return
     right_now = int(date2met())
     sql = ("update GRB set ASP_PROCESSING_LEVEL=1 where GRB_ID<%i" 
            % (right_now - 86400*7) + " and ASP_PROCESSING_LEVEL=0")

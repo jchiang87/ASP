@@ -9,7 +9,7 @@
 import os, sys
 from parfile_parser import Parfile
 from UnbinnedAnalysis import *
-from GrbAspConfig import grbAspConfig
+from GrbAspConfig import grbAspConfig, irf_config
 import dbAccess
 import pyfits
 
@@ -23,9 +23,10 @@ grbpars = Parfile(os.environ['GRBPARS'])
 config = grbAspConfig.find(grbpars['tstart'])
 print config
 
-irfs = config.IRFS
-if irfs == 'DSS':
-    irfs = 'DC2'
+#irfs = config.IRFS
+#if irfs == 'DSS':
+#    irfs = 'DC2'
+irfs, ft1_filter = irf_config(grbpars['tstart'])
 
 grbName = grbpars['name']
 afterglowFiles = grbName + '_afterglow_files'

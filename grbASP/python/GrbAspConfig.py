@@ -41,5 +41,13 @@ class GrbAspConfig(object):
 
 grbAspConfig = GrbAspConfig()
 
+def irf_config(tstart):
+    """Use the configuration from the SOURCEMONITORINGCONFIG table
+    for determining the event classes and irfs.
+    """
+    sql = ("select irfs, ft1_filter from SOURCEMONITORINGCONFIG "
+           + "where startdate<=%i and enddate>=%i" % (tstart, tstart))
+    return apply(sql, lambda curs : [x for x in curs][0])
+
 if __name__ == '__main__':
     print grbAspConfig.find(252372500)

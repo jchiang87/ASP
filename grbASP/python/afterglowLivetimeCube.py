@@ -10,7 +10,7 @@ import os
 from GtApp import GtApp
 from parfile_parser import Parfile
 from combineExpMaps import writeExpMapBounds
-from GrbAspConfig import grbAspConfig
+from GrbAspConfig import grbAspConfig, irf_config
 
 debug = False
 #debug = True
@@ -35,13 +35,16 @@ if debug:
 else:
     gtlivetimecube.run()
 
+irfs, ft1_filter = irf_config(grbpars['tstart'])
+
 gtexpmap = GtApp('gtexpmap', 'Likelihood')
 gtexpmap['evfile'] = pars['ft1File']
 gtexpmap['scfile'] = pars['ft2File']
 gtexpmap['expcube'] = gtlivetimecube['outfile']
 gtexpmap['outfile'] = 'expMap_' + grbName + '.fits'
 gtexpmap['srcrad'] = config.AGRADIUS + 10
-gtexpmap['irfs'] = config.IRFS
+#gtexpmap['irfs'] = config.IRFS
+gtexpmap['irfs'] = irfs
 gtexpmap.pars.write(os.path.join(os.environ['OUTPUTDIR'], 'gtexpmap.par'))
 
 writeExpMapBounds(gtexpmap, nx=1, ny=1)

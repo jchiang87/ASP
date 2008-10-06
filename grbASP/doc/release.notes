@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r7   06-Oct-08   JC   use irfs and data selections from 
+                            SOURCEMONITORINGCONFIG for afterglow analysis
+                            (so that diffuse class events are considered 
+                            instead of transient class)
     v4r6p1 05-Oct-08   JC   promote week-old Notices (since SAA info is not
                             available).
     v4r6   08-Sep-08   JC   skip Fermi test notices; use SOD in calculation of

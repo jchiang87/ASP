@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="8.5" type="Data">
+<task name="PGWave" version="8.6" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -150,7 +150,7 @@
     print attributes
     datacat.registerDataset('FT2', logicalPath, filePath, attributes)
     #
-    if frequency in ('daily', 'weekly'):
+    if frequency in ('six_hours', 'daily', 'weekly'):
         pipeline.createSubstream("drpMonitoring", 0, 
                                  "pgwave_streamId=%i" % streamId)
     ]]></script>

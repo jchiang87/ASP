@@ -81,7 +81,7 @@ if __name__ == '__main__':
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList', 'Ft2FileList', 
                         fileStager=fileStager):
-        if frequency in ('daily', 'weekly'):
+        if frequency in ('six_hours', 'daily', 'weekly'):
             createSubDir(interval, frequency, os.environ['DRPOUTPUTDIR'])
         output_dir = createSubDir(interval, frequency,
                                   os.environ['PGWAVEOUTPUTDIR'])

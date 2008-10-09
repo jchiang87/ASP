@@ -80,7 +80,7 @@ right_now = date2met()
 unhandled = unhandledIntervals()
 for frequency in unhandled:
    for interval in unhandled[frequency]:
-      if interval.tstop < right_now:
+      if interval.tstop > right_now:
          # Skip this interval if the current time still precedes the stop time.
          continue
       args = {'folder' : os.environ['folder'],

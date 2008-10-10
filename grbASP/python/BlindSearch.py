@@ -192,8 +192,14 @@ def read_gtis(ft1files):
 def gti_bounds(events, gtis):
     imins, imaxs = [], []
     for tmin, tmax in gtis:
-        imins.append(num.where(events.TIME >= tmin)[0][0])
-        imaxs.append(num.where(events.TIME <= tmax)[0][-1])
+        try:
+            i0 = num.where(events.TIME >= tmin)[0][0]
+            i1 = num.where(events.TIME <= tmax)[0][-1]
+            imins.append(i0)
+            imaxs.append(i1)
+        except IndexError:
+            # There are no events in this GTI, don't add the indices
+            pass
     return imins, imaxs
 
 def zenmax_filter(tup, zmax=100):

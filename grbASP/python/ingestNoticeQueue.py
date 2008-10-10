@@ -39,7 +39,7 @@ skipped_notice_types = ('SWIFT_SC_SLEW', 'SWIFT_UVOT_POSITION_NACK')
 for notice in notices:
     try:
         packet = Packet(notice)
-        if ((packet.trigger_num==99999 and packet.mission=='Fermi') or
+        if ((packet.trigger_num==99999 and packet.mission.lower()=='fermi') or
             (packet.notice_type in skipped_notice_types)):
             pass
         else:

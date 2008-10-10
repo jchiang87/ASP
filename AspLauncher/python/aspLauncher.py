@@ -62,7 +62,7 @@ try:
                       datacatalog_imp="datacatalog",
                       debug=debug)
 except PipelineError, message:
-   if message.message("DuplicateStreamException"):
+   if message.message.find("pipeline return code: 512") != -1:
       duplicateStreamException = True
    else:
       raise

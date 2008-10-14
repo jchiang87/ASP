@@ -14,6 +14,7 @@ from GcnNotice import GcnNotice
 from databaseAccess import *
 from GrbAspConfig import grbAspConfig
 from date2met import date2met
+import time
 
 grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
 
@@ -61,6 +62,7 @@ def launch_refinement_streams(output_dir):
                 'datacatalog_imp' : os.environ['datacatalog_imp']}
         command = PipelineCommand('GRB_refinement_launcher', args)
         command.run()
+        time.sleep(30)
 
 def launch_afterglow_streams(output_dir):
     notices = afterglows()
@@ -79,6 +81,7 @@ def launch_afterglow_streams(output_dir):
                 'datacatalog_imp' : os.environ['datacatalog_imp']}
         command = PipelineCommand('GRB_afterglow_launcher', args)
         command.run()
+        time.sleep(30)
 
 def purge_old_notices():
     """Unprocessed Notices older than 1 week either have trigger times
@@ -91,7 +94,7 @@ def purge_old_notices():
     if os.environ['PIPELINESERVER'] == 'DEV':
         return
     right_now = int(date2met())
-    sql = ("update GRB set ASP_PROCESSING_LEVEL=1 where GRB_ID<%i" 
+    sql = ("update GRB set ASP_PROCESSING_LEVEL=2 where GRB_ID<%i" 
            % (right_now - 86400*7) + " and ASP_PROCESSING_LEVEL=0")
     apply(sql)
 

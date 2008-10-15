@@ -81,7 +81,8 @@ def fmcmp(fm1, fm2):
 
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
     sql = ("select PTSRC_NAME, EBAND_ID, INTERVAL_NUMBER, FREQUENCY, " +
-           "FLUX, ERROR, TEST_STATISTIC, IS_UPPER_LIMIT from LIGHTCURVES")
+           "FLUX, ERROR, TEST_STATISTIC, IS_UPPER_LIMIT from LIGHTCURVES " +
+           "where FREQUENCY!='six_hours'")
     def getFluxes(cursor):
         fluxes = Fluxes(timeIntervals, ptsrcs, tbounds)
         for entry in cursor:
@@ -125,7 +126,8 @@ class FitsTemplate(object):
         self.HDUList.append(pyfits.PrimaryHDU())
         self._fillKeywords(self.HDUList[0], PHDUKeys)
     def readDbTables(self, tmin, tmax):
-        ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
+#        ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
+        ptsrcs = drpDbAccess.findPointSources(0, 0, 180, srctype='DRP')
         self._deleteEGRETPulsars(ptsrcs)
         timeIntervals = TimeIntervals()
         fluxes = getLightCurves(timeIntervals, ptsrcs, (tmin, tmax))
@@ -271,6 +273,8 @@ if __name__ == '__main__':
     from fastCopy import fastCopy
     import date2met
 
+    print "WARNING: Including DRP sources *only* in this distribution."
+
     dest = 'GSSC'
     try:
         if '-d' in sys.argv[1:]:
@@ -291,7 +295,7 @@ if __name__ == '__main__':
     utc_now = date2met.date2met()
 
     tmax = min(utc_now - latency, tmax)
-    print "UTC now minus 2 day latency: ", utc_now - latency
+    print "UTC now minus 3 day latency: ", utc_now - latency
 
     outfile = 'gll_asp_%010i_v%02i.fit' % (tmax, version)
 

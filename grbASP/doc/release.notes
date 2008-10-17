@@ -5,6 +5,11 @@
     $Id$
 
     @verbatim
+    v4r7p1 17-Oct-08   JC   handle GTIs with zero events in BlindSearch;
+                            account for name change in FERMI (nee Fermi) 
+                            GCN notices for filtering test notices; skip
+                            notices older than 1 week (that cannot be handled
+                            because they occur in SAAs)
     v4r7   06-Oct-08   JC   use irfs and data selections from 
                             SOURCEMONITORINGCONFIG for afterglow analysis
                             (so that diffuse class events are considered 

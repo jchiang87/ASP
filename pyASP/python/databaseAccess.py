@@ -9,28 +9,17 @@
 import os
 import cx_Oracle
 
-if os.environ['ORACLE_HOME'] == '/usr/oracle':
-    #
-    # Use encoded passwords from config file.
-    #
-    db_config = open(os.environ['ASP_DB_CONFIG'], 'r')
-    lines = db_config.readlines()
-    glastgen = lines[0].strip().encode('rot13').split()
-    asp_prod = lines[1].strip().encode('rot13').split()
-    asp_dev = lines[2].strip().encode('rot13').split()
-    rsp_dev = lines[3].strip().encode('rot13').split()
-else:
-    # 
-    # Use Oracle wallet.
-    #
-    glastgen = ('/@glastgenprod',)
-    asp_prod = ('/@asp',)
-    asp_dev = ('/@asp-dev',)
-    rsp_prod = ('/@rsp',)
-    rsp_dev = ('/@rsp-dev',)
+# 
+# Oracle wallet connection strings
+#
+glastgen = ('/@glastgenprod',)
+asp_prod = ('/@asp',)
+asp_dev = ('/@asp-dev',)
+rsp_prod = ('/@rsp',)
+rsp_dev = ('/@rsp-dev',)
 
 #
-# Set the default default to point to the dev tables.
+# Set the default to point to the dev tables.
 #
 asp_default = asp_dev
 

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri Oct 17 08:50:31 PDT 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py 
+Log Message:
+modify query to POINTSOURCES table to restrict to ASP-relevant sources
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r8p2, operation: add
 Package: asp_pgwave

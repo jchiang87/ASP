@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v1r8p3 17-Oct-08   JC   modify query to POINTSOURCES table in 
+                            dbmanager.getPointSources so that it does not
+                            select non-ASP sources (e.g., MQs, RSP Pulsars, 
+                            etc.)
     v1r8p2 08-Oct-08   JC   Launch DRP_monitoring for six hour intervals
     v1r8p1 08-Sep-08   JC   Gino's bug-fix for refinePositions when it tries
                             to refit a position for candidate sources off the

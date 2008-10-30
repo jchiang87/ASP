@@ -273,6 +273,8 @@ if __name__ == '__main__':
     from fastCopy import fastCopy
     import date2met
 
+    os.chdir('/afs/slac/g/glast/ground/links/data/ASP/scratch')
+
     print "WARNING: Including DRP sources *only* in this distribution."
 
     dest = 'GSSC'

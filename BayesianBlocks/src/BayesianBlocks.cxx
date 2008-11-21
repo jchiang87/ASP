@@ -80,7 +80,7 @@ void BayesianBlocks::computeLightCurve(std::vector<double> & tmins,
       if (m_binned) {
          numEvents.push_back(blockContent(imin, imax-1));
       } else {
-         numEvents.push_back(blockContent(imin, imax));
+         numEvents.push_back(blockContent(imin, imax) - 1);
       }
       double exposure(0);
       for (size_t i(imin); i < imax; i++) {
@@ -155,7 +155,13 @@ void BayesianBlocks::createCells() {
 }
 
 void BayesianBlocks::renormalize() {
-   double smallest_cell(1./highestBinDensity());
+//   double smallest_cell(1./highestBinDensity());
+   double smallest_cell(m_eventTimes.back() - m_eventTimes.front());
+   for (unsigned int i = 0; i < m_cells.size(); i++) {
+      if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
+         smallest_cell = m_cells[i];
+      }
+   }
    std::transform(m_cells.begin(), m_cells.end(), m_cells.begin(), 
                   std::bind2nd(std::multiplies<double>(), 2./smallest_cell));
    m_scaledBoundaries.resize(m_cells.size());

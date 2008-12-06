@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+    xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+  <!-- $Header$
+  -->
+  <task name="GRB_afterglow" version="4.0" type="Data">
+    <variables>
+      <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r1p1"</var>
+      <var name="BINDIR">rh9_gcc32</var>
+    </variables>
+    <prerequisites>
+      <prerequisite name="TSTART" type="integer"/>
+      <prerequisite name="TSTOP" type="integer"/>
+      <prerequisite name="output_dir" type="string"/>
+      <prerequisite name="GRB_parfile" type="string"/>
+      <prerequisite name="ASP_PATH" type="string"/>
+      <prerequisite name="GRBASPROOT" type="string"/>
+      <prerequisite name="PIPELINESERVER" type="string"/>
+    </prerequisites>
+    <process name="catalogQuery">
+      <script><![CDATA[
+        outfile = pipeline.createFile("Ft1FileList")
+        logicalPath = "/DC2/Downlinks"
+        opt1 = '(%(TSTART)i <= nTStart && nTStop <= %(TSTOP)i)' % locals()
+        opt2 = '(nTStart <= %(TSTART)i && %(TSTART)i <= nTStop)' % locals()
+        opt3 = '(nTStart <= %(TSTOP)i && %(TSTOP)i <= nTStop)' % locals()
+        query = ('DataType == \"FITS\" && (%s || %s || %s)' 
+                 % (opt1, opt2, opt3))
+        datasetList = datacatalog.getDatasets(logicalPath, query)
+        datasetList.writeToFile(outfile, 1)
+        pipeline.writeFile(outfile)
+        ]]></script>
+    </process>
+    <process name="afterglowData">
+      <variables>
+        <var name="OUTPUTDIR">${output_dir}</var>
+        <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowData.sh"
+           batchOptions="-q short"/>
+      <depends>
+        <after process="catalogQuery" status="SUCCESS"/>
+      </depends>
+    </process>
+    <process name="afterglowDiffResps">
+      <variables>
+        <var name="OUTPUTDIR">${output_dir}</var>
+        <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowDiffResps.sh" 
+           batchOptions="-q long"/>
+      <depends>
+        <after process="afterglowData" status="SUCCESS"/>
+      </depends>
+    </process>
+
+    <process name="afterglowLivetimeCube">
+      <variables>
+        <var name="OUTPUTDIR">${output_dir}</var>
+        <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowLivetimeCube.sh" 
+           batchOptions="-q long"/>
+      <depends>
+        <after process="afterglowData" status="SUCCESS"/>
+      </depends>
+    </process>
+
+    <process name="afterglowExpMap">
+      <variables>
+        <var name="OUTPUTDIR">${output_dir}</var>
+        <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowExpMap.sh" 
+           batchOptions="-q medium"/>
+      <depends>
+        <after process="afterglowLivetimeCube" status="SUCCESS"/>
+      </depends>
+    </process>
+
+    <process name="afterglowAnalysis">
+      <variables>
+        <var name="OUTPUTDIR">${output_dir}</var>
+        <var name="GRBPARS">${GRB_parfile}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/afterglowAnalysis.sh" 
+           batchOptions="-q short"/>
+      <depends>
+        <after process="afterglowExpMap" status="SUCCESS"/>
+        <after process="afterglowDiffResps" status="SUCCESS"/>
+      </depends>
+    </process>
+
+  </task> <!-- GRB_afterglow -->
+</pipeline>

@@ -9,7 +9,7 @@ events = sample(stepFunction(0.5, 0.7, amp=0.5), nsamp)
 fine_blocks = BayesBlocks(events, 1)
 #rough_blocks = BayesBlocks(events, 4)
 
-fine_lc = LightCurve(fine_blocks.computeLightCurve())
+fine_lc = fine_blocks.lightCurve()
 #rough_lc = LightCurve(rough_blocks.computeLightCurve())
 
 (x, y) = fine_lc.dataPoints()

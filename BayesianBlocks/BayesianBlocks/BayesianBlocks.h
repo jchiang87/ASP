@@ -28,14 +28,21 @@
 class BayesianBlocks {
    
 public:
+
+   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1,
+                  bool useInterval=false);
   
-   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1.);
-   
+   BayesianBlocks(const std::vector<double> & cellContent,
+                  const std::vector<double> & cellBoundaries,
+                  const std::vector<double> & efficiencies,
+                  double ncpPrior=1);
+
    ~BayesianBlocks() throw() {}
 
    void computeLightCurve(std::vector<double> & tmins,
                           std::vector<double> & tmaxs,
-                          std::vector<double> & numEvents);
+                          std::vector<double> & numEvents,
+                          std::vector<double> & exposures);
 
    int setCellScaling(const std::vector<double> & scaleFactors);
 
@@ -64,15 +71,24 @@ public:
 
 private:
 
+   bool m_binned;
+
+   /// @brief event arrival times to be used for unbinned analysis
    std::vector<double> m_eventTimes;
 
-   double m_ncpPrior;
+   /// @brief cell counts to be used for binned mode
+   std::vector<double> m_cellContent;
 
    std::vector<double> m_cells;
    std::vector<double> m_cellBoundaries;
    std::deque<double> m_scaledBoundaries;
+   std::vector<double> m_cellExposures;
 
-   std::deque<unsigned int> m_changePoints;
+   double m_ncpPrior;
+
+   bool m_useInterval;
+
+   std::deque<size_t> m_changePoints;
 
    void createCells();
 
@@ -80,11 +96,13 @@ private:
 
    void renormalize();
 
-   double blockCost(unsigned int imin, unsigned int imax) const;
+   double blockCost(size_t imin, size_t imax) const;
 
-   double blockSize(unsigned int imin, unsigned int imax) const;
+   double blockSize(size_t imin, size_t imax) const;
 
-   double blockContent(unsigned int imin, unsigned int imax) const;
+   double blockContent(size_t imin, size_t imax) const;
+
+   double highestBinDensity() const;
 
 };
 

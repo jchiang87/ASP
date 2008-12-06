@@ -1,19 +1,22 @@
-import numarray as num
+import numpy as num
 import bisect
 from BayesianBlocks import BayesianBlocks, DoubleVector
 
 class BayesBlocks(BayesianBlocks):
-    def __init__(self, events, ncpPrior=1):
-        BayesianBlocks.__init__(self, events, ncpPrior)
+    def __init__(self, events, ncpPrior=1, useInterval=True):
+        BayesianBlocks.__init__(self, events, ncpPrior, useInterval)
     def setCellScaling(self, scaleFactors):
         BayesianBlocks.setCellScaling(self, scaleFactors)
     def lightCurve(self):
-        return LightCurve(BayesianBlocks.lightCurve(self))
+#        return LightCurve(BayesianBlocks.lightCurve(self))
+        return LightCurve(self._computeLightCurve())
     def _computeLightCurve(self):
         tmins = DoubleVector()
         tmaxs = DoubleVector()
         numEvents = DoubleVector()
-        BayesianBlocks.computeLightCurve(self, tmins, tmaxs, numEvents)
+        exposures = DoubleVector()
+        BayesianBlocks.computeLightCurve(self, tmins, tmaxs, numEvents,
+                                         exposures)
         return num.array(tmins), num.array(tmaxs), num.array(numEvents)
     def cells(self):
         my_cells = DoubleVector()

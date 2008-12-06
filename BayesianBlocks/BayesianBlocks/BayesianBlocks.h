@@ -29,7 +29,8 @@ class BayesianBlocks {
    
 public:
 
-   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1);
+   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1,
+                  bool useInterval=false);
   
    BayesianBlocks(const std::vector<double> & cellContent,
                   const std::vector<double> & cellBoundaries,
@@ -84,6 +85,8 @@ private:
    std::vector<double> m_cellExposures;
 
    double m_ncpPrior;
+
+   bool m_useInterval;
 
    std::deque<size_t> m_changePoints;
 

@@ -15,10 +15,13 @@
 #include "BayesianBlocks/BayesianBlocks.h"
 
 BayesianBlocks::BayesianBlocks(const std::vector<double> & eventTimes, 
-                               double ncpPrior) 
+                               double ncpPrior, bool useInterval) 
    : m_binned(false), m_eventTimes(eventTimes), 
      m_cellContent(std::vector<double>(eventTimes.size(), 1)), 
-     m_ncpPrior(ncpPrior) {
+     m_ncpPrior(ncpPrior), m_useInterval(useInterval) {
+   if (useInterval) {
+      m_cellContent.pop_back();
+   }
    std::stable_sort(m_eventTimes.begin(), m_eventTimes.end());
    createCells();
 }
@@ -138,13 +141,18 @@ void BayesianBlocks::globalOpt() {
 
 void BayesianBlocks::createCells() {
    size_t npts = m_eventTimes.size();
-   m_cellBoundaries.clear();
-   m_cellBoundaries.push_back((3.*m_eventTimes[0] - m_eventTimes[1])/2.);
-   for (size_t i = 1; i < npts; i++) {
-      m_cellBoundaries.push_back((m_eventTimes[i-1] + m_eventTimes[i])/2.);
+   if (m_useInterval) {
+      m_cellBoundaries = m_eventTimes;
+      npts--;
+   } else {
+      m_cellBoundaries.clear();
+      m_cellBoundaries.push_back((3.*m_eventTimes[0] - m_eventTimes[1])/2.);
+      for (size_t i = 1; i < npts; i++) {
+         m_cellBoundaries.push_back((m_eventTimes[i-1] + m_eventTimes[i])/2.);
+      }
+      m_cellBoundaries.push_back((3.*m_eventTimes[npts-1] 
+                                  - m_eventTimes[npts-2])/2.);
    }
-   m_cellBoundaries.push_back((3.*m_eventTimes[npts-1] 
-                               - m_eventTimes[npts-2])/2.);
    m_cells.clear();
    for (size_t i = 0; i < npts; i++) {
       m_cells.push_back(std::fabs(m_cellBoundaries[i] 

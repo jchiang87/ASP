@@ -427,6 +427,7 @@ if __name__ == '__main__':
 
     for item in grb_candidates:
         grb_dir, tpeak, logProb = item
+        print grb_dir.ra(), grb_dir.dec(), tpeak, logProb
         #
         # Use GCNNOTICES db table to keep track of GRBs found via
         # blind search.  This will likely occur after all other

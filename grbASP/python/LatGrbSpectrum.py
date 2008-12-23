@@ -147,7 +147,10 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
                        FLUX=flux_par.getTrueValue(), 
                        FLUX_ERROR=flux_par.error()*flux_par.getScale())
 
-    events = FitsNTuple(gtselect['outfile'])
+    try:
+        events = FitsNTuple(gtselect['outfile'])
+    except AttributeError:
+        return None
     soft_counts = float(len(num.where(events.ENERGY <= 1e3)[0]))
     hard_counts = len(events.ENERGY) - soft_counts
     if soft_counts > 0:

@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Mon Dec 22 18:31:02 PST 2008
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+use GALPROP_MODEL env var in refine positions; set default value in PGWave.xml
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec 22 18:31:02 PST 2008
 ASP/asp_pgwave/python
 
 Modified Files:

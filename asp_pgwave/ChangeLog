@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Dec 22 18:31:02 PST 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	refinePositions.py 
+Log Message:
+use GALPROP_MODEL env var in refine positions; set default value in PGWave.xml
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r8p3, operation: add
 Package: asp_pgwave

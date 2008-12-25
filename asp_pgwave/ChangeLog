@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Thu Dec 25 09:50:23 PST 2008
+ASP/asp_pgwave/python
+
+Modified Files:
+	refinePositions.py 
+Log Message:
+accommodate interface changes in pointlike and skymaps
+    *
+------------------------------------------------------------
 User: jchiang  Mon Dec 22 18:31:02 PST 2008
 ASP/asp_pgwave/xml
 

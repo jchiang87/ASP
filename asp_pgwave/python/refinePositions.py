@@ -18,8 +18,8 @@ import numpy as num
 import celgal
 
 from pointfit import photonmap
-from pointlike import DiffuseFunction
-from pointlike import SkyDir,SourceList, Source, PointSourceLikelihood, Background
+from skymaps import DiffuseFunction, Background
+from pointlike import SkyDir, SourceList, Source, PointSourceLikelihood
 
 converter = celgal.celgal()
 
@@ -28,7 +28,6 @@ def saveSource(source, glat_cutoff, TS_cutoff):
     tts = source.TS()
     if num.abs(bb) > glat_cutoff and tts <= TS_cutoff:
         print source.name, source.dir.ra(), source.dir.dec()
-#    if num.abs(bb) > glat_cutoff or tts > TS_cutoff:
     if tts > TS_cutoff:
         return True
     return False
@@ -90,7 +89,6 @@ def refinePositions(pgwave_list,
     else:
         bg = lambda : None
     output = open('updated_positions.txt', 'w')
-#    k = 1
     output.write("#Pgw_Ra pgw_Dec RA DEC Delta TS pgw_ksignif\n")
     for source in srclist:
 	output.write( ("%5s  %8.3f%8.3f") % ((source.name),(source.dir.ra()),
@@ -100,28 +98,8 @@ def refinePositions(pgwave_list,
 	sigma = fit.localize(2)
 	source.sigma = sigma
 	print source.name, source.dir.ra(), source.dir.dec(), sigma, source.TS()
-#        if source.TS() < TS_cutoff:
-#            ll, bb = converter.gal((source.dir.ra(), source.dir.dec()))
-#            if num.abs(bb) > glat_cutoff:
-#                dists = []
-#                for coord in zip(events.RA, events.DEC):
-#                    dists.append(celgal.dist(coord, (source.dir.ra(), 
-#                                                     source.dir.dec())))
-#                dists = num.array(dists)
-#                indx = num.where(dists < 3)
-#                norm = sum(events.ENERGY[indx]**2)
-#                ra1 = sum(events.RA[indx]*events.ENERGY[indx]**2)/norm
-#                dec1 = sum(events.DEC[indx]*events.ENERGY[indx]**2)/norm
-#                source.dir = SkyDir(ra1, dec1)
-#                print "calling Fitter with ", source.dir.ra(), source.dir.dec()
-#                fit = PointSourceLikelihood(data.map(), source.name, source.dir)
-#                print "calling fit.localize"
-#                sigma = fit.localize(2)
-#                print "fitted values: ", fit.dir().ra(), fit.dir().dec()
-#                source.dir, source.TS = fit.dir(), fit.TS
-#	#print k,source.dir.ra(), source.dir.dec() #fit.dir().ra(), fit.dir().dec(), fit.TS()
-#	#k=k+1
-        output.write(("  %8.3f"*5 + "\n") % (source.dir.ra(), source.dir.dec(),sigma, fit.TS(), source.ksignif))
+        output.write(("  %8.3f"*5 + "\n") % (source.dir.ra(), source.dir.dec(),
+                                             sigma, fit.TS(), source.ksignif))
     output.close()
     #
     # Move original list out of the way.
@@ -133,8 +111,6 @@ def refinePositions(pgwave_list,
     srclist.write(pgwave_list, glat_cutoff, TS_cutoff)
 
 if __name__ == '__main__':
-#    import sys
-#    refinePositions(sys.argv[1],sys.argv[2],sys.argv[3])
     import os
     from parfile_parser import Parfile
     os.chdir(os.environ['OUTPUTDIR'])

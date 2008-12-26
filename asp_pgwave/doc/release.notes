@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r9p1 26-Dec-08   JC   use GtApp to run gtsrcid
     v1r9   26-Dec-08   JC   use GALPROP_MODEL for diffuse model; accomodate
                             interface changes to pointlike and skymaps in 
                             ST v9r9 relative to ST v9r7p1

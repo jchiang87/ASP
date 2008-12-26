@@ -1,5 +1,5 @@
 """
-@brief Region-of-intereset source analysis for DRP monitoring.  This
+@brief Region-of-interest source analysis for DRP monitoring.  This
 will be performed for the 100 MeV -- 300 GeV range and will provide
 the fluxes for determining if a non-DRP source is in a state where it
 should have its data made public.
@@ -19,6 +19,7 @@ from drpRoiSetup import rootpath, pars, rois, output_dir
 import databaseAccess as dbAccess
 from fitEnergyBand import fitEnergyBand, currentRoi
 from assignRois import RoiIds
+from addNdifrsp import addNdifrsp
 
 roiIds = RoiIds(os.path.join(os.environ['OUTPUTDIR'], 'rois.txt'))
 
@@ -27,12 +28,15 @@ roiIds = RoiIds(os.path.join(os.environ['OUTPUTDIR'], 'rois.txt'))
 #
 roi = currentRoi()
 os.chdir(roi.name)
-print "Working in ", os.getcwd
+print "Working in ", os.getcwd()
 
 #
 # Run gtdiffrsp locally for each region in case it hasn't been run by
 # L1Proc.
 #
+
+addNdifrsp(roi.name + '_events.fits')
+
 gtdiffrsp = GtApp('gtdiffrsp')
 gtdiffrsp['evfile'] = roi.name + '_events.fits'
 gtdiffrsp['scfile'] = pars['ft2file']

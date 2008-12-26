@@ -14,6 +14,7 @@ from GtApp import GtApp
 import readXml
 from parfile_parser import Parfile
 from drpDbAccess import findDiffuseSources
+from addNdifrsp import addNdifrsp
 
 debug = True
 
@@ -47,6 +48,7 @@ if debug:
     print "sourceAnalysis.py"
     print gtdiffresp.command()
 else:
+    addNdifrsp(pars['ft1file'])
     gtdiffresp.run()
 
 os.system('chmod 777 *')

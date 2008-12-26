@@ -20,6 +20,7 @@ from UnbinnedAnalysis import *
 import dbAccess
 from parfile_parser import Parfile
 from FitsNTuple import FitsNTuple, FitsNTupleError
+from addNdifrsp import addNdifrsp
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
@@ -98,6 +99,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
     srcModel.writeTo(srcModelFile)
 
     if computeTs:
+        addNdifrsp(gtselect['outfile'])
         gtdiffrsp.run(evfile=gtselect['outfile'], scfile=ft2File, 
                       srcmdl=srcModelFile, irfs=config.IRFS)
 

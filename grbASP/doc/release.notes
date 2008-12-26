@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v4r7p3 26-Dec-08   JC   use addNdifrsp in LatGrbSpectrum
     v4r7p2 26-Dec-08   JC   use GALPROP_MODEL; catch FitsNTupleError for empty
                             input FT1 files
     v4r7p1 17-Oct-08   JC   handle GTIs with zero events in BlindSearch;

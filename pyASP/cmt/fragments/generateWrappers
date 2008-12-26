@@ -1,7 +1,0 @@
-# -*- makefile -*-
-# $Header$
-
-${CONSTITUENT} :: 
-	(source setup.sh; cd ${PYASPROOT}/python; python wrapperGenerator.py)
-${CONSTITUENT}clean ::
-	/bin/rm -f ${PYASPROOT}/${BINDIR}/*.sh

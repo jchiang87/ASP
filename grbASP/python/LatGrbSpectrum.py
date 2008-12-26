@@ -19,7 +19,7 @@ from refinePosition import absFilePath, likelyUL
 from UnbinnedAnalysis import *
 import dbAccess
 from parfile_parser import Parfile
-from FitsNTuple import FitsNTuple
+from FitsNTuple import FitsNTuple, FitsNTupleError
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
@@ -126,7 +126,6 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
         # avoid this.
         dbAccess.updateGrb(grb_id, IS_UPPER_LIMIT=0)
 
-
     f30 = pl_fluence(like, 30, 3e5, name, tmin, tmax)
     f100 = pl_fluence(like, 1e2, 3e5, name, tmin, tmax)
     f1GeV = pl_fluence(like, 1e3, 3e5, name, tmin, tmax)
@@ -149,7 +148,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
 
     try:
         events = FitsNTuple(gtselect['outfile'])
-    except AttributeError:
+    except FitsNTupleError:
         return None
     soft_counts = float(len(num.where(events.ENERGY <= 1e3)[0]))
     hard_counts = len(events.ENERGY) - soft_counts

@@ -16,7 +16,7 @@ import celgal
 import pyASP
 import dbAccess
 import numpy as num
-from FitsNTuple import FitsNTuple
+from FitsNTuple import FitsNTuple, FitsNTupleError
 from MultiPartMailer import MultiPartMailer
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
@@ -222,7 +222,10 @@ class LatGcnNotice(object):
         mailer.send('solist@glast.stanford.edu', recipients)
 def latCounts(ft1File):
     ebounds = (1e2, 1e3, 1e4)
-    ft1 = FitsNTuple(ft1File)
+    try:
+        ft1 = FitsNTuple(ft1File)
+    except FitsNTupleError:
+        return 0, 0, 0, 0
     foo = []
     for ee in ebounds:
         indx = num.where(ft1.ENERGY < ee)

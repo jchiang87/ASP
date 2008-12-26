@@ -128,6 +128,9 @@ class FitsTemplate(object):
     def readDbTables(self, tmin, tmax):
 #        ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
         ptsrcs = drpDbAccess.findPointSources(0, 0, 180, srctype='DRP')
+        atel_sources = drpDbAccess.findPointSources(0, 0, 180, srctype='ATEL')
+        for item in atel_sources:
+            ptsrcs[item] = atel_sources[item]
         self._deleteEGRETPulsars(ptsrcs)
         timeIntervals = TimeIntervals()
         fluxes = getLightCurves(timeIntervals, ptsrcs, (tmin, tmax))

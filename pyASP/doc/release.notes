@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v3r5p7 26-Dec-08   JC   add addNdifrsp.py, FitsNTupleError
     v3r5p6 24-Aug-08   JC   add fastCopy.py; have date2met compute MET
                             using current date and time by default
     v3r5p5 30-Jul-08   JC   add ft1_filter_merge function

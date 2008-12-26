@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r9   26-Dec-08   JC   use GALPROP_MODEL for diffuse model; accomodate
+                            interface changes to pointlike and skymaps in 
+                            ST v9r9 relative to ST v9r7p1
     v1r8p3 17-Oct-08   JC   modify query to POINTSOURCES table in 
                             dbmanager.getPointSources so that it does not
                             select non-ASP sources (e.g., MQs, RSP Pulsars, 

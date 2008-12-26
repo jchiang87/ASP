@@ -275,7 +275,7 @@ if __name__ == '__main__':
 
     os.chdir('/afs/slac/g/glast/ground/links/data/ASP/scratch')
 
-    print "WARNING: Including DRP sources *only* in this distribution."
+#    print "WARNING: Including DRP sources *only* in this distribution."
 
     dest = 'GSSC'
     try:
@@ -306,7 +306,7 @@ if __name__ == '__main__':
     output.readDbTables(tmin, tmax)
     output.writeto(outfile, clobber=True)
 
-    filterULs(outfile)
+#    filterULs(outfile)
     
     fchecksum = GtApp('fchecksum')
     fchecksum.run(infile=outfile, update='yes', datasum='yes', chatter=0)

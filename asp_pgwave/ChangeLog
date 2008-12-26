@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Fri Dec 26 08:03:51 PST 2008
+ASP/asp_pgwave/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+use GtApp to run gtsrcid; tagging v1r9p1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec 26 08:03:51 PST 2008
 ASP/asp_pgwave/cmt
 
 Modified Files:

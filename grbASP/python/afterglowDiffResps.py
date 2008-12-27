@@ -11,6 +11,7 @@ import os
 from GtApp import GtApp
 from parfile_parser import Parfile
 from GrbAspConfig import grbAspConfig, irf_config
+from addNdifrsp import addNdifrsp
 
 debug = False
 
@@ -35,6 +36,7 @@ gtdiffresp['irfs'] = irfs
 if debug:
     print gtdiffresp.command()
 else:
+    addNdifrsp(gtdiffrsp['evfile'])
     gtdiffresp.run()
 
 os.system('chmod 777 *')

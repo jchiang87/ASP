@@ -166,7 +166,8 @@ def findUniquePointSources(ra, dec, radius, roiIds=None, tol=0.5,
     ok_pgwave_sources = []
     cos_tol = num.cos(tol*num.pi/180.)
     for srcName in my_dict:
-       if my_dict[srcName].sourceType == 'PGWAVE':
+       if (my_dict[srcName].sourceType == 'PGWAVE' or
+           my_dict[srcName].sourceType == 'ATEL'):
             addSource = True
             for knownSource in known_list:
                 nhat = num.array(my_dict[knownSource].nhat)

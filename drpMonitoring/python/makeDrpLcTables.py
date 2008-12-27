@@ -81,7 +81,7 @@ def fmcmp(fm1, fm2):
 
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
     sql = ("select PTSRC_NAME, EBAND_ID, INTERVAL_NUMBER, FREQUENCY, " +
-           "FLUX, ERROR, TEST_STATISTIC, IS_UPPER_LIMIT from LIGHTCURVES" +
+           "FLUX, ERROR, TEST_STATISTIC, IS_UPPER_LIMIT from LIGHTCURVES " +
            "where FREQUENCY!='six_hours' and IS_MONITORED=1")
     def getFluxes(cursor):
         fluxes = Fluxes(timeIntervals, ptsrcs, tbounds)

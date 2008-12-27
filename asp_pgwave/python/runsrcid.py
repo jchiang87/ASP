@@ -7,10 +7,6 @@ from AspHealPix import Healpix,Pixel, SkyDir
 import dbmanager as db
 import sendFAmail as smail
 import datetime as dt
-from GtApp import GtApp
-
-gtsrcid = GtApp('gtsrcid')
-
 noassocfile='NoAssiated.fits'
 index=[]
 ddec=[]
@@ -35,25 +31,53 @@ def loadpgwRow(pgwfits):
 
 
 def rungtsrcid(srcCat,testCat,outCat,prob):
-        gtsrcid.run(srcCatName=srcCat, srcCatPrefix="SRC", 
-                    srcPosError=1, cptCatName=testCat,
-                    cptCatPrefix="CAT", outCatName=outCat,
-                    probMethod="POSITION", probThresh=0.0001,
-                    maxNumCpt=1)
-#
-#	cmd = 'gtsrcid' \
-#         + ' srcCatName='+srcCat \
-#         + ' srcCatPrefix=\"SRC\"' \
-#         + ' srcPosError=\"1\"' \
-#         + ' cptCatName='+testCat \
-#         + ' cptCatPrefix=\"CAT\"' \
-#         + ' outCatName='+outCat \
-#         + ' probMethod=\"POSITION\"' \
-#         + ' probThres=\"0.0001\"' \
-#         + ' maxNumCpt=\"1\" '
-#
-#        print cmd
-#	os.system(cmd)
+
+	cmd = 'gtsrcid' \
+         + ' srcCatName='+srcCat \
+         + ' srcCatPrefix=\"SRC\"' \
+         + ' srcPosError=\"1\"' \
+         + ' cptCatName='+testCat \
+         + ' cptCatPrefix=\"CAT\"' \
+         + ' outCatName='+outCat \
+         + ' probMethod=\"POSITION\"' \
+         + ' probThres=\"0.0001\"' \
+         + ' maxNumCpt=\"1\" '
+
+
+	"""cmd = 'gtsrcid ' \
+         + ' srcCatName=' + srcCat \
+         + ' srcCatPrefix=SRC' \
+         + ' srcCatQty=*' \
+         + ' cptCatName='+testCat \
+         + ' cptCatPrefix=CAT' \
+         + ' cptCatQty=*' \
+         + ' cptPosError=1' \
+         + ' outCatName='+outCat \
+         + ' outCatQty01=\'R=arccos(sin($@SRC_DECJ2000$*2*#pi/360)*sin($@CAT_DEJ2000$*2*#pi/360)+cos($@SRC_DECJ2000$*2*#pi/360)*cos($@CAT_DEJ2000$*2*#pi/360)*cos($@SRC_RAJ2000$*2*#pi/360-$@CAT_RAJ2000$*2*#pi/360))*360/(2*#pi)\''\
+         + ' outCatQty03=\"\"' \
+         + ' outCatQty04=\"\"' \
+         + ' outCatQty05=\"\"' \
+         + ' outCatQty06=\"\"' \
+         + ' outCatQty07=\"\"' \
+         + ' outCatQty08=\"\"' \
+         + ' outCatQty09=\"\"' \
+         + ' probMethod=POSITION' \
+         + ' probThres='+str(prob) \
+         + ' maxNumCpt=1' \
+         + ' select01=\"\"' \
+         + ' select02=\"\"' \
+         + ' select03=\"\"' \
+         + ' select04=\"\"' \
+         + ' select05=\"\"' \
+         + ' select06=\"\"' \
+         + ' select07=\"\"' \
+         + ' select08=\"\"' \
+         + ' select09=\"\"' \
+         + ' chatter=4' \
+         + ' clobber=yes' \
+         + ' debug=no' \
+         + ' mode=ql'"""
+	os.system(cmd)
 	
 def printCat(catf):
   hdulist  = pyfits.open(catf)
@@ -167,7 +191,6 @@ def checkPointSource(pgwdata,dateinfo):
         #mydb.close()
 	if debug==0:
 		procid=int(os.environ['PIPELINE_STREAM'])
-		mydb.deleteDuplicateFE(procid)
 	ra=db._PointSourcesFields['RA'][1]
 	dec=db._PointSourcesFields['DEC'][1]
 	i=0
@@ -222,7 +245,7 @@ def faMessage(source,sunpos,dateinfo):
 	if len(flag)>0:
            for i in range(0,len(flag)):
                 if flag[i]>0:
-                  testo=testo+"\nFlaring source found: "+source['NAME'][i]
+                  testo=testo+"Flaring source found:"+source['NAME'][i]
 	else:
 	   testo=testo+'NO FLARING SOURCE DETECTED\n' 	
 	ss= ("Sun (RA,DEC): %7.4f,%7.4f \nSun (l,b): %7.4f,%7.4f\n" % (sunpos.ra(), sunpos.dec(),sunpos.l(),sunpos.b()))
@@ -266,26 +289,7 @@ def loadCatFileName():
 	return files
 
 if __name__=="__main__":
-        from parfile_parser import Parfile
-        from newpgw2fits import pgw2fits
-        from syncDataViewer import syncDataViewer
-        from renameOutFiles import renameOutFiles
-        try:
-                pgwfile=sys.argv[1]
-                prob=sys.argv[2]
-                runsrcid(pgwfile,prob)
-        except:
-                os.chdir(os.environ['OUTPUTDIR'])
-                dbManager = db.dbmanager()
-                config = dbManager.getPgwaveConfig()
-                dbManager.close()
-                
-                pars = Parfile('pgwave_pars.txt', fixed_keys=False)
-                outfits = pgw2fits(pars['pgwave_list'], config[6:8],
-                                   1, pars['nsource'])
-                if pars['nsource'] > 0:
-                        runsrcid(outfits, 0.1)
-
-		os.system('chmod 777 *')
-        	syncDataViewer()
-        	renameOutFiles()
+	
+	pgwfile=sys.argv[1]
+	prob=sys.argv[2]
+	runsrcid(pgwfile,prob)

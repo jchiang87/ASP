@@ -27,16 +27,16 @@ grbName = grbpars['name']
 afterglowFiles = grbName + '_afterglow_files'
 pars = Parfile(afterglowFiles)
 
-gtdiffresp = GtApp('gtdiffrsp', 'Likelihood')
-gtdiffresp['evfile'] = pars['ft1File']
-gtdiffresp['scfile'] = pars['ft2File']
-gtdiffresp['srcmdl'] = pars['xmlFile']
-#gtdiffresp['irfs'] = config.IRFS
-gtdiffresp['irfs'] = irfs
+gtdiffrsp = GtApp('gtdiffrsp', 'Likelihood')
+gtdiffrsp['evfile'] = pars['ft1File']
+gtdiffrsp['scfile'] = pars['ft2File']
+gtdiffrsp['srcmdl'] = pars['xmlFile']
+#gtdiffrsp['irfs'] = config.IRFS
+gtdiffrsp['irfs'] = irfs
 if debug:
-    print gtdiffresp.command()
+    print gtdiffrsp.command()
 else:
     addNdifrsp(gtdiffrsp['evfile'])
-    gtdiffresp.run()
+    gtdiffrsp.run()
 
 os.system('chmod 777 *')

@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="8.1" type="Data">
+<task name="GRB_refinement" version="8.2" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -115,8 +115,9 @@
                                  LatGrbSpectrum.getVariable("skipDataProducts"))
              print "skipDataProducts = ", skipDataProducts
              if skipDataProducts != "affirmed":
+                 args = "is_upper_limit=%s" % is_ul
                  print "Launching dataProducts substream"
-                 pipeline.createSubstream("dataProducts", 0)
+                 pipeline.createSubstream("dataProducts", 0, args)
            ]]>
          </script>
          <depends>
@@ -131,7 +132,7 @@
        <task name="dataProducts" version="1.0" type="Data">
          <prerequisites>
            <prerequisite name="is_upper_limit" type="string" />
-         </prerequisite>
+         </prerequisites>
          <process name="makeRefinementPlots">
            <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
                 batchOptions="-q short"/>

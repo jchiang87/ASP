@@ -11,6 +11,7 @@ an XML model file.
 
 import sys, os
 import numpy as num
+import pyfits
 from GtApp import GtApp
 import readXml
 import xmlSrcLib
@@ -21,6 +22,7 @@ import dbAccess
 from parfile_parser import Parfile
 from FitsNTuple import FitsNTuple, FitsNTupleError
 from addNdifrsp import addNdifrsp
+import pipeline
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
@@ -56,6 +58,9 @@ def createExpMap(ft1File, ft2File, name, config):
                  srcrad=config.RADIUS+10)
     return gtexpmap['outfile']
 
+class ZeroFt1EventsError(StandardError):
+    "Zero events in FT1 file."
+
 def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
                    config, computeTs=False):
     radius = config.RADIUS
@@ -72,6 +77,10 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
     gtselect['tmax'] = tmax
     gtselect['zmax'] = 100
     gtselect.run()
+
+    events = pyfits.open(gtselect['outfile'])
+    if events['EVENTS'].size() == 0:
+        raise ZeroFt1EventsError
 
     if computeTs:
         expMap = createExpMap(gtselect['outfile'], ft2File, name, config)
@@ -193,8 +202,11 @@ if __name__ == '__main__':
     tmin, tmax = grbTiming(gcnNotice)
     ft1File, ft2File = grbFiles(gcnNotice)
 
-    like = LatGrbSpectrum(ra, dec, tmin, tmax, gcnNotice.Name,
-                          ft1File, ft2File, 
-                          config, computeTs=compute_Ts)
-
+    try:
+        like = LatGrbSpectrum(ra, dec, tmin, tmax, gcnNotice.Name,
+                              ft1File, ft2File, 
+                              config, computeTs=compute_Ts)
+    except ZeroFt1EventsError:
+        pipeline.setVariable("skipDataProducts", "affirmed")
+        
     os.system('chmod 777 *')

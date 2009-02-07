@@ -68,7 +68,7 @@ class GcnNotice(object):
     def _readfloat(self, key):
         line = self._dict[key]
         return float(line.split(':')[1].split()[0])
-    def offAxisAngle(self, ft2File):
+    def offAxisAngle(self, ft2File, radec=None):
         self._getFt2(ft2File)
         indx = num.where(self.ft2.START > self.start_time)
         ii = indx[0][0]
@@ -77,7 +77,9 @@ class GcnNotice(object):
         t1 = self.ft2.START[ii-1]
         t2 = self.ft2.START[ii]
         my_dir = pyASP.SkyDir_interpolate(dir1, dir2, t1, t2, self.start_time)
-        return my_dir.difference(pyASP.SkyDir(self.RA, self.DEC))*180./num.pi
+        if radec is None:
+            radec = self.RA, self.DEC
+        return my_dir.difference(pyASP.SkyDir(*radec))*180./num.pi
     def inSAA(self, ft2File):
         self._getFt2(ft2File)
         indx = num.where(self.ft2.START < self.start_time)

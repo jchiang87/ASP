@@ -14,6 +14,7 @@ from extractLatData import extractLatData
 from GtApp import GtApp
 import celgal
 import dbAccess
+import pipeline
     
 gtfindsrc = GtApp('gtfindsrc', 'Likelihood')
 
@@ -165,3 +166,18 @@ if __name__ == '__main__':
     pars.write()
 
     os.system('chmod 777 *')
+
+    #
+    # Determine if refined position lies within the nominal FOV
+    #
+    fov_angle = 90
+    offAxisAngle = gcnNotice.offAxisAngle(ft2File, 
+                                          (gcnNotice.ra, gcnNotice.dec))
+    if offAxisAngle <= fov_angle:
+        pipeline.setVariable('within_fov', 'affirmed')
+    else:
+        print "**************************************************"
+        print "Refined burst position off-axis angle: %f.1 deg" % offAxisAngle 
+        print "This is outside the nominal FOV angle of %f.1 deg" % fov_angle
+        print "Aborting spectral fit."
+        print "**************************************************"

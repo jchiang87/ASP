@@ -420,6 +420,7 @@ if __name__ == '__main__':
     filename = 'logProbs_%s.fits' % os.environ['DownlinkId']
 
     filepath = os.path.join(grbroot_dir, filename)
+    print "writing ", filepath
     writeTimeHistory(times, logdts, logdists, filepath)
 
     figures = createPlots(filename, os.environ['DownlinkId'],
@@ -446,20 +447,26 @@ if __name__ == '__main__':
         #
         notice.setLocErr(1.)
         #
-        if os.environ['PIPELINESERVER'] == 'PROD':
-            notice.email_notification(logProb, grbConfig.THRESHOLD,
-                                      files=ft1_files, figures=figures)
-        else:
-            notice.email_notification(logProb, grbConfig.THRESHOLD,
-                                      recipients=['jchiang@slac.stanford.edu'],
-                                      files=ft1_files, figures=figures)
-        #
         # Need better logic to check if this burst already has a
         # Notice from a different mission/instrument. Here we just
         # check that the grb_id (int(MET of burst)) hasn't already
         # been used by an entry in the GRB database table.
         #
         isUpdate = dbAccess.haveGrb(notice.grb_id)
+        notice_type = None
+        if isUpdate:
+            sql = ("select NOTICETYPE from gcnnotices where grb_id=%i" 
+                   % notice.grb_id)
+            notice_type = dbAccess.apply(sql, lambda cur:[x[0] for x in cur])[0]
+        #
+        if notice_type != 'ASP_BLIND_SEARCH':
+            if os.environ['PIPELINESERVER'] == 'PROD':
+                notice.email_notification(logProb, grbConfig.THRESHOLD,
+                                          files=ft1_files, figures=figures)
+            else:
+                notice.email_notification(logProb, grbConfig.THRESHOLD,
+                                          recipients=['jchiang@slac.stanford.edu'],
+                                          files=ft1_files, figures=figures)
         notice.registerWithDatabase(isUpdate=isUpdate)
         grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
         mkdir(grb_output)

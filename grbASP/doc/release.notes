@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r7p6 08-Feb-09   JC   Skip LatGrbSpectrum analysis if burst location
+                            after refinement task is outside the fov (> 70 deg);
+                            check if ASP blind search candidate has already
+                            been found from previous analysis of same run
     v4r7p4 26-Dec-08   JC   use consistent app name (gtdiffrsp) in 
                             afterglowDiffResps
     v4r7p4 26-Dec-08   JC   use addNdifrsp in afterglowDiffResps

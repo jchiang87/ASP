@@ -293,14 +293,19 @@ if __name__ == '__main__':
     tmax = getLastUpdateTime()
     print "Most recent processed TSTOP in TIMEINTERVALS table: ", tmax
 
+#    #
+#    # Require at least 3 day latency for deliveries
+#    #
+#    latency = 86400*3.
     #
-    # Require at least 3 day latency for deliveries
+    # No latency for data release
     #
-    latency = 86400*3.
+    latency = 0
     utc_now = date2met.date2met()
 
     tmax = min(utc_now - latency, tmax)
-    print "UTC now minus 3 day latency: ", utc_now - latency
+#    print "UTC now minus 3 day latency: ", utc_now - latency
+    print "UTC now minus latency: ", utc_now - latency
 
     outfile = 'gll_asp_%010i_v%02i.fit' % (tmax, version)
 

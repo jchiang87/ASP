@@ -75,6 +75,8 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
     gtselect['rad'] = radius
     gtselect['tmin'] = tmin
     gtselect['tmax'] = tmax
+    gtselect['emin'] = 100
+    gtselect['emax'] = 3e5
     gtselect['zmax'] = 100
     gtselect.run()
 
@@ -84,6 +86,14 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File,
 
     if computeTs:
         expMap = createExpMap(gtselect['outfile'], ft2File, name, config)
+        #
+        # Check if exposure is zero at this location
+        #
+        foo = pyLike.WcsMap(expMap)
+        grb_dir = pyLike.SkyDir(ra, dec)
+        if foo(grb_dir) == 0:
+            raise ZeroFt1EventsError
+
 
     src = funcFactory.PtSrc()
     src.spectrum.Integral.min = 0

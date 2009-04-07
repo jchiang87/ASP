@@ -125,7 +125,7 @@ def countsMap(grb_id, cmapfile, pos, init_pos, outfile=None):
     image.reverse()
     image = num.array(image)
     pylab.imshow(image, interpolation='nearest', 
-                 cmap=pylab.cm.spectral_r, extent=axisRange)
+                 cmap=pylab.cm.spectral_r, extent=axisRange, aspect='equal')
     pylab.colorbar(ticks=range(min(image.flat), max(image.flat)+2))
 
     coordSys = CoordSys(cmapfile)
@@ -247,7 +247,6 @@ def tsMap(grb_id, fitsfile, ra, dec, outfile=None):
     axisRange = (1, ts[0].header['NAXIS1'], 1, ts[0].header['NAXIS2'])
     levels = max(ts[0].data.flat) - num.array((2.31, 4.61, 9.21))
     image = ts[0].data.tolist()
-    image.reverse()
     image = num.array(image)
     contourSet = pylab.contour(image, levels, interpolation='nearest', 
                                extent=axisRange)

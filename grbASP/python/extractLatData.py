@@ -117,7 +117,10 @@ if __name__ == '__main__':
 
     os.chdir(output_dir)
     grb_id = int(os.environ['GRB_ID'])
-    gcnNotice = GcnNotice(grb_id)
+    #
+    # Skip unreliable LAT on-board notices
+    #
+    gcnNotice = GcnNotice(grb_id, skipped=('FERMI_LAT_POSITION',))
 
     if len(ft1) == 0:
         # We have no FT1 files, so no events.

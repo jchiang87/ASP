@@ -51,16 +51,21 @@ def getGrbIds():
         return grb_ids
     return apply(sql, cursorFunc)
 
-def readGcnNotices(grb_id):
+def readGcnNotices(grb_id, skipped=(), connection=asp_default):
     """Return the stored packet buffers from the GCNNOTICES table, with
     the initial notice being returned first in the list."""
-    sql = "select GCN_NOTICE from GCNNOTICES where GRB_ID = %i order by ISUPDATE ASC" % grb_id
+    sql = "select GCN_NOTICE, NOTICETYPE from GCNNOTICES where GRB_ID = %i order by ISUPDATE ASC" % grb_id
     def cursorFunc(cursor):
         notices = []
         for entry in cursor:
-            notices.append(convert_clob(entry[0]))
+            notices.append((convert_clob(entry[0]), entry[1]))
         return notices
-    return apply(sql, cursorFunc)
+    my_notices = apply(sql, cursorFunc, connection=connection)
+    candidate_notices = [item[0] for item in my_notices 
+                         if item[1] not in skipped]
+    if len(candidate_notices) == 0:
+        return [item[0] for item in my_notices]
+    return candidate_notices
 
 def deleteNotice(grb_id):
     sql = "delete from GCNNOTICES where GRB_ID = %i" % grb_id

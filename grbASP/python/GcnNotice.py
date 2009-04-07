@@ -11,19 +11,27 @@ import os
 import numpy as num
 import pyASP
 from GcnPacket import GcnPacket
+import databaseAccess
 from dbAccess import readGcnNotices, grbName
 
 class GcnNotice(object):
-    def __init__(self, grb_id):
-        self._accessDb(grb_id)
+    def __init__(self, grb_id, skipped=(),
+                 connection=databaseAccess.asp_default):
+        """
+        GCN Notice summary from packet with smallest positional error radius.
+        Allow certain notice types to be skipped.
+        """
+        self.skipped = skipped
+        self._accessDb(grb_id, connection)
         self.ft2 = None
-    def _accessDb(self, grb_id):
+    def _accessDb(self, grb_id, connection):
         #
         # Use trigger time from initial notice and best position 
         # based on error circle radius.
         #
         print "GcnNotice._accessDb: grb_id = ", grb_id
-        notice_list = readGcnNotices(grb_id)
+        notice_list = readGcnNotices(grb_id, skipped=self.skipped,
+                                     connection=connection)
         packet_list = [GcnPacket(x.tostring()) for x in notice_list]
         my_packet = packet_list[0]
         #

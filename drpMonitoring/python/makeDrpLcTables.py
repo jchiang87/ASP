@@ -38,8 +38,8 @@ class TimeIntervals(object):
         return self.intervals[freq][interval_num]
 
 class EpochData(object):
-    def __init__(self, entry, timeIntervals, ptsrcs):
-        self.name = entry[0]
+    def __init__(self, entry, timeIntervals, ptsrcs, aliases=lambda x : x):
+        self.name = aliases(entry[0])
         self.tstart, self.tstop = timeIntervals(entry[3], entry[2])
         self.ra, self.dec = ptsrcs[entry[0]].ra, ptsrcs[entry[0]].dec
         self.flux = {}
@@ -57,13 +57,15 @@ class EpochData(object):
                 tbounds[0] <= self.tstop <= tbounds[1])
 
 class Fluxes(dict):
-    def __init__(self, timeIntervals, ptsrcs, tbounds=None):
+    def __init__(self, timeIntervals, ptsrcs, tbounds=None, 
+                 aliases=lambda x : x):
         dict.__init__(self)
         self.timeInts, self.ptsrcs = timeIntervals, ptsrcs
         self.tbounds = tbounds
+        self.aliases = aliases
     def ingest(self, entry):
-        PK = entry[0], entry[2], entry[3]
-        epochData = EpochData(entry, self.timeInts, self.ptsrcs)
+        PK = self.aliases(entry[0]), entry[2], entry[3]
+        epochData = EpochData(entry, self.timeInts, self.ptsrcs, self.aliases)
         if self.tbounds is None or epochData.accept(self.tbounds):
             if not PK in self.keys():
                 self[PK] = epochData
@@ -79,12 +81,29 @@ def fmcmp(fm1, fm2):
     else:
         return 0
 
+class Aliases(object):
+    def __init__(self):
+        sql = ("select PTSRC_NAME, ALIAS from POINTSOURCES " +
+               "where ALIAS is not null")
+        def get_aliases(curs):
+            aliases = {}
+            for item in curs:
+                aliases[item[0]] = item[1]
+            return aliases
+        self.aliases = dbAccess.apply(sql, get_aliases)
+    def __call__(self, ptsrc_name):
+        try:
+            return self.aliases[ptsrc_name]
+        except KeyError:
+            return ptsrc_name
+
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
+    aliases = Aliases()
     sql = ("select PTSRC_NAME, EBAND_ID, INTERVAL_NUMBER, FREQUENCY, " +
            "FLUX, ERROR, TEST_STATISTIC, IS_UPPER_LIMIT from LIGHTCURVES " +
            "where FREQUENCY!='six_hours' and IS_MONITORED=1")
     def getFluxes(cursor):
-        fluxes = Fluxes(timeIntervals, ptsrcs, tbounds)
+        fluxes = Fluxes(timeIntervals, ptsrcs, tbounds, aliases=aliases)
         for entry in cursor:
             if entry[0] in ptsrcs:
                 fluxes.ingest(entry)
@@ -278,8 +297,6 @@ if __name__ == '__main__':
 
     os.chdir('/afs/slac/g/glast/ground/links/data/ASP/scratch')
 
-#    print "WARNING: Including DRP sources *only* in this distribution."
-
     dest = 'GSSC'
     try:
         if '-d' in sys.argv[1:]:
@@ -293,10 +310,6 @@ if __name__ == '__main__':
     tmax = getLastUpdateTime()
     print "Most recent processed TSTOP in TIMEINTERVALS table: ", tmax
 
-#    #
-#    # Require at least 3 day latency for deliveries
-#    #
-#    latency = 86400*3.
     #
     # No latency for data release
     #

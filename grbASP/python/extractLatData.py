@@ -32,6 +32,7 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect['tmin'] = gcnNotice.start_time - duration
     gtselect['tmax'] = gcnNotice.start_time + duration
     gtselect['zmax'] = 100 # need to retrieve this from db table
+    gtselect['emax'] = 3e5
     gtselect.run()
 
     ft1 = pyfits.open(gtselect['outfile'])
@@ -77,6 +78,7 @@ def extractLatData(gcnNotice, ft1File, config):
         gtselect['outfile'] = gcnNotice.Name + '_LAT_2.fits'
         gtselect['tmin'] = tmin
         gtselect['tmax'] = tmax
+        gtselect['emax'] = 3e5
         gtselect.run()
         gtbin['evfile'] = gtselect['outfile']
         gtbin['outfile'] = gcnNotice.Name + '_LAT_lc_2.fits'

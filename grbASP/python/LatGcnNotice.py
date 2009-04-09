@@ -265,11 +265,15 @@ if __name__ == '__main__':
 
     notice.setDuration(pars['tstop'] - pars['tstart'])
 
-    if Ts_value is None:
-        notice.notice['TRIGGER_SIGNIF'] = '> 5 [sigma]'
-    else:
-        notice.notice['TRIGGER_SIGNIF'] = '%.1f [sigma]' % num.sqrt(Ts_value)
+    notice.notice['SIGNIFICANCE'] = '%.1f [sqrt(TS) 2 dof]' % num.sqrt(Ts_value)
 
+    notice.notice['GRB_INTEN1'] = ("%.1f [0.1 < cnts < 1.0 (GeV)]"
+                                   % pars['GRB_INTEN1'])
+    notice.notice['GRB_INTEN2'] = ("%.1f [1.0 < cnts < 10. (GeV)]"
+                                   % pars['GRB_INTEN2'])
+    notice.notice['GRB_INTEN3'] = ("%.1f [10. < cnts (GeV)]" 
+                                   % pars['GRB_INTEN3'])
+                                   
     ft2File = open(pars['name'] + '_files').readlines()[-1].strip()
     scData = ScData(ft2File)
     srcDir = SkyDir(pars['ra'], pars['dec'])
@@ -283,3 +287,12 @@ if __name__ == '__main__':
 
     outfile_location = "'%s'" % os.path.join(output_dir, outfile)
     dbAccess.updateGrb(grb_id, ASP_GCN_NOTICE_DRAFT=outfile_location)
+
+    if Ts_value >= 25:
+        #
+        # Send this notice for GCN broadcast.
+        #
+        mailer = MultiPartMailer("GCN/FERMI_LAT_GND_POSITION")
+        mailer.add_text(str(notice.notice))
+        mailer.finish()
+        mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",))

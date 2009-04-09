@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Wed Apr  8 20:39:07 PDT 2009
+ASP/asp_pgwave/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+switch to numpy; tagging v1r9p2
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:39:07 PDT 2009
 ASP/asp_pgwave/cmt
 
 Modified Files:

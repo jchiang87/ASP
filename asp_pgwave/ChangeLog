@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:39:07 PDT 2009
+ASP/asp_pgwave/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+switch to numpy; tagging v1r9p2
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r9p1, operation: add
 Package: asp_pgwave

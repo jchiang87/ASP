@@ -47,7 +47,8 @@ _PointSourcesFields={
   'NZ':('nz',[]),\
   'XML_MODEL':('xml_model',[]),\
   'IS_OBSOLETE':('is_obsolete',[]),\
-  'IS_PUBLIC':('is_public',[])}
+  'IS_PUBLIC':('is_public',[]),
+  'ALIAS' : ('alias', [])}
   
 _CounterPartFields={
   'CATALOGNAME':('catalogname',[]),\

@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v4r8   08-Apr-09   JC   compute TS for all sources in LatGrbSpectrum;
+                            fill sqrt(TS) and predicted counts in new GCN 
+                            Notice template; set up emailing of Notices
     v4r7p6 08-Feb-09   JC   Skip LatGrbSpectrum analysis if burst location
                             after refinement task is outside the fov (> 70 deg);
                             check if ASP blind search candidate has already

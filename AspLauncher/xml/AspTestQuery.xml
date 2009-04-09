@@ -7,9 +7,14 @@
 -->
 <task name="AspTestQuery" version="0.1" type="Data">
   <variables>
-    <var name="folder">/Data/OpsSim2/Level1</var>
     <var name="BINDIR">rh9_gcc32</var>
   </variables>
+  <prerequisites>
+    <prerequisite name="folder" type="string"/>
+    <prerequisite name="tstart" type="integer"/>
+    <prerequisite name="tstop" type="integer"/>
+    <prerequisite name="ASPLAUNCHERROOT" type="string"/>
+  </prerequisites>
   <process name="catalogQueries">
     <script>
       <![CDATA[
@@ -20,14 +25,19 @@
             opt3='(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
             query = ('DataType == \"%s\" && (%s || %s || %s)' 
                      % (path, opt1, opt2, opt3))
-            datasetList = datacatalogPROD.getDatasets(folder+'/*', query)
+            datasetList = datacatalog.getDatasets(folder+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
-        tstart = 257835904
-        tstop = 258274304
         query("Ft1FileList", "FT1", tstart, tstop)
         query("Ft2FileList", "FT2", tstart, tstop)
     ]]></script>
+  </process>
+  <process name="hello_world">
+    <job executable="${ASPLAUNCHERROOT}/${BINDIR}/hello_world.sh"
+         batchOptions="-q short"/>
+    <depends>
+      <after process="catalogQueries" status="SUCCESS"/>
+    </depends>
   </process>
 </task>
 </pipeline>

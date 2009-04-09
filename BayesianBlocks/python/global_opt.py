@@ -1,5 +1,5 @@
-import numarray as num
-import numarray.ma as ma
+import numpy as num
+import numpy.ma as ma
 from gammaln import gammln
 
 num.Error.setMode(invalid='ignore')

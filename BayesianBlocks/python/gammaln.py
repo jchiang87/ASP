@@ -1,4 +1,4 @@
-import numarray as num
+import numpy as num
 import copy
 
 def gammln(xx):

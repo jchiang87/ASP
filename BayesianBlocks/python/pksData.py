@@ -3,7 +3,7 @@ sys.path.reverse()
 sys.path.append('/scratch/jchiang/HippoDev/hippodraw/python')
 sys.path.append('/home/jchiang/ST/likeGui/v6/python')
 sys.path.reverse()
-import numarray as num
+import numpy as num
 import hippoplotter as plot
 import glob
 

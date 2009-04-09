@@ -1,4 +1,4 @@
-import numarray as num
+import numpy as num
 from BayesBlocks import BayesBlocks, LightCurve
 
 from distributions import sample, stepFunction

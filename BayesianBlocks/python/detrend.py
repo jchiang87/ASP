@@ -1,5 +1,5 @@
 import random
-import numarray as num
+import numpy as num
 from BayesBlocks import BayesBlocks, retrend, LightCurve
 
 class Distribution(object):

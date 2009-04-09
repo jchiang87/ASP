@@ -10,7 +10,7 @@ from pil import Pil
 
 from xml.dom import minidom
 import random
-import numarray as num
+import numpy as num
 
 def randomSkyDir():
     ra = random.random()*360.

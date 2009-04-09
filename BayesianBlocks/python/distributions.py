@@ -1,6 +1,6 @@
 import bisect
 import random
-import numarray as num
+import numpy as num
 
 def integralDist(dist):
     my_integralDist = [0]

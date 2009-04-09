@@ -1,5 +1,5 @@
 import sys, string, time
-import numarray as num
+import numpy as num
 import hippoplotter as plot
 from distributions import *
 from global_opt import global_opt

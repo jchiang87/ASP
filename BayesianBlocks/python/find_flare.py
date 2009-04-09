@@ -2,8 +2,8 @@ import sys, os
 sys.path.append('../python')
 sys.path.append(os.path.join(os.environ['LIKEGUIROOT'], 'python'))
 sys.path.append(os.path.join(os.environ['SANEROOT'], 'python'))
-import numarray as num
-import numarray.ma as ma
+import numpy as num
+import numpy.ma as ma
 import celgal
 import copy
 from FitsNTuple import FitsNTuple

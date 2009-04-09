@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:39:08 PDT 2009
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py getLightCurves.py runpgw.py 
+Log Message:
+switch to numpy; tagging v1r9p2
+    *
+------------------------------------------------------------
 User: jchiang  Wed Apr  8 20:39:07 PDT 2009
 ASP/asp_pgwave/doc
 

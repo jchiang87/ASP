@@ -1,5 +1,5 @@
 """
-@brief Return a tuple of numarrays, one for each column of ASCII data
+@brief Return a tuple of numpy.arrays, one for each column of ASCII data
 in file.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
@@ -8,7 +8,7 @@ in file.
 # $Header$
 #
 
-import numarray as num
+import numpy as num
 
 def _readlines(fileobj, comment=''):
     lines = []

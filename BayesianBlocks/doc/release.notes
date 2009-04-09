@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r0p1 08-Apr-09   JC   switch to numpy
     v1     05-Dec-08   JC   Use intervals between events as cells instead
                             of Voronoi scheme
     v0r2   13-Jul-07   JC   enable analysis of binned data for flaring source   

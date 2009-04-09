@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v1r7p2 08-Apr-09   JC   switch to numpy; use UpperLimits from pyLikelihood
     v1r7p1 09-Feb-09   JC   set the latency for DRP (et al.) data delivery
                             to zero (from 3 days)
     v1r7   26-Dec-08   JC   set GALPROP_MODEL in xml task def; enable

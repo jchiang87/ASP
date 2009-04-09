@@ -107,7 +107,7 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
             print "computing upper limit for ", srcname
             try:
                 flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
-                                           renorm=True)
+                                           renorm=True)[0]
             except RuntimeError, message:
                 print message
                 # Probable error in setting parameter outside existing bounds;

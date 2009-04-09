@@ -10,7 +10,7 @@
 import sys
 from databaseAccess import apply, cx_Oracle, getDbObjects, asp_default
 import databaseAccess as dbAccess
-import numarray as num
+import numpy as num
 from xml.dom import minidom
 from cleanXml import cleanXml
 

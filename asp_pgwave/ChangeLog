@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri Apr 24 22:57:00 PDT 2009
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+use auto retry in PGWave task
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r9p2, operation: add
 Package: asp_pgwave

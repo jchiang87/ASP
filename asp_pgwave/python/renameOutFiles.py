@@ -19,7 +19,7 @@ def outfile(fn, suffix):
 def renameOutFiles():
     rootname = 'Filtered_evt'
     exts = ('.fits', '_map.fits', '_map.list', '_map.reg', 
-            '_map_pgw_out.fits', '_map_ait.gif', '_map_ait.png')
+            '_map_pgw_out.fits', '_map_ait.gif')
 
     infiles = [rootname + ext for ext in exts]
 

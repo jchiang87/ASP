@@ -1,11 +1,8 @@
-#
-# $Header$
-#
 import os,sys
 from gtutil import *
 from GtApp import GtApp
 import pyfits
-import numpy as num
+import numarray as num
 from newpgw2fits import *
 from runsrcid import *
 from creaXimageGif import *

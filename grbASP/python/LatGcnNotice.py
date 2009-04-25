@@ -38,8 +38,8 @@ class LatGcnTemplate(dict):
         for line in open(template):
             if line.find("#") == 0:   # skip this line
                 continue
-            if line.find('COMMENTS') == 0:
-                continue
+#            if line.find('COMMENTS') == 0:
+#                continue
             if line.find(':') > 0:
                 data = line.split(':')
                 key, value = data[0], (':'.join(data[1:])).strip()
@@ -281,6 +281,7 @@ if __name__ == '__main__':
                                   scData.inclination(pars['tstart'], srcDir))
     notice.notice['GRB_PHI'] = ("%.2f [deg]" % 
                                 scData.azimuth(pars['tstart'], srcDir))
+    notice.notice['COMMENTS'] = 'THIS IS A TEST. REPEAT THIS IS A TEST.'
     
     outfile = pars['name'] + '_Notice.txt'
     notice.write(outfile)
@@ -292,7 +293,9 @@ if __name__ == '__main__':
         #
         # Send this notice for GCN broadcast.
         #
-        mailer = MultiPartMailer("GCN/FERMI_LAT_GND_POSITION")
+#        mailer = MultiPartMailer("GCN/FERMI_LAT_GND_POSITION")
+        mailer = MultiPartMailer("FERMI_LAT_GND_REF_IMPORT")
         mailer.add_text(str(notice.notice))
         mailer.finish()
-        mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",))
+        mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",
+                                                  "vxw@capella.gsfc.nasa.gov"))

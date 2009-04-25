@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="8.4" type="Data">
+<task name="DRP_monitoring" version="8.5" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -60,7 +60,7 @@
     </script>
   </process>
 
-  <process name="getIntervalData">
+  <process name="getIntervalData" autoRetryMaxAttempts="2">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/getIntervalData.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -68,7 +68,7 @@
     </depends>
   </process>
 
-  <process name="diffuseResponses">
+  <process name="diffuseResponses" autoRetryMaxAttempts="2">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/diffuseResponses.sh"
          batchOptions=" -q medium " allocationGroup="glastdata" />
     <depends>
@@ -76,7 +76,7 @@
     </depends>
   </process>
 
-  <process name="sourceSelection">
+  <process name="sourceSelection" autoRetryMaxAttempts="2">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceSelection.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -84,7 +84,7 @@
     </depends>
   </process>
 
-  <process name="assignRois">
+  <process name="assignRois" autoRetryMaxAttempts="2">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/assignRois.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -92,7 +92,7 @@
     </depends>
   </process>
 
-  <process name="launchRoiAnalyses">
+  <process name="launchRoiAnalyses" autoRetryMaxAttempts="2">
     <script language="python">
       <![CDATA[
         assignRois = pipeline.getProcessInstance("assignRois")
@@ -112,7 +112,7 @@
     </createsSubtasks>
   </process>
 
-  <process name="createArchive">
+  <process name="createArchive" autoRetryMaxAttempts="1">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -149,7 +149,7 @@
     </depends>
   </process>
 
-  <process name="clean_up_files">
+  <process name="clean_up_files" autoRetryMaxAttempts="1">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/clean_up_files.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -158,7 +158,7 @@
   </process>
     
   <task name="roiAnalysis" version="1.0" type="Data">
-    <process name="getRoiData">
+    <process name="getRoiData" autoRetryMaxAttempts="2">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -166,7 +166,7 @@
            batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     </process>
 
-    <process name="exposureMap">
+    <process name="exposureMap" autoRetryMaxAttempts="1">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -187,7 +187,7 @@
       </createsSubtasks>
     </process>
 
-    <process name="combineExpMaps">
+    <process name="combineExpMaps" autoRetryMaxAttempts="2">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -198,7 +198,7 @@
       </depends>
     </process>
 
-    <process name="sourceAnalysis">
+    <process name="sourceAnalysis" autoRetryMaxAttempts="2">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -230,7 +230,7 @@
       </createsSubtasks>
     </process>
 
-    <process name="dummyProcess">
+    <process name="dummyProcess" autoRetryMaxAttempts="1">
       <script language="python">
         <![CDATA[
            print "energyBandAnalysis.fitEnergyBand processes finished"
@@ -245,7 +245,7 @@
       <prerequisites>
         <prerequisite name="ROI_ID" type="string"/>
       </prerequisites>
-      <process name="drpExpMap">
+      <process name="drpExpMap" autoRetryMaxAttempts="1">
         <variables>
           <var name="EXPMAP_ID">${pipeline.stream}</var>
         </variables>
@@ -261,7 +261,7 @@
         <prerequisite name="emax" type="integer"/>
         <prerequisite name="ROI_ID" type="string"/>
       </prerequisites>
-      <process name="fitEnergyBand">
+      <process name="fitEnergyBand" autoRetryMaxAttempts="2">
         <job executable="${DRPMONITORINGROOT}/${BINDIR}/fitEnergyBand.sh"
              batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       </process>

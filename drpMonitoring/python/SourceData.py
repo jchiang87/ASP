@@ -28,7 +28,7 @@ class SourceTypeError(RuntimeError):
     "Requested source is not in POINTSOURCES table"
 
 class SourceData(object):
-    _upperThreshold = 2e-6
+    _upperThreshold = 1e-6
     _lowerThreshold = 2e-7
     def __init__(self, name, flux, fluxerr, srcModel, TS, isUL=False,
                  index=None, indexerr=None):

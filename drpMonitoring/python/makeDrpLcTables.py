@@ -88,14 +88,21 @@ class Aliases(object):
         def get_aliases(curs):
             aliases = {}
             for item in curs:
-                aliases[item[0]] = item[1]
+                aliases[item[0]] = [item[1]]
             return aliases
         self.aliases = dbAccess.apply(sql, get_aliases)
+        for src in self.aliases:
+            sql = "select RA, DEC from POINTSOURCES where ptsrc_name='%s'" % src
+            ra, dec = dbAccess.apply(sql,
+                                     lambda curs : [tuple(x) for x in curs][0])
+            self.aliases[src].extend((ra, dec))
     def __call__(self, ptsrc_name):
         try:
-            return self.aliases[ptsrc_name]
+            return self.aliases[ptsrc_name][0]
         except KeyError:
             return ptsrc_name
+    def coords(self, ptsrc_name):
+        return self.aliases[ptsrc_name][1:]
 
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
     aliases = Aliases()
@@ -145,7 +152,6 @@ class FitsTemplate(object):
         self.HDUList.append(pyfits.PrimaryHDU())
         self._fillKeywords(self.HDUList[0], PHDUKeys)
     def readDbTables(self, tmin, tmax):
-#        ptsrcs = drpDbAccess.findPointSources(0, 0, 180)
         ptsrcs = drpDbAccess.findPointSources(0, 0, 180, srctype='DRP')
         atel_sources = drpDbAccess.findPointSources(0, 0, 180, srctype='ATEL')
         for item in atel_sources:

@@ -5,7 +5,8 @@
     $Id$
 
     @verbatim
-    v1r9p2 08-Apr-08   JC   switch to numpy; add "ALIAS" column to POINTSOURCES
+    v1r9p3 25-Apr-09   JC   enable auto retry for PGWave processes
+    v1r9p2 08-Apr-09   JC   switch to numpy; add "ALIAS" column to POINTSOURCES
                             summary dict
     v1r9p1 26-Dec-08   JC   use GtApp to run gtsrcid
     v1r9   26-Dec-08   JC   use GALPROP_MODEL for diffuse model; accomodate

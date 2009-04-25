@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="8.7" type="Data">
+<task name="PGWave" version="8.8" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -46,7 +46,7 @@
         ]]></script>
   </process>
 
-  <process name="getPgwInputData">
+  <process name="getPgwInputData" autoRetryMaxAttempts="2">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/getPgwInputData.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -54,7 +54,7 @@
     </depends>
   </process>
 
-  <process name="runpgw">
+  <process name="runpgw" autoRetryMaxAttempts="2">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runpgw.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -62,7 +62,7 @@
     </depends>
   </process>
 
-  <process name="refinePositions">
+  <process name="refinePositions" autoRetryMaxAttempts="2">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/refinePositions.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -70,7 +70,7 @@
     </depends>
   </process>
 
-  <process name="runsrcid">
+  <process name="runsrcid" autoRetryMaxAttempts="2">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runsrcid.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -78,7 +78,7 @@
     </depends>
   </process>
 
-  <process name="createArchive">
+  <process name="createArchive" autoRetryMaxAttempts="1">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -163,7 +163,7 @@
     </createsSubtasks>
   </process>
   
-  <process name="clean_up_files">
+  <process name="clean_up_files" autoRetryMaxAttempts="1">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/clean_up_files.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -175,7 +175,7 @@
     <prerequisites>
       <prerequisite name="pgwave_streamId" type="integer"/>
     </prerequisites>
-    <process name="launchDrpMonitoring">
+    <process name="launchDrpMonitoring" autoRetryMaxAttempts="1">
       <job executable="${ASP_PGWAVEROOT}/${BINDIR}/launchDrpMonitoring.sh"
            batchOptions=" -q short"/>
     </process>

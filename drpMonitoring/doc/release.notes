@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v1r7p3 25-Apr-09   JC   enable auto retry in DRP_monitoring task;
+                            modify makeDrpLcTables.py to use coordinates from
+                            pointsource alias; change source monitoring flux    
+                            limit to 1e-6
     v1r7p2 08-Apr-09   JC   switch to numpy; use UpperLimits from pyLikelihood
     v1r7p1 09-Feb-09   JC   set the latency for DRP (et al.) data delivery
                             to zero (from 3 days)

@@ -92,7 +92,8 @@ class Aliases(object):
             return aliases
         self.aliases = dbAccess.apply(sql, get_aliases)
         for src in self.aliases:
-            sql = "select RA, DEC from POINTSOURCES where ptsrc_name='%s'" % src
+            sql = ("select RA, DEC from POINTSOURCES where ptsrc_name='%s'"
+                   % self(key))
             ra, dec = dbAccess.apply(sql,
                                      lambda curs : [tuple(x) for x in curs][0])
             self.aliases[src].extend((ra, dec))
@@ -102,7 +103,10 @@ class Aliases(object):
         except KeyError:
             return ptsrc_name
     def coords(self, ptsrc_name):
-        return self.aliases[ptsrc_name][1:]
+        try:
+            return self.aliases[ptsrc_name][1:]
+        except KeyError:
+            return None
 
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):
     aliases = Aliases()

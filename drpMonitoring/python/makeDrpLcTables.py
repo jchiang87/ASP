@@ -41,7 +41,10 @@ class EpochData(object):
     def __init__(self, entry, timeIntervals, ptsrcs, aliases=lambda x : x):
         self.name = aliases(entry[0])
         self.tstart, self.tstop = timeIntervals(entry[3], entry[2])
-        self.ra, self.dec = ptsrcs[entry[0]].ra, ptsrcs[entry[0]].dec
+        try:
+            self.ra, self.dec = aliases.coords(entry[0])
+        except TypeError:
+            self.ra, self.dec = ptsrcs[entry[0]].ra, ptsrcs[entry[0]].dec
         self.flux = {}
         self.error = {}
         self.ts = {}
@@ -83,7 +86,7 @@ def fmcmp(fm1, fm2):
 
 class Aliases(object):
     def __init__(self):
-        sql = ("select PTSRC_NAME, ALIAS from POINTSOURCES " +
+        sql = ("select PTSRC_NAME, ALIAS, RA, DEC from POINTSOURCES " +
                "where ALIAS is not null")
         def get_aliases(curs):
             aliases = {}
@@ -92,10 +95,17 @@ class Aliases(object):
             return aliases
         self.aliases = dbAccess.apply(sql, get_aliases)
         for src in self.aliases:
-            sql = ("select RA, DEC from POINTSOURCES where ptsrc_name='%s'"
-                   % self(key))
-            ra, dec = dbAccess.apply(sql,
-                                     lambda curs : [tuple(x) for x in curs][0])
+            try:
+                sql = ("select RA, DEC from POINTSOURCES where ptsrc_name='%s'"
+                       % self(src))
+                ra, dec = dbAccess.apply(sql, lambda curs :
+                                             [tuple(x) for x in curs][0])
+            except IndexError:
+                sql = ("select RA, DEC from POINTSOURCES where ptsrc_name='%s'"
+                       % src)
+                ra, dec = dbAccess.apply(sql, lambda curs : 
+                                         [tuple(x) for x in curs][0])
+                                         
             self.aliases[src].extend((ra, dec))
     def __call__(self, ptsrc_name):
         try:
@@ -105,7 +115,7 @@ class Aliases(object):
     def coords(self, ptsrc_name):
         try:
             return self.aliases[ptsrc_name][1:]
-        except KeyError:
+        except:
             return None
 
 def getLightCurves(timeIntervals, ptsrcs, tbounds=None):

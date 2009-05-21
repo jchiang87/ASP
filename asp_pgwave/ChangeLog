@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Thu May 21 11:13:01 PDT 2009
+ASP/asp_pgwave/python
+
+Modified Files:
+	dbmanager.py 
+Log Message:
+add ATEL as a valid sourcesub_type for point source selection
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r9p3, operation: add
 Package: asp_pgwave

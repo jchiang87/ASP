@@ -23,7 +23,7 @@ def refinePosition(gcn_notice, ft1Input, ft2Input, config,
     irfs = config.IRFS
     optimizer = config.OPTIMIZER
     try:
-        notice = GcnNotice(gcn_notice)
+        notice = GcnNotice(gcn_notice, skipped=('FERMI_LAT_POSITION',))
     except TypeError:
         notice = gcn_notice
 
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     os.chdir(output_dir)
 
     grb_id = int(os.environ['GRB_ID'])
-    gcnNotice = GcnNotice(grb_id)
+    gcnNotice = GcnNotice(grb_id, skipped=('FERMI_LAT_POSITION',))
     infiles = open(gcnNotice.Name + '_files')
     ft1File = infiles.readline().strip()
     ft2File = infiles.readline().strip()

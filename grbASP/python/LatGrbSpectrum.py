@@ -154,6 +154,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
         from UpperLimits import UpperLimits
         ul = UpperLimits(like)
         upper_limit = ul[name].compute(renorm=True, emin=100, emax=3e5)
+#        upper_limit = [like.flux(name, 100, 3e5) + like.fluxError(name, 100, 3e5), 0]
         dbAccess.updateGrb(grb_id, TS_VALUE=Ts, IS_UPPER_LIMIT=1)
         flux_value = upper_limit[0]
     else:
@@ -207,7 +208,7 @@ if __name__ == '__main__':
     os.chdir(os.environ['OUTPUTDIR'])
 
     grb_id = int(os.environ['GRB_ID'])
-    gcnNotice = GcnNotice(grb_id)
+    gcnNotice = GcnNotice(grb_id, skipped=('FERMI_LAT_POSITION',))
 
     config = grbAspConfig.find(gcnNotice.start_time)
     print config

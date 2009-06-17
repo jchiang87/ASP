@@ -161,6 +161,8 @@ if __name__ == '__main__':
     pars['tstop'] = gcnNotice.start_time + config.NOMINAL_WINDOW
     pars.write()
 
+    os.system("cat %s" % parfile)
+
     ft1Merged = 'FT1_merged.fits'
     print "merging FT1 files:"
     for item in ft1:

@@ -202,7 +202,8 @@ class LatGcnNotice(object):
                           'jchiang@slac.stanford.edu']
         print recipients
 
-        mailer = MultiPartMailer("ASP blind search GRB candidate")
+        mailer = MultiPartMailer("ASP blind search GRB candidate",
+                                 "solist@glast.stanford.edu")
         message = ("ASP GRB_blind_search found a burst candidate at\n\n" +
                    "  (RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
                    "with trigger time\n\n"
@@ -219,7 +220,7 @@ class LatGcnNotice(object):
         for item in figures:
             mailer.add_image(item)
         mailer.finish()
-        mailer.send('solist@glast.stanford.edu', recipients)
+        mailer.send('glastgcn@slac.stanford.edu', recipients)
 def latCounts(ft1File):
     ebounds = (1e2, 1e3, 1e4)
     try:

@@ -81,6 +81,7 @@ class PointSource(object):
         self.ra = entry[2]
         self.dec = entry[3]
         self.nhat = entry[4:7]
+        self.subtype = entry[8]
         if roiIds is not None:
             self.roi_id = roiIds(self.ra, self.dec)
         else:
@@ -90,8 +91,11 @@ class PointSource(object):
         except AttributeError:
             # This entry has no xml definition, so use default
             self.xml = defaultPtSrcXml(self.name, self.ra, self.dec)
+        
     def domElement(self):
-        return minidom.parseString(self.xml).getElementsByTagName('source')[0]
+        my_element = minidom.parseString(self.xml).getElementsByTagName('source')[0]
+        my_element.setAttribute('sourceType', self.subtype)
+        return my_element
     def cos_sep(self, nhat):
         return sum(nhat*self.nhat)
     def __repr__(self):
@@ -114,7 +118,7 @@ def findPointSources(ra, dec, radius, srctype=None, roiIds=None,
     sql = """select pointsources.ptsrc_name, pointsources.roi_id,
              pointsources.ra, pointsources.dec,
              pointsources.nx, pointsources.ny, pointsources.nz,
-             pointsources.xml_model
+             pointsources.xml_model, pointsourcetypeset.sourcesub_type 
              from PointSources
              left join pointsourcetypeset on (pointsources.ptsrc_name =
              pointsourcetypeset.ptsrc_name)"""

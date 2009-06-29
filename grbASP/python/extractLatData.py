@@ -36,7 +36,14 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect.run()
 
     ft1 = pyfits.open(gtselect['outfile'])
-    if ft1['EVENTS'].size() < 2:
+    print "ft1['EVENTS'].size(): ", ft1['EVENTS'].size()
+    
+    try:
+        energies = ft1['EVENTS'].data.field('ENERGY')
+    except (NameError, AttributeError):
+        raise NoFT1EventsError, "Only one or zero events were extracted for the nominal time window and acceptance cone for this burst candidate."
+
+    if ft1['EVENTS'].size() < 2 or len(energies) < 2:
         raise NoFT1EventsError, "Only one or zero events were extracted for the nominal time window and acceptance cone for this burst candidate."
 
     gtbin['evfile'] = gtselect['outfile']
@@ -160,8 +167,6 @@ if __name__ == '__main__':
     pars['tstart'] = gcnNotice.start_time
     pars['tstop'] = gcnNotice.start_time + config.NOMINAL_WINDOW
     pars.write()
-
-    os.system("cat %s" % parfile)
 
     ft1Merged = 'FT1_merged.fits'
     print "merging FT1 files:"

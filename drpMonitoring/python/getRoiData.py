@@ -34,7 +34,7 @@ try:
     os.mkdir(name)
 except OSError:
     pass
-#os.chmod(name, 0777)
+os.chmod(name, 0777)
 os.chdir(name)
 
 #
@@ -62,19 +62,14 @@ gtmktime = GtApp('gtmktime')
 gtmktime['evfile'] = gtselect['outfile']
 gtmktime['outfile'] = name + '_events.fits'
 gtmktime['scfile'] = pars['ft2file']
-gtmktime['roicut'] = 'yes'
-gtmktime['filter'] = 'LIVETIME>0'
-
+gtmktime['filter'] = 'angsep(RA_ZENITH,DEC_ZENITH,%f,%f)+%f<%i' % (ra, dec,
+                                                                   radius,
+                                                                   zenmax)
 if debug:
     print gtmktime.command()
 else:
-    try:
-        gtmktime.run()
-    except RuntimeError:
-        # ROI is probably near the poles of the orbit, so make the 
-        # selection using Jean's recommendation
-        filter = "angsep(RA_ZENITH,DEC_ZENITH,RA_SCZ,DEC_SCZ)<47 || angsep(RA_ZENITH,DEC_ZENITH,%.3f,%.3f)<%.3f" % (ra, dec, zenmax-radius)
-        gtmktime.run(filter=filter, roicut='no')
+    gtmktime.run()
+
 #
 # Because of custom GTI cuts, need to run gtltcube for each ROI.
 #
@@ -87,8 +82,7 @@ gtltcube.run(evfile=gtmktime['outfile'], scfile=pars['ft2file'],
 # sourceSelection process
 #
 sourceModel = rootpath('point_sources.xml')
-#modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, sourcerad)
-modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, radius)
+modelRequest = 'dist((RA,DEC),(%f,%f))<%e' % (ra, dec, sourcerad)
 outputModel = name + '_ptsrcs_model.xml'
 search_Srcs(sourceModel, modelRequest, outputModel)
 

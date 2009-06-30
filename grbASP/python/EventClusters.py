@@ -8,7 +8,7 @@ a user-selectable acceptance cone.
 # $Header$
 #
 
-import numpy as num
+import numarray as num
 from pyIrfLoader import SkyDir
 
 _eventId = 0

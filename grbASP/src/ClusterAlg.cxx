@@ -22,7 +22,7 @@ namespace {
       return aa.first < bb.second;
    }
    bool bracket_second(const std::pair<double, double> & aa,
-                       const std::pair<double, double> & bb) {
+                      const std::pair<double, double> & bb) {
       return aa.second < bb.second;
    }
 }
@@ -56,9 +56,7 @@ double ClusterAlg::logLikeTime(double bg_rate) const {
          dt = goodTime(times.at(j-1), times.at(j));
       }
       double xval(bg_rate*dt);
-      if (xval != 0) {  // remove zero interval contributions
-         logLike += std::log(1. - std::exp(-xval));
-      }
+      logLike += std::log(1. - std::exp(-xval));
    }
    return logLike;
 }

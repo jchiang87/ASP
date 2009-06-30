@@ -14,7 +14,6 @@ from GtApp import GtApp
 import readXml
 from parfile_parser import Parfile
 from drpDbAccess import findDiffuseSources
-from addNdifrsp import addNdifrsp
 
 debug = True
 
@@ -43,12 +42,11 @@ gtdiffresp['irfs'] = pars['rspfunc']
 gtdiffresp['srcmdl'] = srcModel.filename
 
 if debug:
-    print "Skipping the gtdiffresp command until it is parallelized."
+    print "Skipping the gtdiffresp command until it is parallized."
     print "The needed diffuse response information will be computed in "
     print "sourceAnalysis.py"
     print gtdiffresp.command()
 else:
-    addNdifrsp(pars['ft1file'])
     gtdiffresp.run()
 
 os.system('chmod 777 *')

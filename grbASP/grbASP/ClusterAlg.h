@@ -30,12 +30,11 @@ public:
 
    virtual void process(const std::vector<Event> & events,
                         double & logLike_time, double & logLike_pos,
-                        astro::SkyDir & meanDir, double bg_rate=0,
-                        double radius=10) {
+                        astro::SkyDir & meanDir, double bg_rate=0) {
       m_events = events;
       logLike_time = logLikeTime(bg_rate);
       logLike_pos = logLikePosition();
-      meanDir = clusterDir(radius);
+      meanDir = clusterDir();
    }
 
 protected:
@@ -50,7 +49,7 @@ protected:
       return 0;
    }
 
-   virtual astro::SkyDir clusterDir(double radius=10) const {
+   virtual astro::SkyDir clusterDir(double radius=5) const {
       (void)(radius);
       return astro::SkyDir(0, 0);
    };

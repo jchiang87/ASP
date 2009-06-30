@@ -11,12 +11,11 @@ methods for updating the LIGHTCURVES database tables.
 #
 import os
 import databaseAccess as dbAccess
-from PipelineCommand import resolve_nfs_path
 cx_Oracle = dbAccess.cx_Oracle
 
 def getMonitoringBand(emin=100, emax=300000):
-    sql = ("select eband_id from ENERGYBANDS where emin=%i and emax=%i "
-           % (emin, emax) + "and group_id=0")
+    sql = ("select eband_id from ENERGYBANDS where emin=%i and emax=%i"
+           % (emin, emax))
     def getBand(cursor):
         for entry in cursor:
             return entry[0]
@@ -28,18 +27,14 @@ class SourceTypeError(RuntimeError):
     "Requested source is not in POINTSOURCES table"
 
 class SourceData(object):
-    _upperThreshold = 1e-6
+    _upperThreshold = 2e-6
     _lowerThreshold = 2e-7
-    def __init__(self, name, flux, fluxerr, srcModel, TS, isUL=False,
-                 index=None, indexerr=None):
+    def __init__(self, name, flux, fluxerr, srcModel, isUL=False):
         self.name = name
         self.flux, self.fluxerr = flux, fluxerr
         self.type = self._getSrcType()
         self.srcModel = srcModel
-        self.TS = TS
         self.isUL = isUL
-        self.index = index
-        self.indexerr = indexerr
         try:
             self.eband_id = int(os.environ['eband_id'])
         except KeyError:
@@ -56,17 +51,12 @@ class SourceData(object):
                        "FREQUENCY" : "'%s'" % self.frequency}
         self.rowDict = {"FLUX" : self.flux,
                         "ERROR" : self.fluxerr,
-                        "TEST_STATISTIC" : self.TS,
                         "IS_UPPER_LIMIT" : int(self.isUL),
                         "IS_MONITORED" : int(self.is_monitored),
                         "IS_FLARING" : 0,
-                        "XMLFILE" : "'%s'" % resolve_nfs_path(self.srcModel)}
-        if self.index is not None:
-            self.rowDict["SPECTRAL_INDEX"] = self.index
-        if self.indexerr is not None:
-            self.rowDict["SPECTRAL_INDEX_ERROR"] = self.indexerr
+                        "XMLFILE" : "'%s'" % self.srcModel}
     def _getSrcType(self):
-        sql = ("select SOURCESUB_TYPE from POINTSOURCETYPESET where PTSRC_NAME='%s'" %
+        sql = ("select SOURCE_TYPE from POINTSOURCES where PTSRC_NAME='%s'" %
                self.name)
         try:
             type = dbAccess.apply(sql, lambda curs : [x[0] for x in curs][0])

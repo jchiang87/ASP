@@ -1,5 +1,5 @@
 package grbASP
-version v4r8p2
+version v1r1
 
 # $Id$
 
@@ -19,12 +19,9 @@ apply_pattern shared_library
 path_remove PYTHONPATH grbASP
 path_append PYTHONPATH $(GRBASPROOT)/$(BINDIR)
 path_append PYTHONPATH $(GRBASPROOT)/python
-path_append PYTHONPATH $(GRBASPROOT)/python/GCN
 
 macro_append cppflags "" Linux " -I../src -DTRAP_FPE " 
 macro source *.cxx WIN32 "*.h *.cxx"
-
-macro_append grbASP_linkopts "-L$(ROOT_PATH)/lib -lNetx "
 
 library grbASP $(source)
 

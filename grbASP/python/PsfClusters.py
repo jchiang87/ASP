@@ -8,7 +8,7 @@ part of log-likelihood.
 # $Header$
 #
 
-import numpy as num
+import numarray as num
 import pyIrfLoader
 from ScData import ScData
 SkyDir = pyIrfLoader.SkyDir

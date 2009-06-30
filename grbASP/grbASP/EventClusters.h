@@ -30,7 +30,7 @@ protected:
 
    virtual double logLikePosition() const;
 
-   virtual astro::SkyDir clusterDir(double radius) const {
+   virtual astro::SkyDir clusterDir(double radius=5) const {
       return meanDir(findLargestCluster(radius), radius);
    }
 

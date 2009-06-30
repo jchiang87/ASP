@@ -8,9 +8,8 @@
 # $Header$
 #
 import sys
-from databaseAccess import apply, cx_Oracle, getDbObjects, asp_default
-import databaseAccess as dbAccess
-import numpy as num
+from databaseAccess import apply, cx_Oracle, getDbObjects
+import numarray as num
 from xml.dom import minidom
 from cleanXml import cleanXml
 
@@ -21,7 +20,7 @@ def dircos(ra, dec):
     return num.array((nx, ny, nz))
 
 def insertRoi(id, ra, dec, radius, sr_rad):
-    sql = ("insert into ROIS (ROI_ID, RA, DEC, RADIUS, SR_RADIUS, 0) "
+    sql = ("insert into ROIS (ROI_ID, RA, DEC, RADIUS, SR_RADIUS) "
            + "values (%i, %.3f, %.3f, %i, %i)" % (id, ra, dec, radius, sr_rad))
     apply(sql)
 
@@ -34,7 +33,7 @@ def updateRoi(id, **kwds):
 
 def readRois(outfile='rois.txt'):
     output = open(outfile, 'w')
-    sql = "select ROI_ID, RA, DEC, RADIUS, SR_RADIUS from ROIS where group_id=0 order by ROI_ID ASC"
+    sql = "select * from ROIS order by ROI_ID ASC"
     def cursorFunc(cursor):
         for entry in cursor:
             pars = tuple([x for x in entry])
@@ -76,26 +75,19 @@ def defaultPtSrcXml(name, ra, dec):
     return xml_template % (name, ra, dec)
 
 class PointSource(object):
-    def __init__(self, entry, roiIds=None):
+    def __init__(self, entry):
         self.name = entry[0]
-        self.ra = entry[2]
-        self.dec = entry[3]
-        self.nhat = entry[4:7]
-        self.subtype = entry[8]
-        if roiIds is not None:
-            self.roi_id = roiIds(self.ra, self.dec)
-        else:
-            self.roi_id = entry[1]
+        self.roi_id = entry[2]
+        self.ra = entry[6]
+        self.dec = entry[7]
+        self.nhat = entry[10:13]
         try:
-            self.xml = entry[7].read()
+            self.xml = entry[13].read()
         except AttributeError:
             # This entry has no xml definition, so use default
             self.xml = defaultPtSrcXml(self.name, self.ra, self.dec)
-        
     def domElement(self):
-        my_element = minidom.parseString(self.xml).getElementsByTagName('source')[0]
-        my_element.setAttribute('sourceType', self.subtype)
-        return my_element
+        return minidom.parseString(self.xml).getElementsByTagName('source')[0]
     def cos_sep(self, nhat):
         return sum(nhat*self.nhat)
     def __repr__(self):
@@ -111,84 +103,22 @@ class PointSourceDict(dict):
                 my_sources.append(source)
         return my_sources
 
-def findPointSources(ra, dec, radius, srctype=None, roiIds=None,
-                     connection=asp_default):
+def findPointSources(ra, dec, radius, srctype=None):
     nhat = dircos(ra, dec)
     mincos = num.cos(radius*num.pi/180.)
-    sql = """select pointsources.ptsrc_name, pointsources.roi_id,
-             pointsources.ra, pointsources.dec,
-             pointsources.nx, pointsources.ny, pointsources.nz,
-             pointsources.xml_model, pointsourcetypeset.sourcesub_type 
-             from PointSources
-             left join pointsourcetypeset on (pointsources.ptsrc_name =
-             pointsourcetypeset.ptsrc_name)"""
+    sql = "select * from POINTSOURCES"
     if srctype:
-        sql += " where pointsourcetypeset.SOURCESUB_TYPE = '%s'" % srctype
+        sql += " where SOURCE_TYPE = '%s'" % srctype
     def getSources(cursor):
         srcs = PointSourceDict()
         for entry in cursor:
-            src = PointSource(entry, roiIds=roiIds)
+#            if entry[4] == 'Other_FSP':  # skip Gino's test sources
+#                continue
+            src = PointSource(entry)
             if src.cos_sep(nhat) > mincos:
                 srcs[entry[0]] = src
         return srcs
-    return apply(sql, getSources, connection=connection)
-
-def findUniquePointSources(ra, dec, radius, roiIds=None, tol=0.5,
-                           connection=asp_default):
-    """Screen by SOURCE_TYPE, giving precedence to known sources
-    (e.g., DRP, Blazar, Pulsar) over tentative IDs from pgwave that may
-    duplicate these known sources.    
-    """
-    nhat = dircos(ra, dec)
-    mincos = num.cos(radius*num.pi/180.)
-    sql = """select pointsources.ptsrc_name, pointsources.roi_id,
-             pointsources.ra, pointsources.dec,
-             pointsources.nx, pointsources.ny, pointsources.nz,
-             pointsources.xml_model,
-             pointsourcetypeset.sourcesub_type from PointSources
-             left join pointsourcetypeset on (pointsources.ptsrc_name =
-             pointsourcetypeset.ptsrc_name)
-             where pointsourcetypeset.sourcesub_type = 'DRP' or
-             pointsourcetypeset.sourcesub_type = 'BLZRGRPSRC' or
-             pointsourcetypeset.sourcesub_type = 'KNOWNPSR' or
-             pointsourcetypeset.sourcesub_type = 'PGWAVE' or
-             pointsourcetypeset.sourcesub_type = 'ATEL'"""
-    def getSources(cursor):
-        srcs = PointSourceDict()
-        for entry in cursor:
-            src = PointSource(entry, roiIds=roiIds)
-            src.sourceType = entry[-1]
-            if src.cos_sep(nhat) > mincos:
-                srcs[entry[0]] = src
-        return srcs
-    my_dict = apply(sql, getSources, connection=connection)
-
-    known_list = [srcName for srcName in my_dict 
-                  if my_dict[srcName].sourceType in ('DRP', 'BLZRGRPSRC', 
-                                                     'KNOWNPSR')]
-
-    ok_pgwave_sources = []
-    cos_tol = num.cos(tol*num.pi/180.)
-    for srcName in my_dict:
-       if (my_dict[srcName].sourceType == 'PGWAVE' or
-           my_dict[srcName].sourceType == 'ATEL'):
-            addSource = True
-            for knownSource in known_list:
-                nhat = num.array(my_dict[knownSource].nhat)
-                cos_sep = my_dict[srcName].cos_sep(nhat)
-                if cos_sep > cos_tol:
-                    addSource = False
-                    print srcName, cos_sep
-                    continue
-            if addSource:
-                ok_pgwave_sources.append(srcName)
-    
-    known_list.extend(ok_pgwave_sources)
-    uniq_dict = PointSourceDict()
-    for item in known_list:
-        uniq_dict[item] = my_dict[item]
-
-    return uniq_dict
+    return apply(sql, getSources)
 
 class DiffuseSource(object):
     def __init__(self, entry):

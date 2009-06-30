@@ -8,46 +8,33 @@
 #
 
 import os
-import numpy as num
+import numarray as num
 import pyASP
 from GcnPacket import GcnPacket
-import databaseAccess
-from dbAccess import readGcnNotices, grbName
+from dbAccess import readGcnNotices, readGrb, cx_Oracle
+
+_LatFt2File = '/nfs/farm/g/glast/u33/jchiang/DC2/DC2_FT2_v2.fits'
 
 class GcnNotice(object):
-    def __init__(self, grb_id, skipped=(),
-                 connection=databaseAccess.asp_default):
-        """
-        GCN Notice summary from packet with smallest positional error radius.
-        Allow certain notice types to be skipped.
-        """
-        self.skipped = skipped
-        self._accessDb(grb_id, connection)
+    def __init__(self, grb_id):
+        self._accessDb(grb_id)
+#        try:
+#            self._accessDb(grb_id)
+#        except (cx_Oracle.DatabaseError, TypeError):
+#            # Assume grb_id a text file Notice
+#            self._parseTextFile(grb_id)
         self.ft2 = None
-    def _accessDb(self, grb_id, connection):
+    def _accessDb(self, grb_id):
         #
-        # Use trigger time from initial notice and best position 
-        # based on error circle radius.
+        # for now, just assume the first one returned is the one to use
         #
-        print "GcnNotice._accessDb: grb_id = ", grb_id
-        notice_list = readGcnNotices(grb_id, skipped=self.skipped,
-                                     connection=connection)
-        packet_list = [GcnPacket(x.tostring()) for x in notice_list]
-        my_packet = packet_list[0]
-        #
-        # Use MET of initial notice as burst start time.
-        #
-        self.start_time = my_packet.MET
-        errMin = my_packet.posError
-        for item in packet_list:
-            if item.posError < errMin:
-                errMin = item.posError
-                my_packet = item
-        self.packet = my_packet
-        self.RA = my_packet.RA
-        self.DEC = my_packet.Dec
-        self.LOC_ERR = my_packet.posError
-        self.Name = grbName(grb_id)
+        notice = GcnPacket(readGcnNotices(grb_id)[0][1].tostring())
+        self.packet = notice
+        self.RA = notice.RA
+        self.DEC = notice.Dec
+        self.LOC_ERR = notice.posError
+        self.start_time = notice.MET
+        self.Name = readGrb(grb_id)[1]
     def _parseTextFile(self, infile):
         self._create_dict(infile)
         self.RA = self._readcoord('GRB_RA')
@@ -76,7 +63,7 @@ class GcnNotice(object):
     def _readfloat(self, key):
         line = self._dict[key]
         return float(line.split(':')[1].split()[0])
-    def offAxisAngle(self, ft2File, radec=None):
+    def offAxisAngle(self, ft2File=_LatFt2File):
         self._getFt2(ft2File)
         indx = num.where(self.ft2.START > self.start_time)
         ii = indx[0][0]
@@ -85,10 +72,8 @@ class GcnNotice(object):
         t1 = self.ft2.START[ii-1]
         t2 = self.ft2.START[ii]
         my_dir = pyASP.SkyDir_interpolate(dir1, dir2, t1, t2, self.start_time)
-        if radec is None:
-            radec = self.RA, self.DEC
-        return my_dir.difference(pyASP.SkyDir(*radec))*180./num.pi
-    def inSAA(self, ft2File):
+        return my_dir.difference(pyASP.SkyDir(self.RA, self.DEC))*180./num.pi
+    def inSAA(self, ft2File =_LatFt2File):
         self._getFt2(ft2File)
         indx = num.where(self.ft2.START < self.start_time)
         ii = indx[0][-1]

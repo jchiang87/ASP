@@ -8,7 +8,6 @@
  */
 %module grbASP
 %{
-#include <fenv.h>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -24,7 +23,6 @@ astro::JulianDate jd_from_MET(double met) {
 #include "grbASP/EventClusters.h"
 #include "grbASP/PsfClusters.h"
 #include "grbASP/ScData.h"
-#include "grbASP/RootNTupleBase.h"
 %}
 %include stl.i
 %exception {
@@ -38,9 +36,7 @@ astro::JulianDate jd_from_MET(double met) {
 %template(DoublePair) std::pair<double, double>;
 %template(DoubleVector) std::vector<double>;
 %template(PairVector) std::vector< std::pair<double, double> >;
-%template(StringVector) std::vector<std::string>;
 %template(ClusterAlgResults) std::pair<std::pair<double, double>, astro::SkyDir>;
-%feature("autodoc", "1");
 %include $(ASTROROOT)/astro/JulianDate.h
 %include $(ASTROROOT)/astro/SkyProj.h
 %include $(ASTROROOT)/astro/SkyDir.h
@@ -52,12 +48,6 @@ astro::JulianDate jd_from_MET(double met);
 %include $(GRBASPROOT)/grbASP/ClusterAlg.h
 %include $(GRBASPROOT)/grbASP/EventClusters.h
 %include $(GRBASPROOT)/grbASP/PsfClusters.h
-%include $(GRBASPROOT)/grbASP/RootNTupleBase.h
-%extend grbASP::Event {
-   static void enableFPE() {
-      feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW);
-   }
-}
 %extend astro::SkyDir {
    static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
                                     const astro::SkyDir & dir2,
@@ -83,13 +73,11 @@ astro::JulianDate jd_from_MET(double met);
 }
 %extend grbASP::ClusterAlg {
    std::pair< std::pair<double, double>, astro::SkyDir>
-      processEvents(const std::vector<Event> & events, double bg_rate=0,
-                    double radius=10) {
+      processEvents(const std::vector<Event> & events, double bg_rate=0) {
       double logLike_time, logLike_pos;
       astro::SkyDir meanDir;
-      self->process(events, logLike_time, logLike_pos, meanDir, 
-                    bg_rate, radius);
-      return std::make_pair(std::make_pair(logLike_time,logLike_pos), meanDir);
+      self->process(events, logLike_time, logLike_pos, meanDir, bg_rate);
+      return std::make_pair(std::make_pair(logLike_time, logLike_pos),meanDir);
    }
 }
 %extend astro::SolarSystem {
@@ -97,10 +85,5 @@ astro::JulianDate jd_from_MET(double met);
       astro::JulianDate jd(astro::JulianDate::missionStart() + met/8.64e4);
       astro::SolarSystem sun;
       return sun.direction(jd);
-   }
-}
-%extend grbASP::RootNTupleBase {
-   const std::vector<double> & __getitem__(const std::string & name) const {
-      return self->operator[](name);
    }
 }

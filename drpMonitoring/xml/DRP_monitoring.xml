@@ -5,15 +5,11 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="8.5" type="Data">
+<task name="DRP_monitoring" version="5.7" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
     <var name="BINDIR">rh9_gcc32</var>
-    <var name="datacatalog_imp">datacatalog</var>
-    <var name="pgwave_folder">/ASP/Results/pgwave</var>
-    <var name="outputFolder">/ASP/Results/DRP</var>
-    <var name="xrootd_folder">/ASP/DRP</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v01.fit</var>
   </variables>
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
@@ -22,15 +18,14 @@
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="TSTART" type="string"/>
     <prerequisite name="TSTOP" type="string"/>
-    <prerequisite name="pgwave_streamId" type="integer"/>
+    <prerequisite name="pgwave_processId" type="integer"/>
+    <prerequisite name="num_RoIs" type="integer"/>
     <prerequisite name="ASP_PATH" type="string"/>
     <prerequisite name="DRPMONITORINGROOT" type="string"/>
   </prerequisites>
 
   <process name="catalogQuery">
     <script><![CDATA[
-      print "using datacatalog implementation: ", datacatalog_imp
-      datacat = eval(datacatalog_imp)
       #
       # Query for the FT1/2 files for this time interval.
       #
@@ -41,7 +36,7 @@
           opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
           query = ('DataType == \"%s\" && (%s || %s || %s)' 
                    % (path, opt1, opt2, opt3))
-          datasetList = datacat.getDatasets(logicalPath+'/*', query)
+          datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
           datasetList.writeToFile(output, 1)
           pipeline.writeFile(output)
       query("Ft1FileList", "FT1", TSTART, TSTOP)
@@ -50,17 +45,17 @@
       # Find the location of the source list prepared by pgwave.
       #
       output = pipeline.createFile('pgwaveFileList')
-      query = ('DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' 
-               % pgwave_streamId)
-      logicalPath = '%s/%s' % (pgwave_folder, frequency)
-      datasetList = datacat.getDatasets(logicalPath+'/*', query)
+      #query = 'DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' % pgwave_processId
+      query = 'DataType==\"PGWAVESOURCELIST\" && nMetStart==%i' % TSTART
+      logicalPath = '/ASP/OpsSim2/FlareMonitoring/%s' % frequency
+      datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
       datasetList.writeToFile(output, 1)
       pipeline.writeFile(output)
       ]]>
     </script>
   </process>
 
-  <process name="getIntervalData" autoRetryMaxAttempts="2">
+  <process name="getIntervalData">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/getIntervalData.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -68,7 +63,7 @@
     </depends>
   </process>
 
-  <process name="diffuseResponses" autoRetryMaxAttempts="2">
+  <process name="diffuseResponses">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/diffuseResponses.sh"
          batchOptions=" -q medium " allocationGroup="glastdata" />
     <depends>
@@ -76,89 +71,32 @@
     </depends>
   </process>
 
-  <process name="sourceSelection" autoRetryMaxAttempts="2">
+  <process name="sourceSelection">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceSelection.sh"
-         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
+         batchOptions=" -q medium " allocationGroup="glastdata" />
     <depends>
       <after process="getIntervalData" status="SUCCESS"/>
     </depends>
   </process>
 
-  <process name="assignRois" autoRetryMaxAttempts="2">
-    <job executable="${DRPMONITORINGROOT}/${BINDIR}/assignRois.sh"
-         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
-    <depends>
-      <after process="sourceSelection" status="SUCCESS"/>
-    </depends>
-  </process>
-
-  <process name="launchRoiAnalyses" autoRetryMaxAttempts="2">
+  <process name="launchRoiAnalyses">
     <script language="python">
       <![CDATA[
-        assignRois = pipeline.getProcessInstance("assignRois")
-        roi_ids = ("%s" % assignRois.getVariable("ROI_IDS")).split()
-        roi_ids = [int(x) for x in roi_ids]
-        print "number of ROIs", len(roi_ids)
-        for id in roi_ids:
-            pipeline.createSubstream("roiAnalysis", id)
+        for i in range(num_RoIs):
+            pipeline.createSubstream("roiAnalysis", i+1)
       ]]>
     </script>
     <depends>
       <after process="diffuseResponses" status="SUCCESS"/>
-      <after process="assignRois" status="SUCCESS"/>
+      <after process="sourceSelection" status="SUCCESS"/>
     </depends>
     <createsSubtasks>
       <subtask>roiAnalysis</subtask>
     </createsSubtasks>
   </process>
 
-  <process name="createArchive" autoRetryMaxAttempts="1">
-    <job executable="${DRPMONITORINGROOT}/${BINDIR}/createTarBall.sh"
-         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
-    <depends>
-      <after process="roiAnalysis.dummyProcess" status="SUCCESS"/>
-    </depends>
-  </process>
-
-  <process name="registerArchive">
-    <script language="python">
-      <![CDATA[
-        createArchive = pipeline.getProcessInstance("createArchive")
-        dataType = "DRP_ARCHIVE"
-
-        filePath = createArchive.getVariable("tarball_name")
-
-        attributes = ('nMetStart=%s:nMetStop=%s:sFrequency=%s:nInterval=%i' %
-                      (TSTART, TSTOP, frequency, interval))
-        print attributes
-
-        outfile = filePath.split('/')[-1]
-        logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
-        print logicalPath
-
-        if filePath.find('root') == 0:
-            filePath += "@SLAC_XROOT"
-        print filePath
-
-        datacatalog.registerDataset(dataType, logicalPath, filePath,
-                                    attributes)
-      ]]>
-    </script>
-    <depends>
-      <after process="createArchive" status="SUCCESS"/>
-    </depends>
-  </process>
-
-  <process name="clean_up_files" autoRetryMaxAttempts="1">
-    <job executable="${DRPMONITORINGROOT}/${BINDIR}/clean_up_files.sh"
-         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
-    <depends>
-      <after process="registerArchive" status="SUCCESS"/>
-    </depends>
-  </process>
-    
   <task name="roiAnalysis" version="1.0" type="Data">
-    <process name="getRoiData" autoRetryMaxAttempts="2">
+    <process name="getRoiData">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -166,7 +104,7 @@
            batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     </process>
 
-    <process name="exposureMap" autoRetryMaxAttempts="1">
+    <process name="exposureMap">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -187,7 +125,7 @@
       </createsSubtasks>
     </process>
 
-    <process name="combineExpMaps" autoRetryMaxAttempts="2">
+    <process name="combineExpMaps">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -198,7 +136,7 @@
       </depends>
     </process>
 
-    <process name="sourceAnalysis" autoRetryMaxAttempts="2">
+    <process name="sourceAnalysis">
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
@@ -230,22 +168,11 @@
       </createsSubtasks>
     </process>
 
-    <process name="dummyProcess" autoRetryMaxAttempts="1">
-      <script language="python">
-        <![CDATA[
-           print "energyBandAnalysis.fitEnergyBand processes finished"
-        ]]>
-      </script>
-      <depends>
-        <after process="energyBandAnalysis.fitEnergyBand" status="SUCCESS"/>
-      </depends>
-    </process> 
-
     <task name="exposureSubMap" version="1.0" type="Data">
       <prerequisites>
         <prerequisite name="ROI_ID" type="string"/>
       </prerequisites>
-      <process name="drpExpMap" autoRetryMaxAttempts="1">
+      <process name="drpExpMap">
         <variables>
           <var name="EXPMAP_ID">${pipeline.stream}</var>
         </variables>
@@ -261,14 +188,14 @@
         <prerequisite name="emax" type="integer"/>
         <prerequisite name="ROI_ID" type="string"/>
       </prerequisites>
-      <process name="fitEnergyBand" autoRetryMaxAttempts="2">
+      <process name="fitEnergyBand">
         <job executable="${DRPMONITORINGROOT}/${BINDIR}/fitEnergyBand.sh"
              batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       </process>
-    </task> <!--energyBandAnalysis-->
+    </task>
 
-  </task> <!--roiAnalysis-->
+  </task><!--roiAnalysis-->
 
-</task> <!--DRP_monitoring-->
+</task><!--DRP_monitoring-->
 
 </pipeline>

@@ -16,14 +16,12 @@ from UnbinnedAnalysis import *
 from drpRoiSetup import pars, currentRoi
 import pyfits
 from SourceData import SourceData, SourceTypeError
-from assignRois import RoiIds
-
-from UpperLimits import UpperLimits
+from computeUpperLimit import computeUpperLimit
 import drpDbAccess
 
 gtselect = GtApp('gtselect')
 
-def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
+def fitEnergyBand(emin, emax, srcModel, roi):
     gtselect['infile'] = roi.name + '_events.fits'
     gtselect['outfile'] = 'events_%i_%i.fits' % (emin, emax)
     gtselect['rad'] = 180
@@ -62,16 +60,12 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
         upperLimit.parameter.setValue(emax)
 
     try:
-        like.fit(optimizer='DRMNFB')
+        like.fit()
     except RuntimeError:
         try:
-            like.logLike.restoreBestFit()
-            like.fit(optimizer='Minuit')
+            like.fit()
         except RuntimeError:
-            like.logLike.restoreBestFit()
             pass
-
-    print "-log-likelihood after fitting: ", like()
 
     outputModel = "%s_%i_%i_model.xml" % (roi.name, emin, emax)
     like.srcModel = outputModel
@@ -83,10 +77,6 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
     print like.model
     sys.stdout.flush()
 
-    # Compute 90% CL upper limits using class from pyLikelihood.
-    # One-sided 90% UL corresponds to delta-chi-square of 3.065 for 1 dof.
-    ul = UpperLimits(like)
-
     results = {}
     for srcname in ptsrcs:
         src = like.model[srcname]
@@ -94,32 +84,13 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
         integral = spec.getParam('Integral')
         flux = integral.getTrueValue()
         fluxerr = integral.error()*integral.getScale()
-        try:
-            index_param = spec.getParam('Index')
-            index = index_param.getValue()
-            indexerr = index_param.error()
-        except:
-            index = None
-            indexerr = None
         isUL = False
-        TS = like.Ts(srcname)
-        if TS < 25:
-            print "computing upper limit for ", srcname
-            try:
-                flux = ul[srcname].compute(emin=emin, emax=emax, delta=3.065/2.,
-                                           renorm=True)[0]
-            except RuntimeError, message:
-                print message
-                # Probable error in setting parameter outside existing bounds;
-                # just skip this one and do the others.
-                continue
-            print "Upper limit: ", flux
-            print
+        if like.Ts(srcname) < 25:
+            flux = computeUpperLimit(like, srcname)
             isUL = True
         try:
             results[srcname] = SourceData(srcname, flux, fluxerr, 
-                                          outputModel, TS, isUL, 
-                                          index=index, indexerr=indexerr)
+                                          outputModel, isUL)
         except SourceTypeError:
             pass
 
@@ -128,7 +99,7 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
     # select only those sources to write for which this is the
     # principal ROI as given by its POINTSOURCES table ROI_ID entry.
     #
-    monitored_list = drpDbAccess.findPointSources(0, 0, 180, roiIds=roiIds).select(roi.id)
+    monitored_list = drpDbAccess.findPointSources(0, 0, 180).select(roi.id)
 
     print "Writing db table entries for "
     for src in monitored_list:
@@ -141,18 +112,14 @@ def fitEnergyBand(emin, emax, srcModel, roi, roiIds):
     return results
 
 if __name__ == '__main__':
-    roiIds = RoiIds(os.path.join(os.environ['OUTPUTDIR'], 'rois.txt'))
-
     roi = currentRoi()
     os.chdir(roi.name)
-
-    print "Working in ", os.getcwd
 
     inputModel = "%s_%i_%i_model.xml" % (currentRoi().name, 100, 300000)
     srcModel = os.path.join(os.getcwd(), inputModel)
     emin = float(os.environ['emin'])
     emax = float(os.environ['emax'])
 
-    fitEnergyBand(emin, emax, srcModel, roi, roiIds)
+    fitEnergyBand(emin, emax, srcModel, roi)
             
     os.system('chmod o+w *')

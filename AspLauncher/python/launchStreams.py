@@ -12,24 +12,25 @@ each one if the required data are available.
 #
 import os
 from checkLevelOneFiles import providesCoverage
-from PipelineCommand import PipelineCommand, resolve_nfs_path
+from PipelineCommand import PipelineCommand, _asp_path
 from FileStager import FileStager
 
-_pgwaveRoot = resolve_nfs_path(os.environ['ASP_PGWAVEROOT'])
+_version = os.path.split(os.environ['PGWAVEROOT'])[-1]
+_pgwaveRoot = os.path.join(_asp_path, 'ASP', 'pgwave', _version)
 _datacatalog_imp = os.environ['datacatalog_imp']
 
 def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
-                  streamId=None, debug=False):
+                  debug=False):
     args = {'logicalPath' : folder,
             'interval' : interval,
             'frequency' : frequency,
             'TSTART' : tstart,
             'TSTOP' : tstop,
             'OUTPUTDIR' : output_dir,
-            'CATDIR' : '/afs/slac/g/glast/ground/ASP/catalogs',
-            'ASP_PGWAVEROOT' : _pgwaveRoot,
+            'CATDIR' : '/nfs/farm/g/glast/u33/tosti/october/catdir',
+            'PGWAVEROOT' : _pgwaveRoot,
             'datacatalog_imp' : _datacatalog_imp}
-    command = PipelineCommand('PGWave', args, stream=streamId)
+    command = PipelineCommand('PGWave', args)
     command.run(debug=debug)
 
 def get_interval():
@@ -69,21 +70,14 @@ if __name__ == '__main__':
 
     debug = False
 
-    offset = {'six_hours' : 0,
-              'daily' : 1,
-              'weekly' : 2}
-
     os.chdir(currentDir)
     interval, frequency, tstart, tstop = get_interval()
-
-    streamId = tstart + offset[frequency]
-
     if providesCoverage(tstart, tstop, min_frac, 
                         'Ft1FileList', 'Ft2FileList', 
                         fileStager=fileStager):
-        if frequency in ('six_hours', 'daily', 'weekly'):
+        if frequency in ('daily', 'weekly'):
             createSubDir(interval, frequency, os.environ['DRPOUTPUTDIR'])
         output_dir = createSubDir(interval, frequency,
                                   os.environ['PGWAVEOUTPUTDIR'])
         launch_pgwave(interval, frequency, tstart, tstop, folder, 
-                      output_dir, streamId=streamId, debug=debug)
+                      output_dir, debug=debug)

@@ -1,5 +1,5 @@
 """
-@brief Region-of-interest source analysis for DRP monitoring.  This
+@brief Region-of-intereset source analysis for DRP monitoring.  This
 will be performed for the 100 MeV -- 300 GeV range and will provide
 the fluxes for determining if a non-DRP source is in a state where it
 should have its data made public.
@@ -11,32 +11,24 @@ should have its data made public.
 # $Header$
 #
 
-import os, sys, shutil
+import os, sys
 import pipeline
 from GtApp import GtApp
 from UnbinnedAnalysis import *
 from drpRoiSetup import rootpath, pars, rois, output_dir
 import databaseAccess as dbAccess
 from fitEnergyBand import fitEnergyBand, currentRoi
-from assignRois import RoiIds
-from addNdifrsp import addNdifrsp
-
-roiIds = RoiIds(os.path.join(os.environ['OUTPUTDIR'], 'rois.txt'))
 
 #
 # Move to working directory for the ROI of interest
 #
 roi = currentRoi()
 os.chdir(roi.name)
-print "Working in ", os.getcwd()
 
 #
 # Run gtdiffrsp locally for each region in case it hasn't been run by
 # L1Proc.
 #
-
-addNdifrsp(roi.name + '_events.fits')
-
 gtdiffrsp = GtApp('gtdiffrsp')
 gtdiffrsp['evfile'] = roi.name + '_events.fits'
 gtdiffrsp['scfile'] = pars['ft2file']
@@ -49,14 +41,13 @@ gtdiffrsp.run()
 # monitoring state of the non-DRP sources.
 #
 srcModel = os.path.join(os.getcwd(), roi.name + '_model.xml')
-shutil.copy(srcModel, srcModel + '_input')
-results = fitEnergyBand(100, 300000, srcModel, roi, roiIds)
+results = fitEnergyBand(100, 300000, srcModel, roi)
 
 #
 # Query the db tables and write the energy bands that the pipeline
 # needs to dispatch for subsequent analyses.
 #
-sql = "select eband_id, emin, emax from ENERGYBANDS where GROUP_ID=0"
+sql = "select eband_id, emin, emax from ENERGYBANDS"
 def getEnergyBands(cursor):
     ids, emins, emaxs = [], [], []
     for entry in cursor:

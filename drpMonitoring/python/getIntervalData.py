@@ -14,28 +14,27 @@ from GtApp import GtApp
 from FitsNTuple import FitsNTuple
 from getFitsData import getStagedFitsData
 from FileStager import FileStager
-from ft1merge import ft2merge, ft1_filter_merge
+from ft1merge import ft1merge, ft2merge
 from parfile_parser import Parfile
-from PipelineCommand import resolve_nfs_path
 import drpDbAccess
 import databaseAccess as dbAccess
 
 def create_parfile(tstart, parfilename='drp_pars.txt'):
-    infile = os.path.join(resolve_nfs_path(os.environ['DRPMONITORINGROOT']), 
-                          'data', parfilename)
+    version = os.path.split(os.environ['DRPMONITORINGROOT'])[-1]
+    infile = os.path.join(os.environ['ASP_PATH'], 'ASP', 'drpMonitoring', 
+                          version, 'data', parfilename)
     shutil.copy(infile, 'drp_pars.txt')
-    sql = "select startdate, enddate, irfs, ft1_filter from SOURCEMONITORINGCONFIG"
+    sql = "select * from SOURCEMONITORINGCONFIG"
     def findConfig(cursor):
         for entry in cursor:
-            startdate, enddate = entry[0], entry[1]
+            startdate, enddate = entry[1], entry[2]
             if startdate <= tstart and tstart <= enddate:
-                return entry[2], entry[3]
+                return entry[3]
         message = 'SourceMonitoring configuration not found for %i MET' % tstart
         raise RuntimeError, message
-    irfs, ft1_filter = dbAccess.apply(sql, findConfig)
+    irfs = dbAccess.apply(sql, findConfig)
     pars = Parfile(parfilename)
     pars['rspfunc'] = irfs
-    pars['ft1_filter'] = ft1_filter
     pars.write()
     return pars
 
@@ -48,7 +47,7 @@ shutil.copy('pgwaveFileList', os.environ['OUTPUTDIR'])
 
 output_dir = os.environ['OUTPUTDIR']
 process_id = os.environ['PIPELINE_PROCESSINSTANCE']
-fileStager = FileStager(process_id, stageArea=output_dir)
+fileStager = FileStager(process_id, stageArea=output_dir, cleanup=False)
 
 ft1, ft2 = getStagedFitsData(fileStager=fileStager)
 
@@ -64,12 +63,7 @@ gtselect = GtApp('gtselect')
 print "Using downlink files: ", ft1
 
 ft1Merged = 'FT1_merged.fits'
-
-#
-# Prefilter on zenith angle to get rid of most of albedo photons before
-# merging. Additional cuts will be applied downstream.
-#
-ft1_filter_merge(ft1, ft1Merged, zmax=105)
+ft1merge(ft1, ft1Merged)
 
 ft2Merged = 'FT2_merged.fits'
 ft2merge(ft2, ft2Merged)
@@ -80,7 +74,6 @@ gtselect['tmin'] = start_time
 gtselect['tmax'] = stop_time
 gtselect['rad'] = 180.
 gtselect['zmax'] = pars['zenmax']
-gtselect['emax'] = 3e5
 
 if debug:
     print gtselect.command()
@@ -122,10 +115,5 @@ pars['stop_time'] = stop_time
 pars.write()
 
 drpDbAccess.readRois()
-
-#
-# This should be called by FileStager.__del__, but it seems not to be, so...
-#
-fileStager.finish()
 
 os.system('chmod 777 *')

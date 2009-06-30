@@ -5,6 +5,10 @@
     $Id$
 
     @verbatim
+    v4r8p2 30-Jun-09   JC   skip unreliable FERMI_LAT_POSITION notices in
+                            GRB_refinement task; use reply_to feature for
+                            sending alert email from BlindSearch; bug-fix
+                            for single event FT1 files for off-axis bursts
     v4r8p1 25-Apr-09   JC   send notices to vxw@capella address; add 
                             TRIG_SOURCE field to notice template
     v4r8   08-Apr-09   JC   compute TS for all sources in LatGrbSpectrum;

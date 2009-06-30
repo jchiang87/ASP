@@ -1,24 +1,8 @@
-"""
-@brief create light curves using aperture photometry method
-"""
-#
-# $Header$
-#
 import gtutil
 import aperPhotLC
 import sys
-import pyfits
 import databaseAccess as dbAccess
-
-def getIrfs(ft1file):
-    ft1 = pyfits.open(ft1file)
-    tmin, tmax = ft1[1].header['TSTART'], ft1[1].header['TSTOP']
-    sql = ("select IRFS from SOURCEMONITORINGCONFIG where " +
-           "STARTDATE<=%i and ENDDATE>=%i" % (tmin, tmax))
-    def readIrfs(cursor):
-        for entry in cursor:
-            return entry[0]
-    return dbAccess.apply(sql, readIrfs)
+from refinePositions import getIrfs
 
 def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.fits',irf=None):
         if irf is None:
@@ -45,11 +29,11 @@ def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.f
 	print >>f,'McLaughlin V index:',V
 	f.close()
 	f1=open(regfile,'a')
-	#if chi2>1. and V>1.:
-	print >>f1,('fk5;circle(%f,%f,%f)'%(lcpar[0],lcpar[1],lcpar[2]))
-	print >>f1,('fk5;annulus(%f,%f,%f,%f)'%(lcpar[0],lcpar[1],lcpar[3],lcpar[4]))
-	#outpl=srcname+'_lc.png'
-	#aperPhotLC.plotLC(res[0],res[1],res[4],res[5],tit=srcname,outplot=outpl)
+	if chi2>1. and V>1.:
+		print >>f1,('fk5;circle(%f,%f,%f)'%(lcpar[0],lcpar[1],lcpar[2]))
+		print >>f1,('fk5;annulus(%f,%f,%f,%f)'%(lcpar[0],lcpar[1],lcpar[3],lcpar[4]))
+	outpl=srcname+'_lc.png'
+	aperPhotLC.plotLC(res[0],res[1],res[4],res[5],tit=srcname,outplot=outpl)
 	f1.close()
 	return res[6],res[7],chi2,V
 

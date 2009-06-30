@@ -5,14 +5,13 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="8.8" type="Data">
+<task name="PGWave" version="8.3" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/pgwave</var>
     <var name="xrootd_folder">/ASP/pgwave</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v01.fit</var>
   </variables>
   <prerequisites>
     <prerequisite name="logicalPath" type="string"/>
@@ -46,7 +45,7 @@
         ]]></script>
   </process>
 
-  <process name="getPgwInputData" autoRetryMaxAttempts="2">
+  <process name="getPgwInputData">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/getPgwInputData.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -54,7 +53,7 @@
     </depends>
   </process>
 
-  <process name="runpgw" autoRetryMaxAttempts="2">
+  <process name="runpgw">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runpgw.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -62,7 +61,7 @@
     </depends>
   </process>
 
-  <process name="refinePositions" autoRetryMaxAttempts="2">
+  <process name="refinePositions">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/refinePositions.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -70,7 +69,7 @@
     </depends>
   </process>
 
-  <process name="runsrcid" autoRetryMaxAttempts="2">
+  <process name="runsrcid">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runsrcid.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
@@ -78,7 +77,7 @@
     </depends>
   </process>
 
-  <process name="createArchive" autoRetryMaxAttempts="1">
+  <process name="createArchive">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -90,8 +89,6 @@
     <script><![CDATA[
     print "using datacatalog implementation: ", datacatalog_imp
     datacat = eval(datacatalog_imp)
-    streamId = pipeline.getStream()
-    print "registering with stream ID = ", streamId
     #
     #  Register the archive file
     #
@@ -100,9 +97,8 @@
 
     filePath = createArchive.getVariable("tarball_name")
 
-    attributes = (('nDatasetId=%s:nMetStart=%s:nMetStop=%s:' + 
-                   'sFrequency=%s:nInterval=%i') %
-                  (streamId, TSTART, TSTOP, frequency, interval))
+    attributes = ('nMetStart=%s:nMetStop=%s:sFrequency=%s:nInterval=%i' %
+                  (TSTART, TSTOP, frequency, interval))
     print attributes
 
     outfile = filePath.split('/')[-1]
@@ -124,10 +120,12 @@
         return tokens[0] + '_' + suffix + '.' + tokens[1]
     suffix = OUTPUTDIR.split('/')[-1]
     exts = ('.fits', '_map.fits', '_map.list', '_map.reg', 
-            '_map_pgw_out.fits', '_map_ait.gif', '_map_ait.png')
+            '_map_pgw_out.fits', '_map_ait.gif')
     files = [filename(ext, suffix) for ext in exts]
     dataTypes = ('EVENTS', 'SKYMAP', 'PGWAVESOURCELIST', 'DS9REGIONS', 
-                 'PGWAVESUMMARY', 'SKYMAP', 'SKYMAP')
+                 'PGWAVESUMMARY', 'SKYMAP')
+    streamId = pipeline.getStream()
+    print "registering with stream ID = ", streamId
     for outfile, dataType in zip(files, dataTypes):
         logicalPath = ('%s/%s/%s:%s' 
                        % (outputFolder, frequency, dataType, outfile))
@@ -151,7 +149,7 @@
     print attributes
     datacat.registerDataset('FT2', logicalPath, filePath, attributes)
     #
-    if frequency in ('six_hours', 'daily', 'weekly'):
+    if frequency in ('daily', 'weekly'):
         pipeline.createSubstream("drpMonitoring", 0, 
                                  "pgwave_streamId=%i" % streamId)
     ]]></script>
@@ -163,7 +161,7 @@
     </createsSubtasks>
   </process>
   
-  <process name="clean_up_files" autoRetryMaxAttempts="1">
+  <process name="clean_up_files">
     <job executable="${ASP_PGWAVEROOT}/${BINDIR}/clean_up_files.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
@@ -175,7 +173,7 @@
     <prerequisites>
       <prerequisite name="pgwave_streamId" type="integer"/>
     </prerequisites>
-    <process name="launchDrpMonitoring" autoRetryMaxAttempts="1">
+    <process name="launchDrpMonitoring">
       <job executable="${ASP_PGWAVEROOT}/${BINDIR}/launchDrpMonitoring.sh"
            batchOptions=" -q short"/>
     </process>

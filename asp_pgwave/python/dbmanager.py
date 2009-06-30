@@ -47,8 +47,7 @@ _PointSourcesFields={
   'NZ':('nz',[]),\
   'XML_MODEL':('xml_model',[]),\
   'IS_OBSOLETE':('is_obsolete',[]),\
-  'IS_PUBLIC':('is_public',[]),
-  'ALIAS' : ('alias', [])}
+  'IS_PUBLIC':('is_public',[])}
   
 _CounterPartFields={
   'CATALOGNAME':('catalogname',[]),\
@@ -82,7 +81,7 @@ class dbmanager:
 	def close(self):
 		self.conn.close()
 	def getPointSources(self):
-                sql = "select a.* from PointSources a left join PointSourceTypeSet b  on (a.ptsrc_name = b.ptsrc_name)  where ((b.sourcesub_type = 'DRP' or b.sourcesub_type = 'BLZRGRPSRC' or b.sourcesub_type='KNOWNPSR' or b.sourcesub_type='PGWAVE' or b.sourcesub_type='ATEL')) order by ra ASC"
+		sql="select * from POINTSOURCES order by ra ASC"
 		cursor=self.conn.cursor()
 		res=cursor.execute(sql)
 		colname=cursor.description
@@ -129,12 +128,6 @@ class dbmanager:
 		nrec=cursor.fetchone()
 		cursor.close()
 		return nrec[0]
-   	def deleteDuplicateFE(self,procid):
-		sql = ("delete from flareevents where process_id=%i" % procid)
-		cursor=self.conn.cursor()
-		res=cursor.execute(sql)
-		self.conn.commit()
-		cursor.close()
 	def insertFlareEvent(self,nome,tstart,tstop,flux,err,chi,ff,confid,procid):
                 if err != err:
                         # Have nan from pgwave so return without trying to insert
@@ -178,13 +171,6 @@ class dbmanager:
                         sql4=sql2+sql3
         	        #print sql4
                         res=cursor.execute(sql4)
-                        self.conn.commit()
-                        #
-                        # insert subtype into pointsourcetypeset table
-                        #
-                        sql = "insert into pointsourcetypeset (ptsrc_name, sourcesub_type) values ('%s', 'PGWAVE')" % nome1
-                        print sql
-                        cursor.execute(sql)
                         self.conn.commit()
 		cursor.close()	
 		return nome1

@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    v1r9p5 30-Jun-09   JC   accommodate interface change in pointlike in
+                            asp_pgwave/refinePositions.py
     v1r9p4 30-Jun-09   JC   add ATEL as a valid sourcesub_type for point source
                             selection
     v1r9p3 25-Apr-09   JC   enable auto retry for PGWave processes

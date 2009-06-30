@@ -79,8 +79,6 @@ def refinePositions(pgwave_list,
     if use_bg:
         # Crude estimate based on default exposure for Background class
         exposure = ontime*1e3 
-#        diffusefilename = os.path.join(os.environ['EXTFILESSYS'],
-#                                       'galdiffuse', 'GP_gamma.fits')
         diffusefilename = os.environ['GALPROP_MODEL']
 	diffuse = DiffuseFunction(diffusefilename)
         bg = Background(diffuse, exposure)
@@ -95,7 +93,7 @@ def refinePositions(pgwave_list,
                                              source.dir.dec()))
         fit = PointSourceLikelihood(data.map(), source.name, source.dir)
         source.dir, source.TS = fit.dir(), fit.TS
-	sigma = fit.localize(2)
+	sigma = fit.localize()
 	source.sigma = sigma
 	print source.name, source.dir.ra(), source.dir.dec(), sigma, source.TS()
         output.write(("  %8.3f"*5 + "\n") % (source.dir.ra(), source.dir.dec(),

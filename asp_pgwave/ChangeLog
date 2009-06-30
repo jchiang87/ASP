@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue Jun 30 12:20:45 PDT 2009
+ASP/asp_pgwave/python
+
+Modified Files:
+	refinePositions.py 
+Log Message:
+accommodate pointlike interface change in ST v9r15p2
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r9p4, operation: add
 Package: asp_pgwave

@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    v3r6p1 30-Jun-09   JC   add reply_to option to MultiPartMailer class
     v3r6   08-Apr-09   JC   switch to numpy; remove UpperLimits.py in favor of
                             pyLikelihood version
     v3r5p7 26-Dec-08   JC   add addNdifrsp.py, FitsNTupleError

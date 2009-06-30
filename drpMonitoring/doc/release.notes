@@ -5,6 +5,9 @@
     $Id$
 
     @verbatim
+    v1r7p4 30-Jun-09   JC   add W Comae to public release data; update 
+                            sourceType attribute in xml model defs using
+                            sourcesub_type info in db tables
     v1r7p3 25-Apr-09   JC   enable auto retry in DRP_monitoring task;
                             modify makeDrpLcTables.py to use coordinates from
                             pointsource alias; change source monitoring flux    

@@ -50,44 +50,39 @@ double Exposure::value(double time) const {
 void Exposure::readScData(const std::string & scDataFile) {
    std::vector<std::string> scFiles;
    st_facilities::Util::resolve_fits_files(scDataFile, scFiles);
-   std::vector<std::string>::const_iterator scIt = scFiles.begin();
-   bool clear(true);
-   for ( ; scIt != scFiles.end(); scIt++) {
-      st_facilities::Util::file_ok(*scIt);
-      m_scData->readData(*scIt, clear);
-      clear = false;
-   }
+   m_scData->readData(scFiles, m_timeBoundaries.front(), 
+                      m_timeBoundaries.back());
 }
 
 void Exposure::integrateExposure() {
-   unsigned int numIntervals = m_timeBoundaries.size() - 1;
-   m_exposureValues.resize(numIntervals);
-   for (unsigned int i = 0; i < numIntervals; i++) {
-      m_exposureValues[i] = 0;
+   m_exposureValues.resize(m_timeBoundaries.size() - 1);
+   for (size_t j(0); j < m_exposureValues.size(); j++) {
+      m_exposureValues.at(j) = 0;
       std::pair<double, double> wholeInterval;
-      wholeInterval.first = m_timeBoundaries[i];
-      wholeInterval.second = m_timeBoundaries[i+1];
-      std::pair<Likelihood::ScData::Iterator, 
-         Likelihood::ScData::Iterator> scData;
-      Likelihood::ScData::Iterator firstIt = m_scData->vec.begin();
-      Likelihood::ScData::Iterator lastIt = m_scData->vec.end() - 1;
+      wholeInterval.first = m_timeBoundaries.at(j);
+      wholeInterval.second = m_timeBoundaries.at(j+1);
+
+      size_t imin, imax;
       try {
-         scData = m_scData->bracketInterval(wholeInterval);
-         if (scData.first - firstIt < 0) scData.first = firstIt;
-         if (scData.second - firstIt > lastIt - firstIt) 
-            scData.second = lastIt;
-      } catch (std::out_of_range &eObj) { // use brute force
-         scData = std::make_pair(firstIt, lastIt);
+         imin = m_scData->time_index(m_timeBoundaries.at(j));
+         imax = m_scData->time_index(m_timeBoundaries.at(j+1)) + 1;
+      } catch (std::runtime_error &) {
+         imin = 0;
+         imax = m_scData->numIntervals() - 1;
       }
-      for (Likelihood::ScData::Iterator it = scData.first; 
-           it != (scData.second-1); ++it) {
+      imax = std::min(imax, m_scData->numIntervals() - 1);
+      for (size_t i(imin); i < imax + 1; i++) {
+         double tstart(m_scData->start(i));
+         double tstop(m_scData->stop(i));
          std::pair<double, double> thisInterval;
-         thisInterval.first = it->time;
-         thisInterval.second = (it+1)->time;
-         if (Likelihood::LikeExposure::overlap(wholeInterval, thisInterval)) {
-            m_exposureValues[i] += (effArea(thisInterval.first) 
-                                    + effArea(thisInterval.second))/2.
-               *(thisInterval.second - thisInterval.first);
+         thisInterval.first = tstart;
+         thisInterval.second = tstop;
+         double overlap = 
+            Likelihood::LikeExposure::overlap(wholeInterval, thisInterval);
+         if (overlap) {
+            m_exposureValues.at(j) += ((effArea(thisInterval.first) 
+                                        + effArea(thisInterval.second))/2.
+                                       *overlap);
          }
       }
    }

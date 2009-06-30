@@ -7,14 +7,14 @@
 #include "BayesianBlocks/Exposure.h"
 %}
 %include stl.i
-// %exception {
-//    try {
-//       $action
-//    } catch (std::exception & eObj) {
-//       PyErr_SetString(PyExc_RuntimeError, const_cast<char*>(eObj.what()));
-//       return NULL;
-//    }
-// }
+%exception {
+   try {
+      $action
+   } catch (std::exception & eObj) {
+      PyErr_SetString(PyExc_RuntimeError, const_cast<char*>(eObj.what()));
+      return NULL;
+   }
+}
 %template(DoubleVector) std::vector<double>;
 %template(DoubleVectorVector) std::vector< std::vector<double> >;
 %template(IntVector) std::vector<int>;

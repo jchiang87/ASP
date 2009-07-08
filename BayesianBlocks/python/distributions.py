@@ -17,7 +17,7 @@ def interpolate(x, y, xx):
 
 def sample(dist, nsamp):
     my_integralDist = integralDist(dist)
-    values = num.arange(len(dist)+1, type=num.Float)/float(len(dist))
+    values = num.arange(len(dist)+1, dtype=num.float)/float(len(dist))
     my_sample = []
     for i in range(nsamp):
         xi = random.random()

@@ -39,6 +39,8 @@ public:
 
    ~BayesianBlocks() throw() {}
 
+   void setCellContent(const std::vector<double> & cell_content);
+
    void computeLightCurve(std::vector<double> & tmins,
                           std::vector<double> & tmaxs,
                           std::vector<double> & numEvents,

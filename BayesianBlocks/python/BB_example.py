@@ -5,13 +5,15 @@ from BayesBlocks import BayesBlocks, LightCurve
 from distributions import sample
 
 npts = 100
-phi = num.arange(npts, type=num.Float)/(npts-1)*2.*num.pi
+phi = num.arange(npts, dtype=num.float)/(npts-1)*2.*num.pi
 func = 1. + num.sin(phi)
+
+ncp_prior = 8
 
 nsamp = 5000
 events = sample(func, nsamp)*2.*num.pi
 
-fine_blocks = BayesBlocks(events, 4)
+fine_blocks = BayesBlocks(events, ncp_prior)
 fine_lc = fine_blocks.lightCurve()
 
 x, y = fine_lc.dataPoints()
@@ -22,6 +24,6 @@ reps = hist.getDataReps()
 reps[0].setErrorDisplay('y', 1)
 plot.scatter(x, y, pointRep='Line', oplot=1, color='red')
 
-foo = BayesianBlocks(events, 4)
+foo = BayesianBlocks(events, ncp_prior)
 xx, yy = foo.lightCurve()
 plot.scatter(xx, yy, pointRep='Line', oplot=1, color='green')

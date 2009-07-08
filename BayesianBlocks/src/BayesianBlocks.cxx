@@ -54,6 +54,13 @@ BayesianBlocks::BayesianBlocks(const std::vector<double> & cellContent,
    setCellScaling(scaleFactors);
 }
 
+void BayesianBlocks::setCellContent(const std::vector<double> & cell_content) {
+   if (cell_content.size() != m_cellContent.size()) {
+      throw std::runtime_error("cell content sizes do not match");
+   }
+   m_cellContent = cell_content;
+}
+
 int BayesianBlocks::setCellScaling(const std::vector<double> & scaleFactors) {
    if (scaleFactors.size() != m_cells.size()) {
       throw std::runtime_error("The number of scale factors does not equal "
@@ -163,12 +170,16 @@ void BayesianBlocks::createCells() {
 }
 
 void BayesianBlocks::renormalize() {
-//   double smallest_cell(1./highestBinDensity());
-   double smallest_cell(m_eventTimes.back() - m_eventTimes.front());
-   for (unsigned int i = 0; i < m_cells.size(); i++) {
-      if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
-         smallest_cell = m_cells[i];
+   double smallest_cell;
+   if (!m_eventTimes.empty()) {
+      smallest_cell = m_eventTimes.back() - m_eventTimes.front();
+      for (unsigned int i = 0; i < m_cells.size(); i++) {
+         if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
+            smallest_cell = m_cells[i];
+         }
       }
+   } else {
+      smallest_cell = 1./highestBinDensity();
    }
    std::transform(m_cells.begin(), m_cells.end(), m_cells.begin(), 
                   std::bind2nd(std::multiplies<double>(), 2./smallest_cell));
@@ -196,8 +207,12 @@ double BayesianBlocks::blockCost(size_t imin, size_t imax) const {
    double content = blockContent(imin, imax);
    double arg = size - content;
    if (arg > 0) {
-      double my_cost = gammln(content + 1.) + gammln(arg + 1.) 
-         - gammln(size + 2.);
+      double my_cost;
+      if (::getenv("USE_ML_COST")) {
+         my_cost = content*(std::log(content) - std::log(size) - 1);
+      } else {
+         my_cost = gammln(content + 1.) + gammln(arg + 1.) - gammln(size + 2.);
+      }
       return my_cost;
    }
    return -log(size);
@@ -216,7 +231,7 @@ double BayesianBlocks::blockContent(size_t imin, size_t imax) const {
          }
       }
    } else {
-      content = imax - imin + 1.;
+       content = imax - imin + 1.;
    }
    return content;
 }

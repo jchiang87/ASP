@@ -6,7 +6,7 @@ from distributions import sample, stepFunction
 nsamp = 200
 events = sample(stepFunction(0.5, 0.7, amp=0.5), nsamp)
 
-fine_blocks = BayesBlocks(events, 1)
+fine_blocks = BayesBlocks(events, 2)
 #rough_blocks = BayesBlocks(events, 4)
 
 fine_lc = fine_blocks.lightCurve()

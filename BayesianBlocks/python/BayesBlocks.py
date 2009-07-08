@@ -3,7 +3,7 @@ import bisect
 from BayesianBlocks import BayesianBlocks, DoubleVector
 
 class BayesBlocks(BayesianBlocks):
-    def __init__(self, events, ncpPrior=1, useInterval=True):
+    def __init__(self, events, ncpPrior=1, useInterval=False):
         BayesianBlocks.__init__(self, events, ncpPrior, useInterval)
     def setCellScaling(self, scaleFactors):
         BayesianBlocks.setCellScaling(self, scaleFactors)

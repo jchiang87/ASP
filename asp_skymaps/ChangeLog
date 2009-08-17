@@ -1,4 +1,99 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug 17 08:23:51 PDT 2009
+ASP/asp_skymaps
+
+Log Message:
+import of ST v9r11 for use by ASP
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v1r13
+		
+N ASP/asp_skymaps/SConscript
+I ASP/asp_skymaps/rh9_gcc32opt
+I ASP/asp_skymaps/CVS
+N ASP/asp_skymaps/skymapsLib.py
+N ASP/asp_skymaps/.cvsignore
+N ASP/asp_skymaps/ChangeLog
+I ASP/asp_skymaps/data/CVS
+N ASP/asp_skymaps/data/LivetimeCubeTemplate
+N ASP/asp_skymaps/python/image.py
+N ASP/asp_skymaps/python/swig_setup.i
+N ASP/asp_skymaps/python/asp_skymaps.py
+N ASP/asp_skymaps/python/asp_skymaps.pyc
+N ASP/asp_skymaps/python/psf_defaults.py
+I ASP/asp_skymaps/python/CVS
+N ASP/asp_skymaps/python/fermitime.py
+N ASP/asp_skymaps/python/__init__.py
+I ASP/asp_skymaps/python/swig_setup.in.~1.13.~
+N ASP/asp_skymaps/python/swig_setup.in
+N ASP/asp_skymaps/src/PhotonMap.cxx
+N ASP/asp_skymaps/src/SkyImage.cxx
+N ASP/asp_skymaps/src/mainpage.h
+N ASP/asp_skymaps/src/CompositeSkyFunction.cxx
+I ASP/asp_skymaps/src/CVS
+N ASP/asp_skymaps/src/EffectiveArea.cxx
+N ASP/asp_skymaps/src/PhotonBinner.cxx
+N ASP/asp_skymaps/src/SkySpectrum.cxx
+N ASP/asp_skymaps/src/BinnedPhotonData.cxx
+N ASP/asp_skymaps/src/Exposure.cxx
+N ASP/asp_skymaps/src/CompositeSkySpectrum.cxx
+N ASP/asp_skymaps/src/LivetimeCube.cxx
+N ASP/asp_skymaps/src/IsotropicPowerLaw.cxx
+N ASP/asp_skymaps/src/PySkyFunction.cxx
+N ASP/asp_skymaps/src/Background.cxx
+N ASP/asp_skymaps/src/Convolution.cxx
+N ASP/asp_skymaps/src/GtiBase.cxx
+N ASP/asp_skymaps/src/PsfFunction.cxx
+N ASP/asp_skymaps/src/DiffuseFunction.cxx
+N ASP/asp_skymaps/src/HealpixDiffuseFunc.cxx
+N ASP/asp_skymaps/src/Band.cxx
+N ASP/asp_skymaps/src/Gti.cxx
+N ASP/asp_skymaps/src/IParams.cxx
+N ASP/asp_skymaps/src/test/test_main.cxx
+I ASP/asp_skymaps/src/test/CVS
+I ASP/asp_skymaps/doc/CVS
+N ASP/asp_skymaps/doc/release.notes
+N ASP/asp_skymaps/skymaps/BinnedPhotonData.h
+N ASP/asp_skymaps/skymaps/Exposure.h
+N ASP/asp_skymaps/skymaps/IParams.h
+N ASP/asp_skymaps/skymaps/Convolution.h
+N ASP/asp_skymaps/skymaps/DiffuseFunction.h
+N ASP/asp_skymaps/skymaps/SkyImage.h
+N ASP/asp_skymaps/skymaps/Band.h
+N ASP/asp_skymaps/skymaps/IsotropicPowerLaw.h
+N ASP/asp_skymaps/skymaps/PySkyFunction.h
+N ASP/asp_skymaps/skymaps/PhotonBinner.h
+N ASP/asp_skymaps/skymaps/SkySpectrum.h
+N ASP/asp_skymaps/skymaps/Gti.h
+N ASP/asp_skymaps/skymaps/CompositeSkySpectrum.h
+N ASP/asp_skymaps/skymaps/CompositeSkyFunction.h
+N ASP/asp_skymaps/skymaps/EffectiveArea.h
+N ASP/asp_skymaps/skymaps/GtiBase.h
+I ASP/asp_skymaps/skymaps/CVS
+N ASP/asp_skymaps/skymaps/PsfFunction.h
+N ASP/asp_skymaps/skymaps/Background.h
+N ASP/asp_skymaps/skymaps/LivetimeCube.h
+N ASP/asp_skymaps/skymaps/HealpixDiffuseFunc.h
+N ASP/asp_skymaps/skymaps/PhotonMap.h
+I ASP/asp_skymaps/cmt/cleanup.sh
+I ASP/asp_skymaps/cmt/requirements.~1.40.~
+I ASP/asp_skymaps/cmt/setup.sh
+I ASP/asp_skymaps/cmt/rh9_gcc32opt.make
+N ASP/asp_skymaps/cmt/.cvsignore
+I ASP/asp_skymaps/cmt/cleanup.csh
+N ASP/asp_skymaps/cmt/Makefile
+N ASP/asp_skymaps/cmt/binned.fits
+I ASP/asp_skymaps/cmt/CVS
+I ASP/asp_skymaps/cmt/setup.csh
+N ASP/asp_skymaps/cmt/requirements
+N ASP/asp_skymaps/cmt/test_livetimecube.fits
+
+No conflicts created by this import
+
+    *
+------------------------------------------------------------
 User: burnett  Mon Nov 10 14:37:24 PST 2008
 skymaps/python
 

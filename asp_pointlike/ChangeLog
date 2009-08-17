@@ -1,4 +1,139 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug 17 08:04:57 PDT 2009
+ASP/asp_pointlike
+
+Log Message:
+import of ST v9r11 version for use by ASP
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v6r14
+		
+N ASP/asp_pointlike/pointlikeLib.py
+I ASP/asp_pointlike/rh9_gcc32opt
+N ASP/asp_pointlike/SConscript
+N ASP/asp_pointlike/ChangeLog
+I ASP/asp_pointlike/CVS
+N ASP/asp_pointlike/.cvsignore
+N ASP/asp_pointlike/src/Data.cxx
+N ASP/asp_pointlike/src/CalData.cxx
+N ASP/asp_pointlike/src/HealpixDiffuseFunc.cxx
+N ASP/asp_pointlike/src/PointSourceLikelihood.cxx
+N ASP/asp_pointlike/src/Alignment.cxx
+N ASP/asp_pointlike/src/Draw.cxx
+N ASP/asp_pointlike/src/SimpleTSmap.cxx
+N ASP/asp_pointlike/src/EventList.h
+N ASP/asp_pointlike/src/ParamOptimization.cxx
+N ASP/asp_pointlike/src/mainpage.h
+N ASP/asp_pointlike/src/PowerLawFilter.cxx
+N ASP/asp_pointlike/src/SimpleLikelihood.cxx
+I ASP/asp_pointlike/src/CVS
+N ASP/asp_pointlike/src/SourceFinder.cxx
+N ASP/asp_pointlike/src/FlexibleBinner.cxx
+N ASP/asp_pointlike/src/EventList.cxx
+N ASP/asp_pointlike/src/DrawTS.cxx
+N ASP/asp_pointlike/src/ResultsFile.cxx
+N ASP/asp_pointlike/src/PowerLawFilter.h
+N ASP/asp_pointlike/src/ExtendedSourcePDF.cxx
+N ASP/asp_pointlike/src/SourceLikelihood.cxx
+N ASP/asp_pointlike/src/AlignProc.cxx
+N ASP/asp_pointlike/src/RotationInfo.cxx
+N ASP/asp_pointlike/src/SourceList.cxx
+N ASP/asp_pointlike/src/BandBackground.cxx
+N ASP/asp_pointlike/src/ExtendedLikelihood.cxx
+N ASP/asp_pointlike/src/test/test_main.cxx
+N ASP/asp_pointlike/src/test/PhotonList.cxx
+I ASP/asp_pointlike/src/test/CVS
+N ASP/asp_pointlike/src/test/PhotonList.h
+N ASP/asp_pointlike/src/test/test_events.root
+N ASP/asp_pointlike/src/test/pointlike_test.fits
+N ASP/asp_pointlike/src/test/r0236198321_ft1.fit
+I ASP/asp_pointlike/src/alignment/CVS
+N ASP/asp_pointlike/src/alignment/alignment.txt
+N ASP/asp_pointlike/src/alignment/vela.txt
+N ASP/asp_pointlike/src/alignment/alignment_main.cxx
+N ASP/asp_pointlike/src/pointfit/pointfit_main.cxx
+I ASP/asp_pointlike/src/pointfit/CVS
+N ASP/asp_pointlike/src/pointfind/finder_main.cxx
+I ASP/asp_pointlike/src/pointfind/CVS
+N ASP/asp_pointlike/src/tsmap/tsmap.cxx
+I ASP/asp_pointlike/src/tsmap/CVS
+I ASP/asp_pointlike/src/sourcefit/CVS
+N ASP/asp_pointlike/src/sourcefit/sourcefit_main.cxx
+N ASP/asp_pointlike/pointlike/HypergeometricFunction.h
+I ASP/asp_pointlike/pointlike/CVS
+N ASP/asp_pointlike/pointlike/ResultsFile.h
+N ASP/asp_pointlike/pointlike/SimpleLikelihood.h
+N ASP/asp_pointlike/pointlike/ExtendedSourcePDF.h
+N ASP/asp_pointlike/pointlike/SourceLikelihood.h
+N ASP/asp_pointlike/pointlike/FlexibleBinner.h
+N ASP/asp_pointlike/pointlike/DrawTS.h
+N ASP/asp_pointlike/pointlike/ExtendedLikelihood.h
+N ASP/asp_pointlike/pointlike/SourceFinder.h
+N ASP/asp_pointlike/pointlike/PsfFunction.h
+N ASP/asp_pointlike/pointlike/PointSourceLikelihood.h
+N ASP/asp_pointlike/pointlike/Draw.h
+N ASP/asp_pointlike/pointlike/SourceList.h
+N ASP/asp_pointlike/pointlike/AlignProc.h
+N ASP/asp_pointlike/pointlike/PowerLawFilter.h
+N ASP/asp_pointlike/pointlike/BandBackground.h
+N ASP/asp_pointlike/pointlike/RotationInfo.h
+N ASP/asp_pointlike/pointlike/Data.h
+N ASP/asp_pointlike/pointlike/CalData.h
+N ASP/asp_pointlike/pointlike/HealpixDiffuseFunc.h
+N ASP/asp_pointlike/pointlike/ParamOptimization.h
+N ASP/asp_pointlike/pointlike/Alignment.h
+N ASP/asp_pointlike/pointlike/SimpleTSmap.h
+N ASP/asp_pointlike/doc/Doxyfile
+I ASP/asp_pointlike/doc/CVS
+N ASP/asp_pointlike/doc/release.notes
+I ASP/asp_pointlike/cmt/cleanup.csh
+I ASP/asp_pointlike/cmt/setup.csh
+I ASP/asp_pointlike/cmt/cleanup.sh
+I ASP/asp_pointlike/cmt/setup.sh
+N ASP/asp_pointlike/cmt/.cvsignore
+I ASP/asp_pointlike/cmt/CVS
+N ASP/asp_pointlike/cmt/core.11674
+N ASP/asp_pointlike/cmt/requirements
+N ASP/asp_pointlike/cmt/Makefile
+I ASP/asp_pointlike/cmt/rh9_gcc32opt.make
+I ASP/asp_pointlike/cmt/alias.bat
+N ASP/asp_pointlike/python/__init__.py
+N ASP/asp_pointlike/python/dataman.py
+N ASP/asp_pointlike/python/SourcePlot.py
+N ASP/asp_pointlike/python/confluence.py
+N ASP/asp_pointlike/python/runfiles.py
+N ASP/asp_pointlike/python/SourceLib.py
+N ASP/asp_pointlike/python/pointfind_setup.py
+N ASP/asp_pointlike/python/.cvsignore
+N ASP/asp_pointlike/python/swig_setup.in
+N ASP/asp_pointlike/python/pointspec.py
+N ASP/asp_pointlike/python/finder_setup.py
+N ASP/asp_pointlike/python/specfit.py
+N ASP/asp_pointlike/python/pointfit.py
+N ASP/asp_pointlike/python/pointfit_setup.py
+N ASP/asp_pointlike/python/pixeldata.py
+I ASP/asp_pointlike/python/CVS
+N ASP/asp_pointlike/python/Response.py
+N ASP/asp_pointlike/python/Fitters.py
+N ASP/asp_pointlike/python/image.py
+N ASP/asp_pointlike/python/wrappers.py
+N ASP/asp_pointlike/python/Models.py
+N ASP/asp_pointlike/python/test_pointlike_setup.py
+N ASP/asp_pointlike/python/sourcefit_setup.py
+N ASP/asp_pointlike/python/alignment_setup.py
+N ASP/asp_pointlike/python/pointlike_defaults.py
+N ASP/asp_pointlike/python/diffuse.py
+N ASP/asp_pointlike/python/fitstools.py
+N ASP/asp_pointlike/python/phasetools.py
+N ASP/asp_pointlike/python/psf.py
+N ASP/asp_pointlike/python/asp_pointlike.py
+
+No conflicts created by this import
+
+    *
+------------------------------------------------------------
 User: burnett  Mon Nov 10 12:11:58 PST 2008
 pointlike/src
 

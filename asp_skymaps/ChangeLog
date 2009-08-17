@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Mon Aug 17 16:16:09 PDT 2009
+ASP/asp_skymaps/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+adjust author and version in Sconscript; clean up release notes and add EOH
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 16:16:09 PDT 2009
 ASP/asp_skymaps
 
 Modified Files:

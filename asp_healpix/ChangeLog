@@ -1,4 +1,104 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug 17 09:09:57 PDT 2009
+ASP/asp_healpix
+
+Log Message:
+import ST v9r11 version (3rd try) for use by ASP
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v2r2p2
+		
+N ASP/asp_healpix/healpixLib.py
+N ASP/asp_healpix/SConscript
+I ASP/asp_healpix/.cvsignore.~1.1.1.1.~
+N ASP/asp_healpix/ChangeLog
+I ASP/asp_healpix/CVS
+N ASP/asp_healpix/.cvsignore
+N ASP/asp_healpix/cmt/requirements
+I ASP/asp_healpix/cmt/CVS
+N ASP/asp_healpix/data/srctest.fits
+N ASP/asp_healpix/data/Healpix Neighbors Nside=8.txt
+I ASP/asp_healpix/data/CVS
+N ASP/asp_healpix/doc/.cvsignore
+I ASP/asp_healpix/doc/CVS
+N ASP/asp_healpix/doc/release.notes
+N ASP/asp_healpix/src/fftpack.pp
+N ASP/asp_healpix/src/HealPixel.cxx
+N ASP/asp_healpix/src/mainpage.h
+N ASP/asp_healpix/src/swig_setup.in
+I ASP/asp_healpix/src/CVS
+N ASP/asp_healpix/src/AlmOp.cxx
+N ASP/asp_healpix/src/HealpixMap.cxx
+N ASP/asp_healpix/src/HealpixArrayIO.cxx
+N ASP/asp_healpix/src/Healpix.cxx
+N ASP/asp_healpix/src/CosineBinner.cxx
+N ASP/asp_healpix/src/ls_fft.pp
+N ASP/asp_healpix/src/Map.cxx
+N ASP/asp_healpix/src/bluestein.pp
+N ASP/asp_healpix/src/base/powspec.cc
+N ASP/asp_healpix/src/base/fftpack.c
+N ASP/asp_healpix/src/base/xcomplex.h
+N ASP/asp_healpix/src/base/healpix_map_fitsio.h
+N ASP/asp_healpix/src/base/bluestein.c
+N ASP/asp_healpix/src/base/powspec.h
+N ASP/asp_healpix/src/base/rotmatrix.cc
+N ASP/asp_healpix/src/base/rotmatrix.h
+N ASP/asp_healpix/src/base/vec3.h
+N ASP/asp_healpix/src/base/healpix_base.h
+N ASP/asp_healpix/src/base/fftpack.ph
+N ASP/asp_healpix/src/base/cxxutils.h
+I ASP/asp_healpix/src/base/CVS
+N ASP/asp_healpix/src/base/pointing.h
+N ASP/asp_healpix/src/base/alm_powspec_tools.cc
+N ASP/asp_healpix/src/base/healpix_map.cc
+N ASP/asp_healpix/src/base/ls_fft.c
+N ASP/asp_healpix/src/base/alm.h
+N ASP/asp_healpix/src/base/datatypes.h
+N ASP/asp_healpix/src/base/longnam.h
+N ASP/asp_healpix/src/base/cxxutils.cc
+N ASP/asp_healpix/src/base/bluestein.h
+N ASP/asp_healpix/src/base/ylmgen.h
+N ASP/asp_healpix/src/base/alm_map_tools.cc
+N ASP/asp_healpix/src/base/fitshandle.h
+N ASP/asp_healpix/src/base/alm_filter_tools.h
+N ASP/asp_healpix/src/base/bluestein.ph
+N ASP/asp_healpix/src/base/arr.h
+N ASP/asp_healpix/src/base/fftpack.h
+N ASP/asp_healpix/src/base/healpix_map_fitsio.cc
+N ASP/asp_healpix/src/base/planck_rng.h
+N ASP/asp_healpix/src/base/healpix_map.h
+N ASP/asp_healpix/src/base/ls_fft.h
+N ASP/asp_healpix/src/base/fitshandle.cc
+N ASP/asp_healpix/src/base/alm_filter_tools.cc
+N ASP/asp_healpix/src/base/constants.h
+N ASP/asp_healpix/src/base/openmp_support.h
+N ASP/asp_healpix/src/base/healpix_base.cc
+N ASP/asp_healpix/src/base/alm_powspec_tools.h
+N ASP/asp_healpix/src/base/alm_map_tools.h
+N ASP/asp_healpix/src/base/ls_fft.ph
+N ASP/asp_healpix/src/base/message_error.h
+N ASP/asp_healpix/src/base/fftpack_support.h
+N ASP/asp_healpix/src/test/TestHealpixArray.h
+N ASP/asp_healpix/src/test/TestHealpix.h
+N ASP/asp_healpix/src/test/test_healpix.cxx
+I ASP/asp_healpix/src/test/CVS
+N ASP/asp_healpix/healpix/Map.h
+N ASP/asp_healpix/healpix/Healpix.h
+N ASP/asp_healpix/healpix/AlmOp.h
+N ASP/asp_healpix/healpix/HealpixArray.h
+I ASP/asp_healpix/healpix/CVS
+N ASP/asp_healpix/healpix/HealPixel.h
+N ASP/asp_healpix/healpix/HeallpixMap.h
+N ASP/asp_healpix/healpix/HealpixArrayIO.h
+N ASP/asp_healpix/healpix/HealpixMap.h
+N ASP/asp_healpix/healpix/CosineBinner.h
+
+No conflicts created by this import
+
+    *
+------------------------------------------------------------
 User: jchiang  Mon Aug 17 09:05:43 PDT 2009
 ASP/asp_healpix/cmt
 

@@ -76,6 +76,10 @@ if 'CTBCLASSLEVEL' in foo.names:
     fcopy = GtApp('fcopy')
     fcopy.run(infile='time_filtered_events.fits[EVENTS][CTBCLASSLEVEL>1]',
               outfile='Filtered.fits')
+elif 'EVENT_CLASS' in foo.names:
+    fcopy = GtApp('fcopy')
+    fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
+              outfile='Filtered.fits')
 else:
     os.system('ln -s time_filtered_events.fits Filtered.fits')
 

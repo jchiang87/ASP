@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Mon Aug 17 22:27:54 PDT 2009
+ASP/asp_pgwave/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+use asp_pointlike et al.; tagging v1r10
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:27:54 PDT 2009
 ASP/asp_pgwave/cmt
 
 Modified Files:

@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug 17 20:42:00 PDT 2009
+ASP/asp_skymaps/cmt
+
+Removed Files:
+	Makefile binned.fits test_livetimecube.fits 
+Log Message:
+remove unnecessary files
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_skymaps-01-13-01, operation: add
 Package: asp_skymaps

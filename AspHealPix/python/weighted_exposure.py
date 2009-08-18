@@ -1,4 +1,4 @@
-import numarray as num
+import numpy as num
 from FitsNTuple import FitsNTuple
 import pyfits
 

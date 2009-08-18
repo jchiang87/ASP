@@ -1,5 +1,5 @@
 package AspHealPix
-version v0r0p2
+version v0r0p3
 
 author James Chiang <jchiang@slac.stanford.edu>
 
@@ -7,7 +7,7 @@ author James Chiang <jchiang@slac.stanford.edu>
 
 use SwigPolicy v*
 use astro v*
-use healpix v*
+use asp_healpix * ASP
 use irfInterface v* irfs
 use irfLoader v* irfs
 use map_tools v*

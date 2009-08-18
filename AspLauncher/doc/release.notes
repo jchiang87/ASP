@@ -5,6 +5,7 @@
     $Id$
 
     @verbatim
+    * EOH *
     v1r3p6  17-Oct-08    JC   debug the exception screening test condition
                               for duplicate stream exceptions for GRB blind
                               search launching; correct the sign of the test 

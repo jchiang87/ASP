@@ -1,4 +1,83 @@
 ------------------------------------------------------------
+TAG
+Tag name: ASP-03-00-00, operation: add
+Package: asp_healpix
+User: jchiang  Mon Aug 17 23:44:18 2009
+Files:
+  asp_healpix/cmt/requirements  1.1.1.1
+  asp_healpix/data/Healpix  Neighbors
+  asp_healpix/data/srctest.fits  1.1.1.1
+  asp_healpix/doc/.cvsignore  1.1.1.1
+  asp_healpix/doc/release.notes  1.1.1.1
+  asp_healpix/healpix/HealPixel.h  1.1.1.1
+  asp_healpix/healpix/Map.h  1.1.1.1
+  asp_healpix/healpix/HeallpixMap.h  1.1.1.1
+  asp_healpix/healpix/CosineBinner.h  1.1.1.1
+  asp_healpix/healpix/HealpixArray.h  1.1.1.1
+  asp_healpix/healpix/AlmOp.h  1.1.1.1
+  asp_healpix/healpix/Healpix.h  1.1.1.1
+  asp_healpix/healpix/HealpixArrayIO.h  1.1.1.1
+  asp_healpix/healpix/HealpixMap.h  1.1.1.1
+  asp_healpix/src/bluestein.pp  1.1.1.1
+  asp_healpix/src/HealpixArrayIO.cxx  1.1.1.1
+  asp_healpix/src/ls_fft.pp  1.1.1.1
+  asp_healpix/src/Healpix.cxx  1.1.1.1
+  asp_healpix/src/CosineBinner.cxx  1.1.1.1
+  asp_healpix/src/Map.cxx  1.1.1.1
+  asp_healpix/src/fftpack.pp  1.1.1.1
+  asp_healpix/src/mainpage.h  1.1.1.1
+  asp_healpix/src/HealPixel.cxx  1.1.1.1
+  asp_healpix/src/swig_setup.in  1.1.1.1
+  asp_healpix/src/HealpixMap.cxx  1.1.1.1
+  asp_healpix/src/AlmOp.cxx  1.1.1.1
+  asp_healpix/src/base/ylmgen.h  1.1.1.1
+  asp_healpix/src/base/rotmatrix.h  1.1.1.1
+  asp_healpix/src/base/alm_map_tools.cc  1.1.1.1
+  asp_healpix/src/base/pointing.h  1.1.1.1
+  asp_healpix/src/base/healpix_map.cc  1.1.1.1
+  asp_healpix/src/base/planck_rng.h  1.1.1.1
+  asp_healpix/src/base/powspec.h  1.1.1.1
+  asp_healpix/src/base/ls_fft.h  1.1.1.1
+  asp_healpix/src/base/healpix_base.h  1.1.1.1
+  asp_healpix/src/base/rotmatrix.cc  1.1.1.1
+  asp_healpix/src/base/xcomplex.h  1.1.1.1
+  asp_healpix/src/base/ls_fft.ph  1.1.1.1
+  asp_healpix/src/base/cxxutils.h  1.1.1.1
+  asp_healpix/src/base/fitshandle.cc  1.1.1.1
+  asp_healpix/src/base/healpix_map.h  1.1.1.1
+  asp_healpix/src/base/alm_filter_tools.cc  1.1.1.1
+  asp_healpix/src/base/message_error.h  1.1.1.1
+  asp_healpix/src/base/healpix_map_fitsio.cc  1.1.1.1
+  asp_healpix/src/base/alm_filter_tools.h  1.1.1.1
+  asp_healpix/src/base/arr.h  1.1.1.1
+  asp_healpix/src/base/alm_map_tools.h  1.1.1.1
+  asp_healpix/src/base/fftpack_support.h  1.1.1.1
+  asp_healpix/src/base/constants.h  1.1.1.1
+  asp_healpix/src/base/bluestein.ph  1.1.1.1
+  asp_healpix/src/base/datatypes.h  1.1.1.1
+  asp_healpix/src/base/healpix_map_fitsio.h  1.1.1.1
+  asp_healpix/src/base/fftpack.c  1.1.1.1
+  asp_healpix/src/base/ls_fft.c  1.1.1.1
+  asp_healpix/src/base/powspec.cc  1.1.1.1
+  asp_healpix/src/base/bluestein.h  1.1.1.1
+  asp_healpix/src/base/alm_powspec_tools.cc  1.1.1.1
+  asp_healpix/src/base/healpix_base.cc  1.1.1.1
+  asp_healpix/src/base/cxxutils.cc  1.1.1.1
+  asp_healpix/src/base/alm.h  1.1.1.1
+  asp_healpix/src/base/vec3.h  1.1.1.1
+  asp_healpix/src/base/fitshandle.h  1.1.1.1
+  asp_healpix/src/base/longnam.h  1.1.1.1
+  asp_healpix/src/base/fftpack.h  1.1.1.1
+  asp_healpix/src/base/bluestein.c  1.1.1.1
+  asp_healpix/src/base/fftpack.ph  1.1.1.1
+  asp_healpix/src/base/openmp_support.h  1.1.1.1
+  asp_healpix/src/base/alm_powspec_tools.h  1.1.1.1
+  asp_healpix/src/test/TestHealpix.h  1.1.1.1
+  asp_healpix/src/test/TestHealpixArray.h  1.1.1.1
+  asp_healpix/src/test/test_healpix.cxx  1.1.1.1
+
+    *
+------------------------------------------------------------
 User: jchiang  Mon Aug 17 09:09:57 PDT 2009
 ASP/asp_healpix
 

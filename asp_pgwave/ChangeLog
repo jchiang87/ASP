@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Tue Aug 18 11:25:51 PDT 2009
+ASP/asp_pgwave/python
+
+Modified Files:
+	getPgwInputData.py 
+Log Message:
+enable filtering using EVENT_CLASS instead of CTBCLASSLEVEL
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-03-00-00, operation: add
 Package: asp_pgwave

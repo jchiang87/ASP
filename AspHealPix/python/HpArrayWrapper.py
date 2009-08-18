@@ -8,7 +8,7 @@ attribute access to underlying HealpixArray and Healpix objects.
 #
 # $Header$
 #
-import numarray as num
+import numpy as num
 from HealPix import Healpix, SkyDir, HealpixArray, CountsArray, ExposureArray
 import hippoplotter as plot
 

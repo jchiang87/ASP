@@ -1,5 +1,5 @@
 package AspHealPix
-version v0
+version v0r0p3
 
 author James Chiang <jchiang@slac.stanford.edu>
 
@@ -7,7 +7,7 @@ author James Chiang <jchiang@slac.stanford.edu>
 
 use SwigPolicy v*
 use astro v*
-use healpix v*
+use asp_healpix * ASP
 use irfInterface v* irfs
 use irfLoader v* irfs
 use map_tools v*
@@ -23,7 +23,7 @@ macro source *.cxx WIN32 "*.h *.cxx"
 library AspHealPix $(source)
 
 path_remove PYTHONPATH AspHealPix
-path_append PYTHONPATH $(HEALPIXROOT)/$(BINDIR)
-path_append PYTHONPATH $(HEALPIXROOT)/python
+path_append PYTHONPATH $(ASPHEALPIXROOT)/$(BINDIR)
+path_append PYTHONPATH $(ASPHEALPIXROOT)/python
 
 apply_pattern swig_module name="AspHealPix"

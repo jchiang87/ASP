@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:27:54 PDT 2009
+ASP/asp_pgwave/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use asp_pointlike et al.; tagging v1r10
+    *
+------------------------------------------------------------
 TAG
 Tag name: v1r9p5, operation: add
 Package: asp_pgwave

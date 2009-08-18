@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    * EOH *
+
     v4r8p2 30-Jun-09   JC   skip unreliable FERMI_LAT_POSITION notices in
                             GRB_refinement task; use reply_to feature for
                             sending alert email from BlindSearch; bug-fix

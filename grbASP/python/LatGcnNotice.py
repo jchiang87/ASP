@@ -77,7 +77,7 @@ def sexigesimal(ra, dec):
  
 def dec_string(dec, sexiges):
     if dec >= 0:
-        return '+%6.3fd {%s}' % (dec, sexiges)
+        return '%6.3fd {%s}' % (dec, sexiges)
     else:
         return '%7.3fd {%s}' % (dec, sexiges)
 

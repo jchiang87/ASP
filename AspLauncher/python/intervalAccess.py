@@ -56,7 +56,8 @@ def insertInterval(id, freq, tstart, tstop):
     sql = sql_template % (id, freq, tstart, tstop)
     dbAccess.apply(sql)
 
-def insertNewIntervals(nMetStart, nMetStop, freqtype=0):
+def insertNewIntervals(nMetStart, nMetStop, freqtype=0,
+                       omit_prior_intervals=False):
     freqs = getFrequencies(freqtype)
     for freq in freqs:
         sql = ("select interval_number, tstart, tstop from timeintervals " +
@@ -70,6 +71,8 @@ def insertNewIntervals(nMetStart, nMetStop, freqtype=0):
             interval_number += 1
             tstart = tstop
             tstop += freqs[freq]
+            if omit_prior_intervals and nMetStart > tstop:
+               continue
             insertInterval(interval_number, freq, tstart, tstop)
             print "Inserting into TIMEINTERVALS table:", \
                 freq, interval_number, tstart, tstop

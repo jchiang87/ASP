@@ -5,6 +5,8 @@
     $Id$
 
     @verbatim
+    * EOH *
+
     v1r9p5 30-Jun-09   JC   accommodate interface change in pointlike in
                             asp_pgwave/refinePositions.py
     v1r9p4 30-Jun-09   JC   add ATEL as a valid sourcesub_type for point source

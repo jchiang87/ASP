@@ -16,10 +16,13 @@ import pyfits
 from FitsNTuple import FitsNTuple
 import numpy as num
 import celgal
+import copy
 
 from pointfit import photonmap
-from skymaps import DiffuseFunction, Background
-from pointlike import SkyDir, SourceList, Source, PointSourceLikelihood
+from asp_skymaps import DiffuseFunction, Background
+from asp_pointlike import SkyDir, SourceList, Source, PointSourceLikelihood
+#from skymaps import DiffuseFunction, Background
+#from pointlike import SkyDir, SourceList, Source, PointSourceLikelihood
 
 converter = celgal.celgal()
 
@@ -64,10 +67,19 @@ class PgwaveData(list):
                 output.write("\n")
         output.close()
 
+def convert_for_pointfit(infile, outfile):
+    ft1 = pyfits.open(infile)
+    data = copy.deepcopy(ft1['EVENTS'].data)
+    for i, item in enumerate(data.field('CONVERSION_TYPE')):
+        data.field('EVENT_CLASS')[i] = item
+    ft1['EVENTS'].data = data
+    ft1.writeto(outfile, clobber=True)
+
 def refinePositions(pgwave_list,
                     ft1File, glat_cutoff=5,
                     TS_cutoff=10, use_bg=True):
 
+    convert_for_pointfit(ft1File, ft1File)
     srclist = PgwaveData(pgwave_list)
     data = photonmap(ft1File, pixeloutput=None, eventtype=-1)
     #data.info()
@@ -93,7 +105,7 @@ def refinePositions(pgwave_list,
                                              source.dir.dec()))
         fit = PointSourceLikelihood(data.map(), source.name, source.dir)
         source.dir, source.TS = fit.dir(), fit.TS
-	sigma = fit.localize()
+        sigma = fit.localize(2)
 	source.sigma = sigma
 	print source.name, source.dir.ra(), source.dir.dec(), sigma, source.TS()
         output.write(("  %8.3f"*5 + "\n") % (source.dir.ra(), source.dir.dec(),

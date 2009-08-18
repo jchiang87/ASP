@@ -125,6 +125,12 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
                       expCube=None, irfs=irfs)
     like = UnbinnedAnalysis(obs, srcModelFile, optimizer)
     like[0].setBounds(0, 1e7)
+    #
+    # Another check for zero exposure.
+    #
+    if sum(like[name].src.exposure()) == 0:
+        raise ZeroFt1EventsError
+
     like.fit()
     like.writeXml()
     like.writeCountsSpectra(spectrumFile)

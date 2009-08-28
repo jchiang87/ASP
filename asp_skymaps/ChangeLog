@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: jrb  Fri Aug 28 15:13:12 PDT 2009
+ASP/asp_skymaps
+
+Modified Files:
+	.cvsignore SConscript 
+Added Files:
+	asp_skymapsLib.py 
+Log Message:
+Changes/additions for SCons build
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-03-00-00, operation: add
 Package: asp_skymaps

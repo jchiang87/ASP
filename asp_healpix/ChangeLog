@@ -1,4 +1,17 @@
 ------------------------------------------------------------
+User: jrb  Fri Aug 28 15:08:11 PDT 2009
+ASP/asp_healpix
+
+Modified Files:
+	.cvsignore SConscript 
+Added Files:
+	asp_healpixLib.py 
+Log Message:
+SConscript, asp_healpixLib.py needed for SCons build
+.cvsignore:  ignore build, *.pyc
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-03-00-00, operation: add
 Package: asp_healpix

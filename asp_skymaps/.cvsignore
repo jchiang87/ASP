@@ -6,4 +6,6 @@ rh*
 VC*
 VS*
 vcc*
+build
+*.pyc
 

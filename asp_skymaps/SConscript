@@ -1,6 +1,6 @@
 # -*- python -*-
 # @file SConscript
-# @brief scons build specifications for skymaps
+# @brief scons build specifications for asp_skymaps
 #
 # $Header$
 # Authors: J. Chiang <jchiang@slac.stanford.edu>
@@ -12,24 +12,25 @@ progEnv = baseEnv.Clone()
 libEnv = baseEnv.Clone()
 swigEnv = baseEnv.Clone()
 
-progEnv.Tool('skymapsLib')
+progEnv.Tool('asp_skymapsLib')
 test_healpix = progEnv.Program('test_skymaps', listFiles(['src/test/*.cxx']))
 
-libEnv.Tool('skymapsLib', depsOnly = 1)
+libEnv.Tool('asp_skymapsLib', depsOnly = 1)
 libEnv.Append(CPPPATH = ['#/healpix/','#/healpix/src'])
 skymapsLib = libEnv.SharedLibrary('skymaps', listFiles(['src/*.cxx']))
 
-swigEnv.Tool('skymapsLib')
+swigEnv.Tool('asp_skymapsLib')
 swigEnv.Append(CPPPATH = ['#/healpix/','#/healpix/src'])
 swigEnv.Replace(SHLIBPREFIX = '_')
 #swigEnv.Replace(SHLIBSUFFIX = '.pyd')
 swigEnv.Append(RPATH = swigEnv['LIBDIR'])
-pySkymapsLib = swigEnv.SharedLibrary('skymaps','python/swig_setup.i')
+pySkymapsLib = swigEnv.SwigLibrary('skymaps','python/swig_setup.i')
 
-progEnv.Tool('registerObjects', 
-        package = 'skymaps', 
-	includes = listFiles(['skymaps/*.h']),
-	libraries = [skymapsLib],
-	python = ['python/skymaps.py',pySkymapsLib],		
-	)
+progEnv.Tool('registerTargets', 
+             package = 'asp_skymaps', 
+             includes = listFiles(['skymaps/*.h']),
+             libraryCxts = [[skymapsLib, libEnv]],
+             swigLibraryCxts = [[pySkymapsLib, swigEnv]],
+             python = ['python/skymaps.py']
+             )
 

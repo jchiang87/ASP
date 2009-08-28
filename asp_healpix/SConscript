@@ -4,7 +4,7 @@
 #
 # $Header$
 # Authors: T. Burnett <tburnett@u.washington.edu>
-# Version: healpix-02-02-02
+# Version: asp_healpix-02-02-02
 
 Import('baseEnv')
 Import('listFiles')
@@ -13,11 +13,14 @@ libEnv = baseEnv.Clone()
 
 progEnv.Tool('healpixLib')
 libEnv.Tool('healpixLib', depsOnly = 1)
-progEnv.Tool('registerObjects', 
-      package = 'healpix', 
+progEnv.Tool('registerTargets', 
+      package = 'asp_healpix', 
       includes = listFiles(['healpix/*.h','src/base/*.h']),
-      libraries = [libEnv.SharedLibrary('healpix', 
-                    listFiles(['src/*.cxx', 'src/base/*.cc', 'src/base/*.c']))],
-      testApps = [progEnv.Program('test_healpix', listFiles(['src/test/*.cxx']))],
+      libraryCxts = [[libEnv.SharedLibrary('healpix', 
+                                           listFiles(['src/*.cxx','src/base/*.cc',
+                                                      'src/base/*.c'])),
+                      libEnv]],
+      testAppCxts = [[progEnv.Program('test_healpix',
+                                      listFiles(['src/test/*.cxx'])),progEnv]]
       )
 	      

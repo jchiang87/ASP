@@ -6,3 +6,5 @@ rh72*
 VC*
 VS2005
 rh*
+build
+*.pyc

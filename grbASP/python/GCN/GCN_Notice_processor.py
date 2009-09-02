@@ -73,10 +73,12 @@ class GcnNoticeEmail(object):
                 trig_value = line[12:].split()[0].split(',')[0]
                 self.trignum = int(trig_value)
             if (line.find('GRB_DATE:') == 0 or
-                line.find('IMG_START_DATE:') == 0):
+                line.find('IMG_START_DATE:') == 0 or
+                line.find('POINT_DATE:') == 0):
                 self.TJD = int(line.split()[1])
             if (line.find('GRB_TIME:') == 0 or
-                line.find('IMG_START_TIME:') == 0):
+                line.find('IMG_START_TIME:') == 0 or
+                line.find('POINT_TIME:') == 0):
                 self.SOD = int(float(line.split()[1]))
             if body:
                 self.lines.append(line)
@@ -151,7 +153,6 @@ if __name__ == '__main__':
         forwardErrorMessage(msg)
 
     try:
-#        if my_notice.mission_name != "GLAST" or my_notice.trignum != 99999:
         if (my_notice.mission_name.lower() != "fermi" or 
             my_notice.trignum != 99999):
             my_notice.resend(('jchiang@slac.stanford.edu', 

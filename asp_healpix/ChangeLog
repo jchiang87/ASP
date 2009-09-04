@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: jrb  Fri Sep  4 11:34:42 PDT 2009
+ASP/asp_healpix
+
+Modified Files:
+	SConscript 
+Log Message:
+Move include files in src/base to healpix/base so that they can be
+installed in a natural manner
+Other changes to SConscript to bring up to date
+
+    *
+------------------------------------------------------------
 User: jrb  Fri Sep  4 11:25:42 PDT 2009
 ASP/asp_healpix/healpix/base
 

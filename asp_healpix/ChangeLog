@@ -1,4 +1,26 @@
 ------------------------------------------------------------
+User: jrb  Fri Sep  4 11:34:45 PDT 2009
+ASP/asp_healpix/src/base
+
+Modified Files:
+	alm_filter_tools.cc alm_map_tools.cc alm_powspec_tools.cc 
+	bluestein.c cxxutils.cc fftpack.c fitshandle.cc 
+	healpix_base.cc healpix_map.cc healpix_map_fitsio.cc ls_fft.c 
+	powspec.cc rotmatrix.cc 
+Removed Files:
+	alm.h alm_filter_tools.h alm_map_tools.h alm_powspec_tools.h 
+	arr.h bluestein.h constants.h cxxutils.h datatypes.h fftpack.h 
+	fftpack_support.h fitshandle.h healpix_base.h healpix_map.h 
+	healpix_map_fitsio.h longnam.h ls_fft.h message_error.h 
+	openmp_support.h planck_rng.h pointing.h powspec.h rotmatrix.h 
+	vec3.h xcomplex.h ylmgen.h 
+Log Message:
+Move include files in src/base to healpix/base so that they can be
+installed in a natural manner
+Other changes to SConscript to bring up to date
+
+    *
+------------------------------------------------------------
 User: jrb  Fri Sep  4 11:34:43 PDT 2009
 ASP/asp_healpix/src
 

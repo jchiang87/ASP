@@ -7,9 +7,9 @@ $Header$
 */
 
 #include "healpix/AlmOp.h"
-#include "base/xcomplex.h"
-#include "base/alm.h"
-#include "base/cxxutils.h"
+#include "healpix/base/xcomplex.h"
+#include "healpix/base/alm.h"
+#include "healpix/base/cxxutils.h"
 
 using namespace healpix;
 

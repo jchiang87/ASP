@@ -38,8 +38,8 @@
 #include <vector>
 #include <map>
 #include "fitsio.h"
-#include "fitshandle.h"
-#include "cxxutils.h"
+#include "healpix/base/fitshandle.h"
+#include "healpix/base/cxxutils.h"
 
 using namespace std;
 

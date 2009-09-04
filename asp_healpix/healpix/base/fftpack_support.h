@@ -33,7 +33,7 @@
 #define PLANCK_FFTPACK_SUPPORT_H
 
 #include "ls_fft.h"
-#include "arr.h"
+#include "healpix/base/arr.h"
 #include "xcomplex.h"
 
 class cfft

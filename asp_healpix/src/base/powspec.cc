@@ -29,7 +29,7 @@
  *  Author: Martin Reinecke
  */
 
-#include "powspec.h"
+#include "healpix/base/powspec.h"
 
 using namespace std;
 

@@ -14,8 +14,8 @@ libEnv = baseEnv.Clone()
 progEnv.Tool('healpixLib')
 libEnv.Tool('healpixLib', depsOnly = 1)
 progEnv.Tool('registerTargets', 
-      package = 'asp_healpix', 
-      includes = listFiles(['healpix/*.h','src/base/*.h']),
+      package = 'healpix', 
+      includes = listFiles(['healpix/*.h','healpix/base/*.h']),
       libraryCxts = [[libEnv.SharedLibrary('healpix', 
                                            listFiles(['src/*.cxx','src/base/*.cc',
                                                       'src/base/*.c'])),

@@ -29,9 +29,9 @@
  *  Author: Martin Reinecke
  */
 
-#include "healpix_map_fitsio.h"
-#include "healpix_map.h"
-#include "fitshandle.h"
+#include "healpix/base/healpix_map_fitsio.h"
+#include "healpix/base/healpix_map.h"
+#include "healpix/base/fitshandle.h"
 
 using namespace std;
 

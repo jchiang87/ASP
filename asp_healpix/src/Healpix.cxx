@@ -7,9 +7,9 @@
 /* Local Includes */
 
 #include "healpix/Healpix.h"
-#include "base/healpix_base.h"
-#include "base/pointing.h" ///< NASA library for ra,d
-#include "base/arr.h"
+#include "healpix/base/healpix_base.h"
+#include "healpix/base/pointing.h" ///< NASA library for ra,d
+#include "healpix/base/arr.h"
 
 ///< NASA healpix class
 /* Standard Includes */

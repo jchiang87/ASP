@@ -9,13 +9,13 @@ $Header$
 #include "healpix/Map.h"
 #include "healpix/AlmOp.h"
 #include "healpix/HealPixel.h"
-#include "base/healpix_map.h"
-#include "base/healpix_map_fitsio.h"
-#include "base/alm_map_tools.h"
-#include "base/alm_powspec_tools.h"
-#include "base/alm_filter_tools.h"
-#include "base/powspec.h"
-#include "base/fitshandle.h"
+#include "healpix/base/healpix_map.h"
+#include "healpix/base/healpix_map_fitsio.h"
+#include "healpix/base/alm_map_tools.h"
+#include "healpix/base/alm_powspec_tools.h"
+#include "healpix/base/alm_filter_tools.h"
+#include "healpix/base/powspec.h"
+#include "healpix/base/fitshandle.h"
 
 using namespace healpix;
 

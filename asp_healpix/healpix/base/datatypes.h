@@ -37,7 +37,7 @@
 #define PLANCK_DATATYPES_H
 
 #include <string>
-#include "message_error.h"
+#include "healpix/base/message_error.h"
 
 // Template magic to select the proper data types. These templates
 // should not be used outside this file.

@@ -44,7 +44,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fftpack.h"
+#include "healpix/base/fftpack.h"
 
 static void passf2(int ido, int l1, const double *cc, double *ch,
   const double *wa1)

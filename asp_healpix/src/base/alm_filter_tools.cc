@@ -1,11 +1,11 @@
-#include "alm_filter_tools.h"
-#include "alm.h"
-#include "powspec.h"
-#include "alm_powspec_tools.h"
-#include "healpix_map.h"
-#include "fftpack_support.h"
-#include "ylmgen.h"
-#include "openmp_support.h"
+#include "healpix/base/alm_filter_tools.h"
+#include "healpix/base/alm.h"
+#include "healpix/base/powspec.h"
+#include "healpix/base/alm_powspec_tools.h"
+#include "healpix/base/healpix_map.h"
+#include "healpix/base/fftpack_support.h"
+#include "healpix/base/ylmgen.h"
+#include "healpix/base/openmp_support.h"
 using namespace std;
 
 template<typename T> void mf_constantnoise(Alm<T> &sky,Alm<T> &psf) {

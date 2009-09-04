@@ -35,8 +35,8 @@
 #define PLANCK_ROTMATRIX_H
 
 #include <iostream>
-#include "cxxutils.h"
-#include "vec3.h"
+#include "healpix/base/cxxutils.h"
+#include "healpix/base/vec3.h"
 
 /*! \defgroup rotmatrixgroup Rotation matrices */
 /*! \{ */

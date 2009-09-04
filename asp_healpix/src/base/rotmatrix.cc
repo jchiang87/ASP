@@ -31,9 +31,9 @@
  *  Author: Martin Reinecke
  */
 
-#include "rotmatrix.h"
-#include "vec3.h"
-#include "constants.h"
+#include "healpix/base/rotmatrix.h"
+#include "healpix/base/vec3.h"
+#include "healpix/base/constants.h"
 #include <algorithm>
 
 using namespace std;

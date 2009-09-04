@@ -34,7 +34,7 @@
 #ifndef PLANCK_ARR_H
 #define PLANCK_ARR_H
 
-#include "cxxutils.h"
+#include "healpix/base/cxxutils.h"
 #include <algorithm>
 
 /*! \defgroup arraygroup Array classes */

@@ -29,13 +29,13 @@
  *  Author: Martin Reinecke
  */
 
-#include "alm_powspec_tools.h"
-#include "alm.h"
-#include "planck_rng.h"
-#include "powspec.h"
-#include "xcomplex.h"
-#include "rotmatrix.h"
-#include "openmp_support.h"
+#include "healpix/base/alm_powspec_tools.h"
+#include "healpix/base/alm.h"
+#include "healpix/base/planck_rng.h"
+#include "healpix/base/powspec.h"
+#include "healpix/base/xcomplex.h"
+#include "healpix/base/rotmatrix.h"
+#include "healpix/base/openmp_support.h"
 
 using namespace std;
 template<typename T> void create_alm

@@ -7,7 +7,7 @@ $Header$
 */
 
 #include "xcomplex.h"
-#include "arr.h"
+#include "healpix/base/arr.h"
 #include "alm_map_tools.h"
 #include <cmath>
 

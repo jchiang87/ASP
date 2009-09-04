@@ -35,8 +35,8 @@
 #define HEALPIX_YLMGEN_H
 
 #include <cmath>
-#include "arr.h"
-#include "constants.h"
+#include "healpix/base/arr.h"
+#include "healpix/base/constants.h"
 
 /*! Class for efficient calculation of Y_lm(theta,phi=0) */
 class Ylmgen

@@ -32,9 +32,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include "bluestein.h"
-#include "fftpack.h"
-#include "ls_fft.h"
+#include "healpix/base/bluestein.h"
+#include "healpix/base/fftpack.h"
+#include "healpix/base/ls_fft.h"
 
 complex_plan make_complex_plan (int length)
   {

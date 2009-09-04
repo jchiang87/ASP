@@ -39,7 +39,7 @@
 #define PLANCK_RNG_H
 
 #include <cmath>
-#include "cxxutils.h"
+#include "healpix/base/cxxutils.h"
 
 /*! C++ port of the xorshift generator xor128() described in Marsaglia,
     Journal of Statistical Software 2003, vol 8.

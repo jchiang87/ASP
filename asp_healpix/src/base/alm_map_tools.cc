@@ -29,12 +29,12 @@
  *  Author: Martin Reinecke
  */
 
-#include "alm_map_tools.h"
-#include "alm.h"
-#include "healpix_map.h"
-#include "fftpack_support.h"
-#include "ylmgen.h"
-#include "xcomplex.h"
+#include "healpix/base/alm_map_tools.h"
+#include "healpix/base/alm.h"
+#include "healpix/base/healpix_map.h"
+#include "healpix/base/fftpack_support.h"
+#include "healpix/base/ylmgen.h"
+#include "healpix/base/xcomplex.h"
 
 using namespace std;
 

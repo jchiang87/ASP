@@ -33,7 +33,7 @@
 #define HEALPIX_ALM_MAP_TOOLS_H
 
 #include "xcomplex.h"
-#include "arr.h"
+#include "healpix/base/arr.h"
 
 template<typename T> class Alm;
 template<typename T> class Healpix_Map;

@@ -37,7 +37,7 @@
 #include <string>
 #include <vector>
 #include "fitsio.h"
-#include "arr.h"
+#include "healpix/base/arr.h"
 #include "datatypes.h"
 
 /*! \defgroup fitsgroup FITS-related functionality */

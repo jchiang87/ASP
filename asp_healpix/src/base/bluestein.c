@@ -31,8 +31,8 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include "fftpack.h"
-#include "bluestein.h"
+#include "healpix/base/fftpack.h"
+#include "healpix/base/bluestein.h"
 
 /* returns the largest prime factor of n */
 int largest_prime_factor (int n)

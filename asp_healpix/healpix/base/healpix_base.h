@@ -33,8 +33,8 @@
 #define HEALPIX_BASE_H
 
 #include <vector>
-#include "constants.h"
-#include "pointing.h"
+#include "healpix/base/constants.h"
+#include "healpix/base/pointing.h"
 template<typename T, unsigned int sz> class fix_arr;
 
 /*! The two possible ordering schemes of a HEALPix map. */

@@ -16,6 +16,7 @@ private
 macro source *.cxx WIN32 "*.h *.cxx"
 library asp_healpix \
  -s=../healpix $(source) \
+ -s=../healpix/base $(source) \
  -s=../src $(source) \
  -s=base $(source) *.cc *.c
 

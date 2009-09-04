@@ -29,7 +29,7 @@
  *  Author: Martin Reinecke
  */
 
-#include "healpix_map.h"
+#include "healpix/base/healpix_map.h"
 
 using namespace std;
 

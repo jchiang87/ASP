@@ -38,8 +38,8 @@
 #include <string>
 #include <map>
 #include <cmath>
-#include "message_error.h"
-#include "constants.h"
+#include "healpix/base/message_error.h"
+#include "healpix/base/constants.h"
 
 /*! \defgroup mathutilsgroup Mathematical helper functions */
 /*! \{ */

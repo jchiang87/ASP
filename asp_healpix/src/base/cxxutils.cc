@@ -45,7 +45,7 @@
 #include <iomanip>
 #include <string>
 #include <cstdio>
-#include "cxxutils.h"
+#include "healpix/base/cxxutils.h"
 
 using namespace std;
 

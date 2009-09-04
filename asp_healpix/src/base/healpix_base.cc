@@ -29,10 +29,10 @@
  *  Author: Martin Reinecke
  */
 
-#include "healpix_base.h"
-#include "cxxutils.h"
-#include "pointing.h"
-#include "arr.h"
+#include "healpix/base/healpix_base.h"
+#include "healpix/base/cxxutils.h"
+#include "healpix/base/pointing.h"
+#include "healpix/base/arr.h"
 
 using namespace std;
 

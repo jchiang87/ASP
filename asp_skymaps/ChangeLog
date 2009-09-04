@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: jrb  Fri Sep  4 11:39:16 PDT 2009
+ASP/asp_skymaps/src
+
+Modified Files:
+	Convolution.cxx 
+Log Message:
+SConscript: use registerTargets; get rid of unnecessary additions to CPPPATH
+Convolution.cxx:  find asp_healpix include in its new location
+
+    *
+------------------------------------------------------------
+User: jrb  Fri Sep  4 11:39:16 PDT 2009
 ASP/asp_skymaps
 
 Modified Files:

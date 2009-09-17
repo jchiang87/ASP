@@ -240,8 +240,7 @@ class FitsTemplate(object):
         """Delete EGRET Pulsars from output and TeV blazars that do not
         have "confirmed" LAT detection"""
         egretPulsars = ('Vela Pulsar', 'Geminga', 'Crab Pulsar', 
-                        'PSR J1706-44', '1ES 1959+650', 
-                        '1ES 2344+514', 'H 1426+428')
+                        'PSR J1706-44')
         for item in egretPulsars:
             try:
                 del ptsrcs[item]

@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: jrb  Thu Oct  1 16:58:54 PDT 2009
+ASP/asp_pointlike/python
+
+Added Files:
+	swig_setup.i 
+Removed Files:
+	asp_pointlike.py 
+Log Message:
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 16:58:54 PDT 2009
 ASP/asp_pointlike
 
 Modified Files:

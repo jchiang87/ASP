@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: jrb  Thu Oct  1 16:58:54 PDT 2009
+ASP/asp_pointlike
+
+Modified Files:
+	.cvsignore SConscript 
+Added Files:
+	asp_pointlikeLib.py 
+Log Message:
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-03-00-00, operation: add
 Package: asp_pointlike

@@ -4,7 +4,7 @@
 #$Header$
 def generate(env, **kw):
 	if not kw.get('depsOnly',0):
-		env.Tool('addLibrary', library=['skymaps'])
+		env.Tool('addLibrary', library=['asp_skymaps'])
         depends = 'facilities tip st_facilities asp_healpix embed_python'.split()
         for pack in depends: env.Tool(pack+'Lib')
 

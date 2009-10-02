@@ -7,6 +7,7 @@
     @verbatim
     * EOH *
 
+ BayesianBlocks-01-02-01 01-Oct-2009    jrb Updates for SCons build
     v1r2   15-Jul-09   JC   fixes for binned data
     v1r1   30-Jun-09   JC   use new Likelihood::ScData interface
     v1r0p1 08-Apr-09   JC   switch to numpy

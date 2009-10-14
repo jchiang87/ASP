@@ -205,15 +205,12 @@ double BayesianBlocks::highestBinDensity() const {
 double BayesianBlocks::blockCost(size_t imin, size_t imax) const {
    double size = blockSize(imin, imax);
    double content = blockContent(imin, imax);
+   if (::getenv("USE_ML_COST")) {
+      return content*(std::log(content) - std::log(size) - 1);
+   }
    double arg = size - content;
    if (arg > 0) {
-      double my_cost;
-      if (::getenv("USE_ML_COST")) {
-         my_cost = content*(std::log(content) - std::log(size) - 1);
-      } else {
-         my_cost = gammln(content + 1.) + gammln(arg + 1.) - gammln(size + 2.);
-      }
-      return my_cost;
+      return gammln(content + 1.) + gammln(arg + 1.) - gammln(size + 2.);
    }
    return -log(size);
 }

@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: jrb  Wed Oct 14 13:51:27 PDT 2009
+ASP/asp_skymaps
+
+Modified Files:
+	SConscript 
+Log Message:
+SConscript:  get rid of unnecessary RPATH def.
+swig_setup:  $HEALPIXROOT changed to $ASP_HEALPIXROOT
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_skymaps-01-13-02, operation: add
 Package: asp_skymaps

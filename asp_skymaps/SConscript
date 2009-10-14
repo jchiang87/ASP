@@ -19,9 +19,9 @@ libEnv.Tool('asp_skymapsLib', depsOnly = 1)
 skymapsLib = libEnv.SharedLibrary('asp_skymaps', listFiles(['src/*.cxx']))
 
 swigEnv.Tool('asp_skymapsLib')
-#swigEnv.Replace(SHLIBPREFIX = '_')
-#swigEnv.Replace(SHLIBSUFFIX = '.pyd')
-swigEnv.Append(RPATH = swigEnv['LIBDIR'])
+
+#Try commenting out next line in hopes we don't need it
+####swigEnv.Append(RPATH = swigEnv['LIBDIR'])
 pySkymapsLib = swigEnv.SwigLibrary('_asp_skymaps','python/swig_setup.i')
 
 progEnv.Tool('registerTargets', 

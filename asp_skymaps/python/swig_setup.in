@@ -114,8 +114,8 @@ public:
 %include $(ASTROROOT)/astro/SkyDir.h
 %include $(ASTROROOT)/astro/Photon.h
 
-%include $(HEALPIXROOT)/healpix/Healpix.h
-%include $(HEALPIXROOT)/healpix/HealpixMap.h
+%include $(ASP_HEALPIXROOT)/healpix/Healpix.h
+%include $(ASP_HEALPIXROOT)/healpix/HealpixMap.h
 
 // fails now
 //%include $(HEALPIXROOT)/healpix/HealPixel.h

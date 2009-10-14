@@ -1,5 +1,16 @@
 ------------------------------------------------------------
 User: jrb  Wed Oct 14 13:51:27 PDT 2009
+ASP/asp_skymaps/python
+
+Modified Files:
+	swig_setup.in 
+Log Message:
+SConscript:  get rid of unnecessary RPATH def.
+swig_setup:  $HEALPIXROOT changed to $ASP_HEALPIXROOT
+
+    *
+------------------------------------------------------------
+User: jrb  Wed Oct 14 13:51:27 PDT 2009
 ASP/asp_skymaps
 
 Modified Files:

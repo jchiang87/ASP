@@ -13,10 +13,9 @@ ncp_prior = 8
 nsamp = 5000
 events = sample(func, nsamp)*2.*num.pi
 
-fine_blocks = BayesBlocks(events, ncp_prior)
-fine_lc = fine_blocks.lightCurve()
+fine_blocks = BayesBlocks(events)
 
-x, y = fine_lc.dataPoints()
+x, y = fine_blocks.lightCurve(ncp_prior)
 
 import hippoplotter as plot
 hist = plot.histogram(events, 'phi')
@@ -24,6 +23,6 @@ reps = hist.getDataReps()
 reps[0].setErrorDisplay('y', 1)
 plot.scatter(x, y, pointRep='Line', oplot=1, color='red')
 
-foo = BayesianBlocks(events, ncp_prior)
-xx, yy = foo.lightCurve()
+foo = BayesianBlocks(events)
+xx, yy = foo.lightCurve(ncp_prior)
 plot.scatter(xx, yy, pointRep='Line', oplot=1, color='green')

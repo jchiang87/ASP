@@ -3,8 +3,8 @@ import bisect
 from BayesianBlocks import BayesianBlocks, DoubleVector
 
 class BayesBlocks(BayesianBlocks):
-    def __init__(self, events, ncpPrior=1, useInterval=False):
-        BayesianBlocks.__init__(self, events, ncpPrior, useInterval)
+    def __init__(self, events, useInterval=False):
+        BayesianBlocks.__init__(self, events, useInterval)
     def setCellScaling(self, scaleFactors):
         BayesianBlocks.setCellScaling(self, scaleFactors)
     def lightCurve(self):

@@ -29,19 +29,19 @@ class BayesianBlocks {
    
 public:
 
-   BayesianBlocks(const std::vector<double> & eventTimes, double ncpPrior=1,
+   BayesianBlocks(const std::vector<double> & eventTimes,
                   bool useInterval=false);
   
    BayesianBlocks(const std::vector<double> & cellContent,
                   const std::vector<double> & cellBoundaries,
-                  const std::vector<double> & efficiencies,
-                  double ncpPrior=1);
+                  const std::vector<double> & efficiencies);
 
    ~BayesianBlocks() throw() {}
 
    void setCellContent(const std::vector<double> & cell_content);
 
-   void computeLightCurve(std::vector<double> & tmins,
+   void computeLightCurve(double ncpPrior,
+                          std::vector<double> & tmins,
                           std::vector<double> & tmaxs,
                           std::vector<double> & numEvents,
                           std::vector<double> & exposures);
@@ -56,14 +56,6 @@ public:
 
    void getCellBoundaries(std::vector<double> & cellBoundaries, 
                           bool scaled=true) const;
-
-   void setNcpPrior(double ncpPrior) {
-      m_ncpPrior = ncpPrior;
-   }
-
-   double ncpPrior() const {
-      return m_ncpPrior;
-   }
 
    const std::vector<double> & eventTimes() const {
       return m_eventTimes;
@@ -86,15 +78,13 @@ private:
    std::deque<double> m_scaledBoundaries;
    std::vector<double> m_cellExposures;
 
-   double m_ncpPrior;
-
    bool m_useInterval;
 
    std::deque<size_t> m_changePoints;
 
    void createCells();
 
-   void globalOpt();
+   void globalOpt(double ncpPrior);
 
    void renormalize();
 

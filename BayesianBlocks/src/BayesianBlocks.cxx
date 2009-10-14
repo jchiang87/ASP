@@ -15,10 +15,10 @@
 #include "BayesianBlocks/BayesianBlocks.h"
 
 BayesianBlocks::BayesianBlocks(const std::vector<double> & eventTimes, 
-                               double ncpPrior, bool useInterval) 
+                               bool useInterval) 
    : m_binned(false), m_eventTimes(eventTimes), 
      m_cellContent(std::vector<double>(eventTimes.size(), 1)), 
-     m_ncpPrior(ncpPrior), m_useInterval(useInterval) {
+     m_useInterval(useInterval) {
    if (useInterval) {
       m_cellContent.pop_back();
    }
@@ -28,11 +28,9 @@ BayesianBlocks::BayesianBlocks(const std::vector<double> & eventTimes,
 
 BayesianBlocks::BayesianBlocks(const std::vector<double> & cellContent,
                                const std::vector<double> & cellBoundaries,
-                               const std::vector<double> & cellExposures,
-                               double ncpPrior) 
+                               const std::vector<double> & cellExposures)
    : m_binned(true), m_cellContent(cellContent), 
-     m_cellBoundaries(cellBoundaries), m_cellExposures(cellExposures),
-     m_ncpPrior(ncpPrior) {
+     m_cellBoundaries(cellBoundaries), m_cellExposures(cellExposures) {
    if (cellContent.size() != cellBoundaries.size() - 1 ||
        cellContent.size() != cellExposures.size()) {
       throw std::runtime_error("Inconsistent numbers of cells, cell "
@@ -73,11 +71,12 @@ int BayesianBlocks::setCellScaling(const std::vector<double> & scaleFactors) {
    return 1;
 }
 
-void BayesianBlocks::computeLightCurve(std::vector<double> & tmins,
+void BayesianBlocks::computeLightCurve(double ncpPrior,
+                                       std::vector<double> & tmins,
                                        std::vector<double> & tmaxs,
                                        std::vector<double> & numEvents,
-                                       std::vector<double> & exposures){
-   globalOpt();
+                                       std::vector<double> & exposures) {
+   globalOpt(ncpPrior);
    tmins.clear();
    tmaxs.clear();
    numEvents.clear();
@@ -117,17 +116,17 @@ void BayesianBlocks::getCellBoundaries(std::vector<double> & cellBoundaries,
    }
 }
 
-void BayesianBlocks::globalOpt() {
+void BayesianBlocks::globalOpt(double ncpPrior) {
    std::vector<double> opt;
-   opt.push_back(blockCost(0, 0) - m_ncpPrior);
+   opt.push_back(blockCost(0, 0) - ncpPrior);
    std::vector<size_t> last;
    last.push_back(0);
    size_t npts = m_cellContent.size();
    for (size_t nn = 1; nn < npts; nn++) {
-      double max_opt = blockCost(0, nn) - m_ncpPrior;
+      double max_opt = blockCost(0, nn) - ncpPrior;
       size_t jmax(0);
       for (size_t j = 1; j < nn+1; j++) {
-         double my_opt = opt[j-1] + blockCost(j, nn) - m_ncpPrior;
+         double my_opt = opt[j-1] + blockCost(j, nn) - ncpPrior;
          if (my_opt > max_opt) {
             max_opt = my_opt;
             jmax = j;

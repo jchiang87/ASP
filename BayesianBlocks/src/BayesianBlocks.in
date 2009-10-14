@@ -24,12 +24,12 @@
    static void enableFPE() {
       feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW);
    }
-   std::vector< std::vector<double> > lightCurve() {
+   std::vector< std::vector<double> > lightCurve(double ncpPrior) {
       std::vector<double> tmins;
       std::vector<double> tmaxs;
       std::vector<double> numEvents;
       std::vector<double> exposures;
-      self->computeLightCurve(tmins, tmaxs, numEvents, exposures);
+      self->computeLightCurve(ncpPrior, tmins, tmaxs, numEvents, exposures);
 
       std::vector<double> xx;
       std::vector<double> yy;

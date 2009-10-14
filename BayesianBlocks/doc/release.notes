@@ -7,6 +7,7 @@
     @verbatim
     * EOH *
 
+ BayesianBlocks-02-00-00 14-Oct-2009 jchiang refactor interface to pass ncpPrior as parameter to lightCurve method; have that method return the reconstructed light curve directly
  BayesianBlocks-01-02-01 01-Oct-2009    jrb Updates for SCons build
     v1r2   15-Jul-09   JC   fixes for binned data
     v1r1   30-Jun-09   JC   use new Likelihood::ScData interface

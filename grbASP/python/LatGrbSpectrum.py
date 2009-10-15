@@ -157,6 +157,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
 
     Ts = like.Ts(name)
     if Ts < 25:
+        sys.path.insert(0, '.')
         from UpperLimits import UpperLimits
         ul = UpperLimits(like)
         upper_limit = ul[name].compute(renorm=True, emin=100, emax=3e5)

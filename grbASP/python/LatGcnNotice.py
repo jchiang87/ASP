@@ -298,5 +298,6 @@ if __name__ == '__main__':
         mailer = MultiPartMailer("FERMI_LAT_GND_REF_IMPORT")
         mailer.add_text(str(notice.notice))
         mailer.finish()
+#        mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",))
         mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",
                                                   "vxw@capella.gsfc.nasa.gov"))

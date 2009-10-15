@@ -59,10 +59,12 @@ class Packet(object):
                 elif line.find('arcsec') > 0:
                     self.posError /= (60.*60.)
             elif (line.find('GRB_DATE:') == 0 or 
-                  line.find('IMG_START_DATE') == 0):
+                  line.find('IMG_START_DATE') == 0 or 
+                  line.find('POINT_DATE') == 0):
                 self.TJD = int(line.split()[1])
             elif (line.find('GRB_TIME:') == 0 or 
-                  line.find('IMG_START_TIME') == 0):
+                  line.find('IMG_START_TIME') == 0 or 
+                  line.find('POINT_TIME') == 0):
                 self.SOD = int(float(line.split()[1]))
             elif line.find('NOTICE_DATE') == 0:
                 self._parseNoticeDate(line)

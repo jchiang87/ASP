@@ -62,6 +62,7 @@ gti = FitsNTuple('filtered.fits', 'GTI')
 is_covered = False
 for interval in zip(gti.START, gti.STOP):
     if interval[0] <= tstart and tstop <= interval[1]:
+#    if tstop <= interval[1]:
         is_covered = True
         break
 

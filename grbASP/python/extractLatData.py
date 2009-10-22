@@ -56,9 +56,8 @@ def extractLatData(gcnNotice, ft1File, config):
     gtbin.run()
     
     events = FitsNTuple(gtselect['outfile'], 'EVENTS')
-    bb = BayesBlocks(events.TIME, 4)
-    lc = bb.lightCurve()
-    x, y = lc.dataPoints()
+    bb = BayesBlocks(events.TIME)
+    x, y = bb.lightCurve(4)
 
     output = open(gcnNotice.Name + '_BB_lc.dat', 'w')
     for xx, yy in zip(x, y):

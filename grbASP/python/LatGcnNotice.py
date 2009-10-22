@@ -18,6 +18,7 @@ import dbAccess
 import numpy as num
 from FitsNTuple import FitsNTuple, FitsNTupleError
 from MultiPartMailer import MultiPartMailer
+from PipelineCommand import pipelineServer
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
@@ -294,10 +295,13 @@ if __name__ == '__main__':
         #
         # Send this notice for GCN broadcast.
         #
-#        mailer = MultiPartMailer("GCN/FERMI_LAT_GND_POSITION")
         mailer = MultiPartMailer("FERMI_LAT_GND_REF_IMPORT")
         mailer.add_text(str(notice.notice))
         mailer.finish()
-#        mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",))
-        mailer.send("jchiang@slac.stanford.edu", ("jchiang@slac.stanford.edu",
-                                                  "vxw@capella.gsfc.nasa.gov"))
+        if pipelineServer() == 'DEV':
+            mailer.send("jchiang@slac.stanford.edu", 
+                        ("jchiang@slac.stanford.edu",))
+        else:
+            mailer.send("jchiang@slac.stanford.edu", 
+                        ("jchiang@slac.stanford.edu",
+                         "vxw@capella.gsfc.nasa.gov"))

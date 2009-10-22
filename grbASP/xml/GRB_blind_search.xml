@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="4.2" type="Data">
+<task name="GRB_blind_search" version="4.5" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -44,7 +44,7 @@
       pipeline.writeFile(output)
     ]]></script>
   </process>
-  <process name="blind_search">
+  <process name="blind_search" autoRetryMaxAttempts="2">
     <job executable="${GRBASPROOT}/${BINDIR}/BlindSearch.sh"
          batchOptions="-q short">
     </job>

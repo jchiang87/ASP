@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="7.2" type="Data">
+<task name="GRB_afterglow" version="7.3" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -155,7 +155,7 @@
   </process>
 
   <process name="clean_up_files">
-    <job executable="${GRBASPROOT}/${BINDIR}/clean_up_files.sh"
+    <job executable="${GRBASPROOT}/${BINDIR}/grbASP_clean_up_files.sh"
          batchOptions="-q short" />
     <depends>
       <after process="registerArchive" status="SUCCESS" />

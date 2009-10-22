@@ -12,6 +12,7 @@ from getFitsData import getStagedFitsData
 from ft1merge import ft2merge, ft1_filter_merge
 from FitsNTuple import FitsNTuple
 from FileStager import FileStager
+from PipelineCommand import pipelineServer
 
 fcopy = GtApp('fcopy')
 gtselect = GtApp('gtselect')
@@ -40,6 +41,9 @@ gtselect = GtApp('gtselect')
 print "Using downlink files: ", ft1
 
 ft1Merged ='FT1_merged.fits'
+#
+# Use do-nothing default filter.
+#
 ft1_filter_merge(ft1, ft1Merged, filter_string(ft1[0]))
 
 ft2Merged = 'FT2_merged.fits'
@@ -67,21 +71,25 @@ try:
 except OSError:
     pass
 
-#
-# Perform CTBCLASSLEVEL cut when it is available.  @todo implement to
-# use ft1_filter string from SourceMonitoringConfig table
-#
-foo = FitsNTuple('time_filtered_events.fits', 'EVENTS')
-if 'CTBCLASSLEVEL' in foo.names:
-    fcopy = GtApp('fcopy')
-    fcopy.run(infile='time_filtered_events.fits[EVENTS][CTBCLASSLEVEL>1]',
-              outfile='Filtered.fits')
-elif 'EVENT_CLASS' in foo.names:
-    fcopy = GtApp('fcopy')
-    fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
-              outfile='Filtered.fits')
-else:
+if (pipelineServer() == 'DEV' and 
+    os.environ['datacatalog_imp'] != 'datacatalogPROD'):
     os.system('ln -s time_filtered_events.fits Filtered.fits')
+else:
+    # Prod (flight) data.
+    #
+    # Perform CTBCLASSLEVEL cut when it is available.  @todo implement
+    # to use ft1_filter string from SourceMonitoringConfig table
+    #
+    #
+    foo = FitsNTuple('time_filtered_events.fits', 'EVENTS')
+    if 'CTBCLASSLEVEL' in foo.names:
+        fcopy = GtApp('fcopy')
+        fcopy.run(infile='time_filtered_events.fits[EVENTS][CTBCLASSLEVEL>1]',
+                  outfile='Filtered.fits')
+    elif 'EVENT_CLASS' in foo.names:
+        fcopy = GtApp('fcopy')
+        fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
+                  outfile='Filtered.fits')
 
 #
 # apply zenith angle cut and energy cut

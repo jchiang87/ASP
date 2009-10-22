@@ -150,7 +150,7 @@
   </process>
 
   <process name="clean_up_files" autoRetryMaxAttempts="1">
-    <job executable="${DRPMONITORINGROOT}/${BINDIR}/clean_up_files.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/drp_clean_up_files.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="registerArchive" status="SUCCESS"/>

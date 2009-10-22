@@ -10,6 +10,12 @@ Generate ROIs for other sources found by pgwave.
 from read_data import read_data
 import databaseAccess as dbAccess
 from celgal import dist
+from parfile_parser import Parfile
+import pyfits
+
+from GtApp import GtApp
+gtselect = GtApp('gtselect')
+gtmktime = GtApp('gtmktime')
 
 class Roi(object):
     def __init__(self, ra, dec, rad, sr):
@@ -69,6 +75,37 @@ def assignNullRois(roiIds):
                    % (id, src[0]))
             dbAccess.apply(sql)
 
+def testRois(infile='rois.txt'):
+    """Perform the initial acceptance cone selection and GTI generation
+    and filtering for each roi.  Return a tuple of non-null
+    selections.
+    """
+    pars = Parfile('drp_pars.txt')
+    roi_ok = []
+    for id, ra, dec, rad, src_rad in zip(*read_data(infile)):
+        gtselect.run(infile=pars['ft1file'], outfile='ft1_events_no_zen.fits',
+                     ra=ra, dec=dec, rad=rad, emin=30, emax=3e5,
+                     tmin=pars['start_time'], tmax=pars['stop_time'])
+        gtmktime['evfile'] = gtselect['outfile']
+        gtmktime['outfile'] = 'ft1_events.fits'
+        gtmktime['scfile'] = pars['ft2file']
+        gtmktime['roicut'] = 'yes'
+        gtmktime['filter'] = 'LIVETIME>0'
+        try:
+            gtmktime.run()
+        except RuntimeError:
+            filter = "angsep(RA_ZENITH,DEC_ZENITH,RA_SCZ,DEC_SCZ)<47 || angsep(RA_ZENITH,DEC_ZENITH,%.3f,%.3f)<%.3f" % (ra, dec, pars['zenmax']-rad)
+            gtmktime.run(filter=filter, roicut='no')
+        ft1 = pyfits.open(gtmktime['outfile'])
+        if ft1['EVENTS'].header['NAXIS2'] > 0:
+            roi_ok.append(id)
+        #
+        # clean up
+        #
+        os.remove(gtselect['outfile'])
+        os.remove(gtmktime['outfile'])
+    return roi_ok
+
 if __name__ == '__main__':
     import os
     from read_data import read_data
@@ -110,7 +147,12 @@ if __name__ == '__main__':
 
     os.chmod('rois.txt', 0666)
 
-    rois = read_data('rois.txt')
-    nrois = len(rois[0])
-    roi_ids = ("%i "*nrois) % tuple(rois[0])
+#    rois = read_data('rois.txt')
+#    nrois = len(rois[0])
+#    roi_ids = ("%i "*nrois) % tuple(rois[0])
+#    pipeline.setVariable('ROI_IDS', roi_ids)
+
+    rois = testRois('rois.txt')
+    nrois = len(rois)
+    roi_ids = ("%i "*nrois) % tuple(rois)
     pipeline.setVariable('ROI_IDS', roi_ids)

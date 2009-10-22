@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Thu Oct 22 16:50:36 PDT 2009
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+add asp_pgwave_clean_up_files.py; clean up event class filtering in getPgwInputData.py; modify PGWave.xml
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct 22 16:50:36 PDT 2009
 ASP/asp_pgwave/python
 
 Modified Files:

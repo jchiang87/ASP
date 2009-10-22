@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: jchiang  Thu Oct 22 16:50:36 PDT 2009
+ASP/asp_pgwave/python
+
+Modified Files:
+	getPgwInputData.py 
+Added Files:
+	asp_pgwave_clean_up_files.py 
+Log Message:
+add asp_pgwave_clean_up_files.py; clean up event class filtering in getPgwInputData.py; modify PGWave.xml
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_pgwave-01-10-01, operation: add
 Package: asp_pgwave

@@ -11,11 +11,32 @@ various ASP tasks
 import os
 import time
 
-try:
-    _pipelineServer = os.environ['PIPELINESERVER']
-except KeyError:
-    _pipelineServer = 'PROD'
-    os.environ['PIPELINESERVER'] = _pipelineServer
+def pipelineServer():
+    try:
+        _pipelineServer = os.environ['PIPELINESERVER']
+    except KeyError:
+        _pipelineServer = 'PROD'
+        os.environ['PIPELINESERVER'] = _pipelineServer
+    #
+    # If this task is launched from a pipeline task, override _pipelineServer
+    # according to the value of the PIPELINE_FROMADDRESS env var.
+    #
+    try:
+        fromaddress = os.environ['PIPELINE_FROMADDRESS']
+        if fromaddress.find('pipeline-prod') == 0:
+            _pipelineServer = 'PROD'
+        elif fromaddress.find('pipeline-dev') == 0:
+            _pipelineServer = 'DEV'
+        elif fromaddress.find('pipeline-test') == 0:
+            _pipelineServer = 'TEST'
+        os.environ['PIPELINESERVER'] = _pipelineServer
+        print "overriding using pipeline_fromaddress: ", fromaddress
+    except KeyError:
+        # This is not being launched from a pipeline task.
+        pass
+    return _pipelineServer
+
+_pipelineServer = pipelineServer()
 
 #
 # If this task is launched from a pipeline task, override _pipelineServer

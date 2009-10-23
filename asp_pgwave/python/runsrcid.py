@@ -7,10 +7,6 @@ from AspHealPix import Healpix,Pixel, SkyDir
 import dbmanager as db
 import sendFAmail as smail
 import datetime as dt
-from GtApp import GtApp
-
-gtsrcid = GtApp('gtsrcid')
-
 noassocfile='NoAssiated.fits'
 index=[]
 ddec=[]
@@ -35,25 +31,53 @@ def loadpgwRow(pgwfits):
 
 
 def rungtsrcid(srcCat,testCat,outCat,prob):
-        gtsrcid.run(srcCatName=srcCat, srcCatPrefix="SRC", 
-                    srcPosError=1, cptCatName=testCat,
-                    cptCatPrefix="CAT", outCatName=outCat,
-                    probMethod="POSITION", probThresh=0.0001,
-                    maxNumCpt=1)
-#
-#	cmd = 'gtsrcid' \
-#         + ' srcCatName='+srcCat \
-#         + ' srcCatPrefix=\"SRC\"' \
-#         + ' srcPosError=\"1\"' \
-#         + ' cptCatName='+testCat \
-#         + ' cptCatPrefix=\"CAT\"' \
-#         + ' outCatName='+outCat \
-#         + ' probMethod=\"POSITION\"' \
-#         + ' probThres=\"0.0001\"' \
-#         + ' maxNumCpt=\"1\" '
-#
-#        print cmd
-#	os.system(cmd)
+
+	cmd = 'gtsrcid' \
+         + ' srcCatName='+srcCat \
+         + ' srcCatPrefix=\"SRC\"' \
+         + ' srcPosError=\"1\"' \
+         + ' cptCatName='+testCat \
+         + ' cptCatPrefix=\"CAT\"' \
+         + ' outCatName='+outCat \
+         + ' probMethod=\"POSITION\"' \
+         + ' probThres=\"0.0001\"' \
+         + ' maxNumCpt=\"1\" '
+
+
+	"""cmd = 'gtsrcid ' \
+         + ' srcCatName=' + srcCat \
+         + ' srcCatPrefix=SRC' \
+         + ' srcCatQty=*' \
+         + ' cptCatName='+testCat \
+         + ' cptCatPrefix=CAT' \
+         + ' cptCatQty=*' \
+         + ' cptPosError=1' \
+         + ' outCatName='+outCat \
+         + ' outCatQty01=\'R=arccos(sin($@SRC_DECJ2000$*2*#pi/360)*sin($@CAT_DEJ2000$*2*#pi/360)+cos($@SRC_DECJ2000$*2*#pi/360)*cos($@CAT_DEJ2000$*2*#pi/360)*cos($@SRC_RAJ2000$*2*#pi/360-$@CAT_RAJ2000$*2*#pi/360))*360/(2*#pi)\''\
+         + ' outCatQty03=\"\"' \
+         + ' outCatQty04=\"\"' \
+         + ' outCatQty05=\"\"' \
+         + ' outCatQty06=\"\"' \
+         + ' outCatQty07=\"\"' \
+         + ' outCatQty08=\"\"' \
+         + ' outCatQty09=\"\"' \
+         + ' probMethod=POSITION' \
+         + ' probThres='+str(prob) \
+         + ' maxNumCpt=1' \
+         + ' select01=\"\"' \
+         + ' select02=\"\"' \
+         + ' select03=\"\"' \
+         + ' select04=\"\"' \
+         + ' select05=\"\"' \
+         + ' select06=\"\"' \
+         + ' select07=\"\"' \
+         + ' select08=\"\"' \
+         + ' select09=\"\"' \
+         + ' chatter=4' \
+         + ' clobber=yes' \
+         + ' debug=no' \
+         + ' mode=ql'"""
+	os.system(cmd)
 	
 def printCat(catf):
   hdulist  = pyfits.open(catf)
@@ -167,7 +191,6 @@ def checkPointSource(pgwdata,dateinfo):
         #mydb.close()
 	if debug==0:
 		procid=int(os.environ['PIPELINE_STREAM'])
-		mydb.deleteDuplicateFE(procid)
 	ra=db._PointSourcesFields['RA'][1]
 	dec=db._PointSourcesFields['DEC'][1]
 	i=0

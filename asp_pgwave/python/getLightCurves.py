@@ -1,7 +1,4 @@
-#
-# $Header$
-#
-import numpy as num
+import numarray as num
 from databaseAccess import *
 
 def getSourceList():

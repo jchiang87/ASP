@@ -1,4 +1,0 @@
-#
-# $Header$
-#
-print "hello, world"

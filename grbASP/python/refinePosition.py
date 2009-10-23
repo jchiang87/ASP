@@ -59,7 +59,7 @@ def refinePosition(gcn_notice, ft1Input, ft2Input, config,
     if not os.path.isfile(gtfindsrc['outfile']):
         gtfindsrc.run()
     results = open(gtfindsrc['outfile']).readlines()
-    fields = results[-3].split()
+    fields = results[-4].split()
     ra, dec, ts, pos_error = (float(fields[0]), float(fields[1]),
                               float(fields[2]), float(fields[3]))
     if pos_error == 0:

@@ -1,8 +1,0 @@
-Downlink_file=/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks/downlink_0028.fits, output_dir=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1/python/GRB_test, PYASPROOT=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1
-
-GBM_Notice=/nfs/farm/g/glast/u33/jchiang/ASP/GRB/Notices/GLG_NOTICE_080104514.TXT, output_dir=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1/python/GRB_test, PYASPROOT=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1
-
-output_dir=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1/python/GRB_test, GRB_parfile=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1/python/GRB_test/GRB080104514_pars.txt, PYASPROOT=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v0r1
-
-numFiles=1,PYASPROOT=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v1,BINDIR=rh9_gcc32
-num_RoIs=2,PYASPROOT=/nfs/farm/g/glast/u33/jchiang/ASP/pyASP/v1,BINDIR=rh9_gcc32

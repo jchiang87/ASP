@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: jrb  Tue Nov  3 12:49:54 PST 2009
+ASP/asp_pgwave/python
+
+Added Files:
+	asp_pgwave_createTarBall.py 
+Removed Files:
+	clean_up_files.py createTarBall.py 
+Log Message:
+Need unique names for installed files
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_pgwave-01-10-02, operation: add
 Package: asp_pgwave

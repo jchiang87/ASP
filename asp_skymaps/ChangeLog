@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jrb  Tue Nov  3 13:26:11 PST 2009
+ASP/asp_skymaps
+
+Modified Files:
+	SConscript 
+Log Message:
+Add install of data files
+
+    *
+------------------------------------------------------------
 User: jrb  Wed Oct 14 13:51:27 PDT 2009
 ASP/asp_skymaps/python
 

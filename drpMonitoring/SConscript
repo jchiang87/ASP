@@ -10,5 +10,8 @@ import os
 Import('baseEnv')
 Import('listFiles')
 progEnv = baseEnv.Clone()
-libEnv = baseEnv.Clone()
-swigEnv = baseEnv.Clone()
+
+progEnv.Tool('registerTargets', package='drpMonitoring',
+             data=listFiles(['data/*']),
+             wrappedPython=listFiles(['python/*.py']) )
+

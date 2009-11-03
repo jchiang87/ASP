@@ -1,6 +1,6 @@
 # -*- python -*-
 # @file SConscript
-# @brief scons build specifications for AspHealPix
+# @brief scons build specifications for grbASP
 #
 # $Header$
 # Authors: J. Chiang <jchiang@slac.stanford.edu>
@@ -9,6 +9,21 @@
 import os
 Import('baseEnv')
 Import('listFiles')
-progEnv = baseEnv.Clone()
+
 libEnv = baseEnv.Clone()
 swigEnv = baseEnv.Clone()
+
+libEnv.Tool('grbASPLib', depsOnly=1)
+swigEnv.Tool('grbASPLib')
+
+grbASPLib = libEnv.SharedLibrary('grpASP', listFiles(['src/*.cxx']))
+pygrbASPLib = swigEnv.SwigLibrary('_grbASP', 'src/grbASP.i')
+toWrap = listFiles(['python/*py']) + listFiles(['python/GCN/*.py'])
+
+swigEnv.Tool('registerTargets', package='grbASP',
+             includes = listFiles(['grbASP/*.h']),
+             libraryCxts = [[grbASPLib, libEnv]],
+             swigLibraryCxts = [[pygrbASPLib, swigEnv]],
+             data=listFiles(['data/*']),
+             wrappedPython = toWrap)
+             #wrappedPython=listFiles(['python/*.py'])+listFiles(['python/GCN/*.py']))

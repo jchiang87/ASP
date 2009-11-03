@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: jrb  Tue Nov  3 13:21:06 PST 2009
+ASP/asp_healpix
+
+Modified Files:
+	SConscript 
+Log Message:
+SConscript:  add install of files in data/
+release.notes:  add EOH line
+swig_setup.in:  change $(HEALPIXROOT) to $(ASP_HEALPIXROOT)
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_healpix-02-02-03, operation: add
 Package: asp_healpix

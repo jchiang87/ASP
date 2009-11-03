@@ -10,5 +10,7 @@ import os
 Import('baseEnv')
 Import('listFiles')
 progEnv = baseEnv.Clone()
-libEnv = baseEnv.Clone()
-swigEnv = baseEnv.Clone()
+
+progEnv.Tool('registerTargets', package='asp_pgwave',
+             wrappedPython=listFiles(['python/*.py']) )
+

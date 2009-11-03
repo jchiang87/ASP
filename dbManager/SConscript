@@ -1,0 +1,20 @@
+# -*- python -*-
+# @file SConscript
+# @brief scons build specifications for dbManager
+#
+# $Header$
+# Authors: J. Chiang <jchiang@slac.stanford.edu>
+# Version: dbManager-00-02-00
+
+import os
+Import('baseEnv')
+Import('listFiles')
+progEnv = baseEnv.Clone()
+
+
+## Appears to be nothing to do except make a few python files available
+## They're not progras so don't need wrappers
+progEnv.Tool('registerTargets', package='dbManager',
+             data=listFiles(['data/*']),
+             python=listFiles(['python/*.py']) )
+

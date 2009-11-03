@@ -1,5 +1,17 @@
 ------------------------------------------------------------
 User: jrb  Tue Nov  3 13:21:07 PST 2009
+ASP/asp_healpix/src
+
+Modified Files:
+	swig_setup.in 
+Log Message:
+SConscript:  add install of files in data/
+release.notes:  add EOH line
+swig_setup.in:  change $(HEALPIXROOT) to $(ASP_HEALPIXROOT)
+
+    *
+------------------------------------------------------------
+User: jrb  Tue Nov  3 13:21:07 PST 2009
 ASP/asp_healpix/doc
 
 Modified Files:

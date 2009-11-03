@@ -36,15 +36,15 @@
 %template(FloatVector) std::vector<float>;
 %template(LongVector) std::vector<long>;
 
-%include $(HEALPIXROOT)/healpix/Healpix.h
-%include $(HEALPIXROOT)/healpix/HealpixMap.h
+%include $(ASP_HEALPIXROOT)/healpix/Healpix.h
+%include $(ASP_HEALPIXROOT)/healpix/HealpixMap.h
 %extend healpix::HealpixMap{
    float __getitem__(size_t i)            {return (*self)[i];}
    double __call__(const astro::SkyDir& d){return (*self)(d);}
    size_t __len__() {return self->size();}
 }  
 
-%include $(HEALPIXROOT)/healpix/CosineBinner.h
+%include $(ASP_HEALPIXROOT)/healpix/CosineBinner.h
 
 // fails now?
 //%include $(HEALPIXROOT)/healpix/HealPixel.h

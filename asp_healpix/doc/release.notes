@@ -6,6 +6,8 @@
 $Id$
 
 @verbatim
+  * EOH *                    
+
    v2r2p2 THB 28-feb-09 Finally get it to work!
    v2r2p1 THB 16-feb-09 Finally get it to work
    v2r2   THB 26-jan-09 Extend CosineBinner interface to allow phi binning (but not yet implemented)

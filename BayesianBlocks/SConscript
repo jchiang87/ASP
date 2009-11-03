@@ -24,6 +24,7 @@ swigEnv.Tool('registerTargets', package="BayesianBlocks",
              libraryCxts=[[BayesianBlocksLib, libEnv]],
              swigLibraryCxts=[[lib_BayesianBlocks, swigEnv]],
              includes=listFiles(['BayesianBlocks/*.h']),
+             data = listFiles(['data/*']),
              python=['src/BayesianBlocks.py'])
 
 # What about files in python directory?  Should they be installed?

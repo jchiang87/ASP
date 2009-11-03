@@ -30,6 +30,7 @@ progEnv.Tool('registerTargets',
              topInclude = 'skymaps',
              libraryCxts = [[skymapsLib, libEnv]],
              swigLibraryCxts = [[pySkymapsLib, swigEnv]],
+             data = listFiles(['data/*']),
              python = ['python/skymaps.py']
              )
 

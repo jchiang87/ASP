@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     offset = {'six_hours' : 0,
               'daily' : 1,
-              'weekly' : 2}
+              'weekly' : 0}
 
     os.chdir(currentDir)
     interval, frequency, tstart, tstop = get_interval()

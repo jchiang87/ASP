@@ -67,3 +67,4 @@
     @endverbatim
 */
  drpMonitoring-01-07-05 22-Oct-2009 jchiang test each ROI in assignRois.py; drp_clean_up_files.py
+ drpMonitoring-01-07-06 11-Nov-2009 jchiang switch to u52 for log files; update rocking angle cut in gtmktime call

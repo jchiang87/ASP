@@ -94,7 +94,7 @@ def testRois(infile='rois.txt'):
         try:
             gtmktime.run()
         except RuntimeError:
-            filter = "angsep(RA_ZENITH,DEC_ZENITH,RA_SCZ,DEC_SCZ)<47 || angsep(RA_ZENITH,DEC_ZENITH,%.3f,%.3f)<%.3f" % (ra, dec, pars['zenmax']-rad)
+            filter = "angsep(RA_ZENITH,DEC_ZENITH,RA_SCZ,DEC_SCZ)<52 || angsep(RA_ZENITH,DEC_ZENITH,%.3f,%.3f)<%.3f" % (ra, dec, pars['zenmax']-rad)
             try:
                 gtmktime.run(filter=filter, roicut='no')
             except:

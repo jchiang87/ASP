@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="8.6" type="Data">
+<task name="DRP_monitoring" version="8.7" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
@@ -13,7 +13,8 @@
     <var name="pgwave_folder">/ASP/Results/pgwave</var>
     <var name="outputFolder">/ASP/Results/DRP</var>
     <var name="xrootd_folder">/ASP/DRP</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v01.fit</var>
+    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v02.fit</var>
+    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files<var>
   </variables>
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
@@ -113,7 +114,7 @@
   </process>
 
   <process name="createArchive" autoRetryMaxAttempts="1">
-    <job executable="${DRPMONITORINGROOT}/${BINDIR}/createTarBall.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/drp_createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="roiAnalysis.dummyProcess" status="SUCCESS"/>

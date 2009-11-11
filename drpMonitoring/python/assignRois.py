@@ -95,7 +95,10 @@ def testRois(infile='rois.txt'):
             gtmktime.run()
         except RuntimeError:
             filter = "angsep(RA_ZENITH,DEC_ZENITH,RA_SCZ,DEC_SCZ)<47 || angsep(RA_ZENITH,DEC_ZENITH,%.3f,%.3f)<%.3f" % (ra, dec, pars['zenmax']-rad)
-            gtmktime.run(filter=filter, roicut='no')
+            try:
+                gtmktime.run(filter=filter, roicut='no')
+            except:
+                continue
         ft1 = pyfits.open(gtmktime['outfile'])
         if ft1['EVENTS'].header['NAXIS2'] > 0:
             roi_ok.append(id)

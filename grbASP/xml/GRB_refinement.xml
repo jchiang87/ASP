@@ -12,7 +12,7 @@
     <var name="outputFolder">/ASP/Results/GRB/promptBurst</var>
     <var name="xrootd_folder">/ASP/GRB/promptBurst</var>
     <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v02.fit</var>
-    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files<var>
+    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
   </variables>
    <prerequisites>
       <prerequisite name="GCN_NOTICE" type="string"/>

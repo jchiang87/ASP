@@ -11,7 +11,7 @@
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/GRB/BlindSearch</var>
     <var name="xrootd_folder">/ASP/GRB/BlindSearch</var>
-    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files<var>
+    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
   </variables>
   <prerequisites>
      <prerequisite name="logicalPath" type="string"/>

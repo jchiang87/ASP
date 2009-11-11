@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Nov 11 15:51:58 PST 2009
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+tagging v1r10p2; fix closing element in var tag
+    *
+------------------------------------------------------------
 User: jchiang  Wed Nov 11 15:51:57 PST 2009
 ASP/asp_pgwave/cmt
 

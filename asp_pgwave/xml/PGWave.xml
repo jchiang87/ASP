@@ -5,14 +5,15 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="8.9" type="Data">
+<task name="PGWave" version="9.0" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/pgwave</var>
     <var name="xrootd_folder">/ASP/pgwave</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v01.fit</var>
+    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v02.fit</var>
+    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files<var>
   </variables>
   <prerequisites>
     <prerequisite name="logicalPath" type="string"/>
@@ -79,7 +80,7 @@
   </process>
 
   <process name="createArchive" autoRetryMaxAttempts="1">
-    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/createTarBall.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/asp_pgwave_createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="runsrcid" status="SUCCESS"/>

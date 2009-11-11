@@ -10,7 +10,7 @@
     <var name="BINDIR">rh9_gcc32</var>
     <var name="minimum_coverage">0.70</var>
     <var name="datacatalog_imp">datacatalog</var>
-    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files<var>
+    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
   </variables>
   <prerequisites>
     <prerequisite name="folder" type="string"/>

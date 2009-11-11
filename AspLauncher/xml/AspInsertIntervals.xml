@@ -5,10 +5,11 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspInsertIntervals" version="1.1" type="Data">
+<task name="AspInsertIntervals" version="1.2" type="Data">
   <variables>
     <var name="BINDIR">rh9_gcc32</var>
     <var name="datacatalog_imp">datacatalog</var>
+    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
   </variables>
   <prerequisites>
     <prerequisite name="folder" type="string"/>

@@ -47,6 +47,7 @@ def afterglow_lc(grbName, grb_id, lcfile, outfile=None):
 if __name__ == '__main__':
     import databaseAccess as dbAccess
     import pipeline
+    import pyfits
 
     os.chdir(os.environ['OUTPUTDIR'])
     grb_id = int(os.path.basename(os.getcwd()))
@@ -59,6 +60,11 @@ if __name__ == '__main__':
             return entry[0]
     grbName = dbAccess.apply(sql, getInfo)
 
-    countsSpectra(grb_id, grbName + '_afterglow_spec.fits',
-                  outfile='countsSpectra_afterglow_%i.png' % grb_id)
+    specfile = grbName + '_afterglow_spec.fits'
+
+    spectrum = pyfits.open(specfile)
+    if sum(spectrum['COUNTS_SPECTRA'].data.field('ObsCounts')) != 0:
+        countsSpectra(grb_id, specfile,
+                      outfile='countsSpectra_afterglow_%i.png' % grb_id)
+
     afterglow_lc(grbName, grb_id, grbName + '_afterglow_lc.fits')

@@ -1,10 +1,10 @@
 package asp_pgwave
-version v1r10p3
+version v1r7p6
 
 # $Id$
 
 use pgwave *
-use asp_pointlike * ASP
+use py_pointlike v*
 use AspPolicy v* ASP
 use pyASP v* ASP 
 use AspHealPix v* ASP

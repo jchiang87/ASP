@@ -1,24 +1,8 @@
-"""
-@brief create light curves using aperture photometry method
-"""
-#
-# $Header$
-#
 import gtutil
 import aperPhotLC
 import sys
-import pyfits
 import databaseAccess as dbAccess
-
-def getIrfs(ft1file):
-    ft1 = pyfits.open(ft1file)
-    tmin, tmax = ft1[1].header['TSTART'], ft1[1].header['TSTOP']
-    sql = ("select IRFS from SOURCEMONITORINGCONFIG where " +
-           "STARTDATE<=%i and ENDDATE>=%i" % (tmin, tmax))
-    def readIrfs(cursor):
-        for entry in cursor:
-            return entry[0]
-    return dbAccess.apply(sql, readIrfs)
+from refinePositions import getIrfs
 
 def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.fits',irf=None):
         if irf is None:

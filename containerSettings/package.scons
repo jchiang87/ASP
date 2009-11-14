@@ -1,0 +1,12 @@
+# -*- python -*-
+# $Header$
+
+import os,SCons
+
+print "Inside ASP package.scons"
+Import('baseEnv')
+baseEnv.Tool("generatePythonWrapper",
+             ourSetupName=os.path.join(baseEnv.GetOption('supersede'),
+                                       'asp_setup'))
+
+baseEnv.AppendUnique(CPPDEFINES = ['ASP'])

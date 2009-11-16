@@ -7,6 +7,7 @@
     @verbatim
             EOH
 
+ dbManager-00-02-02 16-Nov-2009    jrb add EOH line
  dbManager-00-02-01 16-Nov-2009    jrb Updates for SCons build
     v0r2   16-Mar-08   JC   added code to update ROIs; code freeze tag
     v0r1   04-Mar-08   JC   reorganize a bit; OpsSim2 tag

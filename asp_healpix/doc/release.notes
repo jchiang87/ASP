@@ -8,6 +8,8 @@ $Id$
 @verbatim
   * EOH *                    
 
+ asp_healpix-02-02-04 16-Nov-2009    jrb Changes for SCons build;  
+    minor fix to swig_setup.in  for CMT build
    v2r2p2 THB 28-feb-09 Finally get it to work!
    v2r2p1 THB 16-feb-09 Finally get it to work
    v2r2   THB 26-jan-09 Extend CosineBinner interface to allow phi binning (but not yet implemented)

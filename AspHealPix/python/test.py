@@ -1,7 +1,7 @@
 #
 # $Header$
 #
-import numarray as num
+import numpy as num
 from HealPix import Healpix, SkyDir, CountsArray, ExposureArray
 import hippoplotter as plot
 

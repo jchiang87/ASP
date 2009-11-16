@@ -7,6 +7,7 @@
     @verbatim
 * EOH *
 
+ AspHealPix-00-00-04 16-Nov-2009    jrb Updates for SCons builds
  AspHealPix-00-00-03 17-Aug-2009 jchiang use asp_healpix * ASP
     @endverbatim
 */

@@ -4,7 +4,7 @@
 #
 # $Header$
 # Authors: J. Chiang <jchiang@slac.stanford.edu>
-# Version: BayesianBlocks-02-00-00
+# Version: BayesianBlocks-02-00-01
 
 import os
 Import('baseEnv')

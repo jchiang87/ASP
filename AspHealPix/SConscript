@@ -4,7 +4,7 @@
 #
 # $Header$
 # Authors: J. Chiang <jchiang@slac.stanford.edu>
-# Version: AspHealPix-00-00-03
+# Version: AspHealPix-00-00-04
 
 import os
 Import('baseEnv')

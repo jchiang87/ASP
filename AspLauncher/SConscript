@@ -12,5 +12,5 @@ Import('listFiles')
 progEnv = baseEnv.Clone()
 
 progEnv.Tool('registerTargets', package='AspLauncher',
-             python=listFiles(['python/*.py']) )
+             wrappedPython=listFiles(['python/*.py']) )
 

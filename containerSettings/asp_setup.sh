@@ -5,24 +5,19 @@
 
 export PFILES=".;"
 pipeline_config_root=/afs/slac.stanford.edu/g/glast/ground/PipelineConfig/
-ftools_setup=$pipeline_config_root
-ftools_setup+=ASP/headas-config-noric024835.sh
+ftools_setup=${pipeline_config_root}ASP/headas-config-noric024835.sh
 ###echo ${ftools_setup}
-source ftools_setup
+source ${ftools_setup}
 
 export TNS_ADMIN=/u/gl/glast/oracle/admin
 export ORACLE_HOME=/afs/slac/pacakge/oracle/d/linux/11.1.0
 
-asp_db_config=$pipeline_config_root
-asp_db_config+=ASP/db_config
-export ASP_DB_CONFIG=$asp_db_config
+asp_db_config=${pipeline_config_root}ASP/db_config
 
-asp_python_path=$pipeline_config_root
-asp_python_path+=ASP/python/lib/python2.5/site-packages
-asp_lib_path=$pipeline_config_root
-asp_lib_path+=ASP/lib
-GPLtools_path=$pipeline_config_root
-GPLtools_path+=GPLtools/asp/python
+
+asp_python_path=${pipeline_config_root}ASP/python/lib/python2.5/site-packages
+asp_lib_path=${pipeline_config_root}ASP/lib
+GPLtools_path=${pipeline_config_root}GPLtools/asp/python
 
 export LD_LIBRARY_PATH=${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}:${asp_lib_path}
 

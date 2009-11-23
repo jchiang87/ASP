@@ -10,7 +10,7 @@ ftools_setup=${pipeline_config_root}ASP/headas-config-noric024835.sh
 source ${ftools_setup}
 
 export TNS_ADMIN=/u/gl/glast/oracle/admin
-export ORACLE_HOME=/afs/slac/pacakge/oracle/d/linux/11.1.0
+export ORACLE_HOME=/afs/slac/package/oracle/d/linux/11.1.0
 
 asp_db_config=${pipeline_config_root}ASP/db_config
 

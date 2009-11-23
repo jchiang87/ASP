@@ -19,12 +19,11 @@ swigEnv.Tool('pyASPLib')
                                 
 lib_pyASP = swigEnv.SwigLibrary('_pyASP','src/pyASP.i')
 
+python_modules = listFiles(['python/*.py']) + ['src/pyASP.py']
+
 swigEnv.Tool('registerTargets', package='pyASP',
              libraryCxts=[[pyASPLib, libEnv]],
              swigLibraryCxts=[[lib_pyASP, swigEnv]],
              includes=listFiles(['pyASP/*.h']),
              data = listFiles(['data/*']),
-             python=['src/pyASP.py'])
-
-# pyASP has many other files in the python directory.  Do any
-# need to be installed?
+             python=python_modules)

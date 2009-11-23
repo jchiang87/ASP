@@ -18,8 +18,11 @@ import grbASP
 import pyIrfLoader
 import BayesBlocks
 
-_version = os.path.split(os.environ['GRBASPROOT'])[-1]
-_grbAspRoot = resolve_nfs_path(os.environ['GRBASPROOT'])
+#_version = os.path.split(os.environ['GRBASPROOT'])[-1]
+try:
+    _grbAspRoot = resolve_nfs_path(os.environ['GRBASPROOT'])
+except KeyError:   # probably using an SCons build
+    _grbAspRoot = resolve_nfs_path(os.environ['INST_DIR'])
 
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                        debug=False, streamId=None, 

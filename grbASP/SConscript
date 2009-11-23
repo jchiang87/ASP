@@ -25,5 +25,6 @@ swigEnv.Tool('registerTargets', package='grbASP',
              libraryCxts = [[grbASPLib, libEnv]],
              swigLibraryCxts = [[pygrbASPLib, swigEnv]],
              data=listFiles(['data/*']),
+             python=['src/grbASP.py'],
              wrappedPython = toWrap)
              #wrappedPython=listFiles(['python/*.py'])+listFiles(['python/GCN/*.py']))

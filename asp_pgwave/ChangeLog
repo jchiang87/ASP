@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Nov 23 14:53:28 PST 2009
+ASP-scons/asp_pgwave/xml
+
+Added Files:
+	PGWave-SCons.xml 
+Log Message:
+add SCons version
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_pgwave-01-10-03, operation: add
 Package: asp_pgwave

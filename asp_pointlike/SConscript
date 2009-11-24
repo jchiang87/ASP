@@ -29,6 +29,8 @@ swigEnv.Tool('asp_pointlikeLib')
 swigEnv.Append(RPATH = swigEnv['LIBDIR'])
 pyLib = swigEnv.SwigLibrary('_asp_pointlike','python/swig_setup.i')
 
+pythonModules = listFiles(['python/*.py']) + ['asp_pointlike.py']
+
 progEnv.Tool('registerTargets', 
              package  = 'asp_pointlike', 
              includes = listFiles(['pointlike/*.h']),
@@ -38,8 +40,6 @@ progEnv.Tool('registerTargets',
              binaryCxts = [[progEnv.Program(name, listFiles(['src/%s/*.cxx'%name])),
                             progEnv] for name in apps], 
              testAppCxts = [[progEnv.Program('test_pointlike', listFiles(['src/test/*.cxx'])), progEnv]],
-             python = ['python/asp_pointlike.py',
-                       'python/pointlike_defaults.py',
-                       'python/test_pointlike_setup.py'])
+             python = pythonModules)
 
 

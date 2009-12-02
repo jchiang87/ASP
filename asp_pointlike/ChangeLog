@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Wed Dec  2 12:42:14 PST 2009
+ASP-scons/asp_pointlike
+
+Modified Files:
+	SConscript 
+Log Message:
+remove unncessary (and incorrect) python module to be installed
+
+    *
+------------------------------------------------------------
 User: jchiang  Tue Nov 24 14:11:51 PST 2009
 ASP-scons/asp_pointlike
 

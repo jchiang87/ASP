@@ -29,7 +29,7 @@ swigEnv.Tool('asp_pointlikeLib')
 swigEnv.Append(RPATH = swigEnv['LIBDIR'])
 pyLib = swigEnv.SwigLibrary('_asp_pointlike','python/swig_setup.i')
 
-pythonModules = listFiles(['python/*.py']) + ['asp_pointlike.py']
+pythonModules = listFiles(['python/*.py'])
 
 progEnv.Tool('registerTargets', 
              package  = 'asp_pointlike', 

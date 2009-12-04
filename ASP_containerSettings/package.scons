@@ -7,7 +7,10 @@ import os,SCons
 Import('baseEnv')
 Import('pkgScons')   # our path
 baseEnv.Tool("generatePythonWrapper",
-             ourSetupName=os.path.join(os.path.dirname(pkgScons),
-                                       'asp_setup'))
+             ourPresetupName=os.path.join(os.path.dirname(pkgScons),
+                                          'asp_presetup'),
+             ourPostsetupName=os.path.join(os.path.dirname(pkgScons),
+                                           'asp_postsetup')
+             )
 
 baseEnv.AppendUnique(CPPDEFINES = ['ASP'])

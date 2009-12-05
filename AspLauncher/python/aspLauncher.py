@@ -22,7 +22,10 @@ from createGrbStreams import blindSearchStreams
 from intervalAccess import unhandledIntervals
 from PipelineCommand import PipelineCommand, resolve_nfs_path, PipelineError
 
-_aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
+try:
+   _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
+except KeyError:
+   _aspLauncherRoot = resolve_nfs_path(os.environ['INST_DIR'])
 
 #
 # Standard output directory for ASP results.  This is a symlink to

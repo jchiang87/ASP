@@ -70,6 +70,16 @@ class PipelineError(EnvironmentError):
 class PipelineCommand(object):
     def __init__(self, taskname, args, stream=None):
         "Abstraction for a Pipeline-II command."
+        # Check if this is launched via a task from an SCons-built
+        # package.  If so, then append "-SCons" to the task name if it
+        # is not already there.
+        try:
+            if os.environ['PIPELINE_TASK'].find('-SCons') != -1:
+                if taskname.find('-SCons') == -1:
+                    taskname += '-SCons'
+        except KeyError:
+            pass
+
         if stream is None:
 #            stream = self.streamNumber()
             stream = -1

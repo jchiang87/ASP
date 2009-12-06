@@ -24,6 +24,12 @@ swigEnv.Tool('asp_skymapsLib')
 ####swigEnv.Append(RPATH = swigEnv['LIBDIR'])
 pySkymapsLib = swigEnv.SwigLibrary('_asp_skymaps','python/swig_setup.i')
 
+pythonModules = listFiles(['python/*.py'])
+
+excluded = listFiles(['python/__init__.py', 'python/image.py'])
+for item in excluded:
+    pythonModules.remove(item)
+
 progEnv.Tool('registerTargets', 
              package = 'asp_skymaps', 
              includes = listFiles(['skymaps/*.h']),
@@ -31,6 +37,4 @@ progEnv.Tool('registerTargets',
              libraryCxts = [[skymapsLib, libEnv]],
              swigLibraryCxts = [[pySkymapsLib, swigEnv]],
              data = listFiles(['data/*']),
-             python = ['python/skymaps.py']
-             )
-
+             python = pythonModules)

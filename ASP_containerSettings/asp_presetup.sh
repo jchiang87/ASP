@@ -7,6 +7,8 @@
 pipeline_config_root=/afs/slac.stanford.edu/g/glast/ground/PipelineConfig/
 ftools_setup=${pipeline_config_root}ASP/headas-config-noric024835.sh
 
+export PFILES=".;"
+
 source ${ftools_setup}
 
 export GLAST_EXT=/afs/slac.stanford.edu/g/glast/ground/GLAST_EXT/redhat4-i686-32bit-gcc34

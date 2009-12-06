@@ -4,7 +4,6 @@
 # only be run on SLAC linux.  All site-dependent stuff belongs in this file
 # or in asp_presetup.sh.
 
-export PFILES=".;"
 export TNS_ADMIN=/u/gl/glast/oracle/admin
 export ORACLE_HOME=/afs/slac/package/oracle/d/linux/11.1.0
 

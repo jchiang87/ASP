@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Sat Dec  5 17:50:13 PST 2009
+ASP-scons/asp_skymaps
+
+Modified Files:
+	SConscript 
+Log Message:
+install python modules, excluding those already in asp_pointlike
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_skymaps-01-13-03, operation: add
 Package: asp_skymaps

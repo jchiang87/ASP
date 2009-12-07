@@ -13,7 +13,7 @@ libEnv = baseEnv.Clone()
 swigEnv = baseEnv.Clone()
 
 progEnv.Tool('asp_skymapsLib')
-test_healpix = progEnv.Program('test_skymaps', listFiles(['src/test/*.cxx']))
+test_asp_skymaps = progEnv.Program('test_asp_skymaps', listFiles(['src/test/*.cxx']))
 
 libEnv.Tool('asp_skymapsLib', depsOnly = 1)
 skymapsLib = libEnv.SharedLibrary('asp_skymaps', listFiles(['src/*.cxx']))
@@ -24,7 +24,7 @@ swigEnv.Tool('asp_skymapsLib')
 ####swigEnv.Append(RPATH = swigEnv['LIBDIR'])
 pySkymapsLib = swigEnv.SwigLibrary('_asp_skymaps','python/swig_setup.i')
 
-pythonModules = listFiles(['python/*.py'])
+pythonModules = listFiles(['python/*.py']) + ['python/asp_skymaps.py']
 
 excluded = listFiles(['python/__init__.py', 'python/image.py'])
 for item in excluded:
@@ -37,4 +37,5 @@ progEnv.Tool('registerTargets',
              libraryCxts = [[skymapsLib, libEnv]],
              swigLibraryCxts = [[pySkymapsLib, swigEnv]],
              data = listFiles(['data/*']),
+             testAppCxts=[[test_asp_skymaps, progEnv]],
              python = pythonModules)

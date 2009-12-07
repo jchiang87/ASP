@@ -1,4 +1,4 @@
-%module(docstring="Interface to skymaps") skymaps
+%module(docstring="Interface to skymaps") asp_skymaps
 %{
 #include <stdexcept>
 #include <vector>

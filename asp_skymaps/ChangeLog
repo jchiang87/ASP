@@ -1,4 +1,17 @@
 ------------------------------------------------------------
+User: jrb  Mon Dec  7 15:40:36 PST 2009
+ASP-scons/asp_skymaps/python
+
+Modified Files:
+	swig_setup.i 
+Removed Files:
+	asp_skymaps.py 
+Log Message:
+swig_setup.i:  set correct module name
+asp_skymaps.py:  this is a derived file; does not belong in CVS
+
+    *
+------------------------------------------------------------
 User: jrb  Mon Dec  7 15:39:59 PST 2009
 ASP-scons/asp_skymaps
 

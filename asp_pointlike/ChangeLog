@@ -1,4 +1,16 @@
 ------------------------------------------------------------
+User: jrb  Mon Dec  7 15:42:35 PST 2009
+ASP-scons/asp_pointlike
+
+Modified Files:
+	SConscript 
+Log Message:
+Explicitly add asp_pointlike.py to list of files to be installed.
+listfiles['python/*.py'] doesn't do it, probably since the file doesn't exist 
+at the time the listfiles is done
+
+    *
+------------------------------------------------------------
 User: jchiang  Wed Dec  2 12:42:14 PST 2009
 ASP-scons/asp_pointlike
 

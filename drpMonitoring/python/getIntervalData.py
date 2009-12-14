@@ -23,7 +23,13 @@ import databaseAccess as dbAccess
 def create_parfile(tstart, parfilename='drp_pars.txt'):
     infile = os.path.join(resolve_nfs_path(os.environ['DRPMONITORINGROOT']), 
                           'data', parfilename)
-    shutil.copy(infile, 'drp_pars.txt')
+    try:
+        shutil.copy(infile, 'drp_pars.txt')
+    except IOError:
+        infile =os.path.join(resolve_nfs_path(os.environ['DRPMONITORINGROOT']), 
+                             'data', 'drpMonitoring', parfilename)
+        shutil.copy(infile, 'drp_pars.txt')
+        
     sql = "select startdate, enddate, irfs, ft1_filter from SOURCEMONITORINGCONFIG"
     def findConfig(cursor):
         for entry in cursor:

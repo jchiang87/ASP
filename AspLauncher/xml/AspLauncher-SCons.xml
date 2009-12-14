@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher-SCons" version="2.4" type="Data">
+<task name="AspLauncher-SCons" version="2.6" type="Data">
   <variables>
-    <var name="BINDIR">/nfs/farm/g/glast/u54/asp/jrbdev/ASP-scons/bin/redhat4-i686-32bit-gcc34-Debug</var>
+    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Debug</var>
     <var name="minimum_coverage">0.70</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
@@ -44,7 +44,7 @@
     ]]></script>
   </process>
   <process name="launchStreams">
-    <job executable="${BINDIR}/launchStreams.sh"
+    <job executable="${ASPLAUNCHERROOT}/${BINDIR}/launchStreams.sh"
          batchOptions="-q short"/>
     <depends>
       <after process="catalogQueries" status="SUCCESS"/>

@@ -74,7 +74,7 @@ class PipelineCommand(object):
         # package.  If so, then append "-SCons" to the task name if it
         # is not already there.
         try:
-            if os.environ['PIPELINE_TASK'].find('-SCons') != -1:
+            if os.environ['PIPELINE_TASKPATH'].find('-SCons') != -1:
                 if taskname.find('-SCons') == -1:
                     taskname += '-SCons'
         except KeyError:

@@ -12,7 +12,11 @@ time interval.
 import os
 from PipelineCommand import PipelineCommand, resolve_nfs_path
 
-_drpRoot = resolve_nfs_path(os.environ['DRPMONITORINGROOT'])
+try:
+    _drpRoot = resolve_nfs_path(os.environ['DRPMONITORINGROOT'])
+except KeyError:
+    _drpRoot = resolve_nfs_path(os.environ['INST_DIR'])
+
 _datacatalog_imp = os.environ['datacatalog_imp']
 
 def launch_drp(interval, frequency, tstart, tstop, folder, output_dir,

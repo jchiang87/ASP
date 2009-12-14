@@ -5,10 +5,10 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave-SCons" version="9.0" type="Data">
+<task name="PGWave-SCons" version="9.2" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="BINDIR">/nfs/farm/g/glast/u54/asp/jrbdev/ASP-scons/bin/redhat4-i686-32bit-gcc34-Debug</var>
+    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Debug</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/pgwave</var>
     <var name="xrootd_folder">/ASP/pgwave</var>
@@ -48,7 +48,7 @@
   </process>
 
   <process name="getPgwInputData" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/getPgwInputData.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/getPgwInputData.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>
@@ -56,7 +56,7 @@
   </process>
 
   <process name="runpgw" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/runpgw.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runpgw.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
       <after process="getPgwInputData" status="SUCCESS"/>
@@ -64,7 +64,7 @@
   </process>
 
   <process name="refinePositions" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/refinePositions.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/refinePositions.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
       <after process="runpgw" status="SUCCESS"/>
@@ -72,7 +72,7 @@
   </process>
 
   <process name="runsrcid" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/runsrcid.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/runsrcid.sh"
          batchOptions=" -q glastdataq" allocationGroup="glastdata"/>
     <depends>
       <after process="refinePositions" status="SUCCESS"/>
@@ -80,7 +80,7 @@
   </process>
 
   <process name="createArchive" autoRetryMaxAttempts="1">
-    <job executable="${BINDIR}/asp_pgwave_createTarBall.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/asp_pgwave_createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="runsrcid" status="SUCCESS"/>
@@ -165,7 +165,7 @@
   </process>
   
   <process name="clean_up_files" autoRetryMaxAttempts="1">
-    <job executable="${BINDIR}/asp_pgwave_clean_up_files.sh"
+    <job executable="${ASP_PGWAVEROOT}/${BINDIR}/asp_pgwave_clean_up_files.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="registerData" status="SUCCESS"/>
@@ -177,7 +177,7 @@
       <prerequisite name="pgwave_streamId" type="integer"/>
     </prerequisites>
     <process name="launchDrpMonitoring" autoRetryMaxAttempts="1">
-      <job executable="${BINDIR}/launchDrpMonitoring.sh"
+      <job executable="${ASP_PGWAVEROOT}/${BINDIR}/launchDrpMonitoring.sh"
            batchOptions=" -q short"/>
     </process>
   </task><!--drpMonitoring-->

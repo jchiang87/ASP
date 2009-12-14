@@ -5,10 +5,10 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring-SCons" version="8.7" type="Data">
+<task name="DRP_monitoring-SCons" version="8.8" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="BINDIR">/nfs/farm/g/glast/u54/asp/jrbdev/ASP-scons/bin/redhat4-i686-32bit-gcc34-Debug</var>
+    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Debug</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="pgwave_folder">/ASP/Results/pgwave</var>
     <var name="outputFolder">/ASP/Results/DRP</var>
@@ -62,7 +62,7 @@
   </process>
 
   <process name="getIntervalData" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/getIntervalData.sh" 
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/getIntervalData.sh" 
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>
@@ -70,7 +70,7 @@
   </process>
 
   <process name="diffuseResponses" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/diffuseResponses.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/diffuseResponses.sh"
          batchOptions=" -q medium " allocationGroup="glastdata" />
     <depends>
       <after process="getIntervalData" status="SUCCESS"/>
@@ -78,7 +78,7 @@
   </process>
 
   <process name="sourceSelection" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/sourceSelection.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceSelection.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="getIntervalData" status="SUCCESS"/>
@@ -86,7 +86,7 @@
   </process>
 
   <process name="assignRois" autoRetryMaxAttempts="2">
-    <job executable="${BINDIR}/assignRois.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/assignRois.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="sourceSelection" status="SUCCESS"/>
@@ -114,7 +114,7 @@
   </process>
 
   <process name="createArchive" autoRetryMaxAttempts="1">
-    <job executable="${BINDIR}/drp_createTarBall.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/drp_createTarBall.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="roiAnalysis.dummyProcess" status="SUCCESS"/>
@@ -151,7 +151,7 @@
   </process>
 
   <process name="clean_up_files" autoRetryMaxAttempts="1">
-    <job executable="${BINDIR}/drp_clean_up_files.sh"
+    <job executable="${DRPMONITORINGROOT}/${BINDIR}/drp_clean_up_files.sh"
          batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="registerArchive" status="SUCCESS"/>
@@ -163,7 +163,7 @@
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
-      <job executable="${BINDIR}/getRoiData.sh" 
+      <job executable="${DRPMONITORINGROOT}/${BINDIR}/getRoiData.sh" 
            batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     </process>
 
@@ -192,7 +192,7 @@
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
-      <job executable="${BINDIR}/combineDrpExpMaps.sh" 
+      <job executable="${DRPMONITORINGROOT}/${BINDIR}/combineDrpExpMaps.sh" 
            batchOptions=" -q express " allocationGroup="glastdata" />
       <depends>
         <after process="exposureSubMap.drpExpMap" status="SUCCESS"/>
@@ -203,7 +203,7 @@
       <variables>
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
-      <job executable="${BINDIR}/sourceAnalysis.sh"
+      <job executable="${DRPMONITORINGROOT}/${BINDIR}/sourceAnalysis.sh"
            batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       <depends>
         <after process="combineExpMaps" status="SUCCESS"/>
@@ -250,7 +250,7 @@
         <variables>
           <var name="EXPMAP_ID">${pipeline.stream}</var>
         </variables>
-        <job executable="${BINDIR}/drpExpMap.sh"
+        <job executable="${DRPMONITORINGROOT}/${BINDIR}/drpExpMap.sh"
              batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       </process>
     </task> <!--exposureSubMap-->
@@ -263,7 +263,7 @@
         <prerequisite name="ROI_ID" type="string"/>
       </prerequisites>
       <process name="fitEnergyBand" autoRetryMaxAttempts="2">
-        <job executable="${BINDIR}/fitEnergyBand.sh"
+        <job executable="${DRPMONITORINGROOT}/${BINDIR}/fitEnergyBand.sh"
              batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       </process>
     </task> <!--energyBandAnalysis-->

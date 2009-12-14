@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Dec 14 14:20:34 PST 2009
+ASP-scons/asp_pgwave/python
+
+Modified Files:
+	launchDrpMonitoring.py 
+Log Message:
+use INST_DIR for packageROOT for SCons tasks
+    *
+------------------------------------------------------------
 User: jchiang  Mon Dec 14 12:49:26 PST 2009
 ASP-scons/asp_pgwave/xml
 

@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Wed Dec 16 20:48:13 PST 2009
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+use rhel4_gcc34opt; tagging v1r10p4
+    *
+------------------------------------------------------------
+User: jchiang  Wed Dec 16 20:48:13 PST 2009
 ASP/asp_pgwave/cmt
 
 Modified Files:

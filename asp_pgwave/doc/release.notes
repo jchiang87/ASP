@@ -5,34 +5,6 @@
     $Id$
 
     @verbatim
-    * EOH *
-
- asp_pgwave-01-10-04 16-Dec-2009 jchiang use rhel4_gcc34opt
- asp_pgwave-01-10-03 11-Nov-2009 jchiang switch to u52 for log files
- asp_pgwave-01-10-02 22-Oct-2009 jchiang refactor logic in getPgwInputData; asp_pgwave_clean_up_files.py
- asp_pgwave-01-10-01 18-Aug-2009 jchiang enable filtering on EVENT_CLASS instead of CTBCLASSLEVEL in getPgwInputData.py
- asp_pgwave-01-10-00 17-Aug-2009 jchiang use asp_pointlike et al
-    v1r9p5 30-Jun-09   JC   accommodate interface change in pointlike in
-                            asp_pgwave/refinePositions.py
-    v1r9p4 30-Jun-09   JC   add ATEL as a valid sourcesub_type for point source
-                            selection
-    v1r9p3 25-Apr-09   JC   enable auto retry for PGWave processes
-    v1r9p2 08-Apr-09   JC   switch to numpy; add "ALIAS" column to POINTSOURCES
-                            summary dict
-    v1r9p1 26-Dec-08   JC   use GtApp to run gtsrcid
-    v1r9   26-Dec-08   JC   use GALPROP_MODEL for diffuse model; accomodate
-                            interface changes to pointlike and skymaps in 
-                            ST v9r9 relative to ST v9r7p1
-    v1r8p3 17-Oct-08   JC   modify query to POINTSOURCES table in 
-                            dbmanager.getPointSources so that it does not
-                            select non-ASP sources (e.g., MQs, RSP Pulsars, 
-                            etc.)
-    v1r8p2 08-Oct-08   JC   Launch DRP_monitoring for six hour intervals
-    v1r8p1 08-Sep-08   JC   Gino's bug-fix for refinePositions when it tries
-                            to refit a position for candidate sources off the
-                            Galactic plane
-    v1r8   04-Sep-08   JC   Gino's mods to refinePositions to accommodate
-                            pointfit interface changes in ST v9r7p1
     v1r7p7 21-Aug-08   JC   insert sources into pointsourcetypeset table
                             because of db table changes forced by web apps
                             and RSP

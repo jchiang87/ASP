@@ -7,6 +7,7 @@
     @verbatim
     * EOH *
 
+ grbASP-04-08-08 16-Dec-2009 jchiang use rhel4_gcc34opt
  grbASP-04-08-07 11-Nov-2009 jchiang switch to u52 for log files; check for zero events extracted in makeAfterglowPlots.py
  grbASP-04-08-06 22-Oct-2009 jchiang accommodate new gtfindsrc output in refinePosition.py
  grbASP-04-08-05 22-Oct-2009 jchiang BB v2 interface; grbASP_clean_up_files.py

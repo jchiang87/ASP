@@ -5,10 +5,10 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="9.0" type="Data">
+<task name="PGWave" version="9.1" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="BINDIR">rh9_gcc32</var>
+    <var name="BINDIR">rhel4_gcc34opt</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/pgwave</var>
     <var name="xrootd_folder">/ASP/pgwave</var>

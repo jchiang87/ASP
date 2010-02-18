@@ -5,8 +5,8 @@ from BayesianBlocks import BayesianBlocks, DoubleVector
 class BayesBlocks(BayesianBlocks):
     def __init__(self, events, useInterval=False):
         BayesianBlocks.__init__(self, events, useInterval)
-    def setCellScaling(self, scaleFactors):
-        BayesianBlocks.setCellScaling(self, scaleFactors)
+    def setCellSizes(self, exposures):
+        BayesianBlocks.setCellSizes(self, exposures)
     def lightCurve(self, ncpPrior=1):
         lc = LightCurve(self._computeLightCurve(ncpPrior))
         return lc.dataPoints()

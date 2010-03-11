@@ -34,8 +34,13 @@ class ConvertEpoch(object):
         return self._b1950.cel((l, b))
 
 class LatGcnTemplate(dict):
-    def __init__(self, template=os.path.join(_dataDir, 'GCN_Notice.tpl')):
-        self.ordered_keys = []
+#    def __init__(self, template=os.path.join(_dataDir, 'GCN_Notice.tpl')):
+    def __init__(self, template=None):
+        if template is None:
+            template = os.path.join(_dataDir, 'GCN_Notice.tpl')
+            if not os.path.isfile(template):
+                template = os.path.join(_dataDir, 'grbASP', 'GCN_Notice.tpl')
+         self.ordered_keys = []
         for line in open(template):
             if line.find("#") == 0:   # skip this line
                 continue

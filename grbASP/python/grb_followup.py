@@ -16,7 +16,11 @@ from GrbAspConfig import grbAspConfig
 from date2met import date2met
 import time
 
-grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
+#grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
+try:
+    grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
+except KeyError:
+    grbasproot = resolve_nfs_path(os.environ['INST_DIR'])
 
 def promptGrbs():
     sql = "select GRB_ID from GRB where GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=0"

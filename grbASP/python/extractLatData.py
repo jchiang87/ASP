@@ -85,6 +85,7 @@ def extractLatData(gcnNotice, ft1File, config):
         gtselect['tmin'] = tmin
         gtselect['tmax'] = tmax
         gtselect['emax'] = 3e5
+        gtselect['rad'] = 180
         gtselect.run()
         gtbin['evfile'] = gtselect['outfile']
         gtbin['outfile'] = gcnNotice.Name + '_LAT_lc_2.fits'

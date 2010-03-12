@@ -59,12 +59,13 @@ gtmktime.run(scfile=ft2_merged, filter='LIVETIME>0', evfile=ft1_merged,
 
 gti = FitsNTuple('filtered.fits', 'GTI')
 
-is_covered = False
-for interval in zip(gti.START, gti.STOP):
-    if interval[0] <= tstart and tstop <= interval[1]:
-#    if tstop <= interval[1]:
-        is_covered = True
-        break
+is_covered = gti.START[0] <= tstart and tstop <= gti.STOP[-1]
+#is_covered = False
+#for interval in zip(gti.START, gti.STOP):
+#    if interval[0] <= tstart and tstop <= interval[1]:
+##    if tstop <= interval[1]:
+#        is_covered = True
+#        break
 
 if is_covered:
     refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],

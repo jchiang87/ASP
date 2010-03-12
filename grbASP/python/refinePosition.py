@@ -112,7 +112,10 @@ def likelyUL(grb_id):
 #
 def absFilePath(filename):
     abspath = os.path.abspath(filename)
-    return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
+    try:
+        return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
+    except IndexError:
+        return abspath
 
 if __name__ == '__main__':
     import sys

@@ -15,7 +15,10 @@ import pyfits
 
 def absFilePath(filename):
     abspath = os.path.abspath(filename)
-    return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
+    try:
+        return os.path.join('/nfs/farm/g/glast', abspath.split('g.glast.')[1])
+    except IndexError:
+        return abspath
 
 os.chdir(os.environ['OUTPUTDIR'])
 grbpars = Parfile(os.environ['GRBPARS'])

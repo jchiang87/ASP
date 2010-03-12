@@ -100,10 +100,16 @@ def purge_old_notices():
     right_now = int(date2met())
     sql = ("update GRB set ASP_PROCESSING_LEVEL=2 where GRB_ID<%i" 
            % (right_now - 86400*7) + " and ASP_PROCESSING_LEVEL=0")
+    print "purging old, unprocessed notices:"
+    print sql
+    print ""
     apply(sql)
 
     sql = ("update GRB set ASP_PROCESSING_LEVEL=2 where GRB_ID<%i"
            % (right_now - 86400*8) + " and ASP_PROCESSING_LEVEL=1")
+    print "purging old, unprocessed notices:"
+    print sql
+    print ""
     apply(sql)
 
 def handle_unprocessed_events(output_dir):

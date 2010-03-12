@@ -40,7 +40,7 @@ class LatGcnTemplate(dict):
             template = os.path.join(_dataDir, 'GCN_Notice.tpl')
             if not os.path.isfile(template):
                 template = os.path.join(_dataDir, 'grbASP', 'GCN_Notice.tpl')
-         self.ordered_keys = []
+        self.ordered_keys = []
         for line in open(template):
             if line.find("#") == 0:   # skip this line
                 continue

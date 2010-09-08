@@ -25,7 +25,8 @@ def forwardErrorMessage(msg):
     mail.sendmail(fromaddr, toaddr, "%s%s" % (preamble, msg))
     mail.quit()
 
-archive_path = "/nfs/farm/g/glast/u52/ASP/GCN_Archive"
+#archive_path = "/nfs/farm/g/glast/u52/ASP/GCN_Archive"
+archive_path = "/afs/slac/g/glast/ground/links/data/ASP/GCN_Archive"
 
 if sys.argv[1:]:
     os.chdir(sys.argv[1])

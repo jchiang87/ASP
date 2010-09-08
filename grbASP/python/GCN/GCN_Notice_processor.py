@@ -139,7 +139,8 @@ def forwardErrorMessage(msg):
 
 if __name__ == '__main__':
     import os, sys
-    path = '/nfs/farm/g/glast/u52/ASP/GCN_Archive'
+#    path = '/nfs/farm/g/glast/u52/ASP/GCN_Archive'
+    path = '/afs/slac/g/glast/ground/links/data/ASP/GCN_Archive'
     queue_path = os.path.join(path, "NOTICE_QUEUE")
 
     try:

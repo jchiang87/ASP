@@ -45,12 +45,12 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
             args['logicalPath'] = logicalPath
         if outputFolder is not None:
             args['outputFolder'] = outputFolder
-#        command = PipelineCommand('GRB_blind_search', args, stream=streamId)
-        if not SCons:
-            command = PipelineCommand('GRB_blind_search', args, stream=streamId)
-        else:
-            command = PipelineCommand('GRB_blind_search-SCons', args,
-                                      stream=streamId)
+        command = PipelineCommand('GRB_blind_search', args, stream=streamId)
+#        if not SCons:
+#            command = PipelineCommand('GRB_blind_search', args, stream=streamId)
+#        else:
+#            command = PipelineCommand('GRB_blind_search-SCons', args,
+#                                      stream=streamId)
         command.run(debug=debug)
 
 def refinementStreams(tstart, tstop, logicalPath=None,

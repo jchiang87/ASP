@@ -254,7 +254,8 @@ def tsMap(grb_id, fitsfile, ra, dec, outfile=None):
 
     coordSys = CoordSys(fitsfile)
 
-    scaleFactor = float(10**(-int(num.log10(ts[0].header['CDELT1']))))
+#    scaleFactor = float(10**(-int(num.log10(ts[0].header['CDELT1']))))
+    scaleFactor = float(10**(-int(num.log10(num.abs(ts[0].header['CDELT1'])))))
 
     deltax = max(int((coordSys.latRange[1] - coordSys.latRange[0])
                      /3.*scaleFactor), 1)/scaleFactor

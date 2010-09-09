@@ -27,8 +27,7 @@ except KeyError:   # probably using an SCons build
 def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
                        debug=False, streamId=None, 
                        datacatalog_imp="datacatalog",
-                       outputFolder=None,
-                       SCons=False):
+                       outputFolder=None):
     if downlinks is None:
         raise ValueError, "No downlink IDs specified"
     if grbroot_dir is None:
@@ -46,11 +45,6 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
         if outputFolder is not None:
             args['outputFolder'] = outputFolder
         command = PipelineCommand('GRB_blind_search', args, stream=streamId)
-#        if not SCons:
-#            command = PipelineCommand('GRB_blind_search', args, stream=streamId)
-#        else:
-#            command = PipelineCommand('GRB_blind_search-SCons', args,
-#                                      stream=streamId)
         command.run(debug=debug)
 
 def refinementStreams(tstart, tstop, logicalPath=None,

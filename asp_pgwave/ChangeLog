@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Sep  8 21:40:12 PDT 2010
+ASP/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+migration of prod xml task defs to SCons
+    *
+------------------------------------------------------------
 User: jchiang  Wed Sep  8 17:53:59 PDT 2010
 ASP-scons/asp_pgwave/xml
 

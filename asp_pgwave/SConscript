@@ -1,0 +1,16 @@
+# -*- python -*-
+# @file SConscript
+# @brief scons build specifications for AspHealPix
+#
+# $Header$
+# Authors: J. Chiang <jchiang@slac.stanford.edu>
+# Version: asp_pgwave-01-10-05
+
+import os
+Import('baseEnv')
+Import('listFiles')
+progEnv = baseEnv.Clone()
+
+progEnv.Tool('registerTargets', package='asp_pgwave',
+             wrappedPython=listFiles(['python/*.py']) )
+

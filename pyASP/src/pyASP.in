@@ -1,0 +1,94 @@
+// -*- mode: c++ -*-
+/**
+ * @file pyASP.in
+ * @brief Interface file for SWIG generated wrappers.
+ * @author J. Chiang <jchiang@slac.stanford.edu>
+ *
+ * $Header$
+ */
+%module pyASP
+%{
+#include <stdexcept>
+#include <string>
+#include <vector>
+#include "astro/JulianDate.h"
+#include "astro/PointingTransform.h"
+#include "astro/SkyDir.h"
+#include "astro/SkyProj.h"
+#include "astro/SolarSystem.h"
+astro::JulianDate jd_from_MET(double met) {
+   return astro::JulianDate(astro::JulianDate::missionStart() + met/8.64e4);
+}
+#include "pyASP/ChiProb.h"
+%}
+%include stl.i
+%exception {
+   try {
+      $action
+   } catch (std::exception & eObj) {
+      PyErr_SetString(PyExc_RuntimeError, const_cast<char*>(eObj.what()));
+      return NULL;
+   }
+}
+%template(DoublePair) std::pair<double, double>;
+%template(DoubleVector) std::vector<double>;
+%template(PairVector) std::vector< std::pair<double, double> >;
+%include $(ASTROROOT)/astro/JulianDate.h
+%include $(ASTROROOT)/astro/SkyProj.h
+%include $(ASTROROOT)/astro/SkyDir.h
+%include $(ASTROROOT)/astro/SolarSystem.h
+%include $(PYASPROOT)/pyASP/ChiProb.h
+astro::JulianDate jd_from_MET(double met);
+%extend astro::SkyDir {
+   static astro::SkyDir interpolate(const astro::SkyDir & dir1, 
+                                    const astro::SkyDir & dir2,
+                                    double t1, double t2, double tt) {
+      return astro::SkyDir((tt - t1)/(t2 - t1)*(dir2() - dir1()) + dir1());
+   }
+   astro::SkyDir operator+(const astro::SkyDir & other) {
+      return astro::SkyDir(self->operator()() + other());
+   }
+   static astro::SkyDir rotateToCelestial(const astro::SkyDir & scZAxis,
+                                          const astro::SkyDir & scXAxis,
+                                          double theta, double phi) {
+      theta *= M_PI/180.;
+      phi *= M_PI/180.;
+      astro::PointingTransform transform(scZAxis, scXAxis);
+      HepRotation rotation(transform.localToCelestial());
+      return astro::SkyDir(rotation(Hep3Vector(std::sin(theta)*std::cos(phi),
+                                               std::sin(theta)*std::sin(phi),
+                                               std::cos(theta))),
+                           astro::SkyDir::EQUATORIAL);
+   }
+   double dot(const astro::SkyDir & other) const {
+      return self->dir().dot(other.dir());
+   }
+   astro::SkyDir cross(const astro::SkyDir & other) const {
+      return astro::SkyDir(self->dir().cross(other.dir()));
+   }
+}
+%extend astro::JulianDate {
+   std::vector<double> gregorianDate() {
+      int year, month, day;
+      double hours;
+      self->getGregorianDate(year, month, day, hours);
+      std::vector<double> data;
+      data.push_back(year);
+      data.push_back(month);
+      data.push_back(day);
+      data.push_back(hours);
+      return data;
+   }
+   double value() {
+      return *self;
+   }
+   double tjd() {
+      return *self - 2440000.5;
+   }
+   int dayOfYear() {
+      int year, month, day;
+      double hours;
+      self->getGregorianDate(year, month, day, hours);
+      return *self - astro::JulianDate(year, 1, 1, 0) + 1;
+   }
+}

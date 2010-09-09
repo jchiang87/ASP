@@ -1,0 +1,28 @@
+# -*- python -*-
+# @file SConscript
+# @brief build info for package healpix
+#
+# $Header$
+# Authors: T. Burnett <tburnett@u.washington.edu>
+# Version: asp_healpix-02-02-04
+
+Import('baseEnv')
+Import('listFiles')
+progEnv = baseEnv.Clone()
+libEnv = baseEnv.Clone()
+
+progEnv.Tool('healpixLib')
+libEnv.Tool('healpixLib', depsOnly = 1)
+progEnv.Tool('registerTargets', 
+             package = 'asp_healpix', 
+             includes = listFiles(['healpix/*.h','healpix/base/*.h']),
+             topInclude = 'healpix',
+             data = listFiles(['data/*']),
+             libraryCxts = [[libEnv.SharedLibrary('asp_healpix', 
+                                                  listFiles(['src/*.cxx','src/base/*.cc',
+                                                             'src/base/*.c'])),
+                             libEnv]],
+             testAppCxts = [[progEnv.Program('test_healpix',
+                                             listFiles(['src/test/*.cxx'])),progEnv]]
+      )
+	      

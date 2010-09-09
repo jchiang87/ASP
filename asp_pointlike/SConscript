@@ -1,0 +1,45 @@
+# -*- python -*-
+# @file SConscript
+# @brief scons build specifications for asp_pointlike
+#
+# $Header$
+# Authors: Toby Burnett <tburnett@u.washington.edu>
+# Version: asp_pointlike-06-14-02
+
+#specify package name, applications
+# note for some purposes we use original name, for some must prepend 'asp_'
+# package= 'pointlike'
+apps   =['pointfit', 'pointfind', 'alignment']
+
+# this part is standard: assume includes, a shareable lib, zero or more applications, a test program
+Import('baseEnv')
+Import('listFiles')
+progEnv = baseEnv.Clone()
+libEnv = baseEnv.Clone()
+swigEnv = baseEnv.Clone()
+
+progEnv.Tool('asp_pointlikeLib')
+libEnv.Tool('asp_pointlikeLib', depsOnly = 1)
+pointlikeLib = libEnv.SharedLibrary('asp_pointlike', listFiles(['src/*.cxx']))
+
+swigEnv.Tool('asp_pointlikeLib')
+
+#swigEnv.Replace(SHLIBPREFIX = '_')
+#swigEnv.Replace(SHLIBSUFFIX = '.pyd')
+swigEnv.Append(RPATH = swigEnv['LIBDIR'])
+pyLib = swigEnv.SwigLibrary('_asp_pointlike','python/swig_setup.i')
+
+pythonModules = listFiles(['python/*.py']) + ['python/asp_pointlike.py']
+
+progEnv.Tool('registerTargets', 
+             package  = 'asp_pointlike', 
+             includes = listFiles(['pointlike/*.h']),
+             topInclude = 'pointlike',
+             libraryCxts= [[pointlikeLib, libEnv]],
+             swigLibraryCxts = [[pyLib, swigEnv]],
+             binaryCxts = [[progEnv.Program(name, listFiles(['src/%s/*.cxx'%name])),
+                            progEnv] for name in apps], 
+             testAppCxts = [[progEnv.Program('test_pointlike', listFiles(['src/test/*.cxx'])), progEnv]],
+             python = pythonModules)
+
+

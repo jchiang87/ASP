@@ -1,0 +1,11 @@
+i686
+Linux
+Win32*
+Visual
+rh*
+VC*
+VS*
+vcc*
+build
+*.pyc
+

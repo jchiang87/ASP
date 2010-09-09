@@ -24,8 +24,10 @@ from PipelineCommand import PipelineCommand, resolve_nfs_path, PipelineError
 
 try:
    _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
+   use_scons = False
 except KeyError:
    _aspLauncherRoot = resolve_nfs_path(os.environ['INST_DIR'])
+   use_scons = True
 
 #
 # Standard output directory for ASP results.  This is a symlink to
@@ -63,7 +65,7 @@ try:
                       grbroot_dir=aspOutput('GRB'),
                       streamId=nDownlink, 
                       datacatalog_imp="datacatalog",
-                      debug=debug)
+                      debug=debug, SCons=use_scons)
 except PipelineError, message:
    if message.message.find("pipeline return code: 512") != -1:
       duplicateStreamException = True

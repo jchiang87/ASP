@@ -1,9 +1,0 @@
-# -*- python -*-
-# $Header$
-# Identify the container.  This should be the only file in a container which
-# is not also in some other package.  The prefix is used to form the
-# name of a container settings directory (e.g. ST_containerSettings) for
-# all other container-specific code
-
-prefix='ASP_'
-Return('prefix')

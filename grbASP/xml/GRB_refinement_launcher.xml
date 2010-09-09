@@ -5,11 +5,11 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement_launcher" version="1.3" type="Data">
+<task name="GRB_refinement_launcher" version="1.4" type="Data">
   <variables>
-    <var name="BINDIR">rhel4_gcc34opt</var>
+    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
-    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
+    <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
   </variables>
   <prerequisites>
     <prerequisite name="GCN_NOTICE" type="string"/>

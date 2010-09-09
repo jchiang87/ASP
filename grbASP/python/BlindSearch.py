@@ -29,7 +29,10 @@ def convert(events, imin=0, imax=None):
     for evt_tuple in zip(events.RA[imin:imax], events.DEC[imin:imax],
                          events.TIME[imin:imax], events.ENERGY[imin:imax],
                          events.EVENT_CLASS[imin:imax]):
-        my_events.append(Event(*evt_tuple))
+#        my_events.append(Event(*evt_tuple))
+        my_events.append(Event(float(evt_tuple[0]), float(evt_tuple[1]),
+                               float(evt_tuple[2]), float(evt_tuple[3]),
+                               int(evt_tuple[4])))
     if len(my_events) == 0:
         raise RuntimeError, "zero events in tuple"
     return my_events

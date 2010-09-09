@@ -5,13 +5,14 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search-SCons" version="4.7" type="Data">
+<task name="GRB_blind_search-SCons" version="5.1" type="Data">
   <variables>
-    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Debug</var>
+    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/GRB/BlindSearch</var>
     <var name="xrootd_folder">/ASP/GRB/BlindSearch</var>
-    <var name="logRoot">/nfs/farm/g/glast/u52/ASP/log_files</var>
+<!--    <var name="logRoot">/afs/slac/g/glast/ground/links/data/ASP/log_files</var>-->
+    <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
   </variables>
   <prerequisites>
      <prerequisite name="logicalPath" type="string"/>
@@ -47,7 +48,7 @@
   </process>
   <process name="blind_search" autoRetryMaxAttempts="2">
     <job executable="${GRBASPROOT}/${BINDIR}/BlindSearch.sh"
-         batchOptions="-q short -R rhel40">
+         batchOptions="-q short " allocationGroup="glastdata" >
     </job>
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>

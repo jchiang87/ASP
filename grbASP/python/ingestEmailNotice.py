@@ -112,7 +112,7 @@ class Packet(object):
         # Add a leap second for the one added Dec 31, 2005.
         # Another will be needed after Dec 31, 2008.
         return int((self.TJD + 2440000.5)*8.64e4 + self.SOD
-                   - self._JD_missionStart_seconds + 1)
+                   - self._JD_missionStart_seconds + 2)
         
 def registerWithDatabase(packet, notice_file):
     grb_id = int(packet.MET)

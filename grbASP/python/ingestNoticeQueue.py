@@ -9,6 +9,7 @@ GCN_Notice_processor.py.
 #
 
 import os
+import subprocess
 import sys
 import glob
 import smtplib
@@ -26,7 +27,8 @@ def forwardErrorMessage(msg):
     mail.quit()
 
 #archive_path = "/nfs/farm/g/glast/u52/ASP/GCN_Archive"
-archive_path = "/afs/slac/g/glast/ground/links/data/ASP/GCN_Archive"
+archive_path = "/nfs/farm/g/glast/u41/ASP/GCN_Archive"
+#archive_path = "/afs/slac/g/glast/ground/links/data/ASP/GCN_Archive"
 
 if sys.argv[1:]:
     os.chdir(sys.argv[1])
@@ -52,3 +54,9 @@ for notice in notices:
         os.rename(notice, "_" + notice)
         message = str(msg) + ("\nfor notice file %s" % notice)
         forwardErrorMessage(message)
+
+#try:
+#    command = "/afs/slac/g/glast/groups/grb/Weekly_FT2/GCN_off_axis_plots/plot_offaxis_angles.sh"
+#    subprocess.call(command, shell=True)
+#except Exception, msg:
+#    forwardErrorMessage(msg)

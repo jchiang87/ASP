@@ -157,8 +157,13 @@ def getDrpEnergyBands():
 class FitsTemplate(object):
     def __init__(self, templateFile=None):
         if templateFile is None:
-            templateFile = os.path.join(os.environ['DRPMONITORINGROOT'],
-                                        'data', 'ASP_light_curves.tpl')
+            try:
+                templateFile = os.path.join(os.environ['DRPMONITORINGROOT'],
+                                            'data', 'ASP_light_curves.tpl')
+            except KeyError:
+                templateFile = os.path.join(os.environ['INST_DIR'],
+                                            'data', 'drpMonitoring',
+                                            'ASP_light_curves.tpl')
             input = open(templateFile, 'r')
             PHDUKeys = self._readHDU(input)
             self.LCHDU = self._readHDU(input)
@@ -239,7 +244,7 @@ class FitsTemplate(object):
     def _deleteEGRETPulsars(self, ptsrcs):
         """Delete EGRET Pulsars from output and TeV blazars that do not
         have "confirmed" LAT detection"""
-        egretPulsars = ('Vela Pulsar', 'Geminga', 'Crab Pulsar', 
+        egretPulsars = ('Vela Pulsar', 'Geminga', #'Crab Pulsar', 
                         'PSR J1706-44')
         for item in egretPulsars:
             try:

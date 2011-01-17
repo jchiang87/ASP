@@ -14,6 +14,7 @@ $Header$
 #include "tip/IFileSvc.h"
 #include "tip/Table.h"
 
+#include <cstdio>
 #include <algorithm>
 #include <functional>
 

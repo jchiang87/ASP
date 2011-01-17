@@ -32,6 +32,7 @@
  *  Author: Martin Reinecke
  */
 
+#include <cstring>
 #include <iostream>
 #include <string>
 #include <sstream>

@@ -13,6 +13,7 @@ $Header$
 #include "healpix/base/alm_filter_tools.h"
 #include <map>
 
+#include <cstdio>
 #include <iostream>
 #include <sstream>
 #include <cstring>

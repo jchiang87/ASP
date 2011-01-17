@@ -12,6 +12,7 @@ $Header$
 #include "tip/IFileSvc.h"
 #include "tip/Table.h"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>

@@ -12,6 +12,7 @@ $Header$
 #include <algorithm>
 #include <functional>
 #include <iterator>
+#include <typeinfo>
 
 using namespace skymaps;
 

@@ -10,6 +10,8 @@ $Header$
 #include "tip/IFileSvc.h"
 
 #include <cmath>
+#include <cstdio>
+#include <cstring>
 #include <errno.h>
 #include <sstream>
 #include <string>

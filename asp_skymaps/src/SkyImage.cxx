@@ -11,6 +11,7 @@ $Header$
 #include "tip/Image.h"
 #include "tip/Table.h"
 
+#include <cstdio>
 #include <cctype>
 #include <cmath>
 #include <stdexcept>

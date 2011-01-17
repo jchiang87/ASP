@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Jan 17 08:58:39 PST 2011
+ASP-scons/asp_healpix/src/base
+
+Modified Files:
+	fitshandle.cc 
+Log Message:
+add includes for gcc4.4
+    *
+------------------------------------------------------------
 User: jchiang  Mon Jan 17 08:58:38 PST 2011
 ASP-scons/asp_healpix/src
 

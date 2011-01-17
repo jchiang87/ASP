@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Mon Jan 17 08:58:39 PST 2011
+ASP-scons/asp_skymaps/src
+
+Modified Files:
+	BinnedPhotonData.cxx Convolution.cxx Gti.cxx IParams.cxx 
+	PhotonMap.cxx SkyImage.cxx 
+Log Message:
+add includes for gcc4.4
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-04-00-00, operation: add
 Package: asp_skymaps

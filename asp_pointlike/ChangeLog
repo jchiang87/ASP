@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Jan 17 08:58:39 PST 2011
+ASP-scons/asp_pointlike/src
+
+Modified Files:
+	SourceFinder.cxx 
+Log Message:
+add includes for gcc4.4
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-04-00-00, operation: add
 Package: asp_pointlike

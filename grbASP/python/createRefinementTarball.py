@@ -40,3 +40,11 @@ my_tarball.gzip()
 
 outfile = moveToXrootd(archive_name + '.gz', output_dir)
 pipeline.setVariable('tarball_name', outfile)
+
+#
+# Launch BA tools analysis
+#
+import subprocess
+command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
+           % os.environ['GRB_ID'])
+subprocess.call(command, shell=True)

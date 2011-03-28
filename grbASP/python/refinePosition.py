@@ -62,6 +62,8 @@ def refinePosition(gcn_notice, ft1Input, ft2Input, config,
     fields = results[-4].split()
     ra, dec, ts, pos_error = (float(fields[0]), float(fields[1]),
                               float(fields[2]), float(fields[3]))
+    if ra < 0:
+        ra += 360.
     if pos_error == 0:
         pos_error = celgal.dist((ra, dec), (notice.RA, notice.DEC))
     if tsmap:

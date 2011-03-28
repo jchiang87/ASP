@@ -218,3 +218,11 @@ if __name__ == '__main__':
     fileStager.finish()
 
     os.system('chmod 777 *')
+
+    #
+    # Launch BA tools analysis
+    #
+    import subprocess
+    command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
+               % os.environ['GRB_ID'])
+    subprocess.call(command, shell=True)

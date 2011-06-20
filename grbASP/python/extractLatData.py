@@ -180,6 +180,17 @@ if __name__ == '__main__':
         print item
     ft2merge(ft2, ft2Merged)
 
+    #
+    # Launch BA tools analysis
+    #
+    try:
+        import subprocess
+        command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
+                   % os.environ['GRB_ID'])
+        subprocess.call(command, shell=True)
+    except:
+        pass
+
     if gcnNotice.offAxisAngle(ft2Merged) > 70:
         print "********************"
         print "WARNING:"
@@ -218,11 +229,3 @@ if __name__ == '__main__':
     fileStager.finish()
 
     os.system('chmod 777 *')
-
-    #
-    # Launch BA tools analysis
-    #
-    import subprocess
-    command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
-               % os.environ['GRB_ID'])
-    subprocess.call(command, shell=True)

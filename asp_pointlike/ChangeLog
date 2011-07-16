@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri Jul 15 17:34:03 PDT 2011
+ASP-scons/asp_pointlike/python
+
+Modified Files:
+	swig_setup.i 
+Log Message:
+add CLHEP namespace qualifications
+    *
+------------------------------------------------------------
 User: jchiang  Fri Jul 15 17:34:02 PDT 2011
 ASP-scons/asp_pointlike/pointlike
 

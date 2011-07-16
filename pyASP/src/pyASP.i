@@ -54,8 +54,8 @@ astro::JulianDate jd_from_MET(double met);
       theta *= M_PI/180.;
       phi *= M_PI/180.;
       astro::PointingTransform transform(scZAxis, scXAxis);
-      HepRotation rotation(transform.localToCelestial());
-      return astro::SkyDir(rotation(Hep3Vector(std::sin(theta)*std::cos(phi),
+      CLHEP::HepRotation rotation(transform.localToCelestial());
+      return astro::SkyDir(rotation(CLHEP::Hep3Vector(std::sin(theta)*std::cos(phi),
                                                std::sin(theta)*std::sin(phi),
                                                std::cos(theta))),
                            astro::SkyDir::EQUATORIAL);

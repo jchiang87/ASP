@@ -43,7 +43,7 @@ public:
     @param exposure_list a vector of pointers to SkySpectrum objects corresponding to the exposure,
                     indexed accordign to the event type (usually front/back)
     */
-    Background::Background(const skymaps::SkySpectrum& diffuse, 
+   Background(const skymaps::SkySpectrum& diffuse, 
                        std::vector<const skymaps::SkySpectrum*> exposure_list);
     /** @brief ctor
     @param diffuse  a SkySpectrum representing the diffuse background flux

@@ -426,8 +426,8 @@ std::pair<double,double> ExtendedLikelihood::poissonDerivatives(double a)
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const std::vector<double>& ExtendedLikelihood::gradient(const Hep3Vector& ex,
-							const Hep3Vector& ey) const {
+const std::vector<double>& ExtendedLikelihood::gradient(const CLHEP::Hep3Vector& ex,
+							const CLHEP::Hep3Vector& ey) const {
 
 #ifdef TEST_GRADIENT
     static const double h=1.e-7;
@@ -467,7 +467,7 @@ const std::vector<double>& ExtendedLikelihood::gradient(const Hep3Vector& ex,
         int nphoton( h.second);
         double q = (*it2).first;
 
-        Hep3Vector delta( m_dir()-d() ); 
+        CLHEP::Hep3Vector delta( m_dir()-d() ); 
         double u = 0.5*delta.mag2()/sig2 ;
 	double x = delta.dot(ex);
 	double y = delta.dot(ey);
@@ -509,9 +509,9 @@ const std::vector<double>& ExtendedLikelihood::gradient(const Hep3Vector& ex,
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Hep3Vector ExtendedLikelihood::ps_gradient() const
+CLHEP::Hep3Vector ExtendedLikelihood::ps_gradient() const
 {
-    Hep3Vector grad;
+   CLHEP::Hep3Vector grad;
     m_curv=m_w=0;
 
     double sig2( sqr(sigma()) );
@@ -519,14 +519,14 @@ Hep3Vector ExtendedLikelihood::ps_gradient() const
     //double w(0); // -log likelihood (check)
     int count(0);
 
-    Hep3Vector perp(m_dir().orthogonal());
+    CLHEP::Hep3Vector perp(m_dir().orthogonal());
     PixelList::const_iterator it = m_vec.begin();
 
     for( ; it< m_vec.end(); ++it){
         const std::pair<SkyDir,int>& h = *it;
         SkyDir d( h.first );
         int nphoton( h.second);
-        Hep3Vector delta( m_dir() - d() ); 
+        CLHEP::Hep3Vector delta( m_dir() - d() ); 
         double u( 0.5*delta.mag2()/sig2);
         double y = perp*delta; // pick an arbitrary direction for the curvature
 

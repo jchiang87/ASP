@@ -19,9 +19,9 @@ class ChiProb {
 
 public:
 
-   static double ChiProb::gammln(double xx);
+   static double gammln(double xx);
 
-   static double ChiProb::gammq(double a, double x);
+   static double gammq(double a, double x);
 
 private:
 

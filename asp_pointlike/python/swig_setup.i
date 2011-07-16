@@ -103,7 +103,7 @@ public:
    size_t __len__() {      return 3;       }
    // ctor to initialize from python vector?
    SkyDir(std::vector<double>& vec){
-     return new astro::SkyDir( Hep3Vector(vec[0],vec[1],vec[2]));
+     return new astro::SkyDir( CLHEP::Hep3Vector(vec[0],vec[1],vec[2]));
      }
 }
 

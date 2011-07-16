@@ -284,12 +284,12 @@ void PointSourceLikelihood::setDir(const astro::SkyDir& dir, bool subset){
     m_dir = dir;
 }
 
-const Hep3Vector& PointSourceLikelihood::gradient() const{
-    m_gradient=Hep3Vector(0);  
+const CLHEP::Hep3Vector& PointSourceLikelihood::gradient() const{
+   m_gradient=CLHEP::Hep3Vector(0);  
     const_iterator it = begin();
     for( ; it!=end(); ++it){
         if( (*it)->TS()< s_TScut) continue;
-        Hep3Vector grad((*it)->gradient());
+        CLHEP::Hep3Vector grad((*it)->gradient());
         double curv((*it)->curvature());
         if( curv > 0 ) m_gradient+= grad;
     }
@@ -450,7 +450,7 @@ double PointSourceLikelihood::localize(int skip)
 
 
     for( ; iter<maxiter; ++iter){
-        Hep3Vector grad( gradient() );
+       CLHEP::Hep3Vector grad( gradient() );
         double     curv( curvature() );
 
         // check that resolution is ok: if curvature gets small or negative we are lost
@@ -463,7 +463,7 @@ double PointSourceLikelihood::localize(int skip)
             ,      gradmag( grad.mag() )
             ;
         //,      oldTs( TS() );
-        Hep3Vector delta = grad/curv;
+        CLHEP::Hep3Vector delta = grad/curv;
         double step(delta.mag());
 
         if( verbose() ){
@@ -495,7 +495,7 @@ double PointSourceLikelihood::localize(int skip)
         }
 
         // here decide to back off if likelihood does not increase
-        Hep3Vector olddir(m_dir()); int count(backoff_count); 
+        CLHEP::Hep3Vector olddir(m_dir()); int count(backoff_count); 
         backingoff =true;
         while( count-->0){
             m_dir = olddir -delta;
@@ -565,9 +565,9 @@ double PointSourceLikelihood::fit_localization(double err) {
     setDir(m_dir,false);
 
     //pick 2D coordinate system
-    Hep3Vector rand_x = m_dir().orthogonal();
+    CLHEP::Hep3Vector rand_x = m_dir().orthogonal();
     rand_x=rand_x.unit();
-    Hep3Vector rand_y = (m_dir().cross(rand_x)).unit();
+    CLHEP::Hep3Vector rand_y = (m_dir().cross(rand_x)).unit();
 
     int npts=2;
     int rows=2*npts+1; //number of grid points = rows*rows

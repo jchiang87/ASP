@@ -105,7 +105,7 @@ namespace pointlike {
     virtual double integral(const astro::SkyDir& dir, double a, double b)const;
 
     /// @brief set all parameters using the embedded python module
-    static void SourceLikelihood::setParameters(const embed_python::Module& par);
+    static void setParameters(const embed_python::Module& par);
     
     /// @brief set radius for individual fits
     static void setDefaultUmax(double umax){pointlike::ExtendedLikelihood::setDefaultUmax(umax); };

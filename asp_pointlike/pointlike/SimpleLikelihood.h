@@ -76,7 +76,7 @@ public:
     int photons()const { return m_photon_count; } ///< number of photons used
 
     /// @brief First derivitive: gradient of function just evaluated  
-    Hep3Vector gradient() const;
+   CLHEP::Hep3Vector gradient() const;
 
     /// @return Second derivative along arbitrary direction.
     double curvature() const;

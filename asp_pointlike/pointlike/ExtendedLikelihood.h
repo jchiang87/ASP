@@ -74,7 +74,7 @@ namespace pointlike {
     int photons()const { return m_photon_count; } ///< number of photons used
     
     /// @brief First derivitive: gradient of function just evaluated  
-    Hep3Vector ps_gradient() const;
+     CLHEP::Hep3Vector ps_gradient() const;
     const std::vector<double>& gradient(const CLHEP::Hep3Vector& ex,
 					const CLHEP::Hep3Vector& ey) const;
     

@@ -546,7 +546,7 @@ double pointlike::SourceLikelihood::localizeMinuit()
   
   gFitDeltaX = CLHEP::Hep3Vector(gFitStartDir.y(),-gFitStartDir.x(),0.);
   if( gFitDeltaX.mag2()<1e-10) 
-    gFitDeltaX = gFitStartDir.z()>0 ? Hep3Vector(1.,0.,0.) : Hep3Vector(-1.,0.,0.);
+     gFitDeltaX = gFitStartDir.z()>0 ? CLHEP::Hep3Vector(1.,0.,0.) : CLHEP::Hep3Vector(-1.,0.,0.);
   gFitDeltaX.setMag(1.);	     
   gFitDeltaY = gFitStartDir.cross(gFitDeltaX);
   gFitDeltaY.setMag(1.);
@@ -961,11 +961,11 @@ void pointlike::SourceLikelihood::setBackgroundDensity(const std::vector<double>
 }
 
 const Hep3Vector& pointlike::SourceLikelihood::ps_gradient() const{
-  m_gradient=Hep3Vector(0);  
+   m_gradient=CLHEP::Hep3Vector(0);  
   const_iterator it = begin();
   for( ; it!=end(); ++it){
     if( (*it)->TS()< s_TScut) continue;
-    Hep3Vector grad((*it)->ps_gradient());
+    CLHEP::Hep3Vector grad((*it)->ps_gradient());
     double curv((*it)->ps_curvature());
     if( curv > 0 ) m_gradient+= grad;
   }
@@ -998,7 +998,7 @@ double pointlike::SourceLikelihood::localizeMinpack(int skip){
   
   gFitDeltaX = CLHEP::Hep3Vector(gFitStartDir.y(),-gFitStartDir.x(),0.);
   if( gFitDeltaX.mag2()<1e-10) 
-    gFitDeltaX = gFitStartDir.z()>0 ? Hep3Vector(1.,0.,0.) : Hep3Vector(-1.,0.,0.);
+     gFitDeltaX = gFitStartDir.z()>0 ? CLHEP::Hep3Vector(1.,0.,0.) : CLHEP::Hep3Vector(-1.,0.,0.);
   gFitDeltaX.setMag(1.);	     
   gFitDeltaY = gFitStartDir.cross(gFitDeltaX);
   gFitDeltaY.setMag(1.);

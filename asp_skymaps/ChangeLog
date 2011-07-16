@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Fri Jul 15 17:34:04 PDT 2011
+ASP-scons/asp_skymaps/src
+
+Modified Files:
+	PySkyFunction.cxx 
+Log Message:
+add CLHEP namespace qualifications
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 15 17:34:04 PDT 2011
 ASP-scons/asp_skymaps/skymaps
 
 Modified Files:

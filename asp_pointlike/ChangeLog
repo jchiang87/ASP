@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Fri Jul 15 17:34:04 PDT 2011
+ASP-scons/asp_pointlike/src
+
+Modified Files:
+	EventList.h ExtendedLikelihood.cxx PointSourceLikelihood.cxx 
+	SimpleLikelihood.cxx SourceLikelihood.cxx 
+Log Message:
+add CLHEP namespace qualifications
+    *
+------------------------------------------------------------
 User: jchiang  Fri Jul 15 17:34:03 PDT 2011
 ASP-scons/asp_pointlike/python
 

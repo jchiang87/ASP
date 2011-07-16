@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri Jul 15 17:34:04 PDT 2011
+ASP-scons/asp_skymaps/skymaps
+
+Modified Files:
+	Background.h 
+Log Message:
+add CLHEP namespace qualifications
+    *
+------------------------------------------------------------
 TAG
 Tag name: asp_skymaps-01-13-05, operation: add
 Package: asp_skymaps

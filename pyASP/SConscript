@@ -15,6 +15,9 @@ swigEnv = baseEnv.Clone()
 libEnv.Tool('pyASPLib', depsOnly=1)
 pyASPLib = libEnv.SharedLibrary('pyASP', listFiles(['src/*.cxx']))
 
+toWrap = listFiles(['python/computeFileInfo_P7V6.py',
+                    'python/readFileInfo_P7V6.py'])
+
 swigEnv.Tool('pyASPLib')
                                 
 lib_pyASP = swigEnv.SwigLibrary('_pyASP','src/pyASP.i')
@@ -26,4 +29,5 @@ swigEnv.Tool('registerTargets', package='pyASP',
              swigLibraryCxts=[[lib_pyASP, swigEnv]],
              includes=listFiles(['pyASP/*.h']),
              data = listFiles(['data/*']),
-             python=python_modules)
+             python=python_modules,
+             wrappedPython=toWrap)

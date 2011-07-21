@@ -5,20 +5,20 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="9.0" type="Data">
+<task name="DRP_monitoring" version="9.4" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Optimized</var>
+    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="pgwave_folder">/ASP/Results/pgwave</var>
     <var name="outputFolder">/ASP/Results/DRP</var>
     <var name="xrootd_folder">/ASP/DRP</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/gll_iem_v02.fit</var>
+    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/ring_2year_p76_v0_lowres.fits</var>
     <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
   </variables>
   <prerequisites>
     <prerequisite name="OUTPUTDIR" type="string"/>
-    <prerequisite name="logicalPath" type="string"/>
+    <prerequisite name="folder" type="string"/>
     <prerequisite name="interval" type="integer"/>
     <prerequisite name="frequency" type="string"/>
     <prerequisite name="TSTART" type="string"/>
@@ -35,26 +35,26 @@
       #
       # Query for the FT1/2 files for this time interval.
       #
-      def query(outfile, path, TSTART, TSTOP):
+      def query(outfile, path, TSTART, TSTOP, folder):
           output = pipeline.createFile(outfile)
           opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
           opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)'%locals()
           opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
           query = ('DataType == \"%s\" && (%s || %s || %s)' 
                    % (path, opt1, opt2, opt3))
-          datasetList = datacat.getDatasets(logicalPath+'/*', query)
+          datasetList = datacat.getDatasets(folder+'/*', query)
           datasetList.writeToFile(output, 1)
           pipeline.writeFile(output)
-      query("Ft1FileList", "FT1", TSTART, TSTOP)
-      query("Ft2FileList", "FT2", TSTART, TSTOP)
+      query("Ft1FileList", "FT1", TSTART, TSTOP, folder)
+      query("Ft2FileList", "FT2", TSTART, TSTOP, folder)
       #
       # Find the location of the source list prepared by pgwave.
       #
       output = pipeline.createFile('pgwaveFileList')
       query = ('DataType==\"PGWAVESOURCELIST\" && nDatasetId==%i' 
                % pgwave_streamId)
-      logicalPath = '%s/%s' % (pgwave_folder, frequency)
-      datasetList = datacat.getDatasets(logicalPath+'/*', query)
+      logical_path = '%s/%s' % (pgwave_folder, frequency)
+      datasetList = datacat.getDatasets(logical_path+'/*', query)
       datasetList.writeToFile(output, 1)
       pipeline.writeFile(output)
       ]]>
@@ -134,14 +134,14 @@
         print attributes
 
         outfile = filePath.split('/')[-1]
-        logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
-        print logicalPath
+        logical_path = '%s/%s:%s' % (outputFolder, dataType, outfile)
+        print logical_path
 
         if filePath.find('root') == 0:
             filePath += "@SLAC_XROOT"
         print filePath
 
-        datacatalog.registerDataset(dataType, logicalPath, filePath,
+        datacatalog.registerDataset(dataType, logical_path, filePath,
                                     attributes)
       ]]>
     </script>

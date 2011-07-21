@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher" version="2.8" type="Data">
+<task name="AspLauncher" version="3.0" type="Data">
   <variables>
-    <var name="BINDIR">bin/redhat4-i686-32bit-gcc34-Optimized</var>
+    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
     <var name="minimum_coverage">0.70</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
@@ -29,7 +29,7 @@
       <![CDATA[
         print "using datacatalog implementation: ", datacatalog_imp
         datacat = eval(datacatalog_imp)
-        def query(outfile, path, TSTART, TSTOP):
+        def query(outfile, path, TSTART, TSTOP, folder):
             output = pipeline.createFile(outfile)
             opt1='(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)'%locals()
             opt2='(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)'%locals()
@@ -39,8 +39,8 @@
             datasetList = datacat.getDatasets(folder+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
-        query("Ft1FileList", "FT1", nMetStart, nMetStop)
-        query("Ft2FileList", "FT2", nMetStart, nMetStop)
+        query("Ft1FileList", "FT1", nMetStart, nMetStop, folder)
+        query("Ft2FileList", "FT2", nMetStart, nMetStop, folder)
     ]]></script>
   </process>
   <process name="launchStreams">

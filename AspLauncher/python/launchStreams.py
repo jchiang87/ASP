@@ -15,16 +15,12 @@ from checkLevelOneFiles import providesCoverage
 from PipelineCommand import PipelineCommand, resolve_nfs_path
 from FileStager import FileStager
 
-try:
-    _pgwaveRoot = resolve_nfs_path(os.environ['ASP_PGWAVEROOT'])
-except KeyError:
-    _pgwaveRoot = resolve_nfs_path(os.environ['INST_DIR'])
-
+_pgwaveRoot = resolve_nfs_path(os.environ['INST_DIR'])
 _datacatalog_imp = os.environ['datacatalog_imp']
 
-def launch_pgwave(interval, frequency, tstart, tstop, folder, output_dir,
-                  streamId=None, debug=False):
-    args = {'logicalPath' : folder,
+def launch_pgwave(interval, frequency, tstart, tstop, folder, 
+                  output_dir, streamId=None, debug=False):
+    args = {'folder' : folder,
             'interval' : interval,
             'frequency' : frequency,
             'TSTART' : tstart,

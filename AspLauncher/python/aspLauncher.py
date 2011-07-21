@@ -9,7 +9,7 @@ launched as a subprocess of L1Proc.
 Two environment variables need to be provided:
 
 nDownlink = Data delivery ID of the current L1Proc instance
-folder = Logical folder in the dataCatalog that contains the FT1/2 data
+folder = Folder in the dataCatalog that contains the FT1/2 data
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -22,10 +22,7 @@ from createGrbStreams import blindSearchStreams
 from intervalAccess import unhandledIntervals
 from PipelineCommand import PipelineCommand, resolve_nfs_path, PipelineError
 
-try:
-   _aspLauncherRoot = resolve_nfs_path(os.environ['ASPLAUNCHERROOT'])
-except KeyError:
-   _aspLauncherRoot = resolve_nfs_path(os.environ['INST_DIR'])
+_aspLauncherRoot = resolve_nfs_path(os.environ['INST_DIR'])
 
 #
 # Standard output directory for ASP results.  This is a symlink to
@@ -59,7 +56,7 @@ nDownlink = int(os.environ['nDownlink'])
 
 try:
    blindSearchStreams(downlinks=(nDownlink,),
-                      logicalPath=os.environ['folder'],
+                      folder=os.environ['folder'],
                       grbroot_dir=aspOutput('GRB'),
                       streamId=nDownlink, 
                       datacatalog_imp="datacatalog",

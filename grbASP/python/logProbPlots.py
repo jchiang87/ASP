@@ -13,6 +13,9 @@ import os
 #
 os.environ['MPLCONFIGDIR'] = os.environ['GRBROOTDIR']
 
+import matplotlib
+matplotlib.use('Agg')
+
 import sys
 import datetime
 import numpy as num

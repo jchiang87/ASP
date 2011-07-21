@@ -18,6 +18,7 @@ from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple
 from ft1merge import ft2merge
 from FileStager import FileStager
+from pass_version import pass_version
 
 gtselect = GtApp('gtselect')
 gtmktime = GtApp('gtmktime')
@@ -293,8 +294,14 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
             tmpfile = infile
         outfile = infile.replace('.', '_zmax100.')
         outfile = os.path.basename(outfile)
-        gtselect.run(infile=tmpfile, outfile=outfile, zmax=zmax, 
-                     emin=0, emax=3e6, rad=180)
+        if pass_version(tmpfile) != 'NONE':
+            # Apply pass 7 transient selection
+            gtselect.run(infile=tmpfile, outfile=outfile, zmax=zmax, 
+                         emin=0, emax=3e6, rad=180, evclass=0)
+        else:
+            # data must be Pass 6 or simulation, so make no event selection.
+            gtselect.run(infile=tmpfile, outfile=outfile, zmax=zmax, 
+                         emin=0, emax=3e6, rad=180)
         ft1 = pyfits.open(outfile)
         if ft1['EVENTS'].size() != 0:
             outfiles.append(outfile)

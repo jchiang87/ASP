@@ -13,6 +13,8 @@ import os
 # Need to set this so that pylab can write .matplotlib
 #
 os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
+import matplotlib
+matplotlib.use('Agg')
 
 import numpy as num
 import pylab
@@ -21,6 +23,7 @@ from FitsNTuple import FitsNTuple
 import pyASP
 from SkyCone import makeCone
 from read_data import read_data
+from pass_version import pass_version
 
 def getAxisRange(header):
     naxis1 = header['naxis1']
@@ -329,6 +332,8 @@ if __name__ == '__main__':
 
     ft1file = grbName + '_for_plots.fits'
     gtselect = GtApp('gtselect')
+    if pass_version('FT1_merged.fits') != 'NONE':
+        gtselect['evclass'] = 0
     gtselect.run(infile='FT1_merged.fits', outfile=ft1file,
                  ra=ra, dec=dec, rad=rad*1.5, tmin=tmin, tmax=tmax,
                  emin=30, emax=3e5, zmax=100)

@@ -68,7 +68,7 @@ is_covered = gti.START[0] <= tstart and tstop <= gti.STOP[-1]
 #        break
 
 if is_covered:
-    refinementStreams(tstart, tstop, logicalPath=os.environ['logicalPath'],
+    refinementStreams(tstart, tstop, folder=os.environ['folder'],
                       output_dir=output_dir, grb_ids=(grb_id, ),
                       streamId=grb_id, 
                       datacatalog_imp=os.environ['datacatalog_imp'])

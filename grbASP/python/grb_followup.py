@@ -16,11 +16,7 @@ from GrbAspConfig import grbAspConfig
 from date2met import date2met
 import time
 
-#grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
-try:
-    grbasproot = resolve_nfs_path(os.environ['GRBASPROOT'])
-except KeyError:
-    grbasproot = resolve_nfs_path(os.environ['INST_DIR'])
+grbasproot = resolve_nfs_path(os.environ['INST_DIR'])
 
 def promptGrbs():
     sql = "select GRB_ID from GRB where GCAT_FLAG=0 and ASP_PROCESSING_LEVEL=0"
@@ -62,7 +58,7 @@ def launch_refinement_streams(output_dir):
                 'GRBASPROOT' : grbasproot,
                 'TSTART' : grb_met - dt,
                 'TSTOP' : grb_met + dt,
-                'logicalPath' : os.environ['logicalPath'],
+                'folder' : os.environ['folder'],
                 'datacatalog_imp' : os.environ['datacatalog_imp']}
         command = PipelineCommand('GRB_refinement_launcher', args)
         command.run()
@@ -76,7 +72,7 @@ def launch_afterglow_streams(output_dir):
         print "launching afterglow for ", grb_name
         config = grbAspConfig.find(ag_time)
         dt = config.AGTIMESCALE
-        args = {'logicalPath' : os.environ['logicalPath'],
+        args = {'folder' : os.environ['folder'],
                 'GRB_ID' : grb_id,
                 'TSTART' : int(ag_time),
                 'TSTOP' : int(ag_time + dt),

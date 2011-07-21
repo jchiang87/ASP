@@ -13,6 +13,8 @@ import os
 # blech.  @todo rationalize use of OUTPUTDIR vs output_dir.  The
 # following is needed by the makeRefinementPlots import.
 os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
+import matplotlib
+matplotlib.use('Agg')
 
 import numpy as num
 import pylab

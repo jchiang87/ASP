@@ -11,6 +11,7 @@ import pyfits
 from FitsNTuple import FitsNTuple
 from BayesBlocks import BayesBlocks
 from GtApp import GtApp
+from pass_version import pass_version
 import dbAccess
 from parfile_parser import Parfile
 import pipeline
@@ -33,6 +34,8 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect['tmax'] = gcnNotice.start_time + duration
     gtselect['zmax'] = 100 # need to retrieve this from db table
     gtselect['emax'] = 3e5
+    if pass_version(ft1File) != 'NONE': # Apply Pass 7 transient selection
+        gtselect['evclass'] = 0
     gtselect.run()
 
     ft1 = pyfits.open(gtselect['outfile'])
@@ -180,16 +183,17 @@ if __name__ == '__main__':
         print item
     ft2merge(ft2, ft2Merged)
 
-    #
-    # Launch BA tools analysis
-    #
-    try:
-        import subprocess
-        command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
-                   % os.environ['GRB_ID'])
-        subprocess.call(command, shell=True)
-    except:
-        pass
+    if os.environ['PIPELINESERVER'] == 'PROD':
+        #
+        # Launch BA tools analysis
+        #
+        try:
+            import subprocess
+            command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
+                       % os.environ['GRB_ID'])
+            subprocess.call(command, shell=True)
+        except:
+            pass
 
     if gcnNotice.offAxisAngle(ft2Merged) > 70:
         print "********************"

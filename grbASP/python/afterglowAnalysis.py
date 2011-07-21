@@ -12,6 +12,7 @@ from UnbinnedAnalysis import *
 from GrbAspConfig import grbAspConfig, irf_config
 import dbAccess
 import pyfits
+from pass_version import pass_version
 
 def absFilePath(filename):
     abspath = os.path.abspath(filename)
@@ -110,6 +111,8 @@ from GtApp import GtApp
 # Compute a simple light curve
 #
 gtselect = GtApp('gtselect')
+if pass_version(pars['ft1File']) != 'NONE':
+    gtselect['evclass'] = 0
 gtselect.run(evfile=pars['ft1File'], outfile='filtered_3deg.fits',
              ra=grbpars['ra'], dec=grbpars['dec'], rad=3, coordSys='CEL',
              emin=100, emax=3e5)

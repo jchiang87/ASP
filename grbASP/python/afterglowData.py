@@ -16,6 +16,7 @@ import readXml
 import xmlSrcLib
 import FuncFactory
 import dbAccess
+from pass_version import pass_version
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 fcopy = GtApp('fcopy')
@@ -44,6 +45,8 @@ def getData(time, ra, dec, srcName, ft1, ft2, duration=5*3600, radius=15,
     gtselect['emin'] = 100
     gtselect['emax'] = 3e5
     gtselect['zmax'] = 100
+    if pass_version(gtselect['infile']) != 'NONE':
+        gtselect['evclass'] = 0
     gtselect.run()
 
     srcModel = readXml.SourceModel()

@@ -23,6 +23,7 @@ from parfile_parser import Parfile
 from FitsNTuple import FitsNTuple, FitsNTupleError
 from addNdifrsp import addNdifrsp
 import pipeline
+from pass_version import pass_version
 
 gtselect = GtApp('gtselect', 'dataSubselector')
 gtlike = GtApp('gtlike', 'Likelihood')
@@ -77,6 +78,8 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
     gtselect['emin'] = 100
     gtselect['emax'] = 3e5
     gtselect['zmax'] = 100
+    if pass_version(ft1File) != 'NONE':
+        gtselect['evclass'] = 0
     gtselect.run()
 
     events = pyfits.open(gtselect['outfile'])
@@ -87,7 +90,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
     #
     # Check if exposure is zero at this location
     #
-    foo = pyLike.WcsMap(expMap)
+    foo = pyLike.WcsMap2(expMap)
     grb_dir = pyLike.SkyDir(ra, dec)
     if foo(grb_dir) == 0:
         raise ZeroFt1EventsError
@@ -142,7 +145,8 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
     pars = Parfile(name + '_pars.txt', fixed_keys=False)
     pars['GRB_INTEN1'] = like[name].Npred(100, 1e3)
     pars['GRB_INTEN2'] = like[name].Npred(1e3, 1e4)
-    pars['GRB_INTEN3'] = like[name].Npred(1e4, 2e5)
+#    pars['GRB_INTEN3'] = like[name].Npred(1e4, 2e5)
+    pars['GRB_INTEN3'] = like[name].Npred(1e4, 1e5)
     pars.write()
 
     grb_id = int(os.environ['GRB_ID'])

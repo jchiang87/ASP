@@ -13,8 +13,10 @@ from ft1merge import ft2merge, ft1_filter_merge
 from FitsNTuple import FitsNTuple
 from FileStager import FileStager
 from PipelineCommand import pipelineServer
+from pass_version import pass_version
 
 fcopy = GtApp('fcopy')
+gtmktime = GtApp('gtmktime')
 gtselect = GtApp('gtselect')
 
 def filter_string(ft1file):
@@ -34,9 +36,6 @@ os.chdir(output_dir)
 
 start_time = float(os.environ['TSTART'])
 stop_time = float(os.environ['TSTOP'])
-
-gtmktime = GtApp('gtmktime')
-gtselect = GtApp('gtselect')
 
 print "Using downlink files: ", ft1
 
@@ -82,14 +81,19 @@ else:
     #
     #
     foo = FitsNTuple('time_filtered_events.fits', 'EVENTS')
+    fcopy = GtApp('fcopy')
     if 'CTBCLASSLEVEL' in foo.names:
-        fcopy = GtApp('fcopy')
         fcopy.run(infile='time_filtered_events.fits[EVENTS][CTBCLASSLEVEL>1]',
                   outfile='Filtered.fits')
     elif 'EVENT_CLASS' in foo.names:
-        fcopy = GtApp('fcopy')
-        fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
-                  outfile='Filtered.fits')
+        if pass_version('time_filtered_events.fits') != 'NONE':
+            fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
+                      outfile='Filtered.fits')
+        else:
+            # For Pass 7, apply Source class selection
+            gtselect.run(infile='time_filtered_events.fits',
+                         outfile='Filtered.fits',
+                         evclass=2)
 
 #
 # apply zenith angle cut and energy cut

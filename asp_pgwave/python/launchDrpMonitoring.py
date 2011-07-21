@@ -19,10 +19,10 @@ except KeyError:
 
 _datacatalog_imp = os.environ['datacatalog_imp']
 
-def launch_drp(interval, frequency, tstart, tstop, folder, output_dir,
-               pgwave_streamId, debug=False):
+def launch_drp(interval, frequency, tstart, tstop, folder, 
+               output_dir, pgwave_streamId, debug=False):
     args = {'OUTPUTDIR' : output_dir,
-            'logicalPath' : folder,
+            'folder' : folder,
             'interval' : interval,
             'frequency' : frequency,
             'TSTART' : tstart,
@@ -42,12 +42,12 @@ if __name__ == '__main__':
 
     interval = int(os.environ['interval'])
     frequency = os.environ['frequency']
-    logicalPath = os.environ['logicalPath']
+    folder = os.environ['folder']
     tstart = int(os.environ['TSTART'])
     tstop = int(os.environ['TSTOP'])
 
     streamId = int(os.environ['pgwave_streamId'])
 
-    launch_drp(interval, frequency, tstart, tstop, logicalPath,
+    launch_drp(interval, frequency, tstart, tstop, folder, 
                output_dir, streamId, debug=False)
 

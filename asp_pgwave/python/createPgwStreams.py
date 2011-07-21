@@ -21,7 +21,7 @@ _catdir = '/nfs/farm/g/glast/u33/tosti/october/catdir'
 _startTime = 220838400.   # for DC2 data
 
 def pgwStreams(downl=1, output_dir=_outputDir, startTime=_startTime, 
-            debug=False, logicalPath=None):
+               debug=False, folder=None):
     start_time = 252737700
     #TSTOP=252743070#(downl-1)*1.04e4 + startTime
     stop_time =252743070 # start_time +1.04e4 
@@ -30,10 +30,9 @@ def pgwStreams(downl=1, output_dir=_outputDir, startTime=_startTime,
             'TSTART' : start_time,
             'TSTOP' : stop_time,
             'CATDIR': _catdir, 
-            'ASP_PGWAVEROOT' : _pgwRoot,
-            'logicalPath' : '/DC2/OktoberTest'}
-    if logicalPath is not None:
-            args['logicalPath'] = logicalPath
+            'ASP_PGWAVEROOT' : _pgwRoot}
+    if folder is not None:
+        args['folder'] = folder
     command = PipelineCommand('PGWave', args)
     command.run(debug=debug)
 

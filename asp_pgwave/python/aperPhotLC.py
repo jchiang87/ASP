@@ -3,6 +3,8 @@ import os
 # Need to set this so that pylab can write .matplotlib
 #
 os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
+import matplotlib
+matplotlib.use('Agg')
 
 import sys,commands
 import gtutil

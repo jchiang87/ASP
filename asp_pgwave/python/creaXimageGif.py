@@ -1,6 +1,10 @@
+#
+# $Header$
+#
 import os,sys
+import matplotlib
+matplotlib.use('Agg')
 
-#os.environ['HOME'] = os.environ['output_dir']
 os.environ['HOME'] = os.environ['OUTPUTDIR']
 
 import pylab as pl

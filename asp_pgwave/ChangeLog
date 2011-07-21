@@ -1,4 +1,15 @@
 ------------------------------------------------------------
+User: jchiang  Thu Jul 21 13:59:30 PDT 2011
+ASP-scons/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py creaXimageGif.py createPgwStreams.py 
+	getPgwInputData.py launchDrpMonitoring.py 
+Log Message:
+explicitly use "Agg" backend for matplotlib; 'logicalPath'->'folder'; apply pass 7 source class cut in getPgwInputData.py; switch to rhel5-64 in PGwave.xml
+
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-04-00-00, operation: add
 Package: asp_pgwave

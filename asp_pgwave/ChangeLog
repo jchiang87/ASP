@@ -1,4 +1,14 @@
 ------------------------------------------------------------
+User: jchiang  Thu Jul 21 13:59:50 PDT 2011
+ASP-scons/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+explicitly use "Agg" backend for matplotlib; 'logicalPath'->'folder'; apply pass 7 source class cut in getPgwInputData.py; switch to rhel5-64 in PGwave.xml
+
+    *
+------------------------------------------------------------
 User: jchiang  Thu Jul 21 13:59:30 PDT 2011
 ASP-scons/asp_pgwave/python
 

@@ -60,6 +60,12 @@ gtmktime.run(scfile=ft2_merged, filter='LIVETIME>0', evfile=ft1_merged,
 gti = FitsNTuple('filtered.fits', 'GTI')
 
 is_covered = gti.START[0] <= tstart and tstop <= gti.STOP[-1]
+
+print "tstart, tstop =", tstart, tstop
+if not is_covered:
+    for interval in zip(gti.START, gti.STOP):
+        print interval[0], interval[1]
+
 #is_covered = False
 #for interval in zip(gti.START, gti.STOP):
 #    if interval[0] <= tstart and tstop <= interval[1]:

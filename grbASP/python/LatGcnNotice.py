@@ -165,8 +165,11 @@ class LatGcnNotice(object):
         foo['GRB_DATE'] = ('%i TJD; %i DOY' % (jd.tjd(), jd.dayOfYear()))
         foo['GRB_TIME'] = time_string(hours*3600)
         
-        grb_name = 'GRB%02i%02i%02i%03i' % (year % 100, month, day, 
-                                            1000*num.round(hours/24.))
+        frac = int(num.round(1000*hours/24.))
+        if frac == 1000:
+            frac = 999
+        grb_name = 'GRB%02i%02i%02i%03i' % (year % 100, month, day, frac)
+
         self.name = grb_name
         
         JD_missionStart_seconds = 211845067200

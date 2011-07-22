@@ -164,8 +164,11 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
         sys.path.insert(0, '.')
         from UpperLimits import UpperLimits
         ul = UpperLimits(like)
-        upper_limit = ul[name].compute(renorm=True, emin=100, emax=3e5)
-#        upper_limit = [like.flux(name, 100, 3e5) + like.fluxError(name, 100, 3e5), 0]
+        try:
+            upper_limit = ul[name].compute(renorm=True, emin=100, emax=3e5)
+        except:
+            upper_limit = [flux_par.getValue() + 2*flux_par.error(), 0]
+            #upper_limit = [like.flux(name, 100, 3e5) + like.fluxError(name, 100, 3e5), 0]
         dbAccess.updateGrb(grb_id, TS_VALUE=Ts, IS_UPPER_LIMIT=1)
         flux_value = upper_limit[0]
     else:

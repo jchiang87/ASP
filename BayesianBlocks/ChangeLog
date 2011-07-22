@@ -1,0 +1,1915 @@
+------------------------------------------------------------
+TAG
+Tag name: BayesianBlocks-03-00-01, operation: add
+Package: BayesianBlocks
+User: jchiang  Mon Jan 17 10:02:45 2011
+Files:
+  BayesianBlocks/.cvsignore  1.2
+  BayesianBlocks/ChangeLog  1.144
+  BayesianBlocks/BayesianBlocksLib.py  1.1
+  BayesianBlocks/SConscript  1.8
+  BayesianBlocks/BayesianBlocks.i  1.1
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.15
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.19
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.12
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.13
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.8
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.6
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.8
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.8
+  BayesianBlocks/src/BayesianBlocks.in  1.6
+  BayesianBlocks/src/BayesianBlocks.cxx  1.21
+  BayesianBlocks/src/BayesianBlocks.i  1.4
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jan 17 10:02:34 PST 2011
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jan 17 10:02:34 PST 2011
+ASP/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jan 17 08:59:18 PST 2011
+ASP-scons/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r0p1
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jan 17 08:58:38 PST 2011
+ASP-scons/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx Exposure.cxx 
+Log Message:
+add includes for gcc4.4
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: BayesianBlocks
+User: jchiang  Thu Sep  9 14:24:57 2010
+Files:
+  BayesianBlocks/.cvsignore  1.2
+  BayesianBlocks/ChangeLog  1.139
+  BayesianBlocks/BayesianBlocksLib.py  1.1
+  BayesianBlocks/SConscript  1.7
+  BayesianBlocks/BayesianBlocks.i  1.1
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.15
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.18
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.11
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.13
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.8
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.6
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.8
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.6
+  BayesianBlocks/src/BayesianBlocks.cxx  1.20
+  BayesianBlocks/src/BayesianBlocks.i  1.4
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: BayesianBlocks
+User: jchiang  Thu Sep  9 13:04:47 2010
+Files:
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.15
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.18
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.11
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.13
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.8
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.6
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.8
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.6
+  BayesianBlocks/src/BayesianBlocks.cxx  1.20
+  BayesianBlocks/src/BayesianBlocks.i  1.4
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: BayesianBlocks-03-00-00, operation: add
+Package: BayesianBlocks
+User: jchiang  Fri Mar 12 09:06:37 2010
+Files:
+  BayesianBlocks/.cvsignore  1.2
+  BayesianBlocks/ChangeLog  1.137
+  BayesianBlocks/BayesianBlocksLib.py  1.1
+  BayesianBlocks/SConscript  1.7
+  BayesianBlocks/BayesianBlocks.i  1.1
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.15
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.18
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.11
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.13
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.8
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.6
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.8
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.6
+  BayesianBlocks/src/BayesianBlocks.cxx  1.20
+  BayesianBlocks/src/BayesianBlocks.i  1.4
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:06:31 PST 2010
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:06:31 PST 2010
+ASP/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:05:54 PST 2010
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r0p0
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 17 16:48:42 PST 2010
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+bug fix for exposure scaling; refactor to allow users to set cell sizes directly as cell exposures
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 17 16:48:42 PST 2010
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py 
+Log Message:
+bug fix for exposure scaling; refactor to allow users to set cell sizes directly as cell exposures
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 17 16:48:42 PST 2010
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+bug fix for exposure scaling; refactor to allow users to set cell sizes directly as cell exposures
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 23 14:46:36 PST 2009
+ASP-scons/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+install files in python subdirectory
+    *
+------------------------------------------------------------
+TAG
+Tag name: BayesianBlocks-02-00-01, operation: add
+Package: BayesianBlocks
+User: jrb  Mon Nov 16 15:48:45 2009
+Files:
+  BayesianBlocks/.cvsignore  1.2
+  BayesianBlocks/ChangeLog  1.129
+  BayesianBlocks/BayesianBlocksLib.py  1.1
+  BayesianBlocks/SConscript  1.5
+  BayesianBlocks/BayesianBlocks.i  1.1
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.14
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.17
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.10
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.12
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.8
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.6
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.8
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.6
+  BayesianBlocks/src/BayesianBlocks.cxx  1.19
+  BayesianBlocks/src/BayesianBlocks.i  1.4
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:48:39 PST 2009
+ASP-scons/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:48:39 PST 2009
+ASP-scons/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:48:39 PST 2009
+ASP-scons/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:11:25 PST 2009
+ASP-scons/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.i 
+Log Message:
+Revert .i file to the style SCons expects as input
+
+    *
+------------------------------------------------------------
+User: jrb  Tue Nov  3 13:26:41 PST 2009
+ASP/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+Add install of data files
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: BayesianBlocks-02-00-00, operation: add
+Package: BayesianBlocks
+User: jchiang  Wed Oct 14 14:20:40 2009
+Files:
+  BayesianBlocks/.cvsignore  1.2
+  BayesianBlocks/ChangeLog  1.123
+  BayesianBlocks/BayesianBlocksLib.py  1.1
+  BayesianBlocks/SConscript  1.3
+  BayesianBlocks/BayesianBlocks.i  1.1
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.14
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.16
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.9
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.12
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.8
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.6
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.8
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.6
+  BayesianBlocks/src/BayesianBlocks.cxx  1.19
+  BayesianBlocks/src/BayesianBlocks.i  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct 14 14:20:29 PDT 2009
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct 14 14:20:29 PDT 2009
+ASP/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct 14 14:20:12 PDT 2009
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use full versioning, v2r0p0
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct 14 14:17:59 PDT 2009
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+refactor interface
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct 14 13:44:05 PDT 2009
+ASP/BayesianBlocks/src
+
+Added Files:
+	BayesianBlocks.i 
+Log Message:
+update test scripts to use new interface
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct 14 13:44:05 PDT 2009
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py BayesBlocks.py 
+	test_BayesianBlocks.py 
+Log Message:
+update test scripts to use new interface
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 13 22:57:03 PDT 2009
+ASP/BayesianBlocks
+
+Added Files:
+	BayesianBlocks.i 
+Log Message:
+re-add .i file
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 13 22:56:33 PDT 2009
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx BayesianBlocks.in 
+Removed Files:
+	BayesianBlocks.i 
+Log Message:
+refactor interface
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 13 22:56:33 PDT 2009
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py 
+Log Message:
+refactor interface
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 13 22:56:33 PDT 2009
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+refactor interface
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 13 20:28:10 PDT 2009
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+refactor application of test for posterior cost function
+    *
+------------------------------------------------------------
+TAG
+Tag name: BayesianBlocks-01-02-01, operation: add
+Package: BayesianBlocks
+User: jrb  Thu Oct  1 17:13:56 2009
+Files:
+  BayesianBlocks/.cvsignore  1.2
+  BayesianBlocks/ChangeLog  1.111
+  BayesianBlocks/BayesianBlocksLib.py  1.1
+  BayesianBlocks/SConscript  1.2
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.13
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.14
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.8
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.10
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.7
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.7
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.5
+  BayesianBlocks/src/BayesianBlocks.cxx  1.17
+  BayesianBlocks/src/BayesianBlocks.i  1.1
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 17:13:45 PDT 2009
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 17:13:44 PDT 2009
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 17:13:44 PDT 2009
+ASP/BayesianBlocks
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 17:04:22 PDT 2009
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+Add EOH line
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 16:59:20 PDT 2009
+ASP/BayesianBlocks/src
+
+Added Files:
+	BayesianBlocks.i 
+Log Message:
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Oct  1 16:59:20 PDT 2009
+ASP/BayesianBlocks
+
+Modified Files:
+	.cvsignore 
+Added Files:
+	BayesianBlocksLib.py SConscript 
+Log Message:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-03-00-00, operation: add
+Package: BayesianBlocks
+User: jchiang  Mon Aug 17 23:44:16 2009
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.104
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.13
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.13
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.6
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/BayesBlocks.py  1.10
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/distributions.py  1.4
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.7
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/BB_example.py  1.7
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.5
+  BayesianBlocks/src/BayesianBlocks.cxx  1.17
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 15 13:15:43 PDT 2009
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r2
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 15 13:15:43 PDT 2009
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r2
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul  7 22:51:19 PDT 2009
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+fixes for binned data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul  7 22:51:19 PDT 2009
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py BayesBlocks.py distributions.py 
+Log Message:
+fixes for binned data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul  7 22:51:18 PDT 2009
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+fixes for binned data
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r1, operation: add
+Package: BayesianBlocks
+User: jchiang  Tue Jun 30 10:55:34 2009
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.98
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.12
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.12
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.5
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.9
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.6
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.6
+  BayesianBlocks/python/distributions.py  1.3
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.7
+  BayesianBlocks/src/BayesianBlocks.in  1.5
+  BayesianBlocks/src/BayesianBlocks.cxx  1.16
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jun 30 10:55:05 PDT 2009
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jun 30 10:55:05 PDT 2009
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jun 30 10:54:17 PDT 2009
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.in Exposure.cxx 
+Log Message:
+use new Likelihood::ScData interface
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r0p1, operation: add
+Package: BayesianBlocks
+User: jchiang  Wed Apr  8 20:37:10 2009
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.94
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.12
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.11
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.4
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.2
+  BayesianBlocks/python/find_flare.py  1.8
+  BayesianBlocks/python/BayesBlocks.py  1.9
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.2
+  BayesianBlocks/python/detrend.py  1.8
+  BayesianBlocks/python/BB_example_0.py  1.6
+  BayesianBlocks/python/global_opt.py  1.3
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/pksData.py  1.2
+  BayesianBlocks/python/BB_example.py  1.6
+  BayesianBlocks/python/distributions.py  1.3
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.5
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.6
+  BayesianBlocks/src/BayesianBlocks.in  1.4
+  BayesianBlocks/src/BayesianBlocks.cxx  1.16
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:36:51 PDT 2009
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:36:51 PDT 2009
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:36:00 PDT 2009
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py createFlare.py detrend.py 
+	distributions.py find_flare.py find_flare_2.py gammaln.py 
+	global_opt.py pksData.py timing_study.py 
+Log Message:
+switch to numpy
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1, operation: add
+Package: BayesianBlocks
+User: jchiang  Fri Dec  5 22:42:38 2008
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.90
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.12
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.10
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.3
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.3
+  BayesianBlocks/doc/images/test_flare_diffuse_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example.png  1.1
+  BayesianBlocks/doc/images/powerlaw_not_scaled.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg_BB.png  1.1
+  BayesianBlocks/doc/images/powerlaw_scaled.png  1.1
+  BayesianBlocks/doc/images/powerlaw_detrended.png  1.1
+  BayesianBlocks/doc/images/trade_study_1.png  1.1
+  BayesianBlocks/doc/images/test_flare_diffuse2_scaling.png  1.1
+  BayesianBlocks/doc/images/BB_example_0.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_20deg.png  1.1
+  BayesianBlocks/doc/images/pks1622_flare_BB_scaled.png  1.1
+  BayesianBlocks/doc/images/test_flare_effArea_scaling.png  1.1
+  BayesianBlocks/python/timing_study.py  1.1.1.1
+  BayesianBlocks/python/find_flare.py  1.7
+  BayesianBlocks/python/BayesBlocks.py  1.9
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.1.1.1
+  BayesianBlocks/python/detrend.py  1.7
+  BayesianBlocks/python/BB_example_0.py  1.5
+  BayesianBlocks/python/global_opt.py  1.2
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/pksData.py  1.1
+  BayesianBlocks/python/BB_example.py  1.5
+  BayesianBlocks/python/distributions.py  1.2
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.1
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.4
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.6
+  BayesianBlocks/src/BayesianBlocks.in  1.4
+  BayesianBlocks/src/BayesianBlocks.cxx  1.16
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  5 22:42:10 PST 2008
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  5 22:42:10 PST 2008
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  5 22:39:59 PST 2008
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+use intervals between arrival times as cells
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  5 22:39:58 PST 2008
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py 
+Log Message:
+use intervals between arrival times as cells
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  5 22:39:58 PST 2008
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+use intervals between arrival times as cells
+    *
+------------------------------------------------------------
+User: jchiang  Thu Nov 20 18:13:48 PST 2008
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+use cell size instead of bin density for time scaling
+    *
+------------------------------------------------------------
+User: jchiang  Thu Nov 20 18:13:48 PST 2008
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py 
+Log Message:
+use cell size instead of bin density for time scaling
+    *
+------------------------------------------------------------
+User: cohen  Fri Oct 10 09:11:47 PDT 2008
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	Doxyfile 
+Log Message:
+add the image path
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 10 08:36:48 PDT 2008
+ASP/BayesianBlocks/doc/images
+
+Added Files:
+	BB_example.png BB_example_0.png pks1622_flare.png 
+	pks1622_flare_20deg.png pks1622_flare_20deg_BB.png 
+	pks1622_flare_BB_scaled.png powerlaw_detrended.png 
+	powerlaw_not_scaled.png powerlaw_scaled.png 
+	test_flare_diffuse2_scaling.png test_flare_diffuse_scaling.png 
+	test_flare_effArea_scaling.png trade_study_1.png 
+Log Message:
+add png files for doxygen files
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 10 08:36:07 PDT 2008
+ASP/BayesianBlocks/doc/images
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP/BayesianBlocks/doc/images added to the repository
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r6, operation: add
+Package: BayesianBlocks
+User: jchiang  Sun Jun 29 13:11:24 2008
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.79
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.11
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.9
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.2
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.2
+  BayesianBlocks/python/timing_study.py  1.1.1.1
+  BayesianBlocks/python/find_flare.py  1.7
+  BayesianBlocks/python/BayesBlocks.py  1.7
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.1.1.1
+  BayesianBlocks/python/detrend.py  1.7
+  BayesianBlocks/python/BB_example_0.py  1.5
+  BayesianBlocks/python/global_opt.py  1.2
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/pksData.py  1.1
+  BayesianBlocks/python/BB_example.py  1.5
+  BayesianBlocks/python/distributions.py  1.2
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.1
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.4
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.6
+  BayesianBlocks/src/BayesianBlocks.in  1.4
+  BayesianBlocks/src/BayesianBlocks.cxx  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r2, operation: add
+Package: BayesianBlocks
+User: jchiang  Fri Jul 13 09:26:35 2007
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.78
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.11
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.9
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.2
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.2
+  BayesianBlocks/python/timing_study.py  1.1.1.1
+  BayesianBlocks/python/find_flare.py  1.7
+  BayesianBlocks/python/BayesBlocks.py  1.7
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.1.1.1
+  BayesianBlocks/python/detrend.py  1.7
+  BayesianBlocks/python/BB_example_0.py  1.5
+  BayesianBlocks/python/global_opt.py  1.2
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/pksData.py  1.1
+  BayesianBlocks/python/BB_example.py  1.5
+  BayesianBlocks/python/distributions.py  1.2
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.1
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.4
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.6
+  BayesianBlocks/src/BayesianBlocks.in  1.4
+  BayesianBlocks/src/BayesianBlocks.cxx  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 13 09:26:13 PDT 2007
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BB_example_0.py 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 13 09:26:12 PDT 2007
+ASP/BayesianBlocks/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 13 09:26:12 PDT 2007
+ASP/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jun 11 11:07:58 PDT 2007
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx BayesianBlocks.in 
+Log Message:
+get exposure scaling correct for binned and unbinned analyses
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jun 11 11:07:58 PDT 2007
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py BayesBlocks.py 
+Log Message:
+get exposure scaling correct for binned and unbinned analyses
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jun 11 11:07:57 PDT 2007
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+get exposure scaling correct for binned and unbinned analyses
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jun  9 17:43:31 PDT 2007
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+fix for binned data
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 29 18:28:01 PDT 2007
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx BayesianBlocks.in 
+Log Message:
+renormalize bin content in binned analysis
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 29 18:28:00 PDT 2007
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+renormalize bin content in binned analysis
+    *
+------------------------------------------------------------
+User: jchiang  Wed May  2 16:55:03 PDT 2007
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+mods to support analysis of binned data
+    *
+------------------------------------------------------------
+User: jchiang  Wed May  2 16:55:03 PDT 2007
+ASP/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py 
+Log Message:
+mods to support analysis of binned data
+    *
+------------------------------------------------------------
+User: jchiang  Wed May  2 16:55:02 PDT 2007
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+mods to support analysis of binned data
+    *
+------------------------------------------------------------
+User: jchiang  Tue May  1 10:48:14 PDT 2007
+ASP/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+enable for binned analysis
+    *
+------------------------------------------------------------
+User: jchiang  Tue May  1 10:48:14 PDT 2007
+ASP/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+enable for binned analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 13 21:44:53 PST 2006
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add use python v* IExternal for some reason
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 19:32:09 PDT 2006
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+minor updates
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 19:32:09 PDT 2006
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+minor updates
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r1, operation: add
+Package: BayesianBlocks
+User: jchiang  Mon Jul 10 15:34:44 2006
+Files:
+  BayesianBlocks/.cvsignore  1.1.1.1
+  BayesianBlocks/ChangeLog  1.60
+  BayesianBlocks/BayesianBlocks/BayesianBlocks.h  1.6
+  BayesianBlocks/BayesianBlocks/Exposure.h  1.5
+  BayesianBlocks/cmt/requirements  1.7
+  BayesianBlocks/data/events.dat  1.1.1.1
+  BayesianBlocks/doc/release.notes  1.1
+  BayesianBlocks/doc/Makefile  1.2
+  BayesianBlocks/doc/Doxyfile  1.2
+  BayesianBlocks/python/BayesBlocks.py  1.6
+  BayesianBlocks/python/pks1622_flare.py  1.3
+  BayesianBlocks/python/gammaln.py  1.1.1.1
+  BayesianBlocks/python/distributions.py  1.2
+  BayesianBlocks/python/trials.py  1.2
+  BayesianBlocks/python/createFlare.py  1.4
+  BayesianBlocks/python/find_flare.py  1.7
+  BayesianBlocks/python/timing_study.py  1.1.1.1
+  BayesianBlocks/python/detrend.py  1.7
+  BayesianBlocks/python/BB_example_0.py  1.2
+  BayesianBlocks/python/global_opt.py  1.2
+  BayesianBlocks/python/BB_example.py  1.3
+  BayesianBlocks/python/pksData.py  1.1
+  BayesianBlocks/python/test_BayesianBlocks.py  1.5
+  BayesianBlocks/python/EventData.py  1.1.1.1
+  BayesianBlocks/python/find_flare_2.py  1.1
+  BayesianBlocks/src/mainpage.h  1.8
+  BayesianBlocks/src/Exposure.cxx  1.6
+  BayesianBlocks/src/BayesianBlocks.in  1.2
+  BayesianBlocks/src/BayesianBlocks.cxx  1.8
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:34:24 PDT 2006
+users/jchiang/BayesianBlocks/doc
+
+Added Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:34:23 PDT 2006
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:13:13 PDT 2006
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+refactor lightCurve access
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:13:13 PDT 2006
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py trials.py 
+Log Message:
+refactor lightCurve access
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:13:13 PDT 2006
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+refactor lightCurve access
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.in Exposure.cxx 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	test_BayesianBlocks.py 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 12 23:22:43 PDT 2005
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+catch exceptions; add irf access to Exposure constructor
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:35 PST 2005
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	Exposure.cxx 
+Added Files:
+	BayesianBlocks.in 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:35 PST 2005
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py BB_example_0.py BayesBlocks.py global_opt.py 
+	pks1622_flare.py test_BayesianBlocks.py 
+Removed Files:
+	BayesianBlocks.i Makefile 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:34 PST 2005
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 25 13:17:34 PST 2005
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+update to use SwigPolicy and irfs/irfInterface
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 25 21:04:58 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	createFlare.py 
+Added Files:
+	find_flare_2.py trials.py 
+Log Message:
+add trade study
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 21 09:17:17 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 21 09:17:16 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	find_flare.py 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 21 09:17:15 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Modified Files:
+	Doxyfile 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 21:59:41 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	find_flare.py 
+Log Message:
+apply floor to prevent zero effective areas
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 15:27:22 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	Exposure.cxx mainpage.h 
+Log Message:
+update docs and scripts to generate figures
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 15:27:22 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	createFlare.py find_flare.py pks1622_flare.py 
+Log Message:
+update docs and scripts to generate figures
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 20 15:27:21 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Modified Files:
+	Makefile 
+Log Message:
+update docs and scripts to generate figures
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 22:36:49 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+PKS 1622-297 plots
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 22:36:49 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Added Files:
+	pks1622_flare.py pksData.py 
+Log Message:
+PKS 1622-297 plots
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 17:51:11 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx mainpage.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 17:51:11 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py detrend.py 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 17:51:10 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 07:44:43 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 19 07:44:43 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	detrend.py 
+Log Message:
+update docs
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 22:03:52 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	mainpage.h 
+Log Message:
+add to docs
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 22:03:52 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BB_example.py distributions.py 
+Added Files:
+	BB_example_0.py 
+Log Message:
+add to docs
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:34 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	Exposure.cxx 
+Added Files:
+	mainpage.h 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:34 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	find_flare.py 
+Added Files:
+	BB_example.py 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:33 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Added Files:
+	Doxyfile Makefile 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:23:33 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+add documentation
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 18 18:22:09 PDT 2004
+users/jchiang/BayesianBlocks/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/BayesianBlocks/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:21 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx Exposure.cxx 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:20 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py BayesianBlocks.i Makefile find_flare.py 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:20 PDT 2004
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 20:22:20 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	Exposure.h 
+Log Message:
+use exposure to scale cells
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 16:27:00 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Added Files:
+	Exposure.cxx 
+Log Message:
+add Exposure class
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 17 16:27:00 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Added Files:
+	Exposure.h 
+Log Message:
+add Exposure class
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 14 16:13:57 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	createFlare.py find_flare.py 
+Log Message:
+read flare location from xml file
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 14 14:32:10 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Added Files:
+	createFlare.py find_flare.py 
+Log Message:
+generate random flares
+    *
+------------------------------------------------------------
+User: jchiang  Fri May 14 14:32:09 PDT 2004
+users/jchiang/BayesianBlocks/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+generate random flares
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 13 15:58:18 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+correct last change point
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 13 15:58:17 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesBlocks.py 
+Log Message:
+correct last change point
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 13 13:34:32 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	detrend.py 
+Added Files:
+	BayesBlocks.py 
+Log Message:
+pythonic interface to SWIG module
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 10:45:36 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+restore algorithm to be O(N^2)
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 10:45:35 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	Makefile detrend.py 
+Log Message:
+restore algorithm to be O(N^2)
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 10:45:35 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+restore algorithm to be O(N^2)
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 07:01:46 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+rescale spectrum correctly for plotting
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 07:01:46 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	detrend.py 
+Log Message:
+rescale spectrum correctly for plotting
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 12 07:01:46 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+rescale spectrum correctly for plotting
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 22:40:34 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+detrend using scale factors
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 22:40:34 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	Makefile detrend.py test_BayesianBlocks.py 
+Log Message:
+detrend using scale factors
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 22:40:34 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+detrend using scale factors
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 17:23:56 PDT 2004
+users/jchiang/BayesianBlocks/src
+
+Modified Files:
+	BayesianBlocks.cxx 
+Log Message:
+try detrending for finding spectral features
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 17:23:56 PDT 2004
+users/jchiang/BayesianBlocks/python
+
+Modified Files:
+	BayesianBlocks.i test_BayesianBlocks.py 
+Added Files:
+	detrend.py 
+Log Message:
+try detrending for finding spectral features
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 17:23:55 PDT 2004
+users/jchiang/BayesianBlocks/BayesianBlocks
+
+Modified Files:
+	BayesianBlocks.h 
+Log Message:
+try detrending for finding spectral features
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 11 14:22:25 PDT 2004
+users/jchiang/BayesianBlocks
+
+Log Message:
+Initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+I users/jchiang/BayesianBlocks/rh9_gcc32
+N users/jchiang/BayesianBlocks/.cvsignore
+N users/jchiang/BayesianBlocks/src/BayesianBlocks.cxx
+N users/jchiang/BayesianBlocks/cmt/requirements
+N users/jchiang/BayesianBlocks/BayesianBlocks/BayesianBlocks.h
+N users/jchiang/BayesianBlocks/python/EventData.py
+N users/jchiang/BayesianBlocks/python/distributions.py
+N users/jchiang/BayesianBlocks/python/gammaln.py
+N users/jchiang/BayesianBlocks/python/global_opt.py
+N users/jchiang/BayesianBlocks/python/test_BayesianBlocks.py
+N users/jchiang/BayesianBlocks/python/timing_study.py
+N users/jchiang/BayesianBlocks/python/Makefile
+N users/jchiang/BayesianBlocks/python/BayesianBlocks.i
+N users/jchiang/BayesianBlocks/data/events.dat
+
+No conflicts created by this import
+
+    *

@@ -4,7 +4,7 @@
 #
 # $Header$
 # Authors: Toby Burnett <tburnett@u.washington.edu>
-# Version: asp_pointlike-06-14-03
+# Version: asp_pointlike-06-14-04
 
 #specify package name, applications
 # note for some purposes we use original name, for some must prepend 'asp_'

@@ -13,6 +13,8 @@ import glob
 
 os.chdir(os.environ['OUTPUTDIR'])
 
+os.system('rm -rf logfiles')
+
 files = glob.glob('*')
 
 for item in files:

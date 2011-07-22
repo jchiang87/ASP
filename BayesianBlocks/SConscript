@@ -4,7 +4,7 @@
 #
 # $Header$
 # Authors: J. Chiang <jchiang@slac.stanford.edu>
-# Version: BayesianBlocks-03-00-01
+# Version: BayesianBlocks-02-00-00
 
 import os
 Import('baseEnv')
@@ -19,14 +19,12 @@ BayesianBlocksLib = libEnv.SharedLibrary('BayesianBlocks' ,
 swigEnv.Tool('BayesianBlocksLib')
 lib_BayesianBlocks = swigEnv.SwigLibrary('_BayesianBlocks', 'src/BayesianBlocks.i')
 
-python_modules = listFiles(['python/*.py']) + ['src/BayesianBlocks.py']
 
 swigEnv.Tool('registerTargets', package="BayesianBlocks",
              libraryCxts=[[BayesianBlocksLib, libEnv]],
              swigLibraryCxts=[[lib_BayesianBlocks, swigEnv]],
              includes=listFiles(['BayesianBlocks/*.h']),
-             data = listFiles(['data/*']),
-             python=python_modules)
+             python=['src/BayesianBlocks.py'])
 
 # What about files in python directory?  Should they be installed?
 # test_BayesianBlocks.py uses data/events.dat.  If test_BayesianBLocks.py

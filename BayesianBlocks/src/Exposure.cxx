@@ -6,7 +6,6 @@
  * $Header$
  */
 
-#include <algorithm>
 #include <stdexcept>
 #include <utility>
 

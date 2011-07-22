@@ -8,7 +8,6 @@
 
 #include <cmath>
 
-#include <algorithm>
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
@@ -30,29 +29,46 @@ BayesianBlocks::BayesianBlocks(const std::vector<double> & eventTimes,
 BayesianBlocks::BayesianBlocks(const std::vector<double> & cellContent,
                                const std::vector<double> & cellBoundaries,
                                const std::vector<double> & cellExposures)
-   : m_binned(true), m_cellContent(cellContent),
-     m_cellSizes(cellExposures), m_cellBoundaries(cellBoundaries) {
+   : m_binned(true), m_cellContent(cellContent), 
+     m_cellBoundaries(cellBoundaries), m_cellExposures(cellExposures) {
    if (cellContent.size() != cellBoundaries.size() - 1 ||
        cellContent.size() != cellExposures.size()) {
       throw std::runtime_error("Inconsistent numbers of cells, cell "
                                "boundaries, and/or exposures.");
    }
+   m_cells.reserve(cellBoundaries.size()-1);
+   for (size_t i(0); i < cellBoundaries.size()-1; i++) {
+      m_cells.push_back(cellBoundaries.at(i+1) - cellBoundaries.at(i));
+   }
+   std::vector<double> scaleFactors;
+   double total_eff(0);
+   for (size_t i(0); i < cellExposures.size(); i++) {
+      total_eff += cellExposures.at(i);
+   }
+   for (size_t i(0); i < cellExposures.size(); i++) {
+      scaleFactors.push_back(total_eff/cellExposures.size()
+                             /cellExposures.at(i));
+   }
+   setCellScaling(scaleFactors);
 }
 
-void BayesianBlocks::setCellContent(const std::vector<double> & cellContent) {
-   if (cellContent.size() != m_cellContent.size()) {
+void BayesianBlocks::setCellContent(const std::vector<double> & cell_content) {
+   if (cell_content.size() != m_cellContent.size()) {
       throw std::runtime_error("cell content sizes do not match");
    }
-   m_cellContent = cellContent;
+   m_cellContent = cell_content;
 }
 
-void BayesianBlocks::setCellSizes(const std::vector<double> & cellSizes) {
-   if (cellSizes.size() != m_cellSizes.size()) {
+int BayesianBlocks::setCellScaling(const std::vector<double> & scaleFactors) {
+   if (scaleFactors.size() != m_cells.size()) {
       throw std::runtime_error("The number of scale factors does not equal "
                                "the number of cells.");
    }
-   m_cellSizes = cellSizes;
+   for (size_t i = 0; i < scaleFactors.size(); i++) {
+      m_cells[i] *= scaleFactors[i];
+   }
    renormalize();
+   return 1;
 }
 
 void BayesianBlocks::computeLightCurve(double ncpPrior,
@@ -65,7 +81,7 @@ void BayesianBlocks::computeLightCurve(double ncpPrior,
    tmaxs.clear();
    numEvents.clear();
    exposures.clear();
-   for (size_t i(1); i < m_changePoints.size(); i++) {
+   for (size_t i = 1; i < m_changePoints.size(); i++) {
       size_t imin = m_changePoints[i-1];
       size_t imax = m_changePoints[i];
       tmins.push_back(m_cellBoundaries[imin]);
@@ -77,7 +93,7 @@ void BayesianBlocks::computeLightCurve(double ncpPrior,
       }
       double exposure(0);
       for (size_t i(imin); i < imax; i++) {
-         exposure += m_cellSizes.at(i);
+         exposure += m_cellExposures.at(i);
       }
       exposures.push_back(exposure);
    }
@@ -106,10 +122,10 @@ void BayesianBlocks::globalOpt(double ncpPrior) {
    std::vector<size_t> last;
    last.push_back(0);
    size_t npts = m_cellContent.size();
-   for (size_t nn(1); nn < npts; nn++) {
+   for (size_t nn = 1; nn < npts; nn++) {
       double max_opt = blockCost(0, nn) - ncpPrior;
       size_t jmax(0);
-      for (size_t j(1); j < nn+1; j++) {
+      for (size_t j = 1; j < nn+1; j++) {
          double my_opt = opt[j-1] + blockCost(j, nn) - ncpPrior;
          if (my_opt > max_opt) {
             max_opt = my_opt;
@@ -137,63 +153,65 @@ void BayesianBlocks::createCells() {
    } else {
       m_cellBoundaries.clear();
       m_cellBoundaries.push_back((3.*m_eventTimes[0] - m_eventTimes[1])/2.);
-      for (size_t i(1); i < npts; i++) {
+      for (size_t i = 1; i < npts; i++) {
          m_cellBoundaries.push_back((m_eventTimes[i-1] + m_eventTimes[i])/2.);
       }
       m_cellBoundaries.push_back((3.*m_eventTimes[npts-1] 
                                   - m_eventTimes[npts-2])/2.);
    }
-   m_cellSizes.clear();
-   for (size_t i(0); i < npts; i++) {
-      m_cellSizes.push_back(m_cellBoundaries[i+1] - m_cellBoundaries[i]);
+   m_cells.clear();
+   for (size_t i = 0; i < npts; i++) {
+      m_cells.push_back(std::fabs(m_cellBoundaries[i] 
+                                  - m_cellBoundaries[i+1]));
    }
+   m_cellExposures = m_cells;
    renormalize();
 }
 
 void BayesianBlocks::renormalize() {
-//    double smallest_cell;
-//    if (!m_eventTimes.empty()) {
-//       smallest_cell = m_eventTimes.back() - m_eventTimes.front();
-//       for (unsigned int i = 0; i < m_cellSizes.size(); i++) {
-//          if (m_cellSizes[i] < smallest_cell && m_cellSizes[i] > 0) {
-//             smallest_cell = m_cellSizes[i];
-//          }
-//       }
-//    } else {
-//       smallest_cell = 1./highestBinDensity();
-//    }
-//    std::transform(m_cellSizes.begin(), m_cellSizes.end(), m_cellSizes.begin(), 
-//                   std::bind2nd(std::multiplies<double>(), 2./smallest_cell));
-   m_scaledBoundaries.resize(m_cellSizes.size());
-   std::partial_sum(m_cellSizes.begin(), m_cellSizes.end(), 
+   double smallest_cell;
+   if (!m_eventTimes.empty()) {
+      smallest_cell = m_eventTimes.back() - m_eventTimes.front();
+      for (unsigned int i = 0; i < m_cells.size(); i++) {
+         if (m_cells[i] < smallest_cell && m_cells[i] > 0) {
+            smallest_cell = m_cells[i];
+         }
+      }
+   } else {
+      smallest_cell = 1./highestBinDensity();
+   }
+   std::transform(m_cells.begin(), m_cells.end(), m_cells.begin(), 
+                  std::bind2nd(std::multiplies<double>(), 2./smallest_cell));
+   m_scaledBoundaries.resize(m_cells.size());
+   std::partial_sum(m_cells.begin(), m_cells.end(), 
                     m_scaledBoundaries.begin());
    m_scaledBoundaries.push_front(0);
 }
 
-// double BayesianBlocks::highestBinDensity() const {
-//    double maxDensity(m_cellContent.front()
-//                      /(m_cellBoundaries.at(1) - m_cellBoundaries.front()));
-//    for (size_t i(1); i < m_cellContent.size(); i++) {
-//       double density(m_cellContent.at(i)
-//                      /(m_cellBoundaries.at(i+1) - m_cellBoundaries.at(i)));
-//       if (density > maxDensity) {
-//          maxDensity = density;
-//       }
-//    }
-//    return maxDensity;
-// }
+double BayesianBlocks::highestBinDensity() const {
+   double maxDensity(m_cellContent.front()
+                     /(m_cellBoundaries.at(1) - m_cellBoundaries.front()));
+   for (size_t i(1); i < m_cellContent.size(); i++) {
+      double density(m_cellContent.at(i)
+                     /(m_cellBoundaries.at(i+1) - m_cellBoundaries.at(i)));
+      if (density > maxDensity) {
+         maxDensity = density;
+      }
+   }
+   return maxDensity;
+}
 
 double BayesianBlocks::blockCost(size_t imin, size_t imax) const {
-   double size(blockSize(imin, imax));
-   double content(blockContent(imin, imax));
-   if (::getenv("USE_POSTERIOR_COST")) {
-      double arg = size - content;
-      if (arg > 0) {
-         return gammln(content + 1.) + gammln(arg + 1.) - gammln(size + 2.);
-      }
-      return -log(size);
+   double size = blockSize(imin, imax);
+   double content = blockContent(imin, imax);
+   if (::getenv("USE_ML_COST")) {
+      return content*(std::log(content) - std::log(size) - 1);
    }
-   return content*(std::log(content) - std::log(size));
+   double arg = size - content;
+   if (arg > 0) {
+      return gammln(content + 1.) + gammln(arg + 1.) - gammln(size + 2.);
+   }
+   return -log(size);
 }
 
 double BayesianBlocks::blockSize(size_t imin, size_t imax) const {

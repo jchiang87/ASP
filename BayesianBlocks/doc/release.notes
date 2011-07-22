@@ -7,9 +7,6 @@
     @verbatim
     * EOH *
 
- BayesianBlocks-03-00-01 17-Jan-2011 jchiang add includes for gcc4.4
- BayesianBlocks-03-00-00 12-Mar-2010 jchiang exposure weighting bug-fixes; switch to ML cost function
- BayesianBlocks-02-00-01 16-Nov-2009    jrb minor changes affecting SCons build
  BayesianBlocks-02-00-00 14-Oct-2009 jchiang refactor interface to pass ncpPrior as parameter to lightCurve method; have that method return the reconstructed light curve directly
  BayesianBlocks-01-02-01 01-Oct-2009    jrb Updates for SCons build
     v1r2   15-Jul-09   JC   fixes for binned data

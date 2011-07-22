@@ -18,8 +18,8 @@
 %template(DoubleVector) std::vector<double>;
 %template(DoubleVectorVector) std::vector< std::vector<double> >;
 %template(IntVector) std::vector<int>;
-%include BayesianBlocks/BayesianBlocks.h
-%include BayesianBlocks/Exposure.h
+%include /u1/jchiang/data/ST/BayesianBlocks/v1r2/BayesianBlocks/BayesianBlocks.h
+%include /u1/jchiang/data/ST/BayesianBlocks/v1r2/BayesianBlocks/Exposure.h
 %extend BayesianBlocks {
    static void enableFPE() {
       feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW);

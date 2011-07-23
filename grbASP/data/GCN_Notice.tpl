@@ -21,5 +21,5 @@ GRB_TIME:       47537.12 SOD {13:12:17.12} UT (trigger time)
 SIGNIFICANCE:   12.1 [sqrt(TS) 2 dof]
 GRB_PHI:        90.00 [deg] 
 GRB_THETA:      4.54 [deg] 
-TEST_FLAG:      1
-COMMENTS:       THIS IS A TEST. REPEAT THIS IS A TEST.
+#TEST_FLAG:      1
+#COMMENTS:       THIS IS A TEST. REPEAT THIS IS A TEST.

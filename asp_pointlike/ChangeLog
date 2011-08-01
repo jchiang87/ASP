@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Mon Aug  1 15:59:17 PDT 2011
+ASP-scons/asp_pointlike/cmt
+
+Removed Files:
+	core.11674 
+Log Message:
+remove corefile
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-05-00-00, operation: add
 Package: asp_pointlike

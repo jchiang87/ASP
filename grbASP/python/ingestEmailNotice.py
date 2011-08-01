@@ -87,6 +87,8 @@ class Packet(object):
                                              hours, mins, secs)
     def _build_packet(self):
         self.buffer = array.array("l", 40*(0,))
+        if self.buffer.itemsize == 8:
+            self.buffer = array.array("i", 40*(0,))
         self.buffer[7] = int(self.RA*1e4)
         self.buffer[8] = int(self.Dec*1e4)
         try:

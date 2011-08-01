@@ -18,6 +18,9 @@ import time
 
 def simple_packet(type):
     my_packet = array.array("l", (type,) + 39*(0,))
+    if my_packet.itemsize == 8:
+        # Force 4 byte array if on 64 bit machine
+        my_packet = array.array("i", (type,) + 39*(0,))
     my_packet.byteswap()
     return my_packet
 
@@ -32,6 +35,8 @@ _items = ['type', 'serialNum', 'hopCount', 'packetSOD', 'triggerNum',
 
 def build_packet(infile):
     buffer = array.array("l", 40*(0,))
+    if buffer.itemsize == 8:
+        buffer = array.array("i", 40*(0,))
     for line in open(infile):
         data = line.split('=')
         buffer[_items.index(data[0].strip())] = int(data[1].strip())

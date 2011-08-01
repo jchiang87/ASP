@@ -15,6 +15,7 @@ from databaseAccess import *
 from GrbAspConfig import grbAspConfig
 from date2met import date2met
 import time
+import databaseAccess as dbAccess
 
 grbasproot = resolve_nfs_path(os.environ['INST_DIR'])
 
@@ -47,10 +48,20 @@ def afterglows():
             
 def launch_refinement_streams(output_dir):
     notices = promptGrbs()
+    print "dbAccess:", dbAccess.asp_default
+    print "inside launch_refinement_streams:"
     for grb_id in notices:
+        print grb_id
         grb_met = notices[grb_id].start_time
         grb_name = notices[grb_id].Name
-        config = grbAspConfig.find(grb_met)
+        try:
+            print grb_met
+            print grb_name
+            config = grbAspConfig.find(grb_met)
+        except RuntimeError:
+            print "error finding notice time in GRB_ASP_CONFIG table"
+            grb_met = grb_id
+            config = grbAspConfig.find(grb_met)
         dt = config.TIMEWINDOW
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id,

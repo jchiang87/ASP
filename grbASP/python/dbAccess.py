@@ -14,6 +14,8 @@ from databaseAccess import apply, cx_Oracle, asp_default, glastgen
 
 def convert_clob(clob):
     foo = array.array('l', base64.decodestring(clob.read()))
+    if foo.itemsize == 8:
+        foo = array.array('i', base64.decodestring(clob.read()))
     return foo
 
 def haveGrb(grb_id):
@@ -156,6 +158,8 @@ def current_date():
 
 def simple_packet(type):
     my_packet = array.array("l", (type,) + 39*(0,))
+    if my_packet.itemsize == 8:
+        my_packet = array.array("i", (type,) + 39*(0,))
     my_packet.byteswap()
     return my_packet
 

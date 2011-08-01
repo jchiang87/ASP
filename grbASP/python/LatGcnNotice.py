@@ -120,6 +120,8 @@ class LatGcnNotice(object):
         self.notice = LatGcnTemplate()
         self.notice['NOTICE_DATE'] = notice_date()
         self._packet = array.array("l", 40*(0,))
+        if self._packet.itemsize == 8:
+            self._packet = array.array("i", 40*(0,))
         self.met = burstTime
         self.grb_id = int(self.met)
         self.ra = ra

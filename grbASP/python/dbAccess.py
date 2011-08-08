@@ -163,6 +163,31 @@ def simple_packet(type):
     my_packet.byteswap()
     return my_packet
 
+def gcn_search_seed(grb_id, connection=asp_default):
+    search_seed = {'GBM' : 1,
+                   'ASP' : 2,
+                   'LAT_ONBOARD' : 3,
+                   'SWIFT' : 4,
+                   'INTEGRAL' : 5,
+                   'AGILE' : 6}
+    sql = "select MISSION, NOTICETYPE from GCNNOTICES where grb_id=%i" % grb_id
+    print sql
+    mission, notice_type = apply(sql, lambda curs : [x[:2] for x in curs][0],
+                                 connection)
+                                                     
+    if notice_type.find('GBM') != -1:
+        return search_seed['GBM']
+    elif notice_type == 'ASP_BLIND_SEARCH':
+        return search_seed['ASP']
+    elif notice_type.find('LAT') != -1:
+        return search_seed['LAT']
+    elif mission == 'SWIFT':
+        return search_seed['SWIFT']
+    elif mission.find('AGILE') != -1:
+        return search_seed['AGILE']
+    elif mission == 'INTEGRAL':
+        return search_seed['INTEGRAL']
+    
 def grbAdvocateEmails():
     sql = """select u.first_name,u.last_name,u.email from profile_user u
          join profile_ug ug on ug.user_id=u.user_name 

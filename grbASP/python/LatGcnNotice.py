@@ -293,7 +293,7 @@ if __name__ == '__main__':
                                   scData.inclination(pars['tstart'], srcDir))
     notice.notice['GRB_PHI'] = ("%.2f [deg]" % 
                                 scData.azimuth(pars['tstart'], srcDir))
-#    notice.notice['COMMENTS'] = 'THIS IS A TEST. REPEAT THIS IS A TEST.'
+    notice.notice['SEARCH_METHOD'] = '%i' % dbAccess.gcn_search_seed(grb_id)
     
     outfile = pars['name'] + '_Notice.txt'
     notice.write(outfile)

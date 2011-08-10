@@ -19,6 +19,7 @@
 %template(DoubleVectorVector) std::vector< std::vector<double> >;
 %template(IntVector) std::vector<int>;
 %include BayesianBlocks/BayesianBlocks.h
+%include BayesianBlocks/BayesianBlocks2.h
 %include BayesianBlocks/Exposure.h
 %extend BayesianBlocks {
    static void enableFPE() {

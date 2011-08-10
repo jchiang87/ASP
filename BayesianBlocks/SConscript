@@ -14,10 +14,13 @@ swigEnv = baseEnv.Clone()
 
 libEnv.Tool('BayesianBlocksLib', depsOnly = 1)
 BayesianBlocksLib = libEnv.SharedLibrary('BayesianBlocks' ,
-                                         ['src/Exposure.cxx','src/BayesianBlocks.cxx'])
+                                         ['src/Exposure.cxx',
+                                          'src/BayesianBlocks.cxx',
+                                          'src/BayesianBlocks2.cxx'])
 
 swigEnv.Tool('BayesianBlocksLib')
-lib_BayesianBlocks = swigEnv.SwigLibrary('_BayesianBlocks', 'src/BayesianBlocks.i')
+lib_BayesianBlocks = swigEnv.SwigLibrary('_BayesianBlocks', 
+                                         'src/BayesianBlocks.i')
 
 python_modules = listFiles(['python/*.py']) + ['src/BayesianBlocks.py']
 

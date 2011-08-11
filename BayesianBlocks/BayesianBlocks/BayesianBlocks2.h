@@ -61,8 +61,10 @@ private:
    bool m_point_mode;
    bool m_binned;
    double m_tstart;
-   std::vector<double> m_cellContent;
    std::vector<double> m_cellSizes;
+   std::deque<double> m_cellSizePartialSums;
+   std::vector<double> m_cellContent;
+   std::deque<double> m_cellContentPartialSums;
    std::vector<double> m_cellErrors;
 
    /// @brief Interface class for block cost functions.
@@ -103,10 +105,8 @@ private:
 
    BlockCost * m_blockCost;
 
-   double m_cellScale;
-
    void generateCells(const std::vector<double> & arrival_times);
-   void rescaleCells();
+   void cellPartialSums();
 
    void ingestPointData(const std::vector<double> & xx,
                         const std::vector<double> & yy,

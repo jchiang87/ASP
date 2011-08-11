@@ -56,12 +56,15 @@ public:
       return m_cellErrors;
    }
 
+   void setCellSizes(const std::vector<double> & cellSizes);
+
 private:
 
    bool m_point_mode;
    bool m_binned;
    double m_tstart;
    std::vector<double> m_cellSizes;
+   std::deque<double> m_unscaledCellSizePartialSums;
    std::deque<double> m_cellSizePartialSums;
    std::vector<double> m_cellContent;
    std::deque<double> m_cellContentPartialSums;

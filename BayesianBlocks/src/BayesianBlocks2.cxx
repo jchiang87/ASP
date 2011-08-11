@@ -10,11 +10,20 @@
 
 #include <cmath>
 
-#include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <stdexcept>
 
 #include "BayesianBlocks/BayesianBlocks2.h"
+
+namespace {
+   void computePartialSums(const std::vector<double> & x,
+                           std::deque<double> & partialSums) {
+      partialSums.resize(x.size());
+      std::partial_sum(x.begin(), x.end(), partialSums.begin());
+      partialSums.push_front(0);
+   }
+}
 
 BayesianBlocks2::
 BayesianBlocks2(const std::vector<double> & arrival_times)
@@ -81,9 +90,10 @@ globalOpt(double ncp_prior,
    }
    changePoints.push_front(0);
    changePoints.push_back(npts);
-   for (size_t i(0); i < changePoints.size(); i++) {
-      std::cout << changePoints[i] << "  ";
-   }
+//    for (size_t i(0); i < changePoints.size(); i++) {
+//       std::cout << changePoints[i] << "  ";
+//    }
+//    std::cout << std::endl;
    lightCurve(changePoints, xvals, yvals);
 }
 
@@ -95,6 +105,15 @@ double BayesianBlocks2::blockContent(size_t imin, size_t imax) const {
    return m_cellContentPartialSums[imax+1] - m_cellContentPartialSums[imin];
 }
 
+void BayesianBlocks2::setCellSizes(const std::vector<double> & cellSizes) {  
+   if (cellSizes.size() != m_cellSizes.size()) {
+      throw std::runtime_error("The number of scale factors does not equal "
+                               "the number of cells.");
+   }
+   m_cellSizes = cellSizes;
+   ::computePartialSums(m_cellSizes, m_cellSizePartialSums);
+}
+
 void BayesianBlocks2::lightCurve(const std::deque<size_t> & changePoints,
                                  std::vector<double> & xx, 
                                  std::vector<double> & yy) const {
@@ -103,22 +122,24 @@ void BayesianBlocks2::lightCurve(const std::deque<size_t> & changePoints,
    for (size_t i(0); i < changePoints.size() - 1; i++) {
       size_t imin(changePoints[i]);
       size_t imax(changePoints[i+1]);
-      xx.push_back(m_tstart + m_cellSizePartialSums[imin]);
-      xx.push_back(m_tstart + m_cellSizePartialSums[imax]);
+      xx.push_back(m_tstart + m_unscaledCellSizePartialSums[imin]);
+      xx.push_back(m_tstart + m_unscaledCellSizePartialSums[imax]);
       double yval(0);
       if (m_point_mode) {
          std::vector<double> weights;
          weights.reserve(imax - imin);
          double sum_one_over_sig2(0);
-         double yval(0);
-         for (size_t ii(imin); ii < imax+1; ii++) {
+         for (size_t ii(imin); ii < imax; ii++) {
             weights.push_back(1./m_cellErrors[ii]/m_cellErrors[ii]);
             sum_one_over_sig2 += weights.back();
             yval += weights.back()*m_cellContent[ii];
          }
          yval /= sum_one_over_sig2;
       } else {
-         yval = blockContent(imin, imax-1)/blockSize(imin, imax-1);
+         double unscaled_block_size = 
+            m_unscaledCellSizePartialSums[imax] 
+            - m_unscaledCellSizePartialSums[imin];
+         yval = blockContent(imin, imax-1)/unscaled_block_size;
       }
       yy.push_back(yval);
       yy.push_back(yval);
@@ -137,15 +158,9 @@ generateCells(const std::vector<double> & arrival_times) {
 }
 
 void BayesianBlocks2::cellPartialSums() {
-   m_cellSizePartialSums.resize(m_cellSizes.size());
-   std::partial_sum(m_cellSizes.begin(), m_cellSizes.end(), 
-                    m_cellSizePartialSums.begin());
-   m_cellSizePartialSums.push_front(0);
-
-   m_cellContentPartialSums.resize(m_cellContent.size());
-   std::partial_sum(m_cellContent.begin(), m_cellContent.end(), 
-                    m_cellContentPartialSums.begin());
-   m_cellContentPartialSums.push_front(0);
+   ::computePartialSums(m_cellSizes, m_unscaledCellSizePartialSums);
+   ::computePartialSums(m_cellSizes, m_cellSizePartialSums);
+   ::computePartialSums(m_cellContent, m_cellContentPartialSums);
 }
 
 double BayesianBlocks2::

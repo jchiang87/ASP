@@ -2,8 +2,10 @@
 %module BayesianBlocks
 %{
 #include <fenv.h>
+#include <utility>
 #include <vector>
 #include "BayesianBlocks/BayesianBlocks.h"
+#include "BayesianBlocks/BayesianBlocks2.h"
 #include "BayesianBlocks/Exposure.h"
 %}
 %include stl.i
@@ -16,11 +18,20 @@
    }
 }
 %template(DoubleVector) std::vector<double>;
+%template(PairDoubleVector) std::pair<std::vector<double>,std::vector<double> >;
 %template(DoubleVectorVector) std::vector< std::vector<double> >;
 %template(IntVector) std::vector<int>;
 %include BayesianBlocks/BayesianBlocks.h
 %include BayesianBlocks/BayesianBlocks2.h
 %include BayesianBlocks/Exposure.h
+%extend BayesianBlocks2 {
+   std::pair<std::vector<double>, std::vector<double> > 
+      lightCurve(double ncp_prior) {
+      std::vector<double> xx, yy;
+      self->globalOpt(ncp_prior, xx, yy);
+      return std::make_pair(xx, yy);
+   }
+}
 %extend BayesianBlocks {
    static void enableFPE() {
       feenableexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW);

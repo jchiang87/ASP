@@ -8,14 +8,11 @@
  * $Header$
  */
 
-#ifndef BayesianBlocks_BayesianBlocks2_h
-#define BayesianBlocks_BayesianBlocks2_h
+#ifndef _BayesianBlocks2_h
+#define _BayesianBlocks2_h
 
 #include <deque>
-#include <numeric>
 #include <vector>
-
-namespace BayesianBlocks {
 
 class BayesianBlocks2 {
 
@@ -47,19 +44,9 @@ public:
       return m_blockCost->operator()(imin, imax);
    }
 
-   inline double blockSize(size_t imin, size_t imax) const {
-      const_iterator_t first(m_cellSizes.begin() + imin);
-      const_iterator_t last(m_cellSizes.begin() + imax + 1);
-      double sum(std::accumulate(first, last, 0));
-      return sum;
-   }
+   double blockSize(size_t imin, size_t imax) const;
 
-   inline double blockContent(size_t imin, size_t imax) const {
-      const_iterator_t first(m_cellContent.begin() + imin);
-      const_iterator_t last(m_cellContent.begin() + imax + 1);
-      double sum(std::accumulate(first, last, 0));
-      return sum;
-   }
+   double blockContent(size_t imin, size_t imax) const;
 
    const std::vector<double> & cellContent() const {
       return m_cellContent;
@@ -72,6 +59,7 @@ public:
 private:
 
    bool m_point_mode;
+   bool m_binned;
    double m_tstart;
    std::vector<double> m_cellContent;
    std::vector<double> m_cellSizes;
@@ -115,7 +103,10 @@ private:
 
    BlockCost * m_blockCost;
 
+   double m_cellScale;
+
    void generateCells(const std::vector<double> & arrival_times);
+   void rescaleCells();
 
    void ingestPointData(const std::vector<double> & xx,
                         const std::vector<double> & yy,
@@ -126,6 +117,4 @@ private:
                    std::vector<double> & yy) const;
 };
 
-} // namespace BayesianBlocks
-
-#endif // BayesianBlocks_BayesianBlocks2_h
+#endif // _BayesianBlocks2_h

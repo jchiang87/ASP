@@ -11,28 +11,31 @@
 #include <cmath>
 
 #include <algorithm>
+#include <iostream>
+#include <numeric>
 
 #include "BayesianBlocks/BayesianBlocks2.h"
-
-namespace BayesianBlocks {
 
 BayesianBlocks2::
 BayesianBlocks2(const std::vector<double> & arrival_times)
    : m_point_mode(false),
+     m_binned(false),
      m_tstart((3*arrival_times[0] - arrival_times[1])/2.),
      m_cellContent(arrival_times.size(), 1.),
      m_cellSizes(arrival_times.size(), 0),
      m_blockCost(new BlockCostEvent(*this)) {
    generateCells(arrival_times);
+   rescaleCells();
 }
 
 BayesianBlocks2::
 BayesianBlocks2(double tstart,
                 const std::vector<double> & bin_content,
                 const std::vector<double> & bin_sizes)
-   : m_point_mode(false), m_tstart(tstart),
+   : m_point_mode(false), m_binned(true), m_tstart(tstart),
      m_cellContent(bin_content), m_cellSizes(bin_sizes),
      m_blockCost(new BlockCostEvent(*this)) {
+   rescaleCells();
 }
 
 BayesianBlocks2::
@@ -40,11 +43,13 @@ BayesianBlocks2(const std::vector<double> & xx,
                 const std::vector<double> & yy,
                 const std::vector<double> & dy) 
    : m_point_mode(true),
+     m_binned(false),
      m_tstart((3*xx[0] - xx[1])/2.),
      m_cellContent(yy),
      m_cellSizes(xx.size(), 0),
      m_cellErrors(dy),
-     m_blockCost(new BlockCostPoint(*this)) {
+     m_blockCost(new BlockCostPoint(*this)),
+     m_cellScale(1) {
    generateCells(xx);
 }
 
@@ -61,7 +66,7 @@ globalOpt(double ncp_prior,
       double max_opt(blockCost(0, nn) - ncp_prior);
       size_t jmax(0);
       for (size_t j(1); j < nn+1; j++) {
-         double my_opt(opt.back() + blockCost(j, nn) - ncp_prior);
+         double my_opt(opt[j-1] + blockCost(j, nn) - ncp_prior);
          if (my_opt > max_opt) {
             max_opt = my_opt;
             jmax = j;
@@ -78,18 +83,44 @@ globalOpt(double ncp_prior,
    }
    changePoints.push_front(0);
    changePoints.push_back(npts);
+   for (size_t i(0); i < changePoints.size(); i++) {
+      std::cout << changePoints[i] << "  ";
+   }
+   lightCurve(changePoints, xvals, yvals);
+}
+
+double BayesianBlocks2::blockSize(size_t imin, size_t imax) const {
+   const_iterator_t first(m_cellSizes.begin() + imin);
+   const_iterator_t last(m_cellSizes.begin() + imax + 1);
+   double sum(0);
+   sum = std::accumulate(first, last, sum);
+   return sum;
+}
+
+double BayesianBlocks2::blockContent(size_t imin, size_t imax) const {
+   const_iterator_t first(m_cellContent.begin() + imin);
+   const_iterator_t last(m_cellContent.begin() + imax + 1);
+   double sum(0);
+   sum = std::accumulate(first, last, sum);
+   return sum;
 }
 
 void BayesianBlocks2::lightCurve(const std::deque<size_t> & changePoints,
                                  std::vector<double> & xx, 
                                  std::vector<double> & yy) const {
-   std::vector<double> sizeIntegrals(m_cellSizes.size());
-   std::partial_sum(m_cellSizes.begin(), m_cellSizes.end(), 
+   std::vector<double> cellSizes(m_cellSizes.size());
+   for (size_t i(0); i < m_cellSizes.size(); i++) {
+      cellSizes[i] = m_cellSizes[i]/m_cellScale;
+   }
+   std::deque<double> sizeIntegrals(cellSizes.size());
+   std::partial_sum(cellSizes.begin(), cellSizes.end(), 
                     sizeIntegrals.begin());
+   sizeIntegrals.push_front(0);
 
-   std::vector<double> contentIntegrals(m_cellContent.size());
+   std::deque<double> contentIntegrals(m_cellContent.size());
    std::partial_sum(m_cellContent.begin(), m_cellContent.end(), 
                     contentIntegrals.begin());
+   contentIntegrals.push_front(0);
 
    xx.clear();
    yy.clear();
@@ -113,10 +144,8 @@ void BayesianBlocks2::lightCurve(const std::deque<size_t> & changePoints,
       } else {
          const_iterator_t begin = m_cellContent.begin() + imin;
          const_iterator_t end = m_cellContent.begin() + imax;
-         yval = ((contentIntegrals[imax] - contentIntegrals[imin] 
-                  + m_cellContent[imin])/
-                 (sizeIntegrals[imax] - sizeIntegrals[imin] 
-                  + m_cellSizes[imin]));
+         yval = ((contentIntegrals[imax] - contentIntegrals[imin])/
+                 (sizeIntegrals[imax] - sizeIntegrals[imin])); 
       }
       yy.push_back(yval);
       yy.push_back(yval);
@@ -131,6 +160,24 @@ generateCells(const std::vector<double> & arrival_times) {
       m_cellSizes[i] = (arrival_times[i+1] - arrival_times[i-1])/2.;
    }
    m_cellSizes[npts-1] = arrival_times[npts-1] - arrival_times[npts-2];
+}
+
+void BayesianBlocks2::rescaleCells() {
+   double smallest_cell(m_cellSizes.front());
+   for (size_t i(1); i < m_cellSizes.size(); i++) {
+      if (smallest_cell > m_cellSizes[i]) {
+         smallest_cell = m_cellSizes[i];
+      }
+   }
+   m_cellScale = 2./smallest_cell;
+   if (m_binned) {
+      double zero(0);
+      m_cellScale *= std::accumulate(m_cellContent.begin(), 
+                                     m_cellContent.end(), zero);
+   }
+   for (size_t i(0); i < m_cellSizes.size(); i++) {
+      m_cellSizes[i] *= m_cellScale;
+   }
 }
 
 double BayesianBlocks2::
@@ -168,5 +215,3 @@ BlockCostPoint::operator()(size_t imin, size_t imax) const {
    
    return -sigx2/2.*sum_one_over_sig2;
 }
-
-} // namespace BayesianBlocks

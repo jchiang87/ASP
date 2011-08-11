@@ -128,13 +128,13 @@ void BayesianBlocks2::lightCurve(const std::deque<size_t> & changePoints,
       if (m_point_mode) {
          std::vector<double> weights;
          weights.reserve(imax - imin);
-         double sum_one_over_sig2(0);
+         double sum_wts(0);
          for (size_t ii(imin); ii < imax; ii++) {
             weights.push_back(1./m_cellErrors[ii]/m_cellErrors[ii]);
-            sum_one_over_sig2 += weights.back();
+            sum_wts += weights.back();
             yval += weights.back()*m_cellContent[ii];
          }
-         yval /= sum_one_over_sig2;
+         yval /= sum_wts;
       } else {
          double unscaled_block_size = 
             m_unscaledCellSizePartialSums[imax] 
@@ -167,6 +167,9 @@ double BayesianBlocks2::
 BlockCostEvent::operator()(size_t imin, size_t imax) const {
    double block_size(m_bbObject.blockSize(imin, imax));
    double block_content(m_bbObject.blockContent(imin, imax));
+   if (block_content == 0) {
+      return 0;
+   }
    double cost = block_content*(std::log(block_content/block_size) - 1.);
    return cost;
 }
@@ -175,22 +178,22 @@ double BayesianBlocks2::
 BlockCostPoint::operator()(size_t imin, size_t imax) const {
    std::vector<double> weights;
    weights.reserve(imax - imin);
-   double sum_one_over_sig2(0);
+   double sum_wts(0);
    const std::vector<double> & cellErrors(m_bbObject.cellErrors());
    for (size_t i(imin); i < imax+1; i++) {
       weights.push_back(1./cellErrors[i]/cellErrors[i]);
-      sum_one_over_sig2 += weights.back();
+      sum_wts += weights.back();
    }
    double sum_wts_yy(0);
    double sigx2(0);
    size_t j(0);
    const std::vector<double> & cellContent(m_bbObject.cellContent());
    for (size_t i(imin); i < imax+1; i++, j++) {
-      weights[j] /= sum_one_over_sig2;
+      weights[j] /= sum_wts;
       sum_wts_yy += weights[j]*cellContent[i];
       sigx2 += weights[j]*cellContent[i]*cellContent[i];
    }
    sigx2 -= sum_wts_yy*sum_wts_yy;
    
-   return -sigx2/2.*sum_one_over_sig2;
+   return -sigx2/2.*sum_wts;
 }

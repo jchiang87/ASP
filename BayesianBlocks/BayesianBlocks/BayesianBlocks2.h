@@ -32,11 +32,11 @@ public:
    /// piecewise constant function.
    ///
    /// @param ncp_prior
-   /// @param xvals abscissa values of the reconstructed function
-   /// @param yvals ordinate values of the reconstructed function
+   /// @param xx abscissa values of the reconstructed function
+   /// @param yy ordinate values of the reconstructed function
    void globalOpt(double ncp_prior,
-                  std::vector<double> & xvals,
-                  std::vector<double> & yvals) const;
+                  std::vector<double> & xx,
+                  std::vector<double> & yy) const;
 
    typedef std::vector<double>::const_iterator const_iterator_t;
 

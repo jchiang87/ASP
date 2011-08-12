@@ -1,0 +1,17 @@
+# -*- python -*-
+# @file SConscript
+# @brief scons build specifications for drpMonitoring
+#
+# $Header$
+# Authors: J. Chiang <jchiang@slac.stanford.edu>
+# Version: drpMonitoring-02-00-00
+
+import os
+Import('baseEnv')
+Import('listFiles')
+progEnv = baseEnv.Clone()
+
+progEnv.Tool('registerTargets', package='drpMonitoring',
+             data=listFiles(['data/*']),
+             wrappedPython=listFiles(['python/*.py']) )
+

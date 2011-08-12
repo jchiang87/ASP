@@ -1,5 +1,89 @@
 ------------------------------------------------------------
 TAG
+Tag name: ASP-05-01-00, operation: add
+Package: asp_healpix
+User: jchiang  Fri Aug 12 12:19:34 2011
+Files:
+  asp_healpix/.cvsignore  1.2
+  asp_healpix/asp_healpixLib.py  1.2
+  asp_healpix/ChangeLog  1.1.1.33
+  asp_healpix/healpixLib.py  1.1.1.1
+  asp_healpix/SConscript  1.8
+  asp_healpix/cmt/requirements  1.5
+  asp_healpix/data/Healpix  Neighbors
+  asp_healpix/data/srctest.fits  1.1.1.1
+  asp_healpix/doc/.cvsignore  1.1.1.1
+  asp_healpix/doc/release.notes  1.5
+  asp_healpix/healpix/HealPixel.h  1.1.1.1
+  asp_healpix/healpix/Map.h  1.2
+  asp_healpix/healpix/HeallpixMap.h  1.1.1.1
+  asp_healpix/healpix/CosineBinner.h  1.1.1.1
+  asp_healpix/healpix/HealpixArray.h  1.1.1.1
+  asp_healpix/healpix/AlmOp.h  1.2
+  asp_healpix/healpix/Healpix.h  1.1.1.1
+  asp_healpix/healpix/HealpixArrayIO.h  1.1.1.1
+  asp_healpix/healpix/HealpixMap.h  1.1.1.1
+  asp_healpix/healpix/base/ylmgen.h  1.1
+  asp_healpix/healpix/base/rotmatrix.h  1.1
+  asp_healpix/healpix/base/pointing.h  1.1
+  asp_healpix/healpix/base/planck_rng.h  1.1
+  asp_healpix/healpix/base/powspec.h  1.1
+  asp_healpix/healpix/base/ls_fft.h  1.1
+  asp_healpix/healpix/base/healpix_base.h  1.1
+  asp_healpix/healpix/base/bluestein.h  1.1
+  asp_healpix/healpix/base/alm.h  1.1
+  asp_healpix/healpix/base/xcomplex.h  1.1
+  asp_healpix/healpix/base/cxxutils.h  1.1
+  asp_healpix/healpix/base/vec3.h  1.1
+  asp_healpix/healpix/base/healpix_map.h  1.1
+  asp_healpix/healpix/base/message_error.h  1.1
+  asp_healpix/healpix/base/fitshandle.h  1.1
+  asp_healpix/healpix/base/alm_filter_tools.h  1.1
+  asp_healpix/healpix/base/longnam.h  1.1
+  asp_healpix/healpix/base/fftpack.h  1.1
+  asp_healpix/healpix/base/arr.h  1.1
+  asp_healpix/healpix/base/alm_map_tools.h  1.1
+  asp_healpix/healpix/base/openmp_support.h  1.1
+  asp_healpix/healpix/base/constants.h  1.1
+  asp_healpix/healpix/base/fftpack_support.h  1.1
+  asp_healpix/healpix/base/datatypes.h  1.1
+  asp_healpix/healpix/base/healpix_map_fitsio.h  1.1
+  asp_healpix/healpix/base/alm_powspec_tools.h  1.1
+  asp_healpix/src/bluestein.pp  1.1.1.1
+  asp_healpix/src/HealpixArrayIO.cxx  1.2
+  asp_healpix/src/ls_fft.pp  1.1.1.1
+  asp_healpix/src/Healpix.cxx  1.2
+  asp_healpix/src/CosineBinner.cxx  1.1.1.1
+  asp_healpix/src/Map.cxx  1.2
+  asp_healpix/src/fftpack.pp  1.1.1.1
+  asp_healpix/src/mainpage.h  1.1.1.1
+  asp_healpix/src/HealPixel.cxx  1.1.1.1
+  asp_healpix/src/swig_setup.in  1.2
+  asp_healpix/src/HealpixMap.cxx  1.1.1.1
+  asp_healpix/src/AlmOp.cxx  1.2
+  asp_healpix/src/base/ls_fft.c  1.2
+  asp_healpix/src/base/alm_map_tools.cc  1.2
+  asp_healpix/src/base/healpix_map.cc  1.2
+  asp_healpix/src/base/powspec.cc  1.2
+  asp_healpix/src/base/healpix_base.cc  1.2
+  asp_healpix/src/base/alm_powspec_tools.cc  1.2
+  asp_healpix/src/base/rotmatrix.cc  1.2
+  asp_healpix/src/base/cxxutils.cc  1.2
+  asp_healpix/src/base/ls_fft.ph  1.1.1.1
+  asp_healpix/src/base/fitshandle.cc  1.3
+  asp_healpix/src/base/alm_filter_tools.cc  1.2
+  asp_healpix/src/base/healpix_map_fitsio.cc  1.2
+  asp_healpix/src/base/bluestein.c  1.2
+  asp_healpix/src/base/fftpack.ph  1.1.1.1
+  asp_healpix/src/base/bluestein.ph  1.1.1.1
+  asp_healpix/src/base/fftpack.c  1.2
+  asp_healpix/src/test/TestHealpix.h  1.1.1.1
+  asp_healpix/src/test/TestHealpixArray.h  1.1.1.1
+  asp_healpix/src/test/test_healpix.cxx  1.2
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: ASP-05-00-00, operation: add
 Package: asp_healpix
 User: jchiang  Fri Jul 22 08:39:22 2011

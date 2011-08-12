@@ -1,7 +1,0 @@
-# -*- python -*-
-# $Id$
-# Authors: J. Bogart <jrb@slac.stanford.edu>
-# Version: ASP_containerSettings-00-00-01
-
-# Dummy file for ASP-scons. The real contents is in package.scons,
-# externals.scons and asp_setup.sh

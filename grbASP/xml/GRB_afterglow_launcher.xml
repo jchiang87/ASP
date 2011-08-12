@@ -5,14 +5,13 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_afterglow_launcher" version="1.6" type="Data">
+<task name="GRB_afterglow_launcher" version="0.5" type="Data">
   <variables>
-    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
-    <var name="datacatalog_imp">datacatalog</var>
-    <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
+    <var name="BINDIR">rh9_gcc32</var>
   </variables>
   <prerequisites>
-    <prerequisite name="folder" type="string"/>
+    <prerequisite name="logicalPath" type="string"/>
     <prerequisite name="TSTART" type="integer"/>
     <prerequisite name="TSTOP" type="integer"/>
     <prerequisite name="OUTPUTDIR" type="string"/>
@@ -23,20 +22,18 @@
   <process name="catalogQuery">
     <script>
       <![CDATA[
-        print "using datacatalog implementation: ", datacatalog_imp
-        datacat = eval(datacatalog_imp)
-        def query(outfile, path, TSTART, TSTOP, folder):
+        def query(outfile, path, TSTART, TSTOP):
             output = pipeline.createFile(outfile)
             opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
             opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
             opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
             query = ('DataType == \"%s\" && (%s || %s || %s)' 
                      % (path, opt1, opt2, opt3))
-            datasetList = datacat.getDatasets(folder+'/*', query)
+            datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
-        query("Ft1FileList", "EXTENDEDFT1", TSTART, TSTOP, folder)
-        query("Ft2FileList", "FT2", TSTART, TSTOP, folder)
+        query("Ft1FileList", "FT1", TSTART, TSTOP)
+        query("Ft2FileList", "FT2", TSTART, TSTOP)
     ]]></script>
   </process>
   <process name="launchAfterglowStream">

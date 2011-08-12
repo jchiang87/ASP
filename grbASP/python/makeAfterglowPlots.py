@@ -12,9 +12,9 @@ import os
 
 # blech.  @todo rationalize use of OUTPUTDIR vs output_dir.  The
 # following is needed by the makeRefinementPlots import.
+os.environ['OUTPUTDIR'] = os.environ['output_dir']
+
 os.environ['MPLCONFIGDIR'] = os.environ['OUTPUTDIR']
-import matplotlib
-matplotlib.use('Agg')
 
 import numpy as num
 import pylab
@@ -49,24 +49,18 @@ def afterglow_lc(grbName, grb_id, lcfile, outfile=None):
 if __name__ == '__main__':
     import databaseAccess as dbAccess
     import pipeline
-    import pyfits
 
     os.chdir(os.environ['OUTPUTDIR'])
     grb_id = int(os.path.basename(os.getcwd()))
 
     pipeline.setVariable('GRB_ID', '%i' % grb_id)
     
-    sql = "select GCN_NAME from GRB where GRB_ID=%i and GCAT_FLAG=0" % grb_id
+    sql = "select GCN_NAME from GRB where GRB_ID=%i" % grb_id
     def getInfo(cursor):
         for entry in cursor:
             return entry[0]
     grbName = dbAccess.apply(sql, getInfo)
 
-    specfile = grbName + '_afterglow_spec.fits'
-
-    spectrum = pyfits.open(specfile)
-    if sum(spectrum['COUNTS_SPECTRA'].data.field('ObsCounts')) != 0:
-        countsSpectra(grb_id, specfile,
-                      outfile='countsSpectra_afterglow_%i.png' % grb_id)
-
+    countsSpectra(grbName, grb_id, grbName + '_afterglow_spec.fits',
+                  outfile='countsSpectra_afterglow_%i.png' % grb_id)
     afterglow_lc(grbName, grb_id, grbName + '_afterglow_lc.fits')

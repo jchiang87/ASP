@@ -23,8 +23,6 @@ class GcnPacket(object):
     def __init__(self, buffer):
         self.arrTime = time.time()
         self.buffer = array.array('l', buffer)
-        if self.buffer.itemsize == 8:
-            self.buffer = array.array('i', buffer)
         self.buffer.byteswap()
         # just process the most common items for now, i.e., from 'type'
         # to 'posError'
@@ -57,8 +55,6 @@ class GcnPacket(object):
 
 if __name__ == '__main__':
     buffer = array.array('l', 40*(0,))
-    if buffer.itemsize == 8:
-        buffer = array.array('i', 40*(0,))
     buffer[5] = 14469       # TJD for GRB080104514
     buffer[6] = 4443296     # SOD
     buffer.byteswap()

@@ -11,7 +11,7 @@ from databaseAccess import *
 
 _columns = ['ID', 'STARTDATE', 'ENDDATE', 'IRFS', 'PARTITIONSIZE',
             'THRESHOLD', 'DEADTIME', 'TIMEWINDOW', 'RADIUS', 
-            'AGTIMESCALE', 'AGRADIUS', 'OPTIMIZER', 'NOMINAL_WINDOW']
+            'AGTIMESCALE', 'AGRADIUS', 'OPTIMIZER']
 
 class GrbAspConfigEntry(object):
     def __init__(self, items):
@@ -25,7 +25,7 @@ class GrbAspConfigEntry(object):
 
 class GrbAspConfig(object):
     def __init__(self):
-        sql = 'select %s from GRB_ASP_CONFIG' % (",".join(_columns))
+        sql = 'select * from GRB_ASP_CONFIG'
         def cursorFunc(cursor):
             entries = []
             for items in cursor:
@@ -40,14 +40,6 @@ class GrbAspConfig(object):
         raise RuntimeError, "GRB ASP config not found for MET %i" % met
 
 grbAspConfig = GrbAspConfig()
-
-def irf_config(tstart):
-    """Use the configuration from the SOURCEMONITORINGCONFIG table
-    for determining the event classes and irfs.
-    """
-    sql = ("select irfs, ft1_filter from SOURCEMONITORINGCONFIG "
-           + "where startdate<=%i and enddate>=%i" % (tstart, tstart))
-    return apply(sql, lambda curs : [x for x in curs][0])
 
 if __name__ == '__main__':
     print grbAspConfig.find(252372500)

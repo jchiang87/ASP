@@ -5,220 +5,108 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="8.8" type="Data">
+<task name="GRB_refinement" version="4.2" type="Data">
   <variables>
-    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
-    <var name="datacatalog_imp">datacatalog</var>
-    <var name="outputFolder">/ASP/Results/GRB/promptBurst</var>
-    <var name="xrootd_folder">/ASP/GRB/promptBurst</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/ring_2year_p76_v0_lowres.fits</var>
-    <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
+    <var name="ST_INST">"/nfs/farm/g/glast/u30/builds/rh9_gcc32/ScienceTools/ScienceTools-v9r4p1"</var>
+    <var name="BINDIR">rh9_gcc32</var>
   </variables>
    <prerequisites>
       <prerequisite name="GCN_NOTICE" type="string"/>
       <prerequisite name="GRB_ID" type="integer"/>
-      <prerequisite name="folder" type="string"/>
+      <prerequisite name="logicalPath" type="string"/>
       <prerequisite name="TSTART" type="integer"/>
       <prerequisite name="TSTOP" type="integer"/>
-      <prerequisite name="OUTPUTDIR" type="string"/>
+      <prerequisite name="output_dir" type="string"/>
       <prerequisite name="ASP_PATH" type="string"/>
       <prerequisite name="GRBASPROOT" type="string"/>
       <prerequisite name="PIPELINESERVER" type="string"/>
    </prerequisites>
    <process name="catalogQuery">
      <script><![CDATA[
-       print "using datacatalog implementation: ", datacatalog_imp
-       datacat = eval(datacatalog_imp)
-       def query(outfile, path, TSTART, TSTOP, folder):
+       def query(outfile, path, TSTART, TSTOP):
            output = pipeline.createFile(outfile)
            opt1 = '(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)' % locals()
            opt2 = '(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)' % locals()
            opt3 = '(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
            query = ('DataType == \"%s\" && (%s || %s || %s)' 
                     % (path, opt1, opt2, opt3))
-           datasetList = datacat.getDatasets(folder+'/*', query)
+           datasetList = datacatalog.getDatasets(logicalPath+'/*', query)
            datasetList.writeToFile(output, 1)
            pipeline.writeFile(output)
-       query("Ft1FileList", "EXTENDEDFT1", TSTART, TSTOP, folder)
-       query("Ft2FileList", "FT2", TSTART, TSTOP, folder)
+       query("Ft1FileList", "FT1", TSTART, TSTOP)
+       query("Ft2FileList", "FT2", TSTART, TSTOP)
        ]]></script>
    </process>
    <process name="extractLatData">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+      </variables>
       <job executable="${GRBASPROOT}/${BINDIR}/extractLatData.sh"
            batchOptions="-q short"/>
       <depends>
           <after process="catalogQuery" status="SUCCESS"/>
       </depends>
    </process>
-
-   <process name="launchAnalysis">
-     <script language="python">
-       <![CDATA[
-         extractLatData = pipeline.getProcessInstance("extractLatData")
-         found_data = "%s" % extractLatData.getVariable("found_data")
-         print "found_data = ", found_data
-         if found_data == "foo":
-             print "Launching refinementAnalysis substream"
-             pipeline.createSubstream("refinementAnalysis", 0)
-       ]]>
-     </script>
-     <depends>
-       <after process="extractLatData" status="SUCCESS"/>
-     </depends>
-     <createsSubtasks>
-       <subtask>refinementAnalysis</subtask>
-     </createsSubtasks>
+   <process name="refinePosition">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/refinePosition.sh"
+           batchOptions=" -q glastdataq " allocationGroup="glastdata"/>
+      <depends>
+          <after process="extractLatData" status="SUCCESS"/>
+      </depends>
    </process>
-
-   <task name="refinementAnalysis" version="2.0" type="Data">
-     <process name="refinePosition">
-       <job executable="${GRBASPROOT}/${BINDIR}/refinePosition.sh"
-            batchOptions=" -q glastdataq " allocationGroup="glastdata"/>
-     </process>
-
-     <process name="launchSpectralAnalysis">
-       <script language="python">
-         <![CDATA[
-           refinePosition = pipeline.getProcessInstance("refinePosition")
-           within_fov = "%s" % refinePosition.getVariable("within_fov")
-           print "within_fov = ", within_fov
-           if within_fov == "affirmed":
-               print "Launching spectralAnalysis substream"
-               pipeline.createSubstream("spectralAnalysis", 0)
-         ]]>
-       </script>
-       <depends>
-         <after process="refinePosition" status="SUCCESS"/>
-       </depends>
-       <createsSubtasks>
-         <subtask>spectralAnalysis</subtask>
-       </createsSubtasks>
-     </process>
-
-     <task name="spectralAnalysis" version="1.0" type="Data">
-       <process name="tsMap">
-         <job executable="${GRBASPROOT}/${BINDIR}/tsMap.sh" 
-              batchOptions="-q glastdataq " allocationGroup="glastdata"/>
-       </process>
-
-       <process name="LatGrbSpectrum">
-         <job executable="${GRBASPROOT}/${BINDIR}/LatGrbSpectrum.sh"
-              batchOptions="-q glastdataq " allocationGroup="glastdata"/>
-       </process>
-
-       <process name="launchDataProducts">
-         <script language="python">
-           <![CDATA[
-             tsMap = pipeline.getProcessInstance("tsMap")
-             is_ul = "%s" % tsMap.getVariable("LIKELY_UPPER_LIMIT")
-             LatGrbSpectrum = pipeline.getProcessInstance("LatGrbSpectrum")
-             skipDataProducts = ("%s" % 
-                                 LatGrbSpectrum.getVariable("skipDataProducts"))
-             print "skipDataProducts = ", skipDataProducts
-             if skipDataProducts != "affirmed":
-                 args = "is_upper_limit=%s" % is_ul
-                 print "Launching dataProducts substream"
-                 pipeline.createSubstream("dataProducts", 0, args)
-           ]]>
-         </script>
-         <depends>
-           <after process="tsMap" status="SUCCESS"/>
-           <after process="LatGrbSpectrum" status="SUCCESS"/>
-         </depends>
-         <createsSubtasks>
-           <subtask>dataProducts</subtask>
-         </createsSubtasks>
-       </process>
-
-       <task name="dataProducts" version="1.0" type="Data">
-         <prerequisites>
-           <prerequisite name="is_upper_limit" type="string" />
-         </prerequisites>
-         <process name="makeRefinementPlots">
-           <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
-                batchOptions="-q short"/>
-         </process>
-  
-         <process name="LatGcnNotice">
-           <job executable="${GRBASPROOT}/${BINDIR}/LatGcnNotice.sh"
-                batchOptions="-q short"/>
-         </process>
-  
-         <process name="registerPlots">
-           <script>
-             <![CDATA[
-               print "using datacatalog implementation: ", datacatalog_imp
-               datacat = eval(datacatalog_imp)
-               dataTypes = ('COUNTSMAP', 'SPECTRUM', 'LIGHTCURVE', 
-                            'ERRORCONTOURS')
-               prefixes = ('countsMap', 'countsSpectra', 'lightCurve',
-                           'errorContours')
-               files = ['%s_%i.png' % (prefix, GRB_ID) for prefix in prefixes]
-               nfiles = len(files)
-               if is_upper_limit == 'IS_UPPER_LIMIT':
-                   # TS map was not generated so skip registration of error 
-                   # contours plot
-                   nfiles -= 1
-               for dataType, outfile in zip(dataTypes[:nfiles], files[:nfiles]):
-                   attributes = 'nGrbId=%i' % GRB_ID
-                   print attributes
-                   logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
-                   print logicalPath
-                   filePath = '%s/%s' % (OUTPUTDIR, outfile)
-                   print filePath
-                   datacat.registerDataset(dataType, logicalPath, filePath, 
-                                           attributes)
-             ]]>
-           </script>
-           <depends>
-             <after process="makeRefinementPlots" status="SUCCESS"/>
-           </depends>
-         </process>
-  
-         <process name="createArchive">
-           <job executable="${GRBASPROOT}/${BINDIR}/createRefinementTarball.sh"
-                batchOptions="-q short" />
-           <depends>
-             <after process="LatGcnNotice" status="SUCCESS" />
-             <after process="registerPlots" status="SUCCESS" />
-           </depends>
-         </process>
-  
-         <process name="registerArchive">
-           <script>
-             <![CDATA[
-               createArchive = pipeline.getProcessInstance("createArchive")
-               dataType = "GRB_REFINEMENT_ARCH"
-    
-               filePath = createArchive.getVariable("tarball_name")
-  
-               attributes = 'nGrbId=%i' % GRB_ID
-               print attributes
-  
-               outfile = filePath.split('/')[-1]
-               logicalPath = '%s/%s:%s' % (outputFolder, dataType, outfile)
-               print logicalPath
-  
-               if filePath.find('root') == 0:
-                  filePath += "@SLAC_XROOT"
-               print filePath
-  
-               datacatalog.registerDataset(dataType, logicalPath, filePath,
-                                           attributes)
-             
-             ]]>
-           </script>
-           <depends>
-             <after process="createArchive" status="SUCCESS"/>
-           </depends>
-         </process>
-
-       </task> <!--dataProducts-->
-
-     </task> <!-- spectralAnalysis-->
-
-   </task> <!--refinementAnalysis-->
-
-</task> <!--GRB_refinement-->
-
+   <process name="tsMap">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/tsMap.sh" 
+           batchOptions="-q long"/>
+      <depends>
+          <after process="refinePosition" status="SUCCESS"/>
+      </depends>
+   </process>
+   <process name="LatGrbSpectrum">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+      </variables>
+      <job executable="${GRBASPROOT}/${BINDIR}/LatGrbSpectrum.sh"
+           batchOptions="-q short"/>
+      <depends>
+          <after process="refinePosition" status="SUCCESS"/>
+      </depends>
+   </process>
+   <process name="makeRefinementPlots">
+      <variables>
+         <var name="OUTPUTDIR">${output_dir}</var>
+      </variables>
+     <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
+          batchOptions="-q short"/>
+     <depends>
+       <after process="tsMap" status="SUCCESS"/>
+       <after process="LatGrbSpectrum" status="SUCCESS"/>
+     </depends>
+   </process>
+   <process name="registerPlots">
+     <script><![CDATA[
+     dataTypes = ('COUNTSMAP', 'SPECTRUM', 'LIGHTCURVE', 'ERRORCONTOURS')
+     prefixes = ('countsMap', 'countsSpectra', 'lightCurve',
+                 'errorContours')
+     files = ['%s_%i.png' % (prefix, GRB_ID) for prefix in prefixes]
+     for dataType, outfile in zip(dataTypes, files):
+         attributes = 'nGrbId=%i' % GRB_ID
+         print attributes
+         logicalPath = '/ASP/Results/GRB/%s:%s' % (dataType, outfile)
+         print logicalPath
+         filePath = '%s/%s' % (output_dir, outfile)
+         print filePath
+         datacatalog.registerDataset(dataType, logicalPath, filePath, 
+                                     attributes)
+      ]]></script>
+     <depends>
+       <after process="makeRefinementPlots" status="SUCCESS"/>
+     </depends>
+   </process>
+</task>
 </pipeline>

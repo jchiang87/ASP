@@ -11,19 +11,18 @@ import os
 import glob
 import time
 from parfile_parser import Parfile
-from PipelineCommand import PipelineCommand, resolve_nfs_path
+from PipelineCommand import PipelineCommand, _asp_path
 
 # import these to ensure they are available for the various streams
 import grbASP
 import pyIrfLoader
 import BayesBlocks
 
-_grbAspRoot = resolve_nfs_path(os.environ['INST_DIR'])
+_version = os.path.split(os.environ['GRBASPROOT'])[-1]
+_grbAspRoot = os.path.join(_asp_path, 'ASP', 'grbASP', _version)
 
-def blindSearchStreams(downlinks=None, grbroot_dir=None, folder=None,
-                       debug=False, streamId=None, 
-                       datacatalog_imp="datacatalog",
-                       outputFolder=None):
+def blindSearchStreams(downlinks=None, grbroot_dir=None, logicalPath=None,
+                       debug=False, streamId=None):
     if downlinks is None:
         raise ValueError, "No downlink IDs specified"
     if grbroot_dir is None:
@@ -34,34 +33,32 @@ def blindSearchStreams(downlinks=None, grbroot_dir=None, folder=None,
         args = {'DownlinkId' : downlink,
                 'GRBROOTDIR' : grbroot_dir,
                 'GRBASPROOT' : _grbAspRoot,
-                'datacatalog_imp' : datacatalog_imp}
-        if folder is not None:
-            args['folder'] = folder
-        if outputFolder is not None:
-            args['outputFolder'] = outputFolder
+                'logicalPath' : '/DC2/Downlinks',
+                'ST_INST' : os.environ['ST_INST']}
+        if logicalPath is not None:
+            args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_blind_search', args, stream=streamId)
         command.run(debug=debug)
 
-def refinementStreams(tstart, tstop, folder=None, 
+def refinementStreams(tstart, tstop, logicalPath=None,
                       grb_ids=(), output_dir=None, debug=False,
-                      streamId=None, 
-                      datacatalog_imp="datacatalog"):
+                      streamId=None):
     for grb_id in grb_ids:
         args = {'GCN_NOTICE' : 'None',
                 'GRB_ID' : grb_id, 
-                'OUTPUTDIR' : output_dir,
+                'output_dir' : output_dir,
                 'GRBASPROOT' : _grbAspRoot,
                 'TSTART' : tstart,
                 'TSTOP' : tstop,
-                'datacatalog_imp' : datacatalog_imp}
-        if folder is not None:
-            args['folder'] = folder
+                'logicalPath' : '/DC2/Downlinks',
+                'ST_INST' : os.environ['ST_INST']}
+        if logicalPath is not None:
+            args['logicalPath'] = logicalPath
         command = PipelineCommand('GRB_refinement', args, stream=streamId)
         command.run(debug=debug)
 
 def afterglowStreams(parfiles=None, output_dir=None, debug=False,
-                     folder=None, streamId=None, 
-                     datacatalog_imp="datacatalog"):
+                     logicalPath=None):
     os.chdir(output_dir)
     if parfiles is None:
         parfiles = glob.glob('GRB*_pars.txt')
@@ -75,13 +72,14 @@ def afterglowStreams(parfiles=None, output_dir=None, debug=False,
         tstop = tstart + config.AGTIMESCALE
         args = {'TSTART' : tstart,
                 'TSTOP' : tstop,
-                'GRBPARS' : parfile,
-                'OUTPUTDIR' : output_dir,
+                'GRB_parfile' : parfile,
+                'output_dir' : output_dir,
                 'GRBASPROOT' : _grbAspRoot,
-                'datacatalog_imp' : datacatalog_imp}
-        if folder is not None:
-            args['folder'] = folder
-        command = PipelineCommand('GRB_afterglow', args, stream=streamId)
+                'logicalPath' : '/DC2/Downlinks',
+                'ST_INST' : os.environ['ST_INST']}
+        if logicalPath is not None:
+            args['logicalPath'] = logicalPath
+        command = PipelineCommand('GRB_afterglow', args)
         command.run(debug=debug)
 
 if __name__ == '__main__':

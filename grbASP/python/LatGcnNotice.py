@@ -9,16 +9,11 @@
 
 import os
 import copy
-import string
-import datetime
+import time
 import array
 import celgal
 import pyASP
 import dbAccess
-import numpy as num
-from FitsNTuple import FitsNTuple, FitsNTupleError
-from MultiPartMailer import MultiPartMailer
-from PipelineCommand import pipelineServer
 
 _dataDir = os.path.join(os.environ['GRBASPROOT'], 'data')
 
@@ -34,18 +29,13 @@ class ConvertEpoch(object):
         return self._b1950.cel((l, b))
 
 class LatGcnTemplate(dict):
-#    def __init__(self, template=os.path.join(_dataDir, 'GCN_Notice.tpl')):
-    def __init__(self, template=None):
-        if template is None:
-            template = os.path.join(_dataDir, 'GCN_Notice.tpl')
-            if not os.path.isfile(template):
-                template = os.path.join(_dataDir, 'grbASP', 'GCN_Notice.tpl')
+    def __init__(self, template=os.path.join(_dataDir, 'GCN_Notice.tpl')):
         self.ordered_keys = []
         for line in open(template):
             if line.find("#") == 0:   # skip this line
                 continue
-#            if line.find('COMMENTS') == 0:
-#                continue
+            if line.find('COMMENTS') == 0:
+                continue
             if line.find(':') > 0:
                 data = line.split(':')
                 key, value = data[0], (':'.join(data[1:])).strip()
@@ -83,7 +73,7 @@ def sexigesimal(ra, dec):
  
 def dec_string(dec, sexiges):
     if dec >= 0:
-        return '%6.3fd {%s}' % (dec, sexiges)
+        return '+%6.3fd {%s}' % (dec, sexiges)
     else:
         return '%7.3fd {%s}' % (dec, sexiges)
 
@@ -94,34 +84,11 @@ def time_string(secOfDay):
     return ("%.2f SOD {%02i:%02i:%02i.%02i} UT (trigger time)"
             % (secOfDay, hours, mins, int(secs), secs % 1))
 
-months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-weekdays = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
-
-def notice_date():
-    "Return current date string using GCN Notice formatting"
-    utcnow = datetime.datetime.utcnow()
-    my_date = ("%3s %02i %3s %02i %02i:%02i:%02i UT" %
-               (weekdays[utcnow.weekday()], utcnow.day, months[utcnow.month-1],
-                utcnow.year % 2000, utcnow.hour, utcnow.minute, utcnow.second))
-    return my_date
-
-def utc_date(met):
-    missionStart = datetime.datetime(2001, 1, 1, 0, 0, 0)
-    dt = datetime.timedelta(0, met)
-    utc = missionStart + dt
-    my_date = ("%3s %02i %3s %02i %02i:%02i:%02i UT" %
-               (weekdays[utc.weekday()], utc.day, months[utc.month-1],
-                utc.year % 2000, utc.hour, utc.minute, utc.second))
-    return my_date
-
 class LatGcnNotice(object):
     def __init__(self, burstTime, ra, dec):
         self.notice = LatGcnTemplate()
-        self.notice['NOTICE_DATE'] = notice_date()
+        self.notice['NOTICE_DATE'] = time.asctime()
         self._packet = array.array("l", 40*(0,))
-        if self._packet.itemsize == 8:
-            self._packet = array.array("i", 40*(0,))
         self.met = burstTime
         self.grb_id = int(self.met)
         self.ra = ra
@@ -131,7 +98,6 @@ class LatGcnNotice(object):
     def setLocErr(self, error):
         self.notice['GRB_ERROR'] = ('%.2f [arcmin radius, statistical only]'
                                     % (error*60))
-        self._packet[11] = error*100
     def setIntens(self, counts):
         foo = self.notice
         foo['GRB_INTEN1'] = '%i [0.0 < cnts < 0.1 (GeV)]' % counts[0]
@@ -139,7 +105,7 @@ class LatGcnNotice(object):
         foo['GRB_INTEN3'] = '%i [1.0 < cnts < 10. (GeV)]' % counts[2]
         foo['GRB_INTEN4'] = '%i [10. < cnts (GeV)]' % counts[3]
     def setTriggerNum(self, triggerNum):
-        self.notice['TRIGGER_NUM'] = '%i' % triggerNum
+        self.notice['TRIGGER_NUM'] = '%i,   Sequence_Num: 0' % triggerNum
         self._packet[4] = int(triggerNum)
     def setDuration(self, duration):
         foo = self.notice
@@ -153,27 +119,22 @@ class LatGcnNotice(object):
         ra2000, dec2000 = sexigesimal(ra, dec)
         ra1950, dec1950 = sexigesimal(*b1950)
         foo = self.notice
-        foo['GRB_RA'] = '%7.3fd {%s} (J2000)' % (ra, ra2000)
-        foo['GRB_DEC'] = '%s (J2000)' % dec_string(dec, dec2000)
+        foo['GRB_RA'] = ('%7.3fd {%s} (J2000),\n%16s%7.3fd {%s} (B1950)'
+                         % (ra, ra2000, ' ', b1950[0], ra1950))
+        foo['GRB_DEC'] = ('%s (J2000),\n%16s%s (B1950)'
+                          % (dec_string(dec, dec2000), ' ',
+                             dec_string(b1950[1], dec1950)))
         self._packet[7] = int(self.ra*1e4)
         self._packet[8] = int(self.dec*1e4)
     def _setTime(self, burstTime):
         jd = pyASP.jd_from_MET(burstTime)
         year, month, day, hours = jd.gregorianDate()
         foo = self.notice
-#        foo['GRB_DATE'] = ('%i TJD; %i DOY; %2i/%2i/%2i' %
-#                           (jd.tjd(), jd.dayOfYear(),
-#                            int(year%100), int(month), int(day)))
-        foo['GRB_DATE'] = ('%i TJD; %i DOY' % (jd.tjd(), jd.dayOfYear()))
+        foo['GRB_DATE'] = ('%i TJD; %i DOY; %s/%s/%s' %
+                           (jd.tjd(), jd.dayOfYear(), year%100, month, day))
         foo['GRB_TIME'] = time_string(hours*3600)
-        
-        frac = int(num.round(1000*hours/24.))
-        if frac == 1000:
-            frac = 999
-        grb_name = 'GRB%02i%02i%02i%03i' % (year % 100, month, day, frac)
-
-        self.name = grb_name
-        
+        self.name = ('GRB%02i%02i%02i%03i' %
+                     (year % 100, month, day, hours/24.*1000))
         JD_missionStart_seconds = 211845067200
         jd = (self.met + JD_missionStart_seconds)/8.64e4
         tjd = jd - 2440000.5
@@ -200,118 +161,37 @@ class LatGcnNotice(object):
         # need to implement error radius estimate
         dbAccess.updateGrb(grb_id, GCN_NAME="'%s'" % self.name,
                            INITIAL_LAT_RA=self.ra, INITIAL_LAT_DEC=self.dec,
-                           INITIAL_ERROR_RADIUS=1, ASP_PROCESSING_LEVEL=0)
-        dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), "GLAST", grb_id,
-                                 datetime.datetime.utcnow(), self.met, 
-                                 self.ra, self.dec, 1, isUpdate=int(isUpdate),
-                                 notice_type="ASP_BLIND_SEARCH")
-    def email_notification(self, logProbValue, threshold, 
-                           recipients=None, files=None, figures=()):
-        if recipients is None:
-#            recipients = dbAccess.grbAdvocateEmails()
-            recipients = ['balist@glast.stanford.edu',
-                          'jchiang@slac.stanford.edu']
+                           INITIAL_ERROR_RADIUS=1, ANALYSIS_VERSION=0,
+                           L1_DATA_AVAILABLE=0)
+        dbAccess.insertGcnNotice(grb_id, self.GcnPacket(), 
+                                 dbAccess.current_date(), self.met, 
+                                 self.ra, self.dec, 1, isUpdate=int(isUpdate))
+    def email_notification(self):
+        import smtplib
+#        sql = "select * from GRB_EMAIL_LIST where ROLE = 'Advocate'"
+#        def cursorFunc(cursor):
+#            return [item[1] for item in cursor]
+#        recipients = dbAccess.apply(sql, cursorFunc)
+        recipients = ['jchiang@slac.stanford.edu']
+        recipients.extend(['shiftslist@glast.stanford.edu', 
+                           'GRBslist@glast.stanford.edu'])
         print recipients
-
-        mailer = MultiPartMailer("ASP blind search GRB candidate",
-                                 "solist@glast.stanford.edu")
-        message = ("ASP GRB_blind_search found a burst candidate at\n\n" +
-                   "  (RA, Dec) = (%.3f, %.3f)\n\n" % (self.ra, self.dec) +
-                   "with trigger time\n\n"
-                   "  %s\n  MET = %.3f\n\n" % (utc_date(self.met), self.met) + 
-                   "and log-probability / threshold : " + 
-                   "  %.1f / %.1f \n" % (logProbValue, threshold) +
-                   "Plots of log-probabilty distributions are attached.\n")
-        if files is not None:
-            message += "\nFiles used:\n"
-            for item in files:
-                message += (item + "\n")
-        message += "\nhttp://glast-ground.slac.stanford.edu/ASPDataViewer/\n"
-        mailer.add_text(message)
-        for item in figures:
-            mailer.add_image(item)
-        mailer.finish()
-        mailer.send('glastgcn@slac.stanford.edu', recipients)
-def latCounts(ft1File):
-    ebounds = (1e2, 1e3, 1e4)
-    try:
-        ft1 = FitsNTuple(ft1File)
-    except FitsNTupleError:
-        return 0, 0, 0, 0
-    foo = []
-    for ee in ebounds:
-        indx = num.where(ft1.ENERGY < ee)
-        foo.append(len(indx[0]))
-    foo.append(len(ft1.ENERGY))
-    return (foo[0], foo[1] - foo[0], foo[2] - foo[1], foo[3] - foo[2])
+        fromadr = "solist@glast.stanford.edu"
+        subj = "ASP blind search GRB candidate"
+        mail = smtplib.SMTP('smtpunix.slac.stanford.edu')
+        for address in recipients:
+            print "sending GCN Notice to %s" % address
+            hdr = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n" 
+                   % (fromadr, address, subj))
+            message = ("%sASP GRB_blind_search found a burst candidate at\n\n"
+                       + "MET = %i, (RA, Dec) = (%.3f, %.3f)\n\n"
+                       + "See http://glast-ground.slac.stanford.edu/ASPDataViewer/") % (hdr, self.grb_id, self.ra, self.dec)
+            mail.sendmail(fromadr, address, message)
+        mail.quit()
 
 if __name__ == '__main__':
-    import glob
-    from parfile_parser import Parfile
-    from pyASP import SkyDir
-    from ScData import ScData
-
-    output_dir = os.environ['OUTPUTDIR']
-
-    os.chdir(output_dir)
-    grb_id = int(os.environ['GRB_ID'])
-
-    sql = "select TS_VALUE from GRB where GRB_ID=%i and GCAT_FLAG=0" % grb_id
-    def getTs(cursor):
-        for entry in cursor:
-            return entry[0]
-    Ts_value = dbAccess.apply(sql, getTs)
-
-    if Ts_value is not None and Ts_value < 25:
-        print "Likely non-detection in Level-1 data. TS = ", Ts_value
-
-    pars = Parfile(glob.glob('*_pars.txt')[0])
-
-    notice = LatGcnNotice(pars['tstart'], pars['ra'], pars['dec'])
-
-    notice.setLocErr(pars['loc_err'])
-
-    notice.setIntens(latCounts(pars['name'] + '_LAT_3.fits'))
-
-    notice.setTriggerNum(grb_id)
-
-    notice.setDuration(pars['tstop'] - pars['tstart'])
-
-    notice.notice['SIGNIFICANCE'] = '%.1f [sqrt(TS) 2 dof]' % num.sqrt(Ts_value)
-
-    notice.notice['GRB_INTEN1'] = ("%.1f [0.1 < cnts < 1.0 (GeV)]"
-                                   % pars['GRB_INTEN1'])
-    notice.notice['GRB_INTEN2'] = ("%.1f [1.0 < cnts < 10. (GeV)]"
-                                   % pars['GRB_INTEN2'])
-    notice.notice['GRB_INTEN3'] = ("%.1f [10. < cnts (GeV)]" 
-                                   % pars['GRB_INTEN3'])
-                                   
-    ft2File = open(pars['name'] + '_files').readlines()[-1].strip()
-    scData = ScData(ft2File)
-    srcDir = SkyDir(pars['ra'], pars['dec'])
-    notice.notice['GRB_THETA'] = ("%.2f [deg]" % 
-                                  scData.inclination(pars['tstart'], srcDir))
-    notice.notice['GRB_PHI'] = ("%.2f [deg]" % 
-                                scData.azimuth(pars['tstart'], srcDir))
-    notice.notice['SEARCH_METHOD'] = '%i' % dbAccess.gcn_search_seed(grb_id)
-    
-    outfile = pars['name'] + '_Notice.txt'
-    notice.write(outfile)
-
-    outfile_location = "'%s'" % os.path.join(output_dir, outfile)
-    dbAccess.updateGrb(grb_id, ASP_GCN_NOTICE_DRAFT=outfile_location)
-
-    if Ts_value >= 25:
-        #
-        # Send this notice for GCN broadcast.
-        #
-        mailer = MultiPartMailer("FERMI_LAT_GND_REF_IMPORT")
-        mailer.add_text(str(notice.notice))
-        mailer.finish()
-        if pipelineServer() == 'DEV':
-            mailer.send("jchiang@slac.stanford.edu", 
-                        ("jchiang@slac.stanford.edu",))
-        else:
-            mailer.send("jchiang@slac.stanford.edu", 
-                        ("jchiang@slac.stanford.edu",
-                         "vxw@capella.gsfc.nasa.gov"))
+    notice = LatGcnNotice(222535575.0, 305.723, -67.0446)
+    notice.setLocErr(0.33)
+    notice.setIntens((20, 5, 0, 1))
+    notice.setDuration(12.33)
+    notice.write('foo.txt')

@@ -58,6 +58,10 @@ public:
 
    void setCellSizes(const std::vector<double> & cellSizes);
 
+   /// @brief ncp_prior calibration for unbinned case as a function of
+   /// number of events and false positive fraction.
+   static double ncp_prior(double nevents, double fp_frac);
+
 private:
 
    bool m_point_mode;

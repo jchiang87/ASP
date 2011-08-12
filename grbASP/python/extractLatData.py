@@ -9,7 +9,8 @@
 import numpy as num
 import pyfits
 from FitsNTuple import FitsNTuple
-from BayesBlocks import BayesBlocks
+#from BayesBlocks import BayesBlocks
+from BayesianBlocks import BayesianBlocks2
 from GtApp import GtApp
 from pass_version import pass_version
 import dbAccess
@@ -59,8 +60,11 @@ def extractLatData(gcnNotice, ft1File, config):
     gtbin.run()
     
     events = FitsNTuple(gtselect['outfile'], 'EVENTS')
-    bb = BayesBlocks(events.TIME)
-    x, y = bb.lightCurve(4)
+#    bb = BayesBlocks(events.TIME)
+#    x, y = bb.lightCurve(4)
+    bb = BayesianBlocks2(events.TIME)
+    ncp_prior = BayesianBlocks2.ncp_prior(len(events.TIME), 1e-3)
+    x, y = bb.lightCurve(ncp_prior)
 
     output = open(gcnNotice.Name + '_BB_lc.dat', 'w')
     for xx, yy in zip(x, y):

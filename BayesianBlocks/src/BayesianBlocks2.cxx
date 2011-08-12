@@ -197,3 +197,8 @@ BlockCostPoint::operator()(size_t imin, size_t imax) const {
    
    return -sigx2/2.*sum_wts;
 }
+
+double BayesianBlocks2::ncp_prior(double nevents, double fp_frac) {
+   double value = 4. - std::log(fp_frac/(0.0136*std::pow(nevents, 0.478)));
+   return value;
+}

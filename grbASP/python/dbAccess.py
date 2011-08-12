@@ -187,6 +187,7 @@ def gcn_search_seed(grb_id, connection=asp_default):
         return search_seed['AGILE']
     elif mission == 'INTEGRAL':
         return search_seed['INTEGRAL']
+    return -1
     
 def grbAdvocateEmails():
     sql = """select u.first_name,u.last_name,u.email from profile_user u

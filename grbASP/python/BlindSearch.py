@@ -463,6 +463,17 @@ if __name__ == '__main__':
         # been used by an entry in the GRB database table.
         #
         isUpdate = dbAccess.haveGrb(notice.grb_id)
+        #
+        # Check if this burst candidate occurs during nadirOps.  If
+        # so, skip it.
+        #
+        moot_alias = dbAccess.get_moot_alias(notice.grb_id)
+        print notice.grb_id, moot_alias
+        if moot_alias == 'nadirOps':
+            print 'GRB candidate %i acquired during nadirOps; skipping.' \
+                % notice.grb_id
+            continue
+        #
         notice_type = None
         if isUpdate:
             sql = ("select NOTICETYPE from gcnnotices where grb_id=%i" 

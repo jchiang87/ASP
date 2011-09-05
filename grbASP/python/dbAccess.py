@@ -12,6 +12,15 @@ import array
 import base64
 from databaseAccess import apply, cx_Oracle, asp_default, glastgen
 
+def get_moot_alias(grb_id, connection = ('/@isocflight',)):
+    sql = """select MOOT_ALIAS from GLASTOPS_ACQSUMMARY
+             where STARTEDAT < %i order by STARTEDAT desc""" % grb_id
+    try:
+        return apply(sql, lambda curs : [entry for entry in curs],
+                     connection)[0][0]
+    except IndexError:
+        return None
+
 def convert_clob(clob):
     foo = array.array('l', base64.decodestring(clob.read()))
     if foo.itemsize == 8:

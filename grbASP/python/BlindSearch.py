@@ -19,6 +19,7 @@ from FitsNTuple import FitsNTuple
 from ft1merge import ft2merge
 from FileStager import FileStager
 from pass_version import pass_version
+import celgal
 
 gtselect = GtApp('gtselect')
 gtmktime = GtApp('gtmktime')
@@ -322,6 +323,14 @@ def check_event_order(ft1_files):
             message += item + "\n"
         raise ValueError(message)
 
+def limb_approach(grb_id, ft2file='FT2_merged.fits', zmax=100):
+    ft2 = pyfits.open(ft2file)
+    col = lambda colname : ft2['SC_DATA'].data.field(colname)
+    indx = num.where(grb_id > col('START'))[0][-1]
+    zenangle = dist((col('RA_SCZ')[indx], col('DEC_SCZ')[indx]),
+                    (col('RA_ZENITH')[indx], col('DEC_ZENITH')[indx]))
+    return zenangle > zmax
+
 if __name__ == '__main__':
     import sys
     from LatGcnNotice import LatGcnNotice
@@ -471,6 +480,14 @@ if __name__ == '__main__':
         print notice.grb_id, moot_alias
         if moot_alias == 'nadirOps':
             print 'GRB candidate %i acquired during nadirOps; skipping.' \
+                % notice.grb_id
+            continue
+        #
+        # Check if candidate occurs at outset of a limb transit/Earth 
+        # avoidance maneuver
+        #
+        if limb_approach(grb_id):
+            print 'GRB candidate %i acquired during limb approach; skipping.' \
                 % notice.grb_id
             continue
         #

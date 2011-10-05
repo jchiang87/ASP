@@ -16,6 +16,7 @@ import smtplib
 from ingestEmailNotice import Packet, registerWithDatabase
 from GCN_Notice_processor import GcnNoticeEmail
 from PipelineCommand import resolve_nfs_path
+from GBM_Notice_parser import GBM_Notice_parser
 
 def forwardErrorMessage(msg):
     preamble = ("Subject: ingestNoticeQueue error\n" +
@@ -49,6 +50,12 @@ for notice in notices:
             my_notice = GcnNoticeEmail(open(notice).readlines())
             outfile = my_notice.writeArchive(archive_path)
             registerWithDatabase(packet, resolve_nfs_path(outfile))
+        #
+        # Fill FERMI_GCN_NOTICE_INFO table
+        gbm_parser = GBM_Notice_parser(open(notice))
+        gbm_parser.update_tables()
+        #
+        # clean-up tmp file if all is successful.
         os.remove(notice)
     except Exception, msg:
         os.rename(notice, "_" + notice)

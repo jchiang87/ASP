@@ -1,7 +1,7 @@
 """
 @brief Process FERMI_GBM_FLT_POSITION notices for MOST_LIKELY fields
 and fill the FERMI_GCN_NOTICE_INFO table with that information.  Also
-process GIOC ARR emails and fill the ARR_FLAG field.
+process FERMI_SC_SLEW notices to add ARR decision.
 
 @author J. Chiang
 """
@@ -24,8 +24,8 @@ def grb_error(grb_id):
     return pos_err
 
 def line_filter(line, filter_items=('GCN/FERMI_GBM_FLT_POSITION',
-                                    'GBM Negative ARR',
-                                    'GBM Positive ARR'), position=0):
+                                    'GCN/FERMI_SC_SLEW'),
+                position=0):
     if line.find('Subject') == 0:
         subject = line.strip().split(':')[1].strip()
         for item in filter_items:
@@ -41,8 +41,7 @@ class GBM_Notice_parser(dict):
             if line.find('Subject') == 0:
                 if not line_filter(line):
                     raise RuntimeError("Invalid Notice type")
-            if not data_start and (line.find('TITLE') == 0 or
-                                   line.find('Trigger Number')):
+            if not data_start and line.find('TITLE')==0:
                 data_start = True
             if data_start and line.find(':') != -1:
                 tokens = line.strip().split(':')
@@ -57,8 +56,9 @@ class GBM_Notice_parser(dict):
             pos_err = float(self['GRB_ERROR'].split()[0])
             if not have_grb_id(grb_id):
                 sql = ("""insert into FERMI_GCN_NOTICE_INFO 
-                          (GRB_ID, GRB_ERROR, MOST_LIKELY, MOST_LIKELY_2)
-                          values (%i, %e, '%s', '%s')""" 
+                          (GRB_ID, ARR_FLAG, GRB_ERROR, MOST_LIKELY, 
+                           MOST_LIKELY_2)
+                          values (%i, 0, %e, '%s', '%s')""" 
                        % (grb_id, pos_err, self['MOST_LIKELY'],
                           self['2nd_MOST_LIKELY']))
                 self._apply(sql, debug)
@@ -71,8 +71,15 @@ class GBM_Notice_parser(dict):
                               self['2nd_MOST_LIKELY'], grb_id))
                     self._apply(sql, debug)
         except KeyError:
-            grb_id = int(self['Trigger Number'])
-            arr_flag = int(self['Repoint Decision'].split()[0])
+            # This should be a FERMI_SC_SLEW notice which does not have
+            # the GRB_ERROR field.
+            if self['NOTICE_TYPE'].find('Slew') == -1:
+                raise RuntimeError("This is not a FERMI_SC_SLEW notice: %s" 
+                                   % self['NOTICE_TYPE'])
+            grb_id = int(self['TRIGGER_NUM'])
+            arr_flag = 0
+            if self['NOTICE_TYPE'].find('Will_Slew') != -1:
+                arr_flag = 1
             if not have_grb_id(grb_id):
                 sql = ("""insert into FERMI_GCN_NOTICE_INFO 
                           (GRB_ID, ARR_FLAG) values (%i, %i)"""
@@ -85,14 +92,11 @@ class GBM_Notice_parser(dict):
 
 if __name__ == '__main__':
     import sys
-#    foo = GBM_Notice_parser(sys.stdin.readlines())
-#    foo.update_tables()
-    notice_files = ('example_notice.txt', 'neg_arr_example.txt', 
-                    'example_notice_arr.txt', 'pos_arr_example.txt',
-                    'GBM_gnd_notice.txt', 'Swift_bat_notice',
-                    'Swift_xrt_notice')
+    import glob
+    notice_files = glob.glob('*.txt')
 
-    debug = True
+#    debug = True
+    debug = False
 
     for notice in notice_files:
         try:

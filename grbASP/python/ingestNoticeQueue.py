@@ -42,6 +42,17 @@ skipped_notice_types = ('SWIFT_SC_SLEW', 'SWIFT_UVOT_POSITION_NACK')
 
 for notice in notices:
     try:
+        #
+        # Fill FERMI_GCN_NOTICE_INFO table
+        #
+        try:
+            gbm_parser = GBM_Notice_parser(open(notice))
+            gbm_parser.update_tables()
+        except:
+            pass
+        #
+        # Fill GCNNOTICES table
+        #
         packet = Packet(notice)
         if ((packet.trigger_num==99999 and packet.mission.lower()=='fermi') or
             (packet.notice_type in skipped_notice_types)):
@@ -51,11 +62,8 @@ for notice in notices:
             outfile = my_notice.writeArchive(archive_path)
             registerWithDatabase(packet, resolve_nfs_path(outfile))
         #
-        # Fill FERMI_GCN_NOTICE_INFO table
-        gbm_parser = GBM_Notice_parser(open(notice))
-        gbm_parser.update_tables()
-        #
         # clean-up tmp file if all is successful.
+        #
         os.remove(notice)
     except Exception, msg:
         os.rename(notice, "_" + notice)

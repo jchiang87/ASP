@@ -202,7 +202,7 @@ class FitsTemplate(object):
         tstop = extract("tstop")
         stop = pyfits.Column(name="STOP", format="D", unit='s', array=tstop)
 
-        names = pyfits.Column(name="NAME", format='20A', 
+        names = pyfits.Column(name="NAME", format='30A', 
                               array=extract("name"))
 
         ras = pyfits.Column(name="RA", format='E', unit='deg',

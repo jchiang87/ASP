@@ -20,6 +20,7 @@ from ft1merge import ft2merge
 from FileStager import FileStager
 from pass_version import pass_version
 import celgal
+dist = celgal.dist
 
 gtselect = GtApp('gtselect')
 gtmktime = GtApp('gtmktime')
@@ -486,7 +487,7 @@ if __name__ == '__main__':
         # Check if candidate occurs at outset of a limb transit/Earth 
         # avoidance maneuver
         #
-        if limb_approach(grb_id):
+        if limb_approach(notice.grb_id):
             print 'GRB candidate %i acquired during limb approach; skipping.' \
                 % notice.grb_id
             continue

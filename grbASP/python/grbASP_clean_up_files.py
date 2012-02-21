@@ -20,4 +20,10 @@ files = glob.glob('*')
 for item in files:
     if item.find('.png') > 0 or item.find('Notice.txt') > 0:
         continue
-    os.remove(item)
+    try:
+        os.remove(item)
+    except OSError:
+        try:
+            os.rmdir(item)
+        except:
+            pass

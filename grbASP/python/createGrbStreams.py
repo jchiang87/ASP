@@ -16,7 +16,7 @@ from PipelineCommand import PipelineCommand, resolve_nfs_path
 # import these to ensure they are available for the various streams
 import grbASP
 import pyIrfLoader
-import BayesBlocks
+import BayesianBlocks
 
 _grbAspRoot = resolve_nfs_path(os.environ['INST_DIR'])
 

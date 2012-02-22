@@ -1,0 +1,33 @@
+# -*- python -*-
+# @file SConscript
+# @brief scons build specifications for pyASP
+#
+# $Header$
+# Authors: J. Chiang <jchiang@slac.stanford.edu>
+# Version: pyASP-04-00-00
+
+import os
+Import('baseEnv')
+Import('listFiles')
+
+libEnv = baseEnv.Clone()
+swigEnv = baseEnv.Clone()
+libEnv.Tool('pyASPLib', depsOnly=1)
+pyASPLib = libEnv.SharedLibrary('pyASP', listFiles(['src/*.cxx']))
+
+toWrap = listFiles(['python/computeFileInfo_P7V6.py',
+                    'python/readFileInfo_P7V6.py'])
+
+swigEnv.Tool('pyASPLib')
+                                
+lib_pyASP = swigEnv.SwigLibrary('_pyASP','src/pyASP.i')
+
+python_modules = listFiles(['python/*.py']) + ['src/pyASP.py']
+
+swigEnv.Tool('registerTargets', package='pyASP',
+             libraryCxts=[[pyASPLib, libEnv]],
+             swigLibraryCxts=[[lib_pyASP, swigEnv]],
+             includes=listFiles(['pyASP/*.h']),
+             data = listFiles(['data/*']),
+             python=python_modules,
+             wrappedPython=toWrap)

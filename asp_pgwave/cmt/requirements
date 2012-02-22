@@ -1,0 +1,17 @@
+package asp_pgwave
+version v2r0p0
+
+# $Id$
+
+use pgwave *
+use asp_pointlike * ASP
+use AspPolicy v* ASP
+use pyASP v* ASP 
+use AspHealPix v* ASP
+use drpMonitoring v* ASP -no_auto_imports
+use sane v* -no_auto_imports
+
+path_remove PYTHONPATH asp_pgwave
+path_append PYTHONPATH $(ASP_PGWAVEROOT)/python
+
+apply_pattern wrapper_scripts

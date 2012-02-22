@@ -71,3 +71,4 @@
  drpMonitoring-01-07-07 16-Dec-2009 jchiang use rhel4_gcc34opt
  drpMonitoring-01-07-08 09-Sep-2010 jchiang final SCons conversions
  drpMonitoring-02-00-00 22-Jul-2011 jchiang Pass 7, rhel5-64 switch
+ drpMonitoring-02-00-01 21-Feb-2012 jchiang use 30A formatting for NAME column in monitored light curve FITS file

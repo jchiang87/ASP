@@ -131,7 +131,7 @@ class LatGcnNotice(object):
     def setLocErr(self, error):
         self.notice['GRB_ERROR'] = ('%.2f [arcmin radius, statistical only]'
                                     % (error*60))
-        self._packet[11] = error*100
+        self._packet[11] = int(error*100)
     def setIntens(self, counts):
         foo = self.notice
         foo['GRB_INTEN1'] = '%i [0.0 < cnts < 0.1 (GeV)]' % counts[0]

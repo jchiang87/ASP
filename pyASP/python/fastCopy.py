@@ -10,7 +10,7 @@
 import os
 
 def fastCopy(outfile, dest=None):
-    command = "eval `/afs/slac/g/glast/isoc/flightOps/rhel3_gcc32/ISOC_PROD/bin/isoc env --add-env=flightops`; FASTCopy.py "
+    command = "eval `/afs/slac/g/glast/isoc/flightOps/rhel5_gcc41/ISOC_PROD/bin/isoc env --add-env=flightops`; FASTCopy.py "
     if dest in ('GSSC', 'ISOC'):
         command += "--send %s " % dest
     command += outfile

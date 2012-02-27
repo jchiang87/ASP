@@ -341,7 +341,6 @@ if __name__ == '__main__':
     utc_now = date2met.date2met()
 
     tmax = min(utc_now - latency, tmax)
-#    print "UTC now minus 3 day latency: ", utc_now - latency
     print "UTC now minus latency: ", utc_now - latency
 
     outfile = 'gll_asp_%010i_v%02i.fit' % (tmax, version)
@@ -350,12 +349,12 @@ if __name__ == '__main__':
 
     output.readDbTables(tmin, tmax)
     output.writeto(outfile, clobber=True)
-
-#    filterULs(outfile)
     
     fchecksum = GtApp('fchecksum')
     fchecksum.run(infile=outfile, update='yes', datasum='yes', chatter=0)
-
-    fastCopy(outfile, dest=dest)
-
-    os.remove(outfile)
+#
+# These tasks will be performed in makeDrpLcTables_part2.py
+#
+#    fastCopy(outfile, dest=dest)
+#
+#    os.remove(outfile)

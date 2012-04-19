@@ -22,8 +22,9 @@ def loadpgwRow(pgwfits):
 	hdulist  = pyfits.open(pgwfits)
 	nrows=hdulist[1].header['NAXIS2']
 	if nrows==0:
-		print "no source found:exit program"
-		sys.exit()
+                raise RuntimeError("no source found:exit program")
+#		print "no source found:exit program"
+#		sys.exit()
 	data1    = hdulist[1].data
 	decData = num.array(data1.field('DECJ2000'), dtype=num.float)  
 	raData=num.array(data1.field('RAJ2000'), dtype=num.float)
@@ -284,7 +285,10 @@ if __name__=="__main__":
                 outfits = pgw2fits(pars['pgwave_list'], config[6:8],
                                    1, pars['nsource'])
                 if pars['nsource'] > 0:
-                        runsrcid(outfits, 0.1)
+                        try:
+                                runsrcid(outfits, 0.1)
+                        except RuntimeError:
+                                pass
 
 		os.system('chmod 777 *')
         	syncDataViewer()

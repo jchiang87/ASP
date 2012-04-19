@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Thu Apr 19 07:25:28 PDT 2012
+ASP-scons/asp_pgwave/python
+
+Modified Files:
+	runsrcid.py 
+Log Message:
+throw exception instead of calling sys.exit() if no sources are found by pgwave so that downstream processing can proceed
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-06-00-00, operation: add
 Package: asp_pgwave

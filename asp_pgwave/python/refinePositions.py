@@ -30,7 +30,7 @@ def saveSource(source, glat_cutoff, TS_cutoff):
     ll, bb = converter.gal((source.dir.ra(), source.dir.dec()))
     tts = source.TS()
     if num.abs(bb) > glat_cutoff and tts <= TS_cutoff:
-        print source.name, source.dir.ra(), source.dir.dec()
+        print source.name, source.dir.ra(), source.dir.dec(), tts
     if tts > TS_cutoff:
         return True
     return False
@@ -56,6 +56,7 @@ class PgwaveData(list):
         output.write(hea)
         for irow, source in enumerate(self):
             if saveSource(source, glat_cutoff, TS_cutoff):
+                print "saveSource == True for", source
                 output.write("%4i" % self.data[0][irow])
                 output.write("%8.1f %8.1f" % (self.data[1][irow],
                                               self.data[2][irow]))
@@ -79,6 +80,8 @@ def refinePositions(pgwave_list,
                     ft1File, glat_cutoff=5,
                     TS_cutoff=10, use_bg=True):
 
+    print "working on", ft1File
+    shutil.copy(ft1File, 'FT1_non_pointfit_saved.fits')
     convert_for_pointfit(ft1File, ft1File)
     srclist = PgwaveData(pgwave_list)
     data = photonmap(ft1File, pixeloutput=None, eventtype=-1)
@@ -114,11 +117,16 @@ def refinePositions(pgwave_list,
     #
     # Move original list out of the way.
     #
+    print "Move original list out of the way."
     shutil.copy(pgwave_list, pgwave_list.replace('.list', '_old.list'))
     #
     # Write the updated list in its place.
     #
+    print "writing the updated list"
     srclist.write(pgwave_list, glat_cutoff, TS_cutoff)
+    print "copying to a saved_source_list"
+    shutil.copy(pgwave_list, 'saved_source_list')
+    shutil.copy('FT1_non_pointfit_saved.fits', ft1File)
 
 if __name__ == '__main__':
     import os

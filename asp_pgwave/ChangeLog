@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Sun Apr 22 18:10:28 PDT 2012
+ASP-scons/asp_pgwave/python
+
+Modified Files:
+	refinePositions.py 
+Log Message:
+restore EVENT_CLASS column to Filtered_evt.fits so that gtselect will work correctly in runsrcid process
+    *
+------------------------------------------------------------
 User: jchiang  Thu Apr 19 07:25:28 PDT 2012
 ASP-scons/asp_pgwave/python
 

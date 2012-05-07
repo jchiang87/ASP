@@ -35,7 +35,7 @@
             datasetList = datacat.getDatasets(folder+'/*', query)
             datasetList.writeToFile(output, 1)
             pipeline.writeFile(output)
-        query("Ft1FileList", "EXTENDEDFT1", TSTART, TSTOP, folder)
+        query("Ft1FileList", "FT1", TSTART, TSTOP, folder)
         query("Ft2FileList", "FT2", TSTART, TSTOP, folder)
     ]]></script>
   </process>

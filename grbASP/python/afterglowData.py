@@ -46,7 +46,7 @@ def getData(time, ra, dec, srcName, ft1, ft2, duration=5*3600, radius=15,
     gtselect['emax'] = 3e5
     gtselect['zmax'] = 100
     if pass_version(gtselect['infile']) != 'NONE':
-        gtselect['evclass'] = 0
+        gtselect['evclass'] = 2   # P7SOURCE_V6
     gtselect.run()
 
     srcModel = readXml.SourceModel()

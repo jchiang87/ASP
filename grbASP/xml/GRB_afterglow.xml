@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
   <!-- $Header$
   -->
-<task name="GRB_afterglow" version="7.9" type="Data">
+<task name="GRB_afterglow" version="9.0" type="Data">
   <variables>
     <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -44,7 +44,7 @@
   </process>
   <process name="afterglowData">
     <job executable="${GRBASPROOT}/${BINDIR}/afterglowData.sh"
-         batchOptions="-q short"/>
+         batchOptions="-q glastdataq " allocationGroup="glastdata"/>
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>
     </depends>
@@ -84,7 +84,7 @@
 
   <process name="makeAfterglowPlots">
     <job executable="${GRBASPROOT}/${BINDIR}/makeAfterglowPlots.sh"
-         batchOptions=" -q short " allocationGroup="glastdata" />
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="afterglowAnalysis" status="SUCCESS"/>
     </depends>
@@ -119,7 +119,7 @@
 
   <process name="createArchive">
     <job executable="${GRBASPROOT}/${BINDIR}/createAfterglowTarball.sh"
-         batchOptions="-q short" />
+         batchOptions="-q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="registerPlots" status="SUCCESS" />
     </depends>
@@ -157,7 +157,7 @@
 
   <process name="clean_up_files">
     <job executable="${GRBASPROOT}/${BINDIR}/grbASP_clean_up_files.sh"
-         batchOptions="-q short" />
+         batchOptions="-q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="registerArchive" status="SUCCESS" />
     </depends>

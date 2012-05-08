@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_refinement" version="8.8" type="Data">
+<task name="GRB_refinement" version="9.0" type="Data">
   <variables>
     <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -45,7 +45,7 @@
    </process>
    <process name="extractLatData">
       <job executable="${GRBASPROOT}/${BINDIR}/extractLatData.sh"
-           batchOptions="-q short"/>
+           batchOptions="-q glastdataq " allocationGroup="glastdata"/>
       <depends>
           <after process="catalogQuery" status="SUCCESS"/>
       </depends>
@@ -136,12 +136,12 @@
          </prerequisites>
          <process name="makeRefinementPlots">
            <job executable="${GRBASPROOT}/${BINDIR}/makeRefinementPlots.sh"
-                batchOptions="-q short"/>
+                batchOptions="-q glastdataq " allocationGroup="glastdata"/>
          </process>
   
          <process name="LatGcnNotice">
            <job executable="${GRBASPROOT}/${BINDIR}/LatGcnNotice.sh"
-                batchOptions="-q short"/>
+                batchOptions="-q glastdataq " allocationGroup="glastdata"/>
          </process>
   
          <process name="registerPlots">
@@ -177,7 +177,7 @@
   
          <process name="createArchive">
            <job executable="${GRBASPROOT}/${BINDIR}/createRefinementTarball.sh"
-                batchOptions="-q short" />
+                batchOptions="-q glastdataq " allocationGroup="glastdata"/>
            <depends>
              <after process="LatGcnNotice" status="SUCCESS" />
              <after process="registerPlots" status="SUCCESS" />

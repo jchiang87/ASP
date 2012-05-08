@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_afterglow_launcher" version="1.6" type="Data">
+<task name="GRB_afterglow_launcher" version="3.0" type="Data">
   <variables>
     <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
@@ -41,7 +41,7 @@
   </process>
   <process name="launchAfterglowStream">
     <job executable="${GRBASPROOT}/${BINDIR}/launchAfterglowStream.sh"
-         batchOptions="-q short"/>
+         batchOptions="-q glastdataq " allocationGroup="glastdata"/>
     <depends>
       <after process="catalogQuery" status="SUCCESS"/>
     </depends>

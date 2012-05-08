@@ -1,0 +1,5469 @@
+------------------------------------------------------------
+User: jchiang  Tue May  8 12:48:47 PDT 2012
+ASP-scons/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Tue May  8 12:48:47 PDT 2012
+ASP-scons/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Tue May  8 12:48:47 PDT 2012
+ASP-scons/pyASP
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 24 09:25:04 PST 2012
+ASP-scons/pyASP/python
+
+Modified Files:
+	fastCopy.py 
+Log Message:
+use rhel5 isoc environment for FASTCopy.py
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: pyASP
+User: jchiang  Wed Feb 22 17:05:30 2012
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.393
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.7
+  pyASP/cmt/requirements  1.50
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.36
+  pyASP/pyASP/ChiProb.h  1.2
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/pass_version.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/computeFileInfo_P7V6.py  1.2
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.3
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/readFileInfo_P7V6.py  1.2
+  pyASP/python/parfile_parser.py  1.6
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.2
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_P7V6_120_data.xml  1.1
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: pyASP
+User: jchiang  Wed Feb 22 17:03:22 2012
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.393
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.7
+  pyASP/cmt/requirements  1.50
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.36
+  pyASP/pyASP/ChiProb.h  1.2
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/pass_version.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/computeFileInfo_P7V6.py  1.2
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.3
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/readFileInfo_P7V6.py  1.2
+  pyASP/python/parfile_parser.py  1.6
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.2
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_P7V6_120_data.xml  1.1
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-01-00, operation: add
+Package: pyASP
+User: jchiang  Fri Aug 12 12:19:39 2011
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.392
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.7
+  pyASP/cmt/requirements  1.50
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.36
+  pyASP/pyASP/ChiProb.h  1.2
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/pass_version.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/computeFileInfo_P7V6.py  1.2
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.3
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/readFileInfo_P7V6.py  1.2
+  pyASP/python/parfile_parser.py  1.6
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.2
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_P7V6_120_data.xml  1.1
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-00-00, operation: add
+Package: pyASP
+User: jchiang  Fri Jul 22 08:39:21 2011
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.391
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.7
+  pyASP/cmt/requirements  1.50
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.36
+  pyASP/pyASP/ChiProb.h  1.2
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/pass_version.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/computeFileInfo_P7V6.py  1.2
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.3
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/readFileInfo_P7V6.py  1.2
+  pyASP/python/parfile_parser.py  1.6
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.2
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_P7V6_120_data.xml  1.1
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: pyASP-04-00-00, operation: add
+Package: pyASP
+User: jchiang  Fri Jul 22 08:24:39 2011
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.390
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.7
+  pyASP/cmt/requirements  1.50
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.36
+  pyASP/pyASP/ChiProb.h  1.2
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/pass_version.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/computeFileInfo_P7V6.py  1.2
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.3
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/readFileInfo_P7V6.py  1.2
+  pyASP/python/parfile_parser.py  1.6
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.2
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_P7V6_120_data.xml  1.1
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 22 08:24:33 PDT 2011
+ASP-scons/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 22 08:24:33 PDT 2011
+ASP-scons/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 22 08:24:33 PDT 2011
+ASP-scons/pyASP
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 21 13:24:58 PDT 2011
+ASP-scons/pyASP/python
+
+Modified Files:
+	computeFileInfo_P7V6.py parfile_parser.py readFileInfo_P7V6.py 
+Log Message:
+mods to python scripts to register P7V6_P120 data; modify parfile_parser.py to be able to handle values with '=', e.g., ft1_filter
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 17 18:37:32 PDT 2011
+ASP-scons/pyASP/xml
+
+Added Files:
+	Register_P7V6_120_data.xml 
+Log Message:
+add P7V6 dataset registration code
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 17 18:37:31 PDT 2011
+ASP-scons/pyASP/python
+
+Added Files:
+	computeFileInfo_P7V6.py pass_version.py readFileInfo_P7V6.py 
+Log Message:
+add P7V6 dataset registration code
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 17 18:37:30 PDT 2011
+ASP-scons/pyASP
+
+Modified Files:
+	SConscript 
+Log Message:
+add P7V6 dataset registration code
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 15 17:34:05 PDT 2011
+ASP-scons/pyASP/src
+
+Modified Files:
+	pyASP.i 
+Log Message:
+add CLHEP namespace qualifications
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 15 17:34:05 PDT 2011
+ASP-scons/pyASP/pyASP
+
+Modified Files:
+	ChiProb.h 
+Log Message:
+add CLHEP namespace qualifications
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jun 12 14:32:41 PDT 2011
+ASP-scons/pyASP/python
+
+Modified Files:
+	MultiPartMailer.py 
+Log Message:
+update MultiPartMailer to use email module
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: pyASP
+User: jchiang  Thu Sep  9 14:24:58 2010
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.379
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.5
+  pyASP/cmt/requirements  1.49
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.35
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.1
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: pyASP
+User: jchiang  Thu Sep  9 13:04:49 2010
+Files:
+  pyASP/cmt/requirements  1.49
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.35
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.1
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: pyASP-03-06-04, operation: add
+Package: pyASP
+User: jchiang  Fri Mar 12 09:35:33 2010
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.377
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.5
+  pyASP/cmt/requirements  1.49
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.35
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.21
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.1
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:35:22 PST 2010
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:35:22 PST 2010
+ASP/pyASP
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:34:58 PST 2010
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r6p4
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec 14 13:54:28 PST 2009
+ASP-scons/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+using PIPELINE_TASKPATH instead of PIPELINE_TASK to test for SCons task
+
+    *
+------------------------------------------------------------
+User: jchiang  Sat Dec  5 15:55:13 PST 2009
+ASP-scons/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+append -SCons to task name if launched from and SCons-built task
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 23 14:52:04 PST 2009
+ASP-scons/pyASP/python
+
+Removed Files:
+	exposureSubMap.py 
+Log Message:
+install files in python subdirectory
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 23 14:52:04 PST 2009
+ASP-scons/pyASP
+
+Modified Files:
+	SConscript 
+Log Message:
+install files in python subdirectory
+    *
+------------------------------------------------------------
+TAG
+Tag name: pyASP-03-06-03, operation: add
+Package: pyASP
+User: jrb  Mon Nov 16 15:56:09 2009
+Files:
+  pyASP/.cvsignore  1.2
+  pyASP/ChangeLog  1.369
+  pyASP/pyASPLib.py  1.1
+  pyASP/SConscript  1.3
+  pyASP/cmt/requirements  1.48
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.34
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.19
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.i  1.1
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:56:03 PST 2009
+ASP-scons/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:56:03 PST 2009
+ASP-scons/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:56:03 PST 2009
+ASP-scons/pyASP
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 13:31:36 PST 2009
+ASP/pyASP/src
+
+Added Files:
+	pyASP.i 
+Log Message:
+Files needed for SCons build
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 13:31:36 PST 2009
+ASP/pyASP
+
+Added Files:
+	pyASPLib.py 
+Log Message:
+Files needed for SCons build
+
+    *
+------------------------------------------------------------
+User: jrb  Tue Nov  3 13:38:18 PST 2009
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+Getting ready for SCons
+
+
+    *
+------------------------------------------------------------
+User: jrb  Tue Nov  3 13:38:18 PST 2009
+ASP/pyASP
+
+Modified Files:
+	.cvsignore SConscript 
+Log Message:
+Getting ready for SCons
+
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: pyASP-03-06-02, operation: add
+Package: pyASP
+User: jchiang  Thu Oct 22 17:21:21 2009
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.361
+  pyASP/SConscript  1.1
+  pyASP/cmt/requirements  1.47
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.32
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.19
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct 22 17:21:10 PDT 2009
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct 22 17:20:29 PDT 2009
+ASP/pyASP
+
+Added Files:
+	SConscript 
+Log Message:
+add SConscript
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct 22 17:18:45 PDT 2009
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r6p2
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct 22 16:57:23 PDT 2009
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+add pipelineServer() function
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-03-00-00, operation: add
+Package: pyASP
+User: jchiang  Mon Aug 17 23:44:28 2009
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.356
+  pyASP/cmt/requirements  1.46
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.31
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r6p1, operation: add
+Package: pyASP
+User: jchiang  Tue Jun 30 08:41:24 2009
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.355
+  pyASP/cmt/requirements  1.46
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.31
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.2
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jun 30 08:41:01 PDT 2009
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r6p1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jun 30 08:41:01 PDT 2009
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r6p1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jun 29 16:32:03 PDT 2009
+ASP/pyASP/python
+
+Modified Files:
+	MultiPartMailer.py 
+Log Message:
+add reply_to option for MultiPartMailer
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r8, operation: add
+Package: pyASP
+User: jchiang  Wed Apr  8 20:47:23 2009
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.351
+  pyASP/cmt/requirements  1.45
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.30
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.1
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r8, operation: add
+Package: pyASP
+User: jchiang  Wed Apr  8 20:46:43 2009
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.350
+  pyASP/cmt/requirements  1.45
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.30
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.3
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.5
+  pyASP/python/errEst.py  1.4
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.1
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:46:23 PDT 2009
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r6
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:46:23 PDT 2009
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r6
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr  8 20:45:14 PDT 2009
+ASP/pyASP/python
+
+Modified Files:
+	errEst.py read_data.py search_Srcs.py 
+Removed Files:
+	UpperLimits.py 
+Log Message:
+use numpy; remove UpperLimits.py
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p7, operation: add
+Package: pyASP
+User: jchiang  Fri Dec 26 07:57:00 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.346
+  pyASP/cmt/requirements  1.44
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.29
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/addNdifrsp.py  1.1
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.5
+  pyASP/python/MultiPartMailer.py  1.1
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.11
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec 26 07:56:27 PST 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p7
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec 26 07:56:27 PST 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p7
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec 26 07:46:13 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	FitsNTuple.py 
+Log Message:
+add FitsNTupleError
+    *
+------------------------------------------------------------
+User: jchiang  Thu Dec 25 10:49:52 PST 2008
+ASP/pyASP/python
+
+Added Files:
+	addNdifrsp.py 
+Log Message:
+function to add NDIFRSP keyword to old format FT1 files
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 17 10:25:52 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+remove old password file code
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p6, operation: add
+Package: pyASP
+User: jchiang  Sun Aug 24 14:59:25 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.340
+  pyASP/cmt/requirements  1.43
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.28
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.2
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/fastCopy.py  1.1
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/MultiPartMailer.py  1.1
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun Aug 24 14:59:11 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p6
+    *
+------------------------------------------------------------
+User: jchiang  Sun Aug 24 14:59:11 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p6
+    *
+------------------------------------------------------------
+User: jchiang  Sun Aug 24 14:48:30 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	date2met.py 
+Log Message:
+compute met for utc now by default
+    *
+------------------------------------------------------------
+User: jchiang  Fri Aug 22 15:23:18 PDT 2008
+ASP/pyASP/python
+
+Added Files:
+	fastCopy.py 
+Log Message:
+add fastCopy.py
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p5, operation: add
+Package: pyASP
+User: jchiang  Wed Jul 30 20:15:09 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.335
+  pyASP/cmt/requirements  1.42
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.27
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.14
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/MultiPartMailer.py  1.1
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 30 20:14:53 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p5
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 30 20:14:53 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p5
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 30 20:13:14 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+add ft1_filter_merge
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p4, operation: add
+Package: pyASP
+User: jchiang  Mon Jul 28 21:07:03 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.331
+  pyASP/cmt/requirements  1.41
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.26
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.14
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.13
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/MultiPartMailer.py  1.1
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 28 21:06:43 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p4
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 28 21:06:43 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p4
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 28 21:02:32 PDT 2008
+ASP/pyASP/python
+
+Added Files:
+	MultiPartMailer.py 
+Log Message:
+add class to handle sending email with attachments
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 23 07:50:23 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+add try/except block in case no files are returned from query.
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p3, operation: add
+Package: pyASP
+User: jchiang  Mon Jul 21 21:31:56 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.326
+  pyASP/cmt/requirements  1.40
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.25
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.13
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.13
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/moveToXrootd.py  1.1
+  pyASP/python/TarBall.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 21 21:31:25 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p3
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 21 21:31:25 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p3
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 21 06:56:40 PDT 2008
+ASP/pyASP/python
+
+Added Files:
+	moveToXrootd.py 
+Log Message:
+add moveToXrootd
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 19 13:29:53 PDT 2008
+ASP/pyASP/python
+
+Added Files:
+	TarBall.py 
+Log Message:
+add tarball handling class
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul 15 08:49:38 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+write updated TSTART, TSTOP keywords to merged FT2 file headers
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p2, operation: add
+Package: pyASP
+User: jchiang  Sat Jul 12 20:20:19 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.320
+  pyASP/cmt/requirements  1.39
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.24
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.13
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:19:53 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p1
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:19:53 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p1
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:18:26 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+match runs as encoded in filenames for prod data
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5p1, operation: add
+Package: pyASP
+User: jchiang  Sat Jun 14 15:15:59 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.316
+  pyASP/cmt/requirements  1.38
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.23
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.18
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jun 14 15:15:41 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r5p1
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jun 14 15:15:41 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r5p1
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jun 14 15:00:29 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+refactor to guard against typos in specifying key
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jun 14 14:33:36 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+override pipeline server using PIPELINE_FROMADDRESS env var so that this gets inherited if the tasks are launched from pipeline tasks
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r5, operation: add
+Package: pyASP
+User: jchiang  Fri Jun 13 13:00:34 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.311
+  pyASP/cmt/requirements  1.37
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.22
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.16
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.4
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/readFileInfo.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.10
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.6
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jun 13 12:57:55 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+add rsp connections; tagging v3r5
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jun 13 12:57:55 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add rsp connections; tagging v3r5
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jun 13 12:57:55 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add rsp connections; tagging v3r5
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jun 12 14:00:35 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+remove AspPolicy usage from req file; set default db connection strings based on pipeline context
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jun 12 14:00:35 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+remove AspPolicy usage from req file; set default db connection strings based on pipeline context
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jun 11 15:44:28 PDT 2008
+ASP/pyASP/xml
+
+Modified Files:
+	Register_FT1_data.xml 
+Log Message:
+code for RegisterAspSims; enable oracle wallet use in databaseAccess.py
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jun 11 15:44:28 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	computeFileInfo.py databaseAccess.py 
+Log Message:
+code for RegisterAspSims; enable oracle wallet use in databaseAccess.py
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jun 11 15:44:28 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+code for RegisterAspSims; enable oracle wallet use in databaseAccess.py
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jun  5 08:26:09 PDT 2008
+ASP/pyASP/xml
+
+Modified Files:
+	Register_FT1_data.xml 
+Log Message:
+xml bug fixes
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jun  5 08:13:43 PDT 2008
+ASP/pyASP/xml
+
+Modified Files:
+	Register_FT1_data.xml 
+Log Message:
+update scripts and task def for registering test data
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jun  5 08:13:42 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	computeFileInfo.py 
+Added Files:
+	readFileInfo.py 
+Log Message:
+update scripts and task def for registering test data
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r4p1, operation: add
+Package: pyASP
+User: jchiang  Thu May 29 09:05:29 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.299
+  pyASP/cmt/requirements  1.34
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.21
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.16
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.7
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 29 09:05:03 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r4p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 29 09:05:03 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r4p1
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 27 08:18:07 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+suppress pipeline server info message
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r4, operation: add
+Package: pyASP
+User: jchiang  Thu May 22 11:47:52 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.295
+  pyASP/cmt/requirements  1.33
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.20
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.15
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/UpperLimits.py  1.1
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.7
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 11:35:31 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r4
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 11:35:31 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r4
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 09:12:44 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+give context for PIPELINESERVER message
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 21 15:04:19 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+remove references to BINDIR, ASP_PATH and ST_INST and code related to their use; set default pipelineserver to prod with env var over
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 12 22:13:13 PDT 2008
+ASP/pyASP/python
+
+Added Files:
+	UpperLimits.py 
+Log Message:
+dev version of UpperLimits.py
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r3, operation: add
+Package: pyASP
+User: jchiang  Mon May 12 11:55:20 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.289
+  pyASP/cmt/requirements  1.32
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.19
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.13
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/crearoi.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.7
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 12 11:49:46 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r3
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 12 11:49:46 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r3
+    *
+------------------------------------------------------------
+User: jchiang  Fri May  9 17:17:03 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	crearoi.py 
+Log Message:
+allow for offset in ROI numbering
+    *
+------------------------------------------------------------
+User: jchiang  Thu May  8 14:16:48 PDT 2008
+ASP/pyASP/python
+
+Added Files:
+	crearoi.py 
+Log Message:
+move crearoi.py to pyASP so that drpMonitoring can import it
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r2, operation: add
+Package: pyASP
+User: jchiang  Mon Apr 28 16:05:53 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.284
+  pyASP/cmt/requirements  1.31
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.18
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.13
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.7
+  pyASP/src/pyASP.in  1.12
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 28 14:17:33 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r2
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 28 14:17:33 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r2
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 28 14:15:43 PDT 2008
+ASP/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+add dot and cross products to SkyDir
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3r1, operation: add
+Package: pyASP
+User: jchiang  Tue Apr 22 11:44:30 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.280
+  pyASP/cmt/requirements  1.30
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.17
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.13
+  pyASP/python/FileStager.py  1.6
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.3
+  pyASP/python/databaseAccess.py  1.7
+  pyASP/src/pyASP.in  1.11
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 22 11:43:37 PDT 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 22 11:43:37 PDT 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 21 17:04:29 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	SkyCone.py 
+Log Message:
+move from numarray to numpy for matrix operations
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 16 15:24:44 PDT 2008
+ASP/pyASP/python
+
+Modified Files:
+	FileStager.py databaseAccess.py 
+Log Message:
+make FileStager.finish() a separate function since FileStagerErrors are ignored in FileStager.__del__() on system exit
+    *
+------------------------------------------------------------
+TAG
+Tag name: v3, operation: add
+Package: pyASP
+User: jchiang  Tue Mar  4 14:09:11 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.275
+  pyASP/cmt/requirements  1.29
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.16
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.12
+  pyASP/python/PipelineCommand.py  1.13
+  pyASP/python/FileStager.py  1.5
+  pyASP/python/ft1merge.py  1.12
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/date2met.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/FitsNTuple.py  1.4
+  pyASP/python/SkyCone.py  1.2
+  pyASP/python/databaseAccess.py  1.6
+  pyASP/src/pyASP.in  1.11
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:08:49 PST 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:08:48 PST 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:07:37 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+use prod db
+    *
+------------------------------------------------------------
+User: jchiang  Mon Mar  3 16:56:40 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+handle case where query returns empty file list
+    *
+------------------------------------------------------------
+User: jchiang  Mon Mar  3 15:43:19 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+info message on list of files to be staged
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  2 07:06:31 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	FileStager.py PipelineCommand.py getFitsData.py 
+Log Message:
+strip leading '+' before passing to GPL.stageFiles.in; check if file versioning is in file name
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 29 14:23:07 PST 2008
+ASP/pyASP/python
+
+Added Files:
+	date2met.py 
+Log Message:
+script to convert from calendar date to met
+    *
+------------------------------------------------------------
+User: jchiang  Mon Feb 25 16:24:43 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+refactor connection names
+    *
+------------------------------------------------------------
+User: jchiang  Mon Feb 25 09:59:54 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+refactor connection names; reset defaults
+    *
+------------------------------------------------------------
+User: jchiang  Sun Feb 24 22:33:55 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+add code to strip zero-valued padding from FT2 files
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 22 20:38:02 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	FitsNTuple.py ft1merge.py getFitsData.py 
+Log Message:
+FitsNTuple support for numpy; ft2merge
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 23:23:26 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+add getStagedFileList and getStagedFitsData
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 21:48:36 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+comment out possibly redundant output_dir argument
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 19:37:03 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+enable option to copy file list or not
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 15:26:05 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	FileStager.py FitsNTuple.py getFitsData.py 
+Log Message:
+nuke the hippodraw stuff; bug-fix for FT1 filenames with versions; all stageArea to be set in FileStager
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 20:40:17 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	FileStager.py 
+Log Message:
+stage a whole list of files
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 17:16:46 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+find latest versions of files returned from data catalog query
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 10:17:34 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	databaseAccess.py 
+Log Message:
+add option for different connections
+    *
+------------------------------------------------------------
+User: jchiang  Sun Feb 10 13:17:38 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+add missing parenthesis
+    *
+------------------------------------------------------------
+User: jchiang  Sun Feb 10 07:41:11 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+strip quotes
+    *
+------------------------------------------------------------
+User: jchiang  Sat Feb  9 16:49:17 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+remove extra quotes for new GtApp
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r4, operation: add
+Package: pyASP
+User: jchiang  Thu Feb  7 14:21:09 2008
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.253
+  pyASP/cmt/requirements  1.28
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.15
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/getFitsData.py  1.4
+  pyASP/python/PipelineCommand.py  1.11
+  pyASP/python/FileStager.py  1.2
+  pyASP/python/ft1merge.py  1.7
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.4
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/errEst.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/FitsNTuple.py  1.2
+  pyASP/python/SkyCone.py  1.2
+  pyASP/python/databaseAccess.py  1.2
+  pyASP/src/pyASP.in  1.11
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb  7 14:20:45 PST 2008
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v2r4
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb  7 14:20:45 PST 2008
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v2r4
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb  7 14:19:01 PST 2008
+ASP/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+add FileStagerError; AsciiTuple; and rotation to celestial from instrument coords
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb  7 14:19:00 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	FileStager.py read_data.py 
+Log Message:
+add FileStagerError; AsciiTuple; and rotation to celestial from instrument coords
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jan 28 22:26:32 PST 2008
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py getFitsData.py 
+Added Files:
+	FileStager.py 
+Removed Files:
+	wrapperGenerator.py 
+Log Message:
+remove wrapperGenerator (now in AspPolicy); add FileStager.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Nov 20 20:24:47 PST 2007
+ASP/pyASP/python
+
+Modified Files:
+	FitsNTuple.py PipelineCommand.py SkyCone.py databaseAccess.py 
+Log Message:
+use pipeline default stream ids; add getDbObjects function
+    *
+------------------------------------------------------------
+User: jchiang  Thu Nov  1 17:09:18 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py wrapperGenerator.py 
+Log Message:
+change cmt version; check if FT1/2 file exists
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct  5 20:54:08 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	getFitsData.py 
+Log Message:
+sort fits files
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct  3 13:49:15 PDT 2007
+ASP/pyASP/python
+
+Added Files:
+	getFitsData.py 
+Log Message:
+add getFitsData.py
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r3, operation: add
+Package: pyASP
+User: jchiang  Tue Sep  4 13:48:42 2007
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.243
+  pyASP/cmt/requirements  1.27
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.14
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/PipelineCommand.py  1.10
+  pyASP/python/ft1merge.py  1.6
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.7
+  pyASP/python/getL1Data.py  1.6
+  pyASP/python/read_data.py  1.3
+  pyASP/python/DbEntry.py  1.8
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/exposureSubMap.py  1.9
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.18
+  pyASP/python/databaseAccess.py  1.1
+  pyASP/src/pyASP.in  1.10
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Sep  4 13:48:24 PDT 2007
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v2r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Sep  4 13:48:24 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v2r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Sep  4 09:36:27 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	DbEntry.py 
+Added Files:
+	databaseAccess.py 
+Log Message:
+add databaseAccess
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 13 09:59:22 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	DbEntry.py getL1Data.py 
+Log Message:
+use new scripts for DbEntry; provide alternative implementations for DC2 vs Interleave data
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 15 22:25:35 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	combineExpMaps.py exposureSubMap.py wrapperGenerator.py 
+Log Message:
+use new parameter names
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r2, operation: add
+Package: pyASP
+User: jchiang  Fri Jul 13 09:23:42 2007
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.237
+  pyASP/cmt/requirements  1.26
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.13
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/PipelineCommand.py  1.10
+  pyASP/python/ft1merge.py  1.6
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.6
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.5
+  pyASP/python/read_data.py  1.3
+  pyASP/python/DbEntry.py  1.6
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/exposureSubMap.py  1.8
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.17
+  pyASP/src/pyASP.in  1.10
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 13 09:23:24 PDT 2007
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v2r2
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 13 09:23:24 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v2r2
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 11 14:51:03 PDT 2007
+ASP/pyASP/python
+
+Added Files:
+	exposureSubMap.py 
+Log Message:
+restore exposureSubMap.py since grbASP uses it too
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r1, operation: add
+Package: pyASP
+User: jchiang  Sun May 13 20:23:01 2007
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.233
+  pyASP/cmt/requirements  1.25
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/rois.txt  1.3
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/data/source_model.xml  1.2
+  pyASP/doc/release.notes  1.12
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/PipelineCommand.py  1.10
+  pyASP/python/ft1merge.py  1.6
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.6
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.5
+  pyASP/python/read_data.py  1.3
+  pyASP/python/DbEntry.py  1.6
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.17
+  pyASP/src/pyASP.in  1.10
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun May 13 20:22:38 PDT 2007
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v2r1
+    *
+------------------------------------------------------------
+User: jchiang  Sun May 13 20:22:38 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v2r1
+    *
+------------------------------------------------------------
+User: jchiang  Sun May 13 20:00:11 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Log Message:
+probably will delete soon anyways
+    *
+------------------------------------------------------------
+User: jchiang  Sun May 13 17:47:33 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+add ASP_PATH and ST_INST to default args
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r0p1, operation: add
+Package: pyASP
+User: jchiang  Thu May 10 14:18:18 2007
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.228
+  pyASP/cmt/requirements  1.24
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.11
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/PipelineCommand.py  1.9
+  pyASP/python/ft1merge.py  1.6
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.6
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.5
+  pyASP/python/DbEntry.py  1.6
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/read_data.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.16
+  pyASP/src/pyASP.in  1.10
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 14:16:18 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+remove hardwired PYASPROOT; tagging v2r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 14:16:18 PDT 2007
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+remove hardwired PYASPROOT; tagging v2r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 14:16:17 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+remove hardwired PYASPROOT; tagging v2r0p1
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2, operation: add
+Package: pyASP
+User: jchiang  Thu May 10 10:21:43 2007
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.224
+  pyASP/cmt/requirements  1.23
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/DRP_SourceModel.xml  1.2
+  pyASP/data/rois.txt  1.3
+  pyASP/data/insert_drp_sources.py  1.1
+  pyASP/data/find_drp_sources.py  1.1
+  pyASP/data/source_pars.txt  1.2
+  pyASP/data/drp_pars.txt  1.3
+  pyASP/data/source_model.xml  1.2
+  pyASP/data/DRP_SourceList.txt  1.2
+  pyASP/doc/release.notes  1.10
+  pyASP/pyASP/ChiProb.h  1.1
+  pyASP/python/sexigesimal.py  1.1
+  pyASP/python/PipelineCommand.py  1.8
+  pyASP/python/ft1merge.py  1.6
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/combineExpMaps.py  1.6
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/getL1Data.py  1.5
+  pyASP/python/DbEntry.py  1.6
+  pyASP/python/computeFileInfo.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/read_data.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.16
+  pyASP/src/pyASP.in  1.10
+  pyASP/src/ChiProb.cxx  1.1
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.16
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.4
+  pyASP/xml/Register_FT1_data.xml  1.3
+  pyASP/xml/GRB_afterglow.xml  1.14
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:21:26 PDT 2007
+ASP/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v2
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:21:26 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v2
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 10 10:14:23 PDT 2007
+ASP/pyASP/python
+
+Removed Files:
+	analysis.py 
+Log Message:
+remove old script
+    *
+------------------------------------------------------------
+User: focke  Wed May  9 11:25:42 PDT 2007
+ASP/pyASP/xml
+
+Removed Files:
+	Flare_monitoring.xml 
+Log Message:
+Moved files to ASP/flareMonitoring, and removed them from wrapperGenerator.py.
+    *
+------------------------------------------------------------
+User: focke  Wed May  9 11:25:42 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Removed Files:
+	cStat.py countsMap.py diffMaps.py flareAnalysis.py 
+	flareSearch.py flare_livetimecube.py modelMap.py sourceMap.py 
+Log Message:
+Moved files to ASP/flareMonitoring, and removed them from wrapperGenerator.py.
+    *
+------------------------------------------------------------
+User: focke  Wed May  9 11:25:41 PDT 2007
+ASP/pyASP/data
+
+Removed Files:
+	Flare_monitoring.txt 
+Log Message:
+Moved files to ASP/flareMonitoring, and removed them from wrapperGenerator.py.
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 30 19:50:18 PDT 2007
+ASP/pyASP/python
+
+Added Files:
+	sexigesimal.py 
+Log Message:
+add coordinate format converter
+    *
+------------------------------------------------------------
+User: jchiang  Sun Apr 29 14:14:51 PDT 2007
+ASP/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Added Files:
+	ChiProb.cxx 
+Log Message:
+add ChiProb; clean up .in file
+    *
+------------------------------------------------------------
+User: jchiang  Sun Apr 29 14:14:50 PDT 2007
+ASP/pyASP/pyASP
+
+Added Files:
+	ChiProb.h 
+Log Message:
+add ChiProb; clean up .in file
+    *
+------------------------------------------------------------
+User: jchiang  Sun Apr 29 14:14:48 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add ChiProb; clean up .in file
+    *
+------------------------------------------------------------
+User: jchiang  Sat Apr 28 21:00:45 PDT 2007
+ASP/pyASP/src
+
+Removed Files:
+	ClusterAlg.cxx Event.cxx EventClusters.cxx PsfClusters.cxx 
+	ScData.cxx 
+Log Message:
+remove files now in grbASP
+    *
+------------------------------------------------------------
+User: jchiang  Sat Apr 28 20:58:56 PDT 2007
+ASP/pyASP/pyASP
+
+Removed Files:
+	ClusterAlg.h Event.h EventClusters.h PsfClusters.h ScData.h 
+Log Message:
+remove files now in grbASP
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:57:10 PDT 2007
+ASP/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+expand JulianDate interface
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 25 16:56:24 PDT 2007
+ASP/pyASP/python
+
+Removed Files:
+	DrpSources.py combineDrpExpMaps.py createDrpStreams.py 
+	diffuseResponses.py drpExpMap.py drpRoiSetup.py 
+	exposureSubMap.py fitEnergyBand.py getIntervalData.py 
+	getRoiData.py livetimecube.py sourceAnalysis.py 
+Log Message:
+delete files moved to drpMonitoring
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 24 16:38:41 PDT 2007
+ASP/pyASP/python
+
+Removed Files:
+	EventClusters.py GbmNotice.py LatGcnNotice.py PsfClusters.py 
+	ScData.py afterglowAnalysis.py afterglowData.py 
+	afterglowDiffResps.py afterglowExpMap.py 
+	afterglowLivetimeCube.py 
+Log Message:
+clean up
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 16:42:25 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py fitEnergyBand.py 
+Removed Files:
+	BlindSearch.py LatGrbSpectrum.py createGrbStreams.py 
+	extractLatData.py refinePosition.py tsMap.py 
+Log Message:
+remove some grb scripts; disable wrapper generation
+    *
+------------------------------------------------------------
+User: jchiang  Mon Apr 23 16:42:24 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+remove some grb scripts; disable wrapper generation
+    *
+------------------------------------------------------------
+User: focke  Fri Apr 20 19:23:17 PDT 2007
+ASP/pyASP/xml
+
+Modified Files:
+	Flare_monitoring.xml 
+Log Message:
+Flare monitoring works up to the interesting parts.
+    *
+------------------------------------------------------------
+User: focke  Fri Apr 20 19:23:17 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	cStat.py countsMap.py diffMaps.py flareSearch.py modelMap.py 
+	sourceMap.py wrapperGenerator.py 
+Log Message:
+Flare monitoring works up to the interesting parts.
+    *
+------------------------------------------------------------
+User: focke  Fri Apr 20 19:23:16 PDT 2007
+ASP/pyASP/data
+
+Added Files:
+	Flare_monitoring.txt 
+Log Message:
+Flare monitoring works up to the interesting parts.
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 10 10:49:00 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py ft1merge.py 
+Log Message:
+use new PII CLI; trap KeyError exceptions for primary header
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 10 09:35:51 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py 
+Log Message:
+use env var to set PII server
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 10 09:22:34 PDT 2007
+ASP/pyASP/src
+
+Modified Files:
+	PsfClusters.cxx 
+Log Message:
+pass bg rate to clusterAlg; correct sign of loglikelihood
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 10 09:22:33 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	BlindSearch.py 
+Log Message:
+pass bg rate to clusterAlg; correct sign of loglikelihood
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar 27 19:20:47 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	ft1merge.py 
+Log Message:
+write TSTART, TSTOP, FILENAME keywords
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 22 21:45:24 PDT 2007
+ASP/pyASP/src
+
+Modified Files:
+	PsfClusters.cxx 
+Log Message:
+clean up a bit
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 22 21:45:24 PDT 2007
+ASP/pyASP/pyASP
+
+Modified Files:
+	PsfClusters.h 
+Log Message:
+clean up a bit
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 22 18:55:25 PDT 2007
+ASP/pyASP/src
+
+Modified Files:
+	EventClusters.cxx PsfClusters.cxx pyASP.in 
+Added Files:
+	ClusterAlg.cxx 
+Log Message:
+refactor C++ GRB blind search algorithm interfaces
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 22 18:55:24 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	BlindSearch.py DbEntry.py fitEnergyBand.py 
+Log Message:
+refactor C++ GRB blind search algorithm interfaces
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 22 18:55:23 PDT 2007
+ASP/pyASP/pyASP
+
+Modified Files:
+	EventClusters.h PsfClusters.h 
+Added Files:
+	ClusterAlg.h 
+Log Message:
+refactor C++ GRB blind search algorithm interfaces
+    *
+------------------------------------------------------------
+User: jchiang  Mon Mar 19 15:18:11 PDT 2007
+ASP/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+update PYASPROOT paths, use batchOptions instead of maxCPU in xml
+    *
+------------------------------------------------------------
+User: jchiang  Mon Mar 19 15:18:10 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	PipelineCommand.py fitEnergyBand.py wrapperGenerator.py 
+Log Message:
+update PYASPROOT paths, use batchOptions instead of maxCPU in xml
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 18 13:21:19 PDT 2007
+ASP/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+increase max UpperLimit value to 3e5; set default PYASPROOT to new dir
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 18 13:21:18 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	DrpSources.py 
+Log Message:
+increase max UpperLimit value to 3e5; set default PYASPROOT to new dir
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 18 13:21:18 PDT 2007
+ASP/pyASP/data
+
+Modified Files:
+	DRP_SourceModel.xml 
+Log Message:
+increase max UpperLimit value to 3e5; set default PYASPROOT to new dir
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 18 13:21:18 PDT 2007
+ASP/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+increase max UpperLimit value to 3e5; set default PYASPROOT to new dir
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 16 17:34:19 PDT 2007
+ASP/pyASP/python
+
+Modified Files:
+	fitEnergyBand.py 
+Log Message:
+set irfs from par file
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 15 14:50:06 PDT 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	fitEnergyBand.py 
+Added Files:
+	DrpSources.py 
+Removed Files:
+	DrpSourceList.py 
+Log Message:
+rename DrpSourceList.py -> DrpSources.py
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 15 12:40:37 PDT 2007
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+xml bugfixes
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 15 12:35:47 PDT 2007
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+separate individual energy band fitting for parallelization
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 15 12:35:47 PDT 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	sourceAnalysis.py wrapperGenerator.py 
+Added Files:
+	DrpSourceList.py fitEnergyBand.py 
+Log Message:
+separate individual energy band fitting for parallelization
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar 15 12:35:47 PDT 2007
+users/jchiang/pyASP/data
+
+Modified Files:
+	DRP_SourceList.txt 
+Added Files:
+	DRP_SourceModel.xml find_drp_sources.py 
+Log Message:
+separate individual energy band fitting for parallelization
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar 13 20:54:35 PDT 2007
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml Register_FT1_data.xml 
+Log Message:
+setup for analyzing DC2 data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar 13 20:54:35 PDT 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	combineExpMaps.py createDrpStreams.py getIntervalData.py 
+	getRoiData.py sourceAnalysis.py 
+Log Message:
+setup for analyzing DC2 data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar 13 20:54:34 PDT 2007
+users/jchiang/pyASP/data
+
+Modified Files:
+	drp_pars.txt source_pars.txt 
+Added Files:
+	DRP_SourceList.txt insert_drp_sources.py 
+Log Message:
+setup for analyzing DC2 data
+    *
+------------------------------------------------------------
+User: jchiang  Sat Mar 10 08:22:49 PST 2007
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml Register_FT1_data.xml arg_string 
+Log Message:
+datacatalog access development
+    *
+------------------------------------------------------------
+User: jchiang  Sat Mar 10 08:22:48 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	computeFileInfo.py 
+Log Message:
+datacatalog access development
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar  9 06:26:44 PST 2007
+users/jchiang/pyASP/xml
+
+Added Files:
+	Register_FT1_data.xml 
+Log Message:
+add scaffolding to test scriptlet variable access
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar  9 06:26:44 PST 2007
+users/jchiang/pyASP/python
+
+Added Files:
+	computeFileInfo.py 
+Log Message:
+add scaffolding to test scriptlet variable access
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar  8 16:00:30 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	EventClusters.cxx PsfClusters.cxx 
+Log Message:
+more PsfClusters refactoring
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar  8 16:00:26 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	BlindSearch.py PipelineCommand.py 
+Log Message:
+more PsfClusters refactoring
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar  8 16:00:23 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	Event.h EventClusters.h PsfClusters.h 
+Log Message:
+more PsfClusters refactoring
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar  8 09:38:12 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	PsfClusters.cxx pyASP.in 
+Log Message:
+move to C++ versions of cluster finders for BlindSearch
+    *
+------------------------------------------------------------
+User: jchiang  Thu Mar  8 09:38:12 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	BlindSearch.py 
+Log Message:
+move to C++ versions of cluster finders for BlindSearch
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 23:35:15 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	PsfClusters.cxx 
+Log Message:
+refactor psf access; fix clusterDir calc
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 23:35:15 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	PsfClusters.h 
+Log Message:
+refactor psf access; fix clusterDir calc
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 22:38:00 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Added Files:
+	PsfClusters.cxx ScData.cxx 
+Log Message:
+add PsfClusters, ScData
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 22:38:00 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	Event.h EventClusters.h 
+Added Files:
+	PsfClusters.h ScData.h 
+Log Message:
+add PsfClusters, ScData
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 22:38:00 PST 2007
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add PsfClusters, ScData
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 15:17:45 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	EventClusters.cxx 
+Log Message:
+improve blind search position estimate
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 15:17:45 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	EventClusters.h 
+Log Message:
+improve blind search position estimate
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:58:48 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	EventClusters.cxx 
+Log Message:
+add clusterDir member function
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:58:48 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	Event.h EventClusters.h 
+Log Message:
+add clusterDir member function
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:11:09 PST 2007
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+update chmods; EventClusters debugging
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:11:08 PST 2007
+users/jchiang/pyASP/src
+
+Modified Files:
+	EventClusters.cxx pyASP.in 
+Log Message:
+update chmods; EventClusters debugging
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:11:06 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	BlindSearch.py LatGrbSpectrum.py afterglowAnalysis.py 
+	afterglowData.py afterglowDiffResps.py 
+	afterglowLivetimeCube.py combineDrpExpMaps.py 
+	createDrpStreams.py diffuseResponses.py exposureSubMap.py 
+	extractLatData.py flare_livetimecube.py getIntervalData.py 
+	getRoiData.py livetimecube.py refinePosition.py 
+	sourceAnalysis.py 
+Log Message:
+update chmods; EventClusters debugging
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:11:02 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	Event.h EventClusters.h 
+Log Message:
+update chmods; EventClusters debugging
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:11:01 PST 2007
+users/jchiang/pyASP/data
+
+Modified Files:
+	rois.txt 
+Log Message:
+update chmods; EventClusters debugging
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 14:11:00 PST 2007
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+update chmods; EventClusters debugging
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 07:04:06 PST 2007
+users/jchiang/pyASP/src
+
+Added Files:
+	EventClusters.cxx 
+Removed Files:
+	EventCluster.cxx 
+Log Message:
+rename file; refactor a bit
+    *
+------------------------------------------------------------
+User: jchiang  Wed Mar  7 07:04:06 PST 2007
+users/jchiang/pyASP/pyASP
+
+Modified Files:
+	EventClusters.h 
+Log Message:
+rename file; refactor a bit
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  4 23:12:14 PST 2007
+users/jchiang/pyASP/src
+
+Added Files:
+	Event.cxx EventCluster.cxx 
+Log Message:
+add C++ implementation of clusterin alg
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  4 23:12:14 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	sourceAnalysis.py 
+Log Message:
+add C++ implementation of clusterin alg
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  4 23:12:14 PST 2007
+users/jchiang/pyASP/pyASP
+
+Added Files:
+	Event.h EventClusters.h 
+Log Message:
+add C++ implementation of clusterin alg
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  4 23:08:26 PST 2007
+users/jchiang/pyASP/pyASP
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/pyASP added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jan 30 12:34:13 PST 2007
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+update pipeline command; create subdirs for gtexpmap.par files; rename sources slightly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jan 30 12:34:13 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	PipelineCommand.py exposureSubMap.py getRoiData.py 
+	sourceAnalysis.py 
+Log Message:
+update pipeline command; create subdirs for gtexpmap.par files; rename sources slightly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jan 30 12:34:13 PST 2007
+users/jchiang/pyASP/data
+
+Modified Files:
+	source_model.xml 
+Log Message:
+update pipeline command; create subdirs for gtexpmap.par files; rename sources slightly
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jan  5 13:46:33 PST 2007
+users/jchiang/pyASP/python
+
+Modified Files:
+	DbEntry.py sourceAnalysis.py 
+Log Message:
+enter flux values in trending database
+    *
+------------------------------------------------------------
+User: focke  Fri Dec 15 16:32:34 PST 2006
+users/jchiang/pyASP/xml
+
+Added Files:
+	Flare_monitoring.xml 
+Log Message:
+Added large portions of flare search prototype. wbf Fri Dec 15 16:32:32 PST 2006
+    *
+------------------------------------------------------------
+User: focke  Fri Dec 15 16:32:33 PST 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	cStat.py countsMap.py diffMaps.py flareAnalysis.py 
+	flareSearch.py flare_livetimecube.py modelMap.py sourceMap.py 
+Log Message:
+Added large portions of flare search prototype. wbf Fri Dec 15 16:32:32 PST 2006
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec 11 13:01:42 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	DbEntry.py 
+Log Message:
+no need to check for blanks anymore
+    *
+------------------------------------------------------------
+User: jchiang  Sun Dec 10 13:12:18 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	DbEntry.py 
+Log Message:
+check for spaces in trending db args
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  8 21:25:52 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	DbEntry.py 
+Log Message:
+omit spaces in args passed
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  8 15:03:19 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowExpMap.py 
+Added Files:
+	DbEntry.py 
+Log Message:
+add DbEntry.py for trending database
+    *
+------------------------------------------------------------
+User: jchiang  Tue Dec  5 14:23:54 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py 
+Log Message:
+write out prompt burst spectra as FITS
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec  4 22:03:00 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	getIntervalData.py getRoiData.py sourceAnalysis.py 
+Log Message:
+write out fluxes in five bands
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec  4 22:03:00 PST 2006
+users/jchiang/pyASP/data
+
+Modified Files:
+	drp_pars.txt 
+Log Message:
+write out fluxes in five bands
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec  4 12:30:49 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+use correct subprocess name
+    *
+------------------------------------------------------------
+User: jchiang  Sun Dec  3 15:16:51 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+refactor exposureSubMap, compute number of Rois in createDrpStreams.py
+    *
+------------------------------------------------------------
+User: jchiang  Sun Dec  3 15:16:50 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	PipelineCommand.py afterglowExpMap.py createDrpStreams.py 
+	exposureSubMap.py wrapperGenerator.py 
+Added Files:
+	drpExpMap.py 
+Log Message:
+refactor exposureSubMap, compute number of Rois in createDrpStreams.py
+    *
+------------------------------------------------------------
+User: jchiang  Sat Dec  2 15:45:40 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowAnalysis.py afterglowData.py afterglowDiffResps.py 
+	afterglowLivetimeCube.py combineExpMaps.py 
+Log Message:
+use Parfile explicitly
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1, operation: add
+Package: pyASP
+User: jchiang  Fri Dec  1 21:59:34 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.131
+  pyASP/cmt/requirements  1.17
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/data/rois.txt  1.2
+  pyASP/data/source_pars.txt  1.1
+  pyASP/data/drp_pars.txt  1.1
+  pyASP/data/source_model.xml  1.1
+  pyASP/doc/release.notes  1.9
+  pyASP/python/ft1merge.py  1.4
+  pyASP/python/BlindSearch.py  1.3
+  pyASP/python/combineExpMaps.py  1.4
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.5
+  pyASP/python/LatGrbSpectrum.py  1.6
+  pyASP/python/tsMap.py  1.1
+  pyASP/python/afterglowLivetimeCube.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/getIntervalData.py  1.5
+  pyASP/python/createGrbStreams.py  1.10
+  pyASP/python/EventClusters.py  1.2
+  pyASP/python/extractLatData.py  1.11
+  pyASP/python/createDrpStreams.py  1.2
+  pyASP/python/sourceAnalysis.py  1.4
+  pyASP/python/ScData.py  1.1
+  pyASP/python/exposureSubMap.py  1.3
+  pyASP/python/afterglowData.py  1.2
+  pyASP/python/wrapperGenerator.py  1.11
+  pyASP/python/afterglowAnalysis.py  1.4
+  pyASP/python/afterglowDiffResps.py  1.2
+  pyASP/python/PipelineCommand.py  1.1
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/search_Srcs.py  1.2
+  pyASP/python/analysis.py  1.2
+  pyASP/python/drpRoiSetup.py  1.3
+  pyASP/python/errEst.py  1.3
+  pyASP/python/livetimecube.py  1.5
+  pyASP/python/read_data.py  1.3
+  pyASP/python/combineDrpExpMaps.py  1.3
+  pyASP/python/parfile_parser.py  1.5
+  pyASP/python/refinePosition.py  1.15
+  pyASP/python/diffuseResponses.py  1.5
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowExpMap.py  1.4
+  pyASP/python/getRoiData.py  1.4
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.9
+  pyASP/xml/DRP_monitoring.xml  1.7
+  pyASP/xml/GRB_blind_search.xml  1.6
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.13
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  1 21:59:14 PST 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  1 21:59:14 PST 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  1 21:51:24 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml GRB_afterglow.xml 
+Log Message:
+add PipelineCommand class, refactor create*Streams; rename root_output_dir to output_dir for DRP scripts
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  1 21:51:24 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createDrpStreams.py createGrbStreams.py diffuseResponses.py 
+	drpRoiSetup.py getIntervalData.py getL1Data.py getRoiData.py 
+	livetimecube.py refinePosition.py sourceAnalysis.py 
+Added Files:
+	PipelineCommand.py 
+Log Message:
+add PipelineCommand class, refactor create*Streams; rename root_output_dir to output_dir for DRP scripts
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 27 22:57:49 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowLivetimeCube.py combineDrpExpMaps.py 
+	combineExpMaps.py diffuseResponses.py drpRoiSetup.py 
+	exposureSubMap.py getIntervalData.py getL1Data.py 
+	getRoiData.py livetimecube.py sourceAnalysis.py 
+Added Files:
+	createDrpStreams.py 
+Log Message:
+1st working version of drp scripts?
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 27 22:56:05 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+analyze all 12 regions
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 27 17:07:59 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+pass default L1 paths as optional keywords
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 27 17:07:59 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	getL1Data.py read_data.py 
+Log Message:
+pass default L1 paths as optional keywords
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 27 16:54:35 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	combineDrpExpMaps.py diffuseResponses.py exposureSubMap.py 
+	getIntervalData.py getRoiData.py livetimecube.py 
+	parfile_parser.py sourceAnalysis.py 
+Log Message:
+DRP monitoring updates for debugging
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 27 16:54:34 PST 2006
+users/jchiang/pyASP/data
+
+Modified Files:
+	rois.txt 
+Added Files:
+	drp_pars.txt 
+Log Message:
+DRP monitoring updates for debugging
+    *
+------------------------------------------------------------
+User: jchiang  Fri Nov 24 11:13:15 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+first versions of DRP monitoring scripts
+    *
+------------------------------------------------------------
+User: jchiang  Fri Nov 24 11:13:15 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	diffuseResponses.py ft1merge.py getIntervalData.py 
+	getL1Data.py livetimecube.py parfile_parser.py 
+	wrapperGenerator.py 
+Added Files:
+	combineDrpExpMaps.py drpRoiSetup.py exposureSubMap.py 
+	getRoiData.py sourceAnalysis.py 
+Log Message:
+first versions of DRP monitoring scripts
+    *
+------------------------------------------------------------
+User: jchiang  Thu Nov 23 22:08:38 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+specify ROI_ID using pipeline.stream
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 22 21:43:41 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	parfile_parser.py 
+Log Message:
+add getRoiData.py; use abspaths in parfile_parser.py
+    *
+------------------------------------------------------------
+User: jchiang  Fri Nov 17 09:17:16 PST 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	diffuseResponses.py getIntervalData.py livetimecube.py 
+Log Message:
+some drp scripts
+    *
+------------------------------------------------------------
+User: jchiang  Fri Nov 17 08:08:36 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	parfile_parser.py 
+Log Message:
+refactor parfile_parser code
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 15 20:45:21 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	DRP_monitoring.xml 
+Log Message:
+typo fix
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 15 20:40:45 PST 2006
+users/jchiang/pyASP/data
+
+Added Files:
+	source_model.xml 
+Log Message:
+xml file for drp
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 15 20:38:10 PST 2006
+users/jchiang/pyASP/data
+
+Added Files:
+	rois.txt source_pars.txt 
+Log Message:
+add data files for drp
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 15 19:51:15 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Added Files:
+	DRP_monitoring.xml 
+Log Message:
+add DRB_monitoring.xml
+    *
+------------------------------------------------------------
+User: jchiang  Tue Nov 14 15:45:16 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	analysis.py search_Srcs.py 
+Removed Files:
+	afterglowExposures.py 
+Log Message:
+remove superceded afterglowExposures.py; add Header tag to analysis.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Nov 14 15:32:26 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+add chmod to scripts; add tsMap.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Nov 14 15:32:16 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	BlindSearch.py LatGrbSpectrum.py afterglowAnalysis.py 
+	afterglowData.py afterglowDiffResps.py afterglowExpMap.py 
+	afterglowLivetimeCube.py extractLatData.py refinePosition.py 
+	wrapperGenerator.py 
+Added Files:
+	tsMap.py 
+Log Message:
+add chmod to scripts; add tsMap.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Nov 14 15:20:02 PST 2006
+users/jchiang/pyASP/data
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/data added to the repository
+
+    *
+------------------------------------------------------------
+User: carson  Tue Nov 14 12:54:00 PST 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	analysis.py search_Srcs.py 
+Log Message:
+added analysis.py and search_Srcs.py to do blazar monitoring.
+
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 13 21:54:23 PST 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_blind_search.xml 
+Log Message:
+add doc strings, specifiy output directory for GRB refinement
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 13 21:54:23 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	BlindSearch.py EventClusters.py createGrbStreams.py 
+Log Message:
+add doc strings, specifiy output directory for GRB refinement
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 13 21:54:22 PST 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add doc strings, specifiy output directory for GRB refinement
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r5, operation: add
+Package: pyASP
+User: jchiang  Mon Nov 13 15:47:39 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.102
+  pyASP/cmt/requirements  1.15
+  pyASP/cmt/fragments/generateWrappers  1.1
+  pyASP/doc/release.notes  1.8
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/combineExpMaps.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.2
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/afterglowLivetimeCube.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.8
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.9
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/python/afterglowExpMap.py  1.3
+  pyASP/python/afterglowDiffResps.py  1.1
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.8
+  pyASP/xml/GRB_blind_search.xml  1.5
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.11
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Nov  3 15:42:30 PST 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	read_data.py 
+Log Message:
+improve comment handling
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:29:36 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r5
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:29:35 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r5
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:28:09 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+update versions and set BINDIR arg in scripts
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 10:28:08 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+update versions and set BINDIR arg in scripts
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:18 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:17 PDT 2006
+users/jchiang/pyASP/cmt/fragments
+
+Added Files:
+	generateWrappers 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:59:17 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+generate wrapper scripts by running make; put scripts in bindir; modify xml accordingly
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct 24 09:57:09 PDT 2006
+users/jchiang/pyASP/cmt/fragments
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/cmt/fragments added to the repository
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r4, operation: add
+Package: pyASP
+User: jchiang  Fri Oct 13 14:50:55 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.91
+  pyASP/cmt/requirements  1.13
+  pyASP/doc/release.notes  1.7
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/combineExpMaps.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/afterglowLivetimeCube.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.7
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.8
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/python/afterglowExpMap.py  1.3
+  pyASP/python/afterglowDiffResps.py  1.1
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.6
+  pyASP/xml/GRB_blind_search.xml  1.3
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.9
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 14:50:28 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r4
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 14:50:27 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r4
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 14:49:04 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+use import statements to ensure modules are available for streams
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 13:39:44 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+use 'new' P-II interface; account for off-by-one misfeature
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 13 13:39:43 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowExpMap.py 
+Log Message:
+use 'new' P-II interface; account for off-by-one misfeature
+    *
+------------------------------------------------------------
+User: jchiang  Mon Oct  9 10:06:50 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowLivetimeCube.py combineExpMaps.py 
+Log Message:
+cd to outputdir; correct expmap name
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct  6 15:02:24 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+change version
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct  6 14:58:42 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+typo
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct  5 13:47:54 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+corrections from tonyj
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 21:17:38 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowExpMap.py afterglowLivetimeCube.py combineExpMaps.py 
+	wrapperGenerator.py 
+Log Message:
+various bug fixes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 16:42:43 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+refactor afterglow exposure calculations
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 16:42:43 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Added Files:
+	afterglowDiffResps.py afterglowExpMap.py 
+	afterglowLivetimeCube.py combineExpMaps.py 
+Log Message:
+refactor afterglow exposure calculations
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r3p1, operation: add
+Package: pyASP
+User: jchiang  Tue Oct  3 15:03:31 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.78
+  pyASP/cmt/requirements  1.12
+  pyASP/doc/release.notes  1.6
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.6
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.6
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.6
+  pyASP/xml/GRB_blind_search.xml  1.3
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.4
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 15:03:08 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r3p1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Oct  3 15:02:56 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r3p1
+    *
+------------------------------------------------------------
+User: jchiang  Fri Sep 22 15:27:59 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+stream name change
+    *
+------------------------------------------------------------
+User: jchiang  Fri Sep 22 12:19:45 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml GRB_blind_search.xml GRB_refinement.xml 
+Log Message:
+update xml def to new schema (changes from Tony J.)
+    *
+------------------------------------------------------------
+User: jchiang  Wed Sep 20 16:36:52 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+change task name
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r3, operation: add
+Package: pyASP
+User: jchiang  Tue Aug 22 08:52:48 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.72
+  pyASP/cmt/requirements  1.11
+  pyASP/doc/release.notes  1.5
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/PsfClusters.py  1.1
+  pyASP/python/BlindSearch.py  1.1
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.5
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/EventClusters.py  1.1
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.13
+  pyASP/python/ScData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/wrapperGenerator.py  1.6
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.4
+  pyASP/xml/GRB_blind_search.xml  1.2
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:52:26 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	ScData.py 
+Log Message:
+add ScData; tagging v0r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:52:23 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add ScData; tagging v0r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:52:20 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add ScData; tagging v0r3
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:43:21 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_blind_search.xml 
+Log Message:
+accommodate filename changes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:43:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Log Message:
+accommodate filename changes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:33:23 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	BlindSearch.py EventClusters.py 
+Removed Files:
+	blind_search.py 
+Log Message:
+some refactoring of blind search code
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 22 08:05:56 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	PsfClusters.py 
+Removed Files:
+	PsfCluster.py 
+Log Message:
+rename PsfCluster.py to PsfClusters.py
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 21:37:36 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	PsfCluster.py blind_search.py 
+Log Message:
+refactor to make clustering algorithms interchangeable
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 20:09:44 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Added Files:
+	PsfCluster.py 
+Log Message:
+add PsfCluster; refactor blind_search to enable use of Psf info for new clustering algorithm
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 12:47:10 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	refinePosition.py 
+Log Message:
+use pyIrfLoader; bug-fix
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 21 12:47:09 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use pyIrfLoader; bug-fix
+    *
+------------------------------------------------------------
+User: jchiang  Fri Aug 18 10:03:27 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+do not reset dn=20
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r2p1, operation: add
+Package: pyASP
+User: jchiang  Thu Aug 17 11:16:22 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.59
+  pyASP/cmt/requirements  1.9
+  pyASP/doc/release.notes  1.4
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/createGrbStreams.py  1.5
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/blind_search.py  1.7
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.12
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.5
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.4
+  pyASP/xml/GRB_blind_search.xml  1.1
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 11:15:55 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r2p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 11:15:53 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r2p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 11:10:48 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py wrapperGenerator.py 
+Removed Files:
+	Afterglow.py GBM_analysis.py GBM_refinement.py 
+Log Message:
+refactor wrapperGenerator, createGrbStreams; remove unneeded development scripts
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r2, operation: add
+Package: pyASP
+User: jchiang  Thu Aug 17 08:10:28 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.55
+  pyASP/cmt/requirements  1.8
+  pyASP/doc/release.notes  1.3
+  pyASP/python/ft1merge.py  1.3
+  pyASP/python/GbmNotice.py  1.5
+  pyASP/python/LatGcnNotice.py  1.2
+  pyASP/python/Afterglow.py  1.2
+  pyASP/python/getL1Data.py  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.5
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/afterglowExposures.py  1.1
+  pyASP/python/createGrbStreams.py  1.4
+  pyASP/python/blind_search.py  1.7
+  pyASP/python/GBM_analysis.py  1.2
+  pyASP/python/extractLatData.py  1.10
+  pyASP/python/parfile_parser.py  1.1
+  pyASP/python/refinePosition.py  1.12
+  pyASP/python/afterglowData.py  1.1
+  pyASP/python/SkyCone.py  1.1
+  pyASP/python/wrapperGenerator.py  1.4
+  pyASP/python/afterglowAnalysis.py  1.3
+  pyASP/python/GBM_refinement.py  1.2
+  pyASP/src/pyASP.in  1.4
+  pyASP/xml/GRB_refinement.xml  1.4
+  pyASP/xml/GRB_blind_search.xml  1.1
+  pyASP/xml/arg_string  1.3
+  pyASP/xml/GRB_afterglow.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 08:10:04 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug 17 08:10:04 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug 16 17:09:47 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	arg_string 
+Log Message:
+add SkyCone and other bits
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug 16 17:09:46 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py refinePosition.py 
+Added Files:
+	SkyCone.py 
+Log Message:
+add SkyCone and other bits
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 16:53:28 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+add blindSearchStreams function; refactor a bit
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 16:27:39 PDT 2006
+users/jchiang/pyASP/xml
+
+Added Files:
+	GRB_blind_search.xml 
+Log Message:
+add blind_search xml task definition; correct variable name error in createGrbStreams.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 16:27:37 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	createGrbStreams.py 
+Log Message:
+add blind_search xml task definition; correct variable name error in createGrbStreams.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug 15 15:49:43 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py blind_search.py refinePosition.py 
+Added Files:
+	createGrbStreams.py 
+Log Message:
+add createGrbStreams.py for dispatching other top-level streams
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 10:54:11 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGcnNotice.py blind_search.py 
+Log Message:
+LatGcnNotice bug fixes
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 10:08:11 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+add BlindSearch class
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 08:46:13 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+add LatGcnNotice
+    *
+------------------------------------------------------------
+User: jchiang  Thu Aug  3 08:46:12 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	LatGcnNotice.py 
+Log Message:
+add LatGcnNotice
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug  2 21:35:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+remove extra triggerTimes code
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug  2 21:32:24 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+add localization for largest cluster
+    *
+------------------------------------------------------------
+User: jchiang  Wed Aug  2 12:05:19 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	blind_search.py 
+Log Message:
+add trigger and peak finding algorithms
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 18:20:06 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+add my version of Jay & Jerry's blind search algorithm
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 18:20:05 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	blind_search.py 
+Log Message:
+add my version of Jay & Jerry's blind search algorithm
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 15:34:33 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+use correct xml file; increase maxCPU limit
+    *
+------------------------------------------------------------
+User: jchiang  Tue Aug  1 15:34:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowAnalysis.py 
+Log Message:
+use correct xml file; increase maxCPU limit
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 28 13:49:36 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_afterglow.xml 
+Log Message:
+update maxCPU to ensure long queue
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 27 16:19:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	afterglowAnalysis.py 
+Log Message:
+write-out fitted model
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 27 16:09:19 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	arg_string 
+Added Files:
+	GRB_afterglow.xml 
+Log Message:
+add afterglow analysis scripts
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 27 16:09:19 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	Afterglow.py refinePosition.py 
+Added Files:
+	afterglowAnalysis.py afterglowData.py afterglowExposures.py 
+	parfile_parser.py 
+Log Message:
+add afterglow analysis scripts
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 15:27:03 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	Afterglow.py 
+Log Message:
+add Afterglow.py prototype
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 15:27:00 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add Afterglow.py prototype
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 11:10:48 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+use env vars explicitly set in xml definition
+    *
+------------------------------------------------------------
+User: jchiang  Wed Jul 26 11:10:47 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py refinePosition.py 
+Log Message:
+use env vars explicitly set in xml definition
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 24 10:31:06 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Added Files:
+	arg_string 
+Log Message:
+break GBM_refinement task into constituent parts
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 24 10:31:05 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py ft1merge.py 
+	refinePosition.py wrapperGenerator.py 
+Log Message:
+break GBM_refinement task into constituent parts
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 23 13:04:21 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	extractLatData.py 
+Log Message:
+start breaking scripts into standalone parts
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 22 08:52:41 PDT 2006
+users/jchiang/pyASP/xml
+
+Modified Files:
+	GRB_refinement.xml 
+Log Message:
+re-generalize PASPROOT path
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 22 08:51:05 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GBM_refinement.py extractLatData.py refinePosition.py 
+	wrapperGenerator.py 
+Log Message:
+mods to account for HEADAS FTOOLS kluge
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 17:33:27 PDT 2006
+users/jchiang/pyASP/xml
+
+Added Files:
+	GRB_refinement.xml 
+Log Message:
+add xml def for PII and GBM_refinement script
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 17:33:27 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	wrapperGenerator.py 
+Added Files:
+	GBM_refinement.py 
+Log Message:
+add xml def for PII and GBM_refinement script
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 17:31:43 PDT 2006
+users/jchiang/pyASP/xml
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/xml added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 20 12:25:28 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	LatGrbSpectrum.py extractLatData.py ft1merge.py 
+	refinePosition.py 
+Added Files:
+	wrapperGenerator.py 
+Log Message:
+add wrapperGenerator
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul 18 09:23:05 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	ft1merge.py getL1Data.py 
+Log Message:
+add ft1merge and getL1Data modules
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul 18 09:14:40 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GBM_analysis.py 
+Log Message:
+clean up example
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 17:56:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py LatGrbSpectrum.py extractLatData.py 
+	refinePosition.py 
+Added Files:
+	GBM_analysis.py 
+Log Message:
+add example script to analyze data for GBM Notices
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 17:56:32 PDT 2006
+users/jchiang/pyASP/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add example script to analyze data for GBM Notices
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 17 17:56:32 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add example script to analyze data for GBM Notices
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r1, operation: add
+Package: pyASP
+User: jchiang  Mon Jul 10 15:31:00 2006
+Files:
+  pyASP/.cvsignore  1.1.1.1
+  pyASP/ChangeLog  1.13
+  pyASP/cmt/requirements  1.5
+  pyASP/doc/release.notes  1.1
+  pyASP/python/read_data.py  1.1
+  pyASP/python/errEst.py  1.3
+  pyASP/python/LatGrbSpectrum.py  1.1
+  pyASP/python/GbmNotice.py  1.3
+  pyASP/python/FitsNTuple.py  1.1
+  pyASP/python/extractLatData.py  1.4
+  pyASP/python/refinePosition.py  1.4
+  pyASP/src/pyASP.in  1.2
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:37 PDT 2006
+users/jchiang/pyASP/doc
+
+Added Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:36 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:30:15 PDT 2006
+users/jchiang/pyASP/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/users/jchiang/pyASP/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:33 PDT 2006
+users/jchiang/pyASP/src
+
+Modified Files:
+	pyASP.in 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:33 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py extractLatData.py refinePosition.py 
+Added Files:
+	LatGrbSpectrum.py 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul 10 15:25:32 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+updates for LatGrbSpectrum
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:12:15 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	GbmNotice.py errEst.py extractLatData.py refinePosition.py 
+Log Message:
+use BayesianBlocks
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  9 18:12:15 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use BayesianBlocks
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul  7 13:16:06 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	errEst.py refinePosition.py 
+Added Files:
+	FitsNTuple.py read_data.py 
+Removed Files:
+	find_Sun.py 
+Log Message:
+add local scripts
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul  7 10:27:18 PDT 2006
+users/jchiang/pyASP/python
+
+Modified Files:
+	extractLatData.py 
+Added Files:
+	errEst.py refinePosition.py 
+Log Message:
+add error estimator and position refinement scripts
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:53:17 PDT 2006
+users/jchiang/pyASP/python
+
+Added Files:
+	GbmNotice.py extractLatData.py 
+Log Message:
+scripts for GRB analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:53:17 PDT 2006
+users/jchiang/pyASP/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+scripts for GRB analysis
+    *
+------------------------------------------------------------
+User: jchiang  Mon Jul  3 18:35:38 PDT 2006
+users/jchiang/pyASP
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N users/jchiang/pyASP/.cvsignore
+I users/jchiang/pyASP/.cvsignore~
+N users/jchiang/pyASP/src/pyASP.in
+N users/jchiang/pyASP/cmt/requirements
+N users/jchiang/pyASP/python/find_Sun.py
+
+No conflicts created by this import
+
+    *

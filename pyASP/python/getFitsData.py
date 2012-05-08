@@ -43,6 +43,7 @@ def getFileList(filelist, copylist=True):
         if (os.path.isfile(line.strip().strip('+')) or
             line.find('root') == 0):    # file exists or is listed on xrootd
             fitsfiles.append(line.strip().strip('+'))
+    fitsfiles.sort()
     return filter_versions(fitsfiles)
 
 def getStagedFileList(filelist, output_dir=None, fileStager=None):
@@ -56,6 +57,7 @@ def getStagedFileList(filelist, output_dir=None, fileStager=None):
         fileStager = FileStager('', stageArea=output_dir, cleanup=False)
     print "getStagedFileList: opening", filelist
     infiles = fileStager.infiles([line.strip() for line in open(filelist)])
+    infiles.sort()
     fitsfiles = []
     for item in infiles:
         print "staged file:", item
@@ -63,10 +65,45 @@ def getStagedFileList(filelist, output_dir=None, fileStager=None):
             fitsfiles.append(item.strip('+'))
     return filter_versions(fitsfiles)
 
+def match_runs(ft1_files, ft2_files):
+    #
+    # klugey test to see if we are looking at data from L1Proc
+    #
+    try:
+        if ft1_files[0].find('ph_r') == -1:
+            #
+            # If not, then just return the input filename lists.
+            #
+            print "skipping filename matching for FT1/2 files"
+            return ft1_files, ft2_files
+    except IndexError:
+        #
+        # We have no FT1 files from the query, so just return empty lists
+        #
+        return [], []
+    #
+    # Extract run id from filename (and neglect file version since
+    # those need not match)
+    #
+    runid = lambda x, pref : x.split(pref)[-1].split('v')[0]
+
+    ft1_runs = set([runid(x, 'ph_') for x in ft1_files])
+    ft2_runs = set([runid(x, 'pt_') for x in ft2_files])
+    matched = ft1_runs.intersection(ft2_runs)
+
+    ft1 = [x for x in ft1_files if runid(x, 'ph_') in matched]
+    ft1.sort()
+    ft2 = [x for x in ft2_files if runid(x, 'pt_') in matched]
+    ft2.sort()
+
+    return ft1, ft2
+
 def getFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList', copylist=True):
-    return getFileList(ft1list, copylist), getFileList(ft2list, copylist)
+    ft1, ft2 = getFileList(ft1list, copylist), getFileList(ft2list, copylist)
+    return match_runs(ft1, ft2)
 
 def getStagedFitsData(ft1list='Ft1FileList', ft2list='Ft2FileList',
                       fileStager=None):
-    return (getStagedFileList(ft1list, fileStager=fileStager),
-            getStagedFileList(ft2list, fileStager=fileStager))
+    ft1, ft2 = (getStagedFileList(ft1list, fileStager=fileStager),
+                getStagedFileList(ft2list, fileStager=fileStager))
+    return match_runs(ft1, ft2)

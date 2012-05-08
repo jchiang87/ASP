@@ -1,5 +1,6 @@
 """
-@brief Compute the file information for downlink files.
+@brief Compute the file information for downlink files and write them
+to a text file.
 
 @author J. Chiang <jchiang@slac.stanford.edu>
 """
@@ -8,24 +9,33 @@
 #
 
 import os
+import glob
 import pyfits
+import pipeline
 
-def getObsTimes(vars):
-    ft1File = os.path.join(vars["downlinkDir"], vars["downlinkFile"])
+def getObsTimes(ft1File):
     events = pyfits.open(ft1File)["EVENTS"]
     return events.header["TSTART"], events.header["TSTOP"]
 
-variables = {}
-variables["downlinkDir"] = "/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks"
-variables["downlinkFile"] = "downlink_0000.fits"
+filePathRoot = os.environ['filePathRoot']
+baseName = os.environ['baseName']
 
-tstart, tstop = getObsTimes(variables)
-variables["tstart"] = "%i" % tstart
-variables["tstop"] = "%i" % tstop
+print filePathRoot
+print baseName
 
-print variables
+glob_string = os.path.join(filePathRoot, baseName + '*.fits')
+print glob_string
 
-summary = open(os.environ["PIPELINE_SUMMARY"], 'a')
-for item in variables:
-    summary.write("pipeline.%s : %s\n" % (item, variables[item]))
-summary.close()
+files = glob.glob(glob_string)
+files.sort()
+
+fileList = os.path.join(filePathRoot, 'ft1FileList.txt')
+
+output = open(fileList, 'w')
+for ft1File in files:
+    tstart, tstop = getObsTimes(ft1File)
+    output.write('%s  %.3f  %.3f\n' % (ft1File, tstart, tstop))
+output.close()
+
+pipeline.setVariable('fileList', fileList)
+pipeline.setVariable('numFt1Files', len(files))

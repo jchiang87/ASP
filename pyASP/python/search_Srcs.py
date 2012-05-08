@@ -30,7 +30,7 @@ Class for transforming between Equatorial and Galactic coordinates.
 """
 
 try:
-    from numarray import *
+    from numpy import *
 except ImportError:
     from math import *
     arcsin = asin

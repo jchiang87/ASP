@@ -8,7 +8,7 @@ about the minimum and can be fit by a paraboloid near the minimum.
 #
 # $Header$
 #
-import numarray as num
+import numpy as num
 from read_data import read_data
 from pyASP import SkyDir
 

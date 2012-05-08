@@ -11,17 +11,58 @@ various ASP tasks
 import os
 import time
 
-_bindir = os.environ['BINDIR']
-_st_inst = os.environ['ST_INST']
-_asp_path = os.environ['ASP_PATH']
-_pipelineServer = os.environ['PIPELINESERVER']
+def pipelineServer():
+    try:
+        _pipelineServer = os.environ['PIPELINESERVER']
+    except KeyError:
+        _pipelineServer = 'PROD'
+        os.environ['PIPELINESERVER'] = _pipelineServer
+    #
+    # If this task is launched from a pipeline task, override _pipelineServer
+    # according to the value of the PIPELINE_FROMADDRESS env var.
+    #
+    try:
+        fromaddress = os.environ['PIPELINE_FROMADDRESS']
+        if fromaddress.find('pipeline-prod') == 0:
+            _pipelineServer = 'PROD'
+        elif fromaddress.find('pipeline-dev') == 0:
+            _pipelineServer = 'DEV'
+        elif fromaddress.find('pipeline-test') == 0:
+            _pipelineServer = 'TEST'
+        os.environ['PIPELINESERVER'] = _pipelineServer
+        print "overriding using pipeline_fromaddress: ", fromaddress
+    except KeyError:
+        # This is not being launched from a pipeline task.
+        pass
+    return _pipelineServer
 
-print "Using:\n"
-print "BINDIR = %s" % _bindir
-print "ST_INST = %s" % _st_inst
-print "ASP_PATH = %s" % _asp_path
-print "PIPELINESERVER = %s" % _pipelineServer
-print ""
+_pipelineServer = pipelineServer()
+
+#
+# If this task is launched from a pipeline task, override _pipelineServer
+# according to the value of the PIPELINE_FROMADDRESS env var.
+#
+try:
+    fromaddress = os.environ['PIPELINE_FROMADDRESS']
+    if fromaddress.find('pipeline-prod') == 0:
+        _pipelineServer = 'PROD'
+    elif fromaddress.find('pipeline-dev') == 0:
+        _pipelineServer = 'DEV'
+    elif fromaddress.find('pipeline-test') == 0:
+        _pipelineServer = 'TEST'
+    os.environ['PIPELINESERVER'] = _pipelineServer
+    print "overriding using pipeline_fromaddress: ", fromaddress
+except KeyError:
+    # This is not being launched from a pipeline task.
+    pass
+
+def resolve_nfs_path(path):
+    tokens = path.split(":")
+    for i in range(len(tokens)):
+        if tokens[i].find('g.glast.'):
+            tokens[i] = os.path.join('/nfs/farm/g/glast', 
+                                     tokens[i].split('g.glast.')[-1])
+    return ":".join(tokens)
 
 class PipelineError(EnvironmentError):
     "Pipeline stream creation failed"
@@ -29,6 +70,16 @@ class PipelineError(EnvironmentError):
 class PipelineCommand(object):
     def __init__(self, taskname, args, stream=None):
         "Abstraction for a Pipeline-II command."
+        # Check if this is launched via a task from an SCons-built
+        # package.  If so, then append "-SCons" to the task name if it
+        # is not already there.
+        try:
+            if os.environ['PIPELINE_TASKPATH'].find('-SCons') != -1:
+                if taskname.find('-SCons') == -1:
+                    taskname += '-SCons'
+        except KeyError:
+            pass
+
         if stream is None:
 #            stream = self.streamNumber()
             stream = -1
@@ -55,10 +106,7 @@ class PipelineCommand(object):
         the default dictionary can be over-ridden by key-value pairs in
         the argDict.
         """
-        defaultDict = {'BINDIR' : _bindir,
-                       'ST_INST' : _st_inst,
-                       'ASP_PATH' : _asp_path,
-                       'PIPELINESERVER' : _pipelineServer}
+        defaultDict = {'PIPELINESERVER' : _pipelineServer}
         defaultDict.update(argDict)
         arg_string = ""
         for item in defaultDict:

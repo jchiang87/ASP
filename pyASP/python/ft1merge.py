@@ -18,6 +18,7 @@ from GtApp import GtApp
 fcopy = GtApp('fcopy')
 fmerge = GtApp('fmerge')
 fchecksum = GtApp('fchecksum')
+gtselect = GtApp('gtselect')
 
 def _fileList(infiles, extnum=1):
     filelist = 'ft1merge_file_list'
@@ -41,6 +42,17 @@ def _getTimeKeywords(infiles, extnum=1):
         if header['TSTOP'] > tstop:
             tstop = header['TSTOP']
     return tstart, tstop
+
+def updateTimeKeywords(fitsfile, tstart, tstop):
+    foo = pyfits.open(fitsfile)
+    foo[0].header['FILENAME'] = os.path.basename(fitsfile)
+    for i in range(len(foo)):
+        try:
+            foo[i].header['TSTART'] = tstart
+            foo[i].header['TSTOP'] = tstop
+        except KeyError:
+            pass
+    foo.writeto(fitsfile, clobber=True)
 
 def ft1merge(infiles, outfile):
     tstart, tstop = _getTimeKeywords(infiles)
@@ -107,6 +119,7 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
     if not infiles_arg:
         raise RuntimeError, "FT2 file list is empty"
     infiles = infiles_arg
+    tstart, tstop = _getTimeKeywords(infiles)
     if filter_zeros:
         infiles = UnpaddedFT2Files(infiles_arg)
     tmpfile = "ft2_file_list"
@@ -121,6 +134,7 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
     fmerge['mextname'] = ' '
     fmerge['lastkey'] = ' '
     fmerge.run()
+    updateTimeKeywords(outfile, tstart, tstop)
     try:
         os.remove(tmpfile)
     except OSError:
@@ -130,8 +144,41 @@ def ft2merge(infiles_arg, outfile, filter_zeros=True):
     except AttributeError:
         pass
 
+def ft1_filter_merge(ft1files, outfile, filter=None, zmax=105):
+    """Prefilter the input FT1 files with a minimal filter string designed
+    to remove most albedo photons.  This is useful for merging data
+    from pointed observations.
+    """
+    if filter is not None and filter.find("ZENITH_ANGLE") != -1:
+        message = ("A zenith angle cut of < 105 deg is applied by default.\n" +
+                   "Use the zmax keyword argument to modify this or " +
+                   "make additional zenith angle cuts using gtselect.")
+        raise ValueError(message)
+
+    filter_string = "ZENITH_ANGLE < %f" % zmax
+    if filter is not None:
+        filter_string += " && %s" % filter
+
+    ft1files.sort()
+
+    outfiles = []
+    for i, item in enumerate(ft1files):
+        outfiles.append('ft1_temp_%03i.fits' % i)
+        infile = '%s[%s]' % (item, filter_string)
+        fcopy.run(infile=infile, outfile=outfiles[-1])
+
+    ft1_temp = 'FT1_merged_temp.fits'
+    ft1merge(outfiles, ft1_temp)
+
+    gtselect.run(infile=ft1_temp, outfile=outfile, zmax=zmax, rad=180)
+
+    for item in outfiles:
+        os.remove(item)
+
+    os.remove(ft1_temp)
+
 if __name__ == '__main__':
-    L1DataPath = '/nfs/farm/g/glast/u33/jchiang/DC2/Downlinks'
-    infiles = [os.path.join(L1DataPath, 'downlink_%04i.fits' % i)
-               for i in range(4)]
-    ft1merge(infiles, 'foo.fits')
+    ft1_files = [x.strip() for x in open('ft1_list')]
+    ft2_files = [x.strip() for x in open('ft2_list')]
+    ft1merge(ft1_files, 'FT1_merged.fits')
+    ft2merge(ft2_files, 'FT2_merged.fits')

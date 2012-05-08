@@ -30,7 +30,9 @@ class Parfile(dict):
         for line in open(self.filename).readlines():
             if line.find('#') == 0:
                 continue
-            key, value = [x.strip() for x in line.split("=")]
+            data = [x.strip() for x in line.split("=")]
+            key = data[0]
+            value = '='.join(data[1:])
             self._addkey(key)
             try:
                 self[key.strip()] = float(value.strip())

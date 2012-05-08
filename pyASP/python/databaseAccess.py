@@ -9,24 +9,45 @@
 import os
 import cx_Oracle
 
-db_config = open(os.environ['ASP_DB_CONFIG'], 'r')
-lines = db_config.readlines()
+# 
+# Oracle wallet connection strings
+#
+glastgen = ('/@glastgenprod',)
+asp_prod = ('/@asp',)
+asp_dev = ('/@asp-dev',)
+rsp_prod = ('/@rsp',)
+rsp_dev = ('/@rsp-dev',)
 
-glastgen = lines[0].strip().encode('rot13').split()
-asp_prod = lines[1].strip().encode('rot13').split()
-asp_dev = lines[2].strip().encode('rot13').split()
-
+#
+# Set the default to point to the dev tables.
+#
 asp_default = asp_dev
-#asp_default = asp_prod
+
+try:
+    #
+    # Reset the default to prod if running in the PROD pipeline.
+    #
+    if os.environ['PIPELINESERVER'] == "PROD":
+        asp_default = asp_prod
+except KeyError:
+    #
+    # We may be running interactively (and did not set PIPELINESERVER), 
+    # so keep "DEV" as the default.
+    #
+    print "Warning: Using dev db tables."
+    pass
 
 def nullFunc(*args):
     return None
 
-def apply(sql, cursorFunc=nullFunc, connection=asp_default):
+def apply(sql, cursorFunc=nullFunc, connection=asp_default, args=None):
     my_connection = cx_Oracle.connect(*connection)
     cursor = my_connection.cursor()
     try:
-        cursor.execute(sql)
+        if args is None:
+            cursor.execute(sql)
+        else:
+            cursor.execute(sql, args)
         results = cursorFunc(cursor)
     except cx_Oracle.DatabaseError, message:
         cursor.close()

@@ -5,6 +5,36 @@
     $Id$
 
     @verbatim
+    * EOH *
+
+ pyASP-04-00-01 08-May-2012 jchiang use rhel5 version of FASTCopy.py (from ISOC tools)
+ pyASP-04-00-00 22-Jul-2011 jchiang Pass 7, rhel5-64 switch
+ pyASP-03-06-04 12-Mar-2010 jchiang SCons-related changes
+ pyASP-03-06-03 16-Nov-2009    jrb Updates for SCons builds
+    v3r6p1 30-Jun-09   JC   add reply_to option to MultiPartMailer class
+    v3r6   08-Apr-09   JC   switch to numpy; remove UpperLimits.py in favor of
+                            pyLikelihood version
+    v3r5p7 26-Dec-08   JC   add addNdifrsp.py, FitsNTupleError
+    v3r5p6 24-Aug-08   JC   add fastCopy.py; have date2met compute MET
+                            using current date and time by default
+    v3r5p5 30-Jul-08   JC   add ft1_filter_merge function
+    v3r5p4 28-Jul-08   JC   add MultiPartMailer class and add try/except 
+                            block in getFitsData in case no files are 
+                            returned by catalog query
+    v3r5p3 21-Jul-08   JC   add TarBall class and moveToXrootd function 
+                            for archiving
+    v3r5p2 12-Jul-08   JC   cross-check run numbers for FT1/FT2 data when
+                            running on L1Proc data
+    v3r5p1 14-Jun-08   JC   ensure pipeline server mode is inherited when
+                            top-level tasks are launched by other top-level
+                            tasks.
+    v3r5   13-Jun-08   JC   use connections strings appropriate for 
+                            Oracle wallet use
+    v3r4p1 29-May-08   JC   suppress info message from PipelineCommand
+    v3r4   22-May-08   JC   add dev version of UpperLimits.py; add python
+                            function to resolve nfs paths
+    v3r3   12-May-08   JC   add Gino's script to generate ROIs for a list
+                            of source positions (crearoi.py)
     v3r2   28-Apr-08   JC   add dot and cross products to SkyDir
     v3r1   22-Apr-08   JC   make FileStager.finish() a separate function
                             move to numpy from numarray in SkyCone.py
@@ -33,3 +63,4 @@
     v0     03-Jul-06   JC   Initial import.
     @endverbatim
 */
+ pyASP-03-06-02 22-Oct-2009 jchiang add pipelineServer() function

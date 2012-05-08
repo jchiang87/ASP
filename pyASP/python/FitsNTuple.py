@@ -9,6 +9,9 @@ numpy arrays
 # $Id$
 #
 
+class FitsNTupleError(RuntimeError):
+    "Error reading in FITS table"
+
 class FitsNTuple:
     def __init__(self, fitsfiles, extension=1):
         import sys, pyfits
@@ -28,6 +31,9 @@ class FitsNTuple:
         for i, file in enumerate(fitsfiles):
             #print "adding", file
             table = pyfits.open(file.strip(" "))
+            if table[extension].size() == 0:
+                raise FitsNTupleError("zero rows in %s[%s]" % (file.strip(" "),
+                                                               extension))
             if i == 0:
                 self.names = table[extension].columns.names
             for name in self.names:

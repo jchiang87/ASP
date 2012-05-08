@@ -1,0 +1,279 @@
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Wed Feb 22 17:06:27 2012
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Wed Feb 22 17:06:20 2012
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Wed Feb 22 17:04:09 2012
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Wed Feb 22 17:03:15 2012
+Files:
+  ASP-scons/containerPrefix.scons  1.1
+  ASP-scons/.cvsignore  1.1
+  ASP-scons/ChangeLog  1.21
+  ASP-scons/ASP_containerSettings/asp_postsetup.sh  1.4
+  ASP-scons/ASP_containerSettings/.cvsignore  1.1
+  ASP-scons/ASP_containerSettings/package.scons  1.2
+  ASP-scons/ASP_containerSettings/asp_setup.sh  1.3
+  ASP-scons/ASP_containerSettings/SConscript  1.1
+  ASP-scons/ASP_containerSettings/asp_presetup.sh  1.4
+  ASP-scons/ASP_containerSettings/doc/release.notes  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-01-00, operation: add
+Package: ASP-scons
+User: jchiang  Fri Aug 12 12:19:27 2011
+Files:
+  ASP-scons/containerPrefix.scons  1.1
+  ASP-scons/.cvsignore  1.1
+  ASP-scons/ChangeLog  1.20
+  ASP-scons/ASP_containerSettings/asp_postsetup.sh  1.4
+  ASP-scons/ASP_containerSettings/.cvsignore  1.1
+  ASP-scons/ASP_containerSettings/package.scons  1.2
+  ASP-scons/ASP_containerSettings/asp_setup.sh  1.3
+  ASP-scons/ASP_containerSettings/SConscript  1.1
+  ASP-scons/ASP_containerSettings/asp_presetup.sh  1.4
+  ASP-scons/ASP_containerSettings/doc/release.notes  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Fri Jul 22 08:39:16 2011
+Files:
+  ASP-scons/containerPrefix.scons  1.1
+  ASP-scons/.cvsignore  1.1
+  ASP-scons/ChangeLog  1.19
+  ASP-scons/ASP_containerSettings/asp_postsetup.sh  1.4
+  ASP-scons/ASP_containerSettings/.cvsignore  1.1
+  ASP-scons/ASP_containerSettings/package.scons  1.2
+  ASP-scons/ASP_containerSettings/asp_setup.sh  1.3
+  ASP-scons/ASP_containerSettings/SConscript  1.1
+  ASP-scons/ASP_containerSettings/asp_presetup.sh  1.4
+  ASP-scons/ASP_containerSettings/doc/release.notes  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 21 13:20:05 PDT 2011
+ASP-scons/ASP_containerSettings
+
+Modified Files:
+	asp_postsetup.sh asp_presetup.sh 
+Log Message:
+clean up a little; modify ORACLE_HOME and GLAST_EXT to use rhel5-64 versions; append ST syspfiles to PFILES env var
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Thu Sep  9 14:24:51 2010
+Files:
+  ASP-scons/containerPrefix.scons  1.1
+  ASP-scons/.cvsignore  1.1
+  ASP-scons/ChangeLog  1.17
+  ASP-scons/ASP_containerSettings/asp_postsetup.sh  1.3
+  ASP-scons/ASP_containerSettings/.cvsignore  1.1
+  ASP-scons/ASP_containerSettings/package.scons  1.2
+  ASP-scons/ASP_containerSettings/asp_setup.sh  1.3
+  ASP-scons/ASP_containerSettings/SConscript  1.1
+  ASP-scons/ASP_containerSettings/asp_presetup.sh  1.3
+  ASP-scons/ASP_containerSettings/doc/release.notes  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: ASP-scons
+User: jchiang  Thu Sep  9 13:04:41 2010
+Files:
+  ASP-scons/containerPrefix.scons  1.1
+  ASP-scons/.cvsignore  1.1
+  ASP-scons/ChangeLog  1.16
+  ASP-scons/ASP_containerSettings/doc/release.notes  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Sat Dec  5 16:37:44 PST 2009
+ASP-scons/ASP_containerSettings
+
+Modified Files:
+	asp_postsetup.sh asp_presetup.sh 
+Log Message:
+define PFILES before sourcing headas tool setup
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  4 22:50:44 PST 2009
+ASP-scons/ASP_containerSettings
+
+Modified Files:
+	asp_postsetup.sh asp_presetup.sh 
+Log Message:
+remove commented out code; set GLAST_EXT
+    *
+------------------------------------------------------------
+User: jrb  Thu Dec  3 18:49:48 PST 2009
+ASP-scons/ASP_containerSettings
+
+Modified Files:
+	asp_setup.sh package.scons 
+Added Files:
+	.cvsignore asp_postsetup.sh asp_presetup.sh 
+Log Message:
+Separate asp_setup.sh into asp_presetup.sh, asp_postsetup.sh
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 23 14:44:48 PST 2009
+ASP-scons/ASP_containerSettings
+
+Modified Files:
+	asp_setup.sh 
+Log Message:
+correct typo
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 17:46:40 PST 2009
+ASP-scons
+
+Added Files:
+	.cvsignore containerPrefix.scons 
+Log Message:
+containerPrefix.scons: so SCons will know about alt containerSettings dir
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 16:52:21 PST 2009
+ASP-scons/ASP_containerSettings/doc
+
+Added Files:
+	release.notes 
+Log Message:
+contents for ASP_containerSettings
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 16:52:21 PST 2009
+ASP-scons/ASP_containerSettings
+
+Added Files:
+	SConscript asp_setup.sh package.scons 
+Log Message:
+contents for ASP_containerSettings
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 16:27:13 PST 2009
+ASP-scons/containerSettings/doc
+
+Removed Files:
+	release.notes 
+Log Message:
+settings directory moved to ASP_containerSettings
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 16:27:13 PST 2009
+ASP-scons/containerSettings
+
+Removed Files:
+	SConscript asp_setup.sh package.scons 
+Log Message:
+settings directory moved to ASP_containerSettings
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 16:16:02 PST 2009
+ASP-scons/ASP_containerSettings/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP-scons/ASP_containerSettings/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jrb  Thu Nov 19 16:15:25 PST 2009
+ASP-scons/ASP_containerSettings
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP-scons/ASP_containerSettings added to the repository
+
+    *
+------------------------------------------------------------
+User: jrb  Wed Nov 18 15:21:49 PST 2009
+ASP-scons/containerSettings
+
+Modified Files:
+	asp_setup.sh 
+Log Message:
+Fix shell syntax
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 16:45:06 PST 2009
+ASP-scons/containerSettings/doc
+
+Added Files:
+	release.notes 
+Log Message:
+Make into a more-or-less standard SCons package
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 16:44:32 PST 2009
+ASP-scons/containerSettings
+
+Modified Files:
+	package.scons 
+Log Message:
+Correct path for asp_setup.sh
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 16:42:56 PST 2009
+ASP-scons/containerSettings/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP-scons/containerSettings/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jrb  Fri Nov 13 17:23:24 PST 2009
+ASP-scons
+
+Log Message:
+new SCons container package for ASP
+
+Status:
+
+Vendor Tag:	GLAST
+Release Tags:	v0r0p0
+		
+N ASP-scons/containerSettings/asp_setup.sh
+N ASP-scons/containerSettings/SConscript
+N ASP-scons/containerSettings/package.scons
+
+No conflicts created by this import
+
+    *

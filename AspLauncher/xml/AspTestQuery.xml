@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+   xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+<!-- $Header$
+-->
+<task name="AspTestQuery" version="0.1" type="Data">
+  <variables>
+    <var name="folder">/Data/OpsSim2/Level1</var>
+    <var name="BINDIR">rh9_gcc32</var>
+  </variables>
+  <process name="catalogQueries">
+    <script>
+      <![CDATA[
+        def query(outfile, path, TSTART, TSTOP):
+            output = pipeline.createFile(outfile)
+            opt1='(%(TSTART)i <= nMetStart && nMetStop <= %(TSTOP)i)'%locals()
+            opt2='(nMetStart <= %(TSTART)i && %(TSTART)i <= nMetStop)'%locals()
+            opt3='(nMetStart <= %(TSTOP)i && %(TSTOP)i <= nMetStop)' % locals()
+            query = ('DataType == \"%s\" && (%s || %s || %s)' 
+                     % (path, opt1, opt2, opt3))
+            datasetList = datacatalogPROD.getDatasets(folder+'/*', query)
+            datasetList.writeToFile(output, 1)
+            pipeline.writeFile(output)
+        tstart = 257835904
+        tstop = 258274304
+        query("Ft1FileList", "FT1", tstart, tstop)
+        query("Ft2FileList", "FT2", tstart, tstop)
+    ]]></script>
+  </process>
+</task>
+</pipeline>

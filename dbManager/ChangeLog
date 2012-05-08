@@ -1,0 +1,428 @@
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: dbManager
+User: jchiang  Wed Feb 22 17:05:08 2012
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.32
+  dbManager/SConscript  1.3
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: dbManager
+User: jchiang  Wed Feb 22 17:03:20 2012
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.32
+  dbManager/SConscript  1.3
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-01-00, operation: add
+Package: dbManager
+User: jchiang  Fri Aug 12 12:19:37 2011
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.31
+  dbManager/SConscript  1.3
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-00-00, operation: add
+Package: dbManager
+User: jchiang  Fri Jul 22 08:39:24 2011
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.30
+  dbManager/SConscript  1.3
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: dbManager
+User: jchiang  Thu Sep  9 14:24:56 2010
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.29
+  dbManager/SConscript  1.3
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: dbManager
+User: jchiang  Thu Sep  9 13:04:47 2010
+Files:
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: dbManager-00-02-02, operation: add
+Package: dbManager
+User: jrb  Mon Nov 16 15:55:25 2009
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.27
+  dbManager/SConscript  1.3
+  dbManager/cmt/requirements  1.6
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.6
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:55:19 PST 2009
+ASP-scons/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:55:19 PST 2009
+ASP-scons/dbManager/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:55:19 PST 2009
+ASP-scons/dbManager
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:55:06 PST 2009
+ASP-scons/dbManager/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+Add EOH line
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: dbManager-00-02-01, operation: add
+Package: dbManager
+User: jrb  Mon Nov 16 15:52:45 2009
+Files:
+  dbManager/.cvsignore  1.2
+  dbManager/ChangeLog  1.22
+  dbManager/SConscript  1.2
+  dbManager/cmt/requirements  1.5
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.4
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:52:39 PST 2009
+ASP-scons/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:52:39 PST 2009
+ASP-scons/dbManager/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 15:52:39 PST 2009
+ASP-scons/dbManager
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jrb  Tue Nov  3 13:18:49 PST 2009
+ASP/dbManager
+
+Modified Files:
+	.cvsignore 
+Added Files:
+	SConscript 
+Log Message:
+Getting ready for SCons
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-03-00-00, operation: add
+Package: dbManager
+User: jchiang  Mon Aug 17 23:44:22 2009
+Files:
+  dbManager/.cvsignore  1.1.1.1
+  dbManager/ChangeLog  1.17
+  dbManager/cmt/requirements  1.4
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.3
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.5
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul 20 17:09:28 PDT 2008
+ASP/dbManager/python
+
+Modified Files:
+	insertSources.py 
+Log Message:
+make connection explicit for safety
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r6, operation: add
+Package: dbManager
+User: jchiang  Sun Jun 29 13:11:26 2008
+Files:
+  dbManager/.cvsignore  1.1.1.1
+  dbManager/ChangeLog  1.15
+  dbManager/cmt/requirements  1.4
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.3
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.2
+  dbManager/python/insertSources.py  1.4
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun May 11 16:44:02 PDT 2008
+ASP/dbManager/python
+
+Modified Files:
+	modify_Frequencies.py 
+Log Message:
+add interval manipulation functions
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r2, operation: add
+Package: dbManager
+User: jchiang  Sun Mar 16 14:58:29 2008
+Files:
+  dbManager/.cvsignore  1.1.1.1
+  dbManager/ChangeLog  1.13
+  dbManager/cmt/requirements  1.4
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.3
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.1.1.1
+  dbManager/python/insertSources.py  1.4
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 16 14:58:08 PDT 2008
+ASP/dbManager/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 16 14:58:07 PDT 2008
+ASP/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r2
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 16 14:51:42 PDT 2008
+ASP/dbManager/python
+
+Modified Files:
+	insertSources.py 
+Log Message:
+add code to update ROIs
+    *
+------------------------------------------------------------
+TAG
+Tag name: v0r1, operation: add
+Package: dbManager
+User: jchiang  Tue Mar  4 14:00:46 2008
+Files:
+  dbManager/.cvsignore  1.1.1.1
+  dbManager/ChangeLog  1.9
+  dbManager/cmt/requirements  1.3
+  dbManager/data/AspSrcModel.xml  1.1.1.1
+  dbManager/doc/release.notes  1.2
+  dbManager/python/setConfig.py  1.3
+  dbManager/python/modify_Frequencies.py  1.1.1.1
+  dbManager/python/insertSources.py  1.3
+  dbManager/python/GrbAspConfigManager.py  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:00:32 PST 2008
+ASP/dbManager/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 14:00:31 PST 2008
+ASP/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v0r1
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:59:29 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	insertSources.py 
+Log Message:
+add guarding try/except so sql can be inspected
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  2 07:10:34 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	setConfig.py 
+Log Message:
+refactor SMCONFIG handling; insert data for AspSims test
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 29 19:20:39 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	setConfig.py 
+Log Message:
+insert SOURCEMONITORINGCONFIG data
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 29 14:22:29 PST 2008
+ASP/dbManager/python
+
+Modified Files:
+	insertSources.py 
+Added Files:
+	GrbAspConfigManager.py setConfig.py 
+Removed Files:
+	modify_grb_asp_config.py 
+Log Message:
+add scripts for setting db config
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 28 08:26:27 PST 2008
+ASP/dbManager/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+reset package name
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 28 08:25:55 PST 2008
+ASP/dbManager/doc
+
+Added Files:
+	release.notes 
+Log Message:
+add release.notes
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 28 08:22:46 PST 2008
+ASP/dbManager
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	JC
+Release Tags:	v0
+		
+N ASP/dbManager/.cvsignore
+N ASP/dbManager/cmt/requirements
+N ASP/dbManager/python/insertSources.py
+N ASP/dbManager/python/modify_Frequencies.py
+N ASP/dbManager/python/modify_grb_asp_config.py
+N ASP/dbManager/data/AspSrcModel.xml
+
+No conflicts created by this import
+
+    *

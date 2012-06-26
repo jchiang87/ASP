@@ -2,6 +2,73 @@
 TAG
 Tag name: ASP-06-01-01, operation: add
 Package: asp_skymaps
+User: jchiang  Tue Jun 26 13:07:12 2012
+Files:
+  asp_skymaps/.cvsignore  1.2
+  asp_skymaps/asp_skymapsLib.py  1.2
+  asp_skymaps/ChangeLog  1.1.1.59
+  asp_skymaps/SConscript  1.15
+  asp_skymaps/skymapsLib.py  1.1.1.1
+  asp_skymaps/cmt/.cvsignore  1.1.1.1
+  asp_skymaps/cmt/requirements  1.7
+  asp_skymaps/data/LivetimeCubeTemplate  1.1.1.1
+  asp_skymaps/doc/release.notes  1.14
+  asp_skymaps/python/image.py  1.1.1.1
+  asp_skymaps/python/__init__.py  1.1.1.1
+  asp_skymaps/python/swig_setup.in  1.2
+  asp_skymaps/python/swig_setup.i  1.2
+  asp_skymaps/python/fermitime.py  1.1.1.1
+  asp_skymaps/python/psf_defaults.py  1.1.1.1
+  asp_skymaps/skymaps/DiffuseFunction.h  1.1.1.1
+  asp_skymaps/skymaps/Exposure.h  1.1.1.1
+  asp_skymaps/skymaps/BinnedPhotonData.h  1.1.1.1
+  asp_skymaps/skymaps/SkySpectrum.h  1.1.1.1
+  asp_skymaps/skymaps/PsfFunction.h  1.1.1.1
+  asp_skymaps/skymaps/HealpixDiffuseFunc.h  1.1.1.1
+  asp_skymaps/skymaps/GtiBase.h  1.1.1.1
+  asp_skymaps/skymaps/CompositeSkySpectrum.h  1.1.1.1
+  asp_skymaps/skymaps/PySkyFunction.h  1.1.1.1
+  asp_skymaps/skymaps/Band.h  1.1.1.1
+  asp_skymaps/skymaps/CompositeSkyFunction.h  1.1.1.1
+  asp_skymaps/skymaps/EffectiveArea.h  1.1.1.1
+  asp_skymaps/skymaps/PhotonMap.h  1.1.1.1
+  asp_skymaps/skymaps/Gti.h  1.1.1.1
+  asp_skymaps/skymaps/IParams.h  1.1.1.1
+  asp_skymaps/skymaps/LivetimeCube.h  1.1.1.1
+  asp_skymaps/skymaps/SkyImage.h  1.1.1.1
+  asp_skymaps/skymaps/Background.h  1.2
+  asp_skymaps/skymaps/Convolution.h  1.1.1.1
+  asp_skymaps/skymaps/PhotonBinner.h  1.1.1.1
+  asp_skymaps/skymaps/IsotropicPowerLaw.h  1.1.1.1
+  asp_skymaps/src/PySkyFunction.cxx  1.2
+  asp_skymaps/src/GtiBase.cxx  1.1.1.1
+  asp_skymaps/src/Gti.cxx  1.2
+  asp_skymaps/src/CompositeSkySpectrum.cxx  1.1.1.1
+  asp_skymaps/src/mainpage.h  1.1.1.1
+  asp_skymaps/src/Background.cxx  1.1.1.1
+  asp_skymaps/src/PhotonBinner.cxx  1.1.1.1
+  asp_skymaps/src/PsfFunction.cxx  1.1.1.1
+  asp_skymaps/src/HealpixDiffuseFunc.cxx  1.1.1.1
+  asp_skymaps/src/Band.cxx  1.1.1.1
+  asp_skymaps/src/Exposure.cxx  1.1.1.1
+  asp_skymaps/src/BinnedPhotonData.cxx  1.2
+  asp_skymaps/src/DiffuseFunction.cxx  1.1.1.1
+  asp_skymaps/src/IParams.cxx  1.2
+  asp_skymaps/src/LivetimeCube.cxx  1.1.1.1
+  asp_skymaps/src/IsotropicPowerLaw.cxx  1.1.1.1
+  asp_skymaps/src/EffectiveArea.cxx  1.1.1.1
+  asp_skymaps/src/SkySpectrum.cxx  1.1.1.1
+  asp_skymaps/src/Convolution.cxx  1.3
+  asp_skymaps/src/SkyImage.cxx  1.2
+  asp_skymaps/src/PhotonMap.cxx  1.2
+  asp_skymaps/src/CompositeSkyFunction.cxx  1.1.1.1
+  asp_skymaps/src/test/test_main.cxx  1.1.1.1
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-01-01, operation: add
+Package: asp_skymaps
 User: jchiang  Tue Jun 26 13:06:44 2012
 Files:
   asp_skymaps/.cvsignore  1.2

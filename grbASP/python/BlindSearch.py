@@ -15,7 +15,7 @@ import pyfits
 from GtApp import GtApp
     
 from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
-from FitsNTuple import FitsNTuple
+from FitsNTuple import FitsNTuple, FitsNTupleError
 from ft1merge import ft2merge
 from FileStager import FileStager
 from pass_version import pass_version
@@ -411,13 +411,14 @@ if __name__ == '__main__':
 
     grb_candidates = []
 
+    print imins, imaxs
     for imin, imax in zip(imins, imaxs):
         events = package(imin, imax)
 
+        if len(events.TIME) > 0:
+            grbConfig = grbAspConfig.find(min(events.TIME))
         if len(events.TIME) < 2:
             continue
-
-        grbConfig = grbAspConfig.find(min(events.TIME))
 
         print "imin, imax = ", imin, imax
         print "# events = ", len(events.TIME)
@@ -443,8 +444,15 @@ if __name__ == '__main__':
     print "writing ", filepath
     writeTimeHistory(times, logdts, logdists, filepath)
 
-    figures = createPlots(filename, os.environ['DownlinkId'],
-                          -grbConfig.THRESHOLD)
+    try:
+        figures = createPlots(filename, os.environ['DownlinkId'],
+                              -grbConfig.THRESHOLD)
+    except (NameError, FitsNTupleError):
+        # if there are no events then grbConfig is not set, so skip
+        # generating the figures, which are only used in the email
+        # notifications
+        figures = []
+        pass
 
     for item in grb_candidates:
         grb_dir, tpeak, logProb = item

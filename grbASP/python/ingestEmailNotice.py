@@ -102,19 +102,20 @@ class Packet(object):
         tjd = self.TJD
         sod = self.SOD
         jd = pyASP.JulianDate(tjd + 2440000.5 + sod/8.64e4)
-        # Add a leap second for the one added Dec 31, 2005.
-        # Another will be needed after Dec 31, 2008.
         self.start_time = (jd.seconds() -
-                           pyASP.JulianDate_missionStart().seconds() + 1)
+                           pyASP.JulianDate_missionStart().seconds())
         year, month, day, hours = jd.gregorianDate()
 #        return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, hours/24.*1000)
         return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, 
                                         round(sod/86400.*1000))
     def _MET(self):
         # Add a leap second for the one added Dec 31, 2005.
-        # Another will be needed after Dec 31, 2008.
-        return int((self.TJD + 2440000.5)*8.64e4 + self.SOD
-                   - self._JD_missionStart_seconds + 2)
+        # And another after Dec 31, 2008.
+        my_met = int((self.TJD + 2440000.5)*8.64e4 + self.SOD
+                     - self._JD_missionStart_seconds + 2)
+        if my_met > 362793602:  # 2012-07-01, the next leap second
+            my_met += 1
+        return my_met
         
 def registerWithDatabase(packet, notice_file):
     grb_id = int(packet.MET)

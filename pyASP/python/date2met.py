@@ -12,6 +12,10 @@ import datetime
 import time
 
 _missionStart = datetime.datetime(2001, 1, 1, 0, 0, 0)
+_leap_seconds = (datetime.datetime(2006, 1, 1, 0, 0, 0),
+                 datetime.datetime(2008, 1, 1, 0, 0, 0),
+                 datetime.datetime(2012, 7, 1, 0, 0, 0))
+                 
 
 def date2met(datestring=None):
     if datestring is None:
@@ -32,9 +36,17 @@ def date2met(datestring=None):
             pass
     mydate = datetime.datetime(year, month, day, hours, mins, secs)
     diff = mydate - _missionStart
-    return diff.days*86400. + diff.seconds
+    met = diff.days*86400. + diff.seconds
+    for item in _leap_seconds:
+        if mydate > item:
+            met += 1
+    return met
 
 if __name__ == '__main__':
-    print date2met("2001-01-01 00 00 00")
     print date2met()
-    print date2met("2009-03-03")
+    print date2met("2006-01-01 00:00:00")
+    print date2met("2006-01-01 00:00:01")
+    print date2met("2009-01-01 00:00:00")
+    print date2met("2009-01-01 00:00:01")
+    print date2met("2012-07-01 00:00:00")
+    print date2met("2012-07-01 00:00:01")

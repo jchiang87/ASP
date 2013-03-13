@@ -70,8 +70,8 @@ for notice in notices:
         message = str(msg) + ("\nfor notice file %s" % notice)
         forwardErrorMessage(message)
 
-try:
-    command = "/afs/slac/g/glast/groups/grb/Weekly_FT2/GCN_off_axis_plots/plot_offaxis_angles.sh"
-    subprocess.call(command, shell=True)
-except Exception, msg:
-    forwardErrorMessage(msg)
+#try:
+#    command = "/afs/slac/g/glast/groups/grb/Weekly_FT2/GCN_off_axis_plots/plot_offaxis_angles.sh"
+#    subprocess.call(command, shell=True)
+#except Exception, msg:
+#    forwardErrorMessage(msg)

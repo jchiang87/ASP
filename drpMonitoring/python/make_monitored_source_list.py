@@ -1,10 +1,20 @@
+"""
+@brief Create the FITS tables to contain the light curve information for
+the Monitored Source List distributed by the FSSC at
+http://fermi.gsfc.nasa.gov/ssc/data/access/lat/msl_lc/
+
+@author J. Chiang <jchiang@slac.stanford.edu>
+"""
+#
+# $Header$
+#
 import os
 import datetime
 from collections import OrderedDict
 import numpy as np
 import pyfits
 import databaseAccess as dbAccess
-from makeDrpLcTables import TimeIntervals
+from makeDrpLcTables import TimeIntervals, getLastUpdateTime
 
 def get_energy_bands():
     sql = """select energybands.eband_id, energybands.name from energybands
@@ -242,9 +252,33 @@ class LightCurveFitsFile(object):
         return key, value, comment
 
 if __name__ == '__main__':
-    tmin = 240105600
-#    tmax = 384652800
-    tmax = 384739200
-    foo = LightCurveFitsFile()
-    foo.readDbTables(tmin, tmax, chatter=1)
-    foo.writeto("msl_%i.fits" % tmax)
+    import sys
+    from GtApp import GtApp
+    import date2met
+
+    os.chdir('/afs/slac/g/glast/ground/links/data/ASP/scratch')
+
+    version = 0
+
+    tmin = 240105600  # 2008 Aug 11
+    tmax = getLastUpdateTime()
+    print "Most recent processed TSTOP in TIMEINTERVALS table: ", tmax
+
+    #
+    # No latency for data release
+    #
+    latency = 0
+    utc_now = date2met.date2met()
+
+    tmax = min(utc_now - latency, tmax)
+    print "UTC now minus latency: ", utc_now - latency
+
+    outfile = 'gll_asp_%010i_v%02i.fit' % (tmax, version)
+
+    output = LightCurveFitsFile()
+
+    output.readDbTables(tmin, tmax, chatter=1)
+    output.writeto(outfile, clobber=True)
+    
+    fchecksum = GtApp('fchecksum')
+    fchecksum.run(infile=outfile, update='yes', datasum='yes', chatter=0)

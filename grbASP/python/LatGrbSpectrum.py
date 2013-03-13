@@ -45,8 +45,11 @@ def pl_energy_flux(like, emin, emax, srcname="point source 0"):
     gamma = -spec.getParam('Index').getTrueValue()
     flux = (pl_integral(emin, emax, gamma-1)/pl_integral(emin, emax, gamma)
             *like[srcname].flux(emin, emax)*ergperMeV)
-    fractionalError = (spec.getParam('Integral').error()
-                       /spec.getParam('Integral').getValue())
+    try:
+        fractionalError = (spec.getParam('Integral').error()
+                           /spec.getParam('Integral').getValue())
+    except ZeroDivisionError:
+        fractionalError = 0
     return flux, flux*fractionalError
 
 def pl_fluence(like, emin, emax, srcname, tmin, tmax):

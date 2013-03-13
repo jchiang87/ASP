@@ -65,7 +65,7 @@ class Packet(object):
             elif (line.find('GRB_TIME:') == 0 or 
                   line.find('IMG_START_TIME') == 0 or 
                   line.find('POINT_TIME') == 0):
-                self.SOD = int(float(line.split()[1]))
+                self.SOD = float(line.split()[1])
             elif line.find('NOTICE_DATE') == 0:
                 self._parseNoticeDate(line)
             elif line.find("TRIGGER_NUM:") == 0:
@@ -96,7 +96,7 @@ class Packet(object):
         except AttributeError:
             pass
         self.buffer[5] = self.TJD
-        self.buffer[6] = self.SOD*100
+        self.buffer[6] = int(self.SOD*100.)
         self.buffer.byteswap()
     def candidateName(self):
         tjd = self.TJD
@@ -105,7 +105,6 @@ class Packet(object):
         self.start_time = (jd.seconds() -
                            pyASP.JulianDate_missionStart().seconds())
         year, month, day, hours = jd.gregorianDate()
-#        return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, hours/24.*1000)
         return 'GRB%02i%02i%02i%03i' % (year % 100, month, day, 
                                         round(sod/86400.*1000))
     def _MET(self):

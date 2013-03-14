@@ -16,6 +16,10 @@ import pyfits
 import databaseAccess as dbAccess
 from makeDrpLcTables import TimeIntervals, getLastUpdateTime
 
+# This sets the ordering of the columns in the output FITS file.
+# The FSSC expects a specific ordering.
+_eband_ids = (7, 6, 5)
+
 def get_energy_bands():
     sql = """select energybands.eband_id, energybands.name from energybands
              join taskgrouplist on
@@ -54,8 +58,7 @@ class FitsEntry(object):
         # three energy bands, indexed by eband_id.  Fill with null
         # values so that missing entries are properly set.
         #
-        self.eband_ids = (5, 6, 7)
-        self.data = dict([(id, [-1, -1, -1, -1]) for id in self.eband_ids])
+        self.data = dict([(id, [-1, -1, -1, -1]) for id in _eband_ids])
     def process_entry(self, entry):
         """Each entry from the LIGHTCURVE db table query contains
         flux, error, ul, TS data for a single energy band."""
@@ -72,7 +75,7 @@ class FitsEntry(object):
         POINTSOURCES table."""
         ra, dec = coords[self.name]
         row = [self.start, self.stop, self.name, ra, dec]
-        for eband_id in self.eband_ids:
+        for eband_id in _eband_ids:
             # Append flux, error, is_ul info for each band
             row.extend(self.data[eband_id][:3])
         row.append(self.stop - self.start)   # duration
@@ -80,7 +83,7 @@ class FitsEntry(object):
         return tuple(row)
 
 class LightCurveFitsFile(object):
-    def __init__(self, templateFile=None, eband_ids=(5, 6, 7)):
+    def __init__(self, templateFile=None):
         if templateFile is None:
             try:
                 templateFile = os.path.join(os.environ['DRPMONITORINGROOT'],
@@ -95,7 +98,6 @@ class LightCurveFitsFile(object):
         self.HDUList = pyfits.HDUList()
         self.HDUList.append(pyfits.PrimaryHDU())
         self._fillKeywords(self.HDUList[0], PHDUKeys)
-        self.eband_ids = eband_ids
     def readDbTables(self, tmin, tmax, chatter=0):
         """Queries of LIGHTCURVES table to obtain the flux info
         for each source.
@@ -107,7 +109,7 @@ class LightCurveFitsFile(object):
             if chatter > 0:
                 print i, name
             eband_query = " or ".join(["lightcurves.eband_id=%i" % eband_id
-                                       for eband_id in self.eband_ids])
+                                       for eband_id in _eband_ids])
             sql = """select
                      lightcurves.flux,
                      lightcurves.error,
@@ -166,7 +168,7 @@ class LightCurveFitsFile(object):
         colnames = ["START", "STOP", "NAME", "RA", "DEC"]
         formats = ["D", "D", "30A", "E", "E"]
         units = ["s", "s", None, "deg", "deg"]
-        for eband_id in (5, 6, 7):
+        for eband_id in _eband_ids:
             colnames.append("FLUX%s" % ebands[eband_id])
             colnames.append("ERROR%s" % ebands[eband_id])
             colnames.append("UL%s" % ebands[eband_id])

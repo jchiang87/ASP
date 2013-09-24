@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline xmlns="http://glast-ground.slac.stanford.edu/pipeline" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+  <task name="RegisterAspSims" type="Data" version="2.6">
+    <notation>Registering ASP simulation data</notation>
+    <variables>
+      <var name="filePathRoot">/nfs/farm/g/glast/u33/ASP/AspSims/TestData2</var>
+      <var name="baseName">newSims_filt</var>
+      <var name="PYASPROOT">/nfs/farm/g/glast/u33/ASP/dev/ASP/pyASP/v3r4p1</var>
+      <var name="BINDIR">rh9_gcc32</var>
+      <var name="outputFolder">/ASP/TestSims6</var>
+    </variables>
+    <process name="computeFileInfo">
+      <job executable="${PYASPROOT}/${BINDIR}/computeFileInfo.sh"
+           batchOptions="-q glastdataq " allocationGroup="glastdata"/>
+    </process>
+    <process name="launchRegistrationTasks">
+      <script><![CDATA[
+         computeFileInfo = pipeline.getProcessInstance("computeFileInfo")
+         fileList = computeFileInfo.getVariable("fileList")
+         numFt1Files = int("%s" % computeFileInfo.getVariable("numFt1Files"))
+         for i in range(numFt1Files):
+             pipeline.createSubstream("registerDatasetTask", i, 
+                                      "fileList=%s,fileEntry=%i,"%(fileList, i))
+      ]]></script>
+      <depends>
+        <after process="computeFileInfo" status="SUCCESS"/>
+      </depends>
+      <createsSubtasks>
+        <subtask>registerDatasetTask</subtask>
+      </createsSubtasks>
+    </process>
+    <process name="registerFT2File">
+      <script><![CDATA[
+        basename = 'newSims_scData_0000.fits'
+        fileName = '/nfs/farm/g/glast/u33/ASP/AspSims/TestData2/' + basename
+        attributes = 'nMetStart=0:nMetStop=1209630'
+        logicalPath = '%s/FT2:%s' % (outputFolder, basename)
+        datacatalog.registerDataset('FT2', logicalPath, fileName, attributes)
+      ]]>
+      </script>
+    </process>
+    <task name="registerDatasetTask" version="1.0" type="Data">
+      <prerequisites>
+        <prerequisite name="fileList" type="string"/>
+        <prerequisite name="fileEntry" type="integer"/>
+      </prerequisites>
+      <process name="readFileInfo">
+        <job executable="${PYASPROOT}/${BINDIR}/readFileInfo.sh"
+             batchOptions="-q glastdataq " allocationGroup="glastdata"/>
+      </process>
+      <process name="registerDataset">
+        <script><![CDATA[
+          fileInfo = pipeline.getProcessInstance("readFileInfo")
+          fileName = fileInfo.getVariable("fileName")
+          basename = fileName.split('/')[-1]
+          nDownlink = fileInfo.getVariable("nDownlink")
+          tstart = fileInfo.getVariable("tstart")
+          tstop = fileInfo.getVariable("tstop")
+          print fileName, nDownlink, tstart, tstop
+          attributes = ('nDownlink=%s:nMetStart=%s:nMetStop=%s'
+                        % (nDownlink, tstart, tstop))
+          logicalPath = '%s/FT1:%s' % (outputFolder, basename)
+          datacatalog.registerDataset('FT1', logicalPath, fileName,
+                                      attributes)
+
+          #
+          # register the FT2 file.
+          #
+          basename = 'newSims_scData_0000.fits'
+          fileName = '/nfs/farm/g/glast/u33/ASP/AspSims/TestData/' + basename
+          attributes = 'nMetStart=0:nMetStop=1209630'
+          logicalPath = '%s/FT2:%s' % (outputFolder, basename)
+          datacatalog.registerDataset('FT2', logicalPath, fileName, attributes)
+        ]]>
+        </script>
+        <depends>
+          <after process="readFileInfo" status="SUCCESS"/>
+        </depends>
+      </process>
+    </task>
+  </task>
+</pipeline>

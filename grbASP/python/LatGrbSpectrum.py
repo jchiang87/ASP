@@ -86,7 +86,7 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
     gtselect.run()
 
     events = pyfits.open(gtselect['outfile'])
-    if events['EVENTS'].size() == 0:
+    if events['EVENTS'].size == 0:
         raise ZeroFt1EventsError
 
     expMap = createExpMap(gtselect['outfile'], ft2File, name, config)

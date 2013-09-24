@@ -39,14 +39,14 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect.run()
 
     ft1 = pyfits.open(gtselect['outfile'])
-    print "ft1['EVENTS'].size(): ", ft1['EVENTS'].size()
+    print "ft1['EVENTS'].size: ", ft1['EVENTS'].size
     
     try:
         energies = ft1['EVENTS'].data.field('ENERGY')
     except (NameError, AttributeError):
         raise NoFT1EventsError, "Only one or zero events were extracted for the nominal time window and acceptance cone for this burst candidate."
 
-    if ft1['EVENTS'].size() < 2 or len(energies) < 2:
+    if ft1['EVENTS'].size < 2 or len(energies) < 2:
         raise NoFT1EventsError, "Only one or zero events were extracted for the nominal time window and acceptance cone for this burst candidate."
 
     gtbin['evfile'] = gtselect['outfile']
@@ -59,7 +59,7 @@ def extractLatData(gcnNotice, ft1File, config):
     gtbin.run()
     
     events = FitsNTuple(gtselect['outfile'], 'EVENTS')
-    bb = BayesianBlocks(events.TIME)
+    bb = BayesianBlocks(events.TIME, gtselect['tmin'], gtselect['tmax'])
     ncp_prior = BayesianBlocks.ncp_prior(len(events.TIME), 1e-3)
     x, y = bb.lightCurve(ncp_prior)
 

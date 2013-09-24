@@ -305,7 +305,8 @@ def apply_zmaxcut(infiles, ft2files, zmax=100):
             gtselect.run(infile=tmpfile, outfile=outfile, zmax=zmax, 
                          emin=0, emax=3e6, rad=180)
         ft1 = pyfits.open(outfile)
-        if ft1['EVENTS'].size() != 0:
+        #if ft1['EVENTS'].size() != 0:
+        if ft1['EVENTS'].size != 0:
             outfiles.append(outfile)
         if ft2files:
             os.remove(tmpfile)

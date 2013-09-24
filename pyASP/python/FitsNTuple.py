@@ -31,7 +31,7 @@ class FitsNTuple:
         for i, file in enumerate(fitsfiles):
             #print "adding", file
             table = pyfits.open(file.strip(" "))
-            if table[extension].size() == 0:
+            if table[extension].size == 0:
                 raise FitsNTupleError("zero rows in %s[%s]" % (file.strip(" "),
                                                                extension))
             if i == 0:

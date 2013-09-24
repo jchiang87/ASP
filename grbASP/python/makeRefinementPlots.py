@@ -223,7 +223,7 @@ def getTimeKeywords(fitsfile):
 
 def lightCurve(grb_id, tstart, ft1file, outfile=None, bb_lc_file=None):
     tmin, tmax, ft1_pyfits = getTimeKeywords(ft1file)
-    if ft1_pyfits['EVENTS'].size() != 0:
+    if ft1_pyfits['EVENTS'].size != 0:
         ft1 = FitsNTuple(ft1file)
         tvals = ft1.TIME - int(tstart)
     else:

@@ -4,7 +4,7 @@
 #
 TITLE:          GCN/FERMI NOTICE   
 NOTICE_DATE:    Tue 01 Jan 08 13:15:20 UT 
-NOTICE_TYPE:    Fermi-LAT Offline GRB Position
+NOTICE_TYPE:    Fermi-LAT Ground GRB Position
 TRIGGER_NUM:    100001, Sequence_Num: 0 
 TRIG_SOURCE:    LAT
 GRB_RA:         282.306d {+18h 49m 13s} (J2000), 

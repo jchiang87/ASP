@@ -501,6 +501,16 @@ if __name__ == '__main__':
                 % notice.grb_id
             continue
         #
+        # Check if candidate is within 30 deg of Galactic Center during
+        # modified GC survey mode for 2014:
+        #
+        if (dist((grb_dir.ra(), grb_dir.dec()), (266.40, -28.94)) < 30):
+            print 'GRB candidate %i at (RA, Dec) = %.2f, %.2f within 30 deg of Galactic Center' % (notice.grb_id, grb_dir.ra(), grb_dir.dec())
+            notice.email_notification(logProb, grbConfig.THRESHOLD,
+                                      recipients=['jchiang@slac.stanford.edu'],
+                                      files=ft1_files, figures=figures)
+            continue
+        #
         notice_type = None
         if isUpdate:
             sql = ("select NOTICETYPE from gcnnotices where grb_id=%i" 

@@ -74,13 +74,20 @@ class FitsEntry(object):
         each source by name.  The coordinate info is obtained from the
         POINTSOURCES table."""
         ra, dec = coords[self.name]
+        ra, dec = float(ra), float(dec)
         row = [self.start, self.stop, self.name, ra, dec]
         for eband_id in _eband_ids:
             # Append flux, error, is_ul info for each band
             row.extend(self.data[eband_id][:3])
-        row.append(self.stop - self.start)   # duration
+        row.append(float(self.stop - self.start))   # duration
         row.append(self.data[5][-1])         # TS for 100-300000 MeV band
         return tuple(row)
+
+def rename_source(names, old_name, new_name):
+    for i in range(len(names)):
+        if names[i] == old_name:
+            names[i] = new_name
+    return names
 
 class LightCurveFitsFile(object):
     def __init__(self, templateFile=None):
@@ -161,6 +168,17 @@ class LightCurveFitsFile(object):
         # zip into column format.
         #
         columns = [np.array(col) for col in zip(*rows)]
+        #
+        # Ad hoc source renaming
+        #
+        columns[2] = rename_source(columns[2], 
+                                   'FERMI J1532-1321 (ATel #3579)',
+                                   'TXS 1530-131')
+        #
+        # Ensure START, STOP columns are double precision
+        #
+        columns[0] = np.array(columns[0], dtype=np.float64)
+        columns[1] = np.array(columns[1], dtype=np.float64)
         #
         # Set attributes for building pyfits.Columns.
         #

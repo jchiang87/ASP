@@ -189,7 +189,7 @@ def gcn_search_seed(grb_id, connection=asp_default):
     elif notice_type == 'ASP_BLIND_SEARCH':
         return search_seed['ASP']
     elif notice_type.find('LAT') != -1:
-        return search_seed['LAT']
+        return search_seed['LAT_ONBOARD']
     elif mission == 'SWIFT':
         return search_seed['SWIFT']
     elif mission.find('AGILE') != -1:

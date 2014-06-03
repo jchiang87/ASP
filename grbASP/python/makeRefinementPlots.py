@@ -215,7 +215,7 @@ def createHist(xvals, xmin, xmax, nx=50):
         except IndexError:
             if val == xmax:
                 bins[-1] += 1
-    return xx, bins
+    return xx[:nx], bins
 
 def getTimeKeywords(fitsfile):
     foo = pyfits.open(fitsfile)

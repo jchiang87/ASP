@@ -29,11 +29,13 @@ def get_energy_bands():
                                 for entry in curs])
     return dbAccess.apply(sql, cursorFunc=func)
 
-def drpNames(aliases=lambda x : x):
+def drpNames(aliases=lambda x : x, omit=None):
     sql = """select ptsrc_name from pointsourcetypeset
              where sourcesub_type='DRP'"""
     extract = lambda curs : [aliases(entry[0]) for entry in curs]
     my_names = dbAccess.apply(sql, cursorFunc=extract)
+    if omit is not None:
+        my_names = [x for x in my_names if x not in omit]
     my_names.sort()
     return my_names
 
@@ -90,7 +92,21 @@ def rename_source(names, old_name, new_name):
     return names
 
 class LightCurveFitsFile(object):
-    def __init__(self, templateFile=None):
+    def __init__(self, templateFile=None, omit=None,
+                 met_filter={'PKS 0502+049' : (0, 430358400),
+                             'MG1 J050533+0415' : (0, 430358400)}):
+        # The met_filter specifies time ranges that should be omitted.
+        # In this case, the FAs requested that data for MG1
+        # J050533+0415 prior to Aug 22, 2014 be omitted since that
+        # source is now correctly identified as PKS 0502+049.  The
+        # filter on PKS 0502+049 is needed to omit fluxes from its
+        # ASPJ alias.
+        # Entries for MG1 J050533+0415 after Aug 22, 2014 are renamed
+        # to PKS 0502+049 in self._add_lightcurve_hdu(...) below and
+        # PKS 0502+049 will be fit for instead of MG1 J050533+0415 by 
+        # ASP in future DRP runs.
+        self.omit = omit
+        self.met_filter = met_filter
         if templateFile is None:
             try:
                 templateFile = os.path.join(os.environ['DRPMONITORINGROOT'],
@@ -110,7 +126,7 @@ class LightCurveFitsFile(object):
         for each source.
         """
         time_intervals = TimeIntervals()
-        drp_names = drpNames()
+        drp_names = drpNames(omit=self.omit)
         results = OrderedDict()
         for i, name in enumerate(drp_names):
             if chatter > 0:
@@ -151,6 +167,10 @@ class LightCurveFitsFile(object):
                 if start >= tmax or stop < tmin:
                     continue
                 key = name, start, stop
+                if name in self.met_filter:
+                    filt_tmin, filt_tmax = self.met_filter[name]
+                    if start > filt_tmin and stop < filt_tmax:
+                        continue
                 if not results.has_key(key):
                     results[key] = FitsEntry(*key)
                 results[key].process_entry(entry)
@@ -174,6 +194,9 @@ class LightCurveFitsFile(object):
         columns[2] = rename_source(columns[2], 
                                    'FERMI J1532-1321 (ATel #3579)',
                                    'TXS 1530-131')
+        columns[2] = rename_source(columns[2], 
+                                   'MG1 J050533+0415',
+                                   'PKS 0502+049')
         #
         # Ensure START, STOP columns are double precision
         #

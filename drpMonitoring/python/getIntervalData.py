@@ -122,7 +122,7 @@ else:
     fcopy.run()
 
 pars['ft1file'] = fcopy['outfile']
-pars['ft2file'] = os.path.abspath(ft2Merged)
+pars['ft2file'] = resolve_nfs_path(os.path.abspath(ft2Merged))
 pars['start_time'] = start_time
 pars['stop_time'] = stop_time
 pars.write()

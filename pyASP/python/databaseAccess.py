@@ -37,12 +37,16 @@ except KeyError:
     print "Warning: Using dev db tables."
     pass
 
+_connection = None
+
 def nullFunc(*args):
     return None
 
 def apply(sql, cursorFunc=nullFunc, connection=asp_default, args=None):
-    my_connection = cx_Oracle.connect(*connection)
-    cursor = my_connection.cursor()
+    global _connection
+    if _connection is None:
+        _connection = cx_Oracle.connect(*connection)
+    cursor = _connection.cursor()
     try:
         if args is None:
             cursor.execute(sql)
@@ -51,12 +55,10 @@ def apply(sql, cursorFunc=nullFunc, connection=asp_default, args=None):
         results = cursorFunc(cursor)
     except cx_Oracle.DatabaseError, message:
         cursor.close()
-        my_connection.close()
         raise cx_Oracle.DatabaseError, message
     cursor.close()
     if cursorFunc is nullFunc:
-        my_connection.commit()
-    my_connection.close()
+        _connection.commit()
     return results
 
 def getDbObjects(tablename, connection=asp_default):

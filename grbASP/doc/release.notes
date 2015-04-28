@@ -7,6 +7,7 @@
     @verbatim
     * EOH *
 
+ grbASP-05-04-00 28-Apr-2015 jchiang adjustments to BlindSearch.py to avoid GC during pointed obs; skip nadirOps moot db query; minor adjustments to GCN_Notice.tpl
  grbASP-05-03-02 23-Sep-2013 jchiang changes for pyfits 3.1; new constructor for BayesianBlocks in ST-09-32-05
  grbASP-05-03-01 26-Jun-2012 jchiang leap second handling
  grbASP-05-03-00 08-May-2012 jchiang switch from EXTENDEDFT1 to FT1 in GRB_afterglow datacatalog query; switch to glastdataq for all batch submissions

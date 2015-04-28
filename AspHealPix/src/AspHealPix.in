@@ -1,0 +1,130 @@
+// -*- mode: c++ -*-
+/**
+ * @file AspHealPix.in 
+ * @brief Interface file for SWIG generated wrappers.
+ * @author J. Chiang <jchiang@slac.stanford.edu>
+ *
+ * $Header$
+ */
+%module AspHealPix
+%{
+#include <cmath>
+#include <map>
+#include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
+#include "astro/SkyDir.h"
+#include "astro/SkyProj.h"
+#include "healpix/Healpix.h"
+#include "map_tools/SkyImage.h"
+#include "AspHealPix/HealpixArray.h"
+#include "AspHealPix/CountsArray.h"
+#include "AspHealPix/ExposureArray.h"
+#include "AspHealPix/Pixel.h"
+#include "AspHealPix/PoissonProb.h"
+%}
+%include stl.i
+%exception {
+   try {
+      $action
+   } catch (std::exception & eObj) {
+      PyErr_SetString(PyExc_RuntimeError, const_cast<char *>(eObj.what()));
+      return NULL;
+   }
+}
+%exception {
+   try {
+      $action
+   } catch (Pixel::StopIteration & eObj) {
+      PyErr_SetString(PyExc_StopIteration, const_cast<char *>(eObj.what()));
+      return NULL;
+   }
+}
+%template(DoublePair) std::pair<double, double>;
+%template(DoubleVector) std::vector<double>;
+%template(FloatVector) std::vector<float>;
+%template(StringVector) std::vector<std::string>;
+%include $(ASTROROOT)/astro/SkyProj.h
+%include $(ASTROROOT)/astro/SkyDir.h
+%include $(HEALPIXROOT)/healpix/Healpix.h
+%feature("autodoc", "1");
+%include $(ASPHEALPIXROOT)/AspHealPix/Pixel.h
+%include $(ASPHEALPIXROOT)/AspHealPix/HealpixArray.h
+%include $(ASPHEALPIXROOT)/AspHealPix/CountsArray.h
+%include $(ASPHEALPIXROOT)/AspHealPix/ExposureArray.h
+%include $(ASPHEALPIXROOT)/AspHealPix/PoissonProb.h
+
+%extend HealpixArray {
+   void __setitem__(const astro::SkyDir & dir, float value) {
+      self->operator[](dir) = value;
+   }
+   float __getitem__(const astro::SkyDir & dir) const {
+      return self->operator[](dir);
+   }
+}
+
+%extend healpix::Healpix {
+   Pixel pixel(const astro::SkyDir & dir) const {
+      return self->pixel(dir);
+   }
+
+   long coord2pix(const astro::SkyDir dir) const {
+      Pixel my_pix(dir, *self);
+      return my_pix.index();
+   }
+
+   long coord2pix(double lon, double lat, astro::SkyDir::CoordSystem 
+                  coordsys=astro::SkyDir::EQUATORIAL) const {
+      astro::SkyDir my_dir(lon, lat, coordsys);
+      Pixel my_pix(my_dir, *self);
+      return my_pix.index();
+   }
+
+   std::pair<double, double> 
+      pix2coord(long index,  astro::SkyDir::CoordSystem 
+                coordsys=astro::SkyDir::EQUATORIAL) const {
+      Pixel my_pix(index, *self);
+      if (coordsys == astro::SkyDir::EQUATORIAL) {
+         return std::make_pair(my_pix().ra(), my_pix().dec());
+      } else if (coordsys == astro::SkyDir::GALACTIC) {
+         return std::make_pair(my_pix().l(), my_pix().b());
+      } else {
+         throw std::runtime_error("pix2coord: invalid coordinate system");
+      }
+   }
+
+   Pixel __getitem__(long index) const {
+      if (index >= self->npix()) {
+         throw Pixel::StopIteration();
+      }
+      return Pixel(index, *self);
+   }
+
+   Pixel __getitem__(const astro::SkyDir & dir) const {
+      return Pixel(dir, *self);
+   }
+}
+
+%extend Pixel {
+   double ra() {
+      astro::SkyDir dir(*self);
+      return dir.ra();
+   }
+   double dec() {
+      astro::SkyDir dir(*self);
+      return dir.dec();
+   }
+   double l() {
+      astro::SkyDir dir(*self);
+      return dir.l();
+   }
+   double b() {
+      astro::SkyDir dir(*self);
+      return dir.b();
+   }
+   double separation(const Pixel & pix) {
+      astro::SkyDir dir(*self);
+      return dir.difference(pix())*180./M_PI;
+   }
+}

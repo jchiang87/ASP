@@ -1,0 +1,1857 @@
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-02-00, operation: add
+Package: AspLauncher
+User: jchiang  Mon Sep 23 23:05:43 2013
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.164
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-01-01, operation: add
+Package: AspLauncher
+User: jchiang  Tue Jun 26 13:07:08 2012
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-01-01, operation: add
+Package: AspLauncher
+User: jchiang  Tue Jun 26 13:06:41 2012
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.162
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-01-00, operation: add
+Package: AspLauncher
+User: jchiang  Tue May  8 13:01:07 2012
+Files:
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-01-00, operation: add
+Package: AspLauncher
+User: jchiang  Tue May  8 13:00:25 2012
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.160
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-06-00-00, operation: add
+Package: AspLauncher
+User: jchiang  Wed Feb 22 17:03:16 2012
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.159
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-01-00, operation: add
+Package: AspLauncher
+User: jchiang  Fri Aug 12 12:19:28 2011
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.158
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-05-00-00, operation: add
+Package: AspLauncher
+User: jchiang  Fri Jul 22 08:39:16 2011
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.157
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: AspLauncher-02-00-00, operation: add
+Package: AspLauncher
+User: jchiang  Fri Jul 22 08:18:42 2011
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.156
+  AspLauncher/SConscript  1.9
+  AspLauncher/cmt/requirements  1.21
+  AspLauncher/doc/release.notes  1.18
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.39
+  AspLauncher/python/launchStreams.py  1.26
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.22
+  AspLauncher/xml/AspInsertIntervals.xml  1.6
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 22 08:18:36 PDT 2011
+ASP-scons/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 22 08:18:36 PDT 2011
+ASP-scons/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Jul 22 08:18:36 PDT 2011
+ASP-scons/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 21 13:22:40 PDT 2011
+ASP-scons/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals.xml AspLauncher.xml 
+Log Message:
+remove CMT-related residua; standardize references to datacat folders instead of logicalPath; switch to rhel5-64 in xml task def
+    *
+------------------------------------------------------------
+User: jchiang  Thu Jul 21 13:22:39 PDT 2011
+ASP-scons/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+remove CMT-related residua; standardize references to datacat folders instead of logicalPath; switch to rhel5-64 in xml task def
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: AspLauncher
+User: jchiang  Thu Sep  9 14:24:56 2010
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.150
+  AspLauncher/SConscript  1.8
+  AspLauncher/cmt/requirements  1.20
+  AspLauncher/doc/release.notes  1.17
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.38
+  AspLauncher/python/launchStreams.py  1.25
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.21
+  AspLauncher/xml/AspInsertIntervals.xml  1.5
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-04-00-00, operation: add
+Package: AspLauncher
+User: jchiang  Thu Sep  9 13:04:42 2010
+Files:
+  AspLauncher/cmt/requirements  1.20
+  AspLauncher/doc/release.notes  1.17
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.38
+  AspLauncher/python/launchStreams.py  1.25
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.21
+  AspLauncher/xml/AspInsertIntervals.xml  1.5
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: AspLauncher-01-04-04, operation: add
+Package: AspLauncher
+User: jchiang  Thu Sep  9 08:43:05 2010
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.148
+  AspLauncher/SConscript  1.8
+  AspLauncher/cmt/requirements  1.20
+  AspLauncher/doc/release.notes  1.17
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.38
+  AspLauncher/python/launchStreams.py  1.25
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.21
+  AspLauncher/xml/AspInsertIntervals.xml  1.5
+  AspLauncher/xml/AspLauncher-SCons.xml  1.3
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Sep  9 08:42:59 PDT 2010
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Thu Sep  9 08:42:59 PDT 2010
+ASP/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Thu Sep  9 08:36:37 PDT 2010
+ASP-scons/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r4p4
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Sep  9 08:29:09 PDT 2010
+ASP-scons/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+final changes to remove special handling for SCons-based tasks
+    *
+------------------------------------------------------------
+User: jchiang  Wed Sep  8 21:38:18 PDT 2010
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals.xml AspLauncher.xml 
+Log Message:
+migration of prod xml task defs to SCons
+    *
+------------------------------------------------------------
+User: jchiang  Wed Sep  8 17:53:35 PDT 2010
+ASP-scons/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals-SCons.xml AspLauncher-SCons.xml 
+Log Message:
+explicitly set log files location to u41. PII doesn't understand symlinks for some reason.  test for SCons in aspLauncher.py
+    *
+------------------------------------------------------------
+User: jchiang  Wed Sep  8 17:53:35 PDT 2010
+ASP-scons/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+explicitly set log files location to u41. PII doesn't understand symlinks for some reason.  test for SCons in aspLauncher.py
+    *
+------------------------------------------------------------
+TAG
+Tag name: AspLauncher-01-04-03, operation: add
+Package: AspLauncher
+User: jchiang  Fri Mar 12 09:04:39 2010
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.140
+  AspLauncher/SConscript  1.7
+  AspLauncher/cmt/requirements  1.19
+  AspLauncher/doc/release.notes  1.16
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.36
+  AspLauncher/python/launchStreams.py  1.25
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.20
+  AspLauncher/xml/AspInsertIntervals.xml  1.4
+  AspLauncher/xml/AspLauncher-SCons.xml  1.2
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:04:33 PST 2010
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:04:33 PST 2010
+ASP/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Fri Mar 12 09:03:41 PST 2010
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r4p3
+    *
+------------------------------------------------------------
+User: jchiang  Mon Feb  1 10:25:50 PST 2010
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+revert offset for weekly streams
+    *
+------------------------------------------------------------
+TAG
+Tag name: AspLauncher-01-04-02, operation: add
+Package: AspLauncher
+User: jchiang  Wed Dec 16 20:46:36 2009
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.135
+  AspLauncher/SConscript  1.6
+  AspLauncher/cmt/requirements  1.18
+  AspLauncher/doc/release.notes  1.15
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.36
+  AspLauncher/python/launchStreams.py  1.24
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.20
+  AspLauncher/xml/AspInsertIntervals.xml  1.4
+  AspLauncher/xml/AspLauncher-SCons.xml  1.2
+  AspLauncher/xml/AspInsertIntervals-SCons.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Dec 16 20:46:25 PST 2009
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Dec 16 20:46:25 PST 2009
+ASP/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Dec 16 20:45:51 PST 2009
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r4p2
+    *
+------------------------------------------------------------
+User: jchiang  Wed Dec 16 20:44:33 PST 2009
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals.xml AspLauncher.xml 
+Log Message:
+modify task defs to use rhel4_gcc34opt build
+    *
+------------------------------------------------------------
+User: jchiang  Mon Dec 14 14:19:45 PST 2009
+ASP-scons/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals-SCons.xml AspLauncher-SCons.xml 
+Log Message:
+use Debug build; add <package>ROOT dir to executable path
+    *
+------------------------------------------------------------
+User: jchiang  Fri Dec  4 23:01:18 PST 2009
+ASP-scons/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+use INST_DIR instead of <package>ROOT for SCons
+    *
+------------------------------------------------------------
+User: jchiang  Mon Nov 23 14:52:53 PST 2009
+ASP-scons/AspLauncher/xml
+
+Added Files:
+	AspInsertIntervals-SCons.xml AspLauncher-SCons.xml 
+Log Message:
+add SCons versions of task definitions
+    *
+------------------------------------------------------------
+User: jrb  Mon Nov 16 16:34:20 PST 2009
+ASP-scons/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+need wrapper scripts for this package
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 11 20:38:08 PST 2009
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+needed to bump version for prod installation
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: AspLauncher-01-04-01, operation: add
+Package: AspLauncher
+User: jchiang  Wed Nov 11 15:50:49 2009
+Files:
+  AspLauncher/.cvsignore  1.2
+  AspLauncher/ChangeLog  1.125
+  AspLauncher/SConscript  1.4
+  AspLauncher/cmt/requirements  1.17
+  AspLauncher/doc/release.notes  1.14
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.35
+  AspLauncher/python/launchStreams.py  1.23
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.18
+  AspLauncher/xml/AspInsertIntervals.xml  1.3
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 11 15:50:43 PST 2009
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 11 15:50:43 PST 2009
+ASP/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+stag/GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 11 15:49:34 PST 2009
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals.xml AspLauncher.xml 
+Log Message:
+tagging v1r4p1; fix closing element in var tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 11 15:49:34 PST 2009
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r4p1; fix closing element in var tag
+    *
+------------------------------------------------------------
+User: jchiang  Wed Nov 11 09:44:50 PST 2009
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+use u52 for log files
+    *
+------------------------------------------------------------
+User: jchiang  Tue Nov 10 14:42:28 PST 2009
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+set offset in weekly stream ids to account for leap seconds introduced in the switch from Wednesdays to Mondays for the start of these intervals.
+
+    *
+------------------------------------------------------------
+User: jrb  Tue Nov  3 13:24:19 PST 2009
+ASP/AspLauncher
+
+Modified Files:
+	.cvsignore SConscript 
+Log Message:
+Getting ready for SCons
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: ASP-03-00-00, operation: add
+Package: AspLauncher
+User: jchiang  Mon Aug 17 23:44:15 2009
+Files:
+  AspLauncher/cmt/requirements  1.16
+  AspLauncher/doc/release.notes  1.13
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.35
+  AspLauncher/python/launchStreams.py  1.22
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: AspLauncher-01-04-00, operation: add
+Package: AspLauncher
+User: jchiang  Mon Aug 17 22:26:08 2009
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.116
+  AspLauncher/SConscript  1.2
+  AspLauncher/cmt/requirements  1.16
+  AspLauncher/doc/release.notes  1.13
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.4
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.35
+  AspLauncher/python/launchStreams.py  1.22
+  AspLauncher/python/insertIntervals.py  1.3
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:26:02 PDT 2009
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:26:02 PDT 2009
+ASP/AspLauncher
+
+Modified Files:
+	SConscript 
+Log Message:
+GoGui_auto-tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:25:11 PDT 2009
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+add SConscript file so I can tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:25:11 PDT 2009
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add SConscript file so I can tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:25:11 PDT 2009
+ASP/AspLauncher
+
+Added Files:
+	SConscript 
+Log Message:
+add SConscript file so I can tag
+    *
+------------------------------------------------------------
+User: jchiang  Mon Aug 17 22:23:14 PDT 2009
+ASP/AspLauncher/python
+
+Modified Files:
+	insertIntervals.py intervalAccess.py 
+Log Message:
+special interval handling for DEV tests
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3p6, operation: add
+Package: AspLauncher
+User: jchiang  Fri Oct 17 08:44:45 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.109
+  AspLauncher/cmt/requirements  1.15
+  AspLauncher/doc/release.notes  1.11
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.35
+  AspLauncher/python/launchStreams.py  1.22
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 17 08:44:26 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3p6
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 17 08:44:26 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3p6
+    *
+------------------------------------------------------------
+User: jchiang  Fri Oct 10 11:17:06 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+debug test used to screen for duplicate stream exceptions for blind search launching.
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu Oct  9 08:15:52 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+correct sign of test for launching
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3p5, operation: add
+Package: AspLauncher
+User: jchiang  Wed Oct  8 10:28:57 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.104
+  AspLauncher/cmt/requirements  1.14
+  AspLauncher/doc/release.notes  1.10
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.33
+  AspLauncher/python/launchStreams.py  1.22
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct  8 10:28:29 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3p5
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct  8 10:28:29 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3p5
+    *
+------------------------------------------------------------
+User: jchiang  Wed Oct  8 10:27:07 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+launch drpMonitoring for six hour intervals
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3p4, operation: add
+Package: AspLauncher
+User: jchiang  Sun Oct  5 14:09:08 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.100
+  AspLauncher/cmt/requirements  1.13
+  AspLauncher/doc/release.notes  1.9
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.33
+  AspLauncher/python/launchStreams.py  1.21
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun Oct  5 14:08:43 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3p4
+    *
+------------------------------------------------------------
+User: jchiang  Sun Oct  5 14:08:43 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3p4
+    *
+------------------------------------------------------------
+User: jchiang  Sun Oct  5 14:07:01 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+check current time before attempting to launch pending time intervals
+    *
+------------------------------------------------------------
+User: jchiang  Sun Oct  5 12:55:04 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Removed Files:
+	launchRspStreams.py 
+Log Message:
+remove RSP launching code
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jul 22 22:12:16 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Added Files:
+	launchRspStreams.py 
+Log Message:
+add RSP
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3p3, operation: add
+Package: AspLauncher
+User: jchiang  Sat Jul 19 15:29:10 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.94
+  AspLauncher/cmt/requirements  1.12
+  AspLauncher/doc/release.notes  1.8
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.32
+  AspLauncher/python/launchStreams.py  1.19
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 19 15:28:23 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3p3
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 19 15:28:23 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3p3
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 19 15:26:58 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+return code 160 from aspLauncher.py if duplicate blind search stream is encountered
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3p2, operation: add
+Package: AspLauncher
+User: jchiang  Sat Jul 12 20:13:27 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.90
+  AspLauncher/cmt/requirements  1.11
+  AspLauncher/doc/release.notes  1.7
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.8
+  AspLauncher/python/aspLauncher.py  1.31
+  AspLauncher/python/launchStreams.py  1.19
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.3
+
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:13:13 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3p2
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:13:13 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3p2
+    *
+------------------------------------------------------------
+User: jchiang  Sat Jul 12 20:12:11 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py 
+Log Message:
+issue warning regarding coverage of FT1 by FT2 instead of leaving exception unhandled
+    *
+------------------------------------------------------------
+User: jchiang  Sun Jul  6 14:24:35 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspTestQuery.xml 
+Log Message:
+modify test query to use OpsSim2 data
+    *
+------------------------------------------------------------
+TAG
+Tag name: v2r6, operation: add
+Package: AspLauncher
+User: jchiang  Sun Jun 29 13:11:23 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.85
+  AspLauncher/cmt/requirements  1.10
+  AspLauncher/doc/release.notes  1.6
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.7
+  AspLauncher/python/aspLauncher.py  1.31
+  AspLauncher/python/launchStreams.py  1.19
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.2
+
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3p1, operation: add
+Package: AspLauncher
+User: jchiang  Thu May 29 08:58:25 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.84
+  AspLauncher/cmt/requirements  1.10
+  AspLauncher/doc/release.notes  1.6
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.3
+  AspLauncher/python/checkLevelOneFiles.py  1.7
+  AspLauncher/python/aspLauncher.py  1.31
+  AspLauncher/python/launchStreams.py  1.19
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.2
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 29 08:58:07 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3p1
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 29 08:58:07 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3p1
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 28 08:57:24 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	intervalAccess.py 
+Log Message:
+use group_id instead of type for FREQUENCIES query condition since db table changed
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r3, operation: add
+Package: AspLauncher
+User: jchiang  Thu May 22 11:47:54 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.80
+  AspLauncher/cmt/requirements  1.9
+  AspLauncher/doc/release.notes  1.5
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/intervalAccess.py  1.2
+  AspLauncher/python/checkLevelOneFiles.py  1.7
+  AspLauncher/python/aspLauncher.py  1.31
+  AspLauncher/python/launchStreams.py  1.19
+  AspLauncher/python/insertIntervals.py  1.2
+  AspLauncher/xml/AspLauncher.xml  1.16
+  AspLauncher/xml/AspInsertIntervals.xml  1.2
+  AspLauncher/xml/AspTestQuery.xml  1.2
+
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 11:34:34 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r3
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 11:34:34 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r3
+    *
+------------------------------------------------------------
+User: jchiang  Thu May 22 09:11:53 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+unset defaults for folder, nDownlink env vars; allow debug mode to be configurable
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 21 20:37:53 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+replace hard-coded path with hard-coded symlink for output directory
+    *
+------------------------------------------------------------
+User: jchiang  Wed May 21 15:01:33 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+move resolve_nfs_path to pyASP; remove references to _asp_path and code related to its use
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 22:17:49 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py intervalAccess.py launchStreams.py 
+Log Message:
+don't set streamId for AspLauncher tasks
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 20:13:27 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspInsertIntervals.xml 
+Log Message:
+java string types cannot be cast in jython ints or floats so pass them as is, as string
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 20:13:27 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py insertIntervals.py 
+Log Message:
+java string types cannot be cast in jython ints or floats so pass them as is, as string
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 16:26:52 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Added Files:
+	AspInsertIntervals.xml 
+Log Message:
+factor the interval insertion into a separate task to avoid multiple attempts to fill the same intervals running concurrently
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 16:26:52 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+factor the interval insertion into a separate task to avoid multiple attempts to fill the same intervals running concurrently
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 16:14:35 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+fix typos
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 16:12:44 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+bump version number
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 16:10:08 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+code to insert new intervals into TIMEINTERVALS db table
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 16:10:07 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Added Files:
+	insertIntervals.py intervalAccess.py 
+Log Message:
+code to insert new intervals into TIMEINTERVALS db table
+    *
+------------------------------------------------------------
+User: jchiang  Tue May 20 12:03:39 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+remove dependence on ASP_PATH, rely on wrapper script for environment, apply string substitution for nfs mount points
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 19 19:58:57 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+change comments to reflect new wrapperGenerator behavior
+    *
+------------------------------------------------------------
+User: jchiang  Mon May 19 17:33:03 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspTestQuery.xml 
+Log Message:
+versiont of test query without batch process or command line args
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r2, operation: add
+Package: AspLauncher
+User: jchiang  Sun May  4 20:19:55 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.62
+  AspLauncher/cmt/requirements  1.8
+  AspLauncher/doc/release.notes  1.4
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/checkLevelOneFiles.py  1.7
+  AspLauncher/python/aspLauncher.py  1.22
+  AspLauncher/python/launchStreams.py  1.17
+  AspLauncher/xml/AspLauncher.xml  1.12
+  AspLauncher/xml/AspTestQuery.xml  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun May  4 20:19:38 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r2
+    *
+------------------------------------------------------------
+User: jchiang  Sun May  4 20:19:38 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r2
+    *
+------------------------------------------------------------
+User: jchiang  Sun May  4 20:18:40 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+set datacatalog version
+    *
+------------------------------------------------------------
+User: jchiang  Fri May  2 15:48:50 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use asp_pgwave
+    *
+------------------------------------------------------------
+User: jchiang  Fri May  2 15:13:45 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+pass stream id to PGWave task; use afs installation of catalog files
+
+    *
+------------------------------------------------------------
+User: jchiang  Fri May  2 15:12:06 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+use v9r5p2
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r1, operation: add
+Package: AspLauncher
+User: jchiang  Tue Apr 22 11:44:20 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.55
+  AspLauncher/cmt/requirements  1.6
+  AspLauncher/doc/release.notes  1.3
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/checkLevelOneFiles.py  1.7
+  AspLauncher/python/aspLauncher.py  1.21
+  AspLauncher/python/launchStreams.py  1.16
+  AspLauncher/xml/AspLauncher.xml  1.11
+  AspLauncher/xml/AspTestQuery.xml  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Apr 22 11:41:12 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r1
+    *
+------------------------------------------------------------
+User: jchiang  Wed Apr 16 15:18:31 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+add offsets to start time to use as stream id for pgwave processes
+    *
+------------------------------------------------------------
+User: jchiang  Sat Apr 12 13:10:46 PDT 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+add option to set datacatalog implementation 
+    *
+------------------------------------------------------------
+User: jchiang  Sat Apr 12 13:10:34 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+add option to set datacatalog implementation 
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1r0p1, operation: add
+Package: AspLauncher
+User: jchiang  Sun Mar 16 14:59:10 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.50
+  AspLauncher/cmt/requirements  1.5
+  AspLauncher/doc/release.notes  1.2
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/checkLevelOneFiles.py  1.7
+  AspLauncher/python/aspLauncher.py  1.20
+  AspLauncher/python/launchStreams.py  1.15
+  AspLauncher/xml/AspLauncher.xml  1.10
+  AspLauncher/xml/AspTestQuery.xml  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 16 14:54:45 PDT 2008
+ASP/AspLauncher/doc
+
+Modified Files:
+	release.notes 
+Log Message:
+tagging v1r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 16 14:54:45 PDT 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1r0p1
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar 16 14:50:54 PDT 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py 
+Log Message:
+reimplement test to see if FT2 data cover the FT1 data.
+    *
+------------------------------------------------------------
+TAG
+Tag name: v1, operation: add
+Package: AspLauncher
+User: jchiang  Tue Mar  4 13:57:01 2008
+Files:
+  AspLauncher/.cvsignore  1.1.1.1
+  AspLauncher/ChangeLog  1.46
+  AspLauncher/cmt/requirements  1.4
+  AspLauncher/doc/release.notes  1.1
+  AspLauncher/python/hello_world.py  1.1
+  AspLauncher/python/checkLevelOneFiles.py  1.6
+  AspLauncher/python/aspLauncher.py  1.20
+  AspLauncher/python/launchStreams.py  1.15
+  AspLauncher/xml/AspLauncher.xml  1.10
+  AspLauncher/xml/AspTestQuery.xml  1.1
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:56:41 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+tagging v1 for OpsSim2
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:56:41 PST 2008
+ASP/AspLauncher/doc
+
+Added Files:
+	release.notes 
+Log Message:
+tagging v1 for OpsSim2
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:56:41 PST 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+tagging v1 for OpsSim2
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:56:21 PST 2008
+ASP/AspLauncher/doc
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP/AspLauncher/doc added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 13:16:23 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+bump task version
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 10:40:18 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+move grb launching to aspLauncher.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 10:40:18 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+move grb launching to aspLauncher.py
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 10:10:15 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+new launcher scheme based on is_processed column in timeintervals table
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 10:10:14 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+new launcher scheme based on is_processed column in timeintervals table
+    *
+------------------------------------------------------------
+User: jchiang  Tue Mar  4 09:21:37 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+use is_processed column
+    *
+------------------------------------------------------------
+User: jchiang  Mon Mar  3 16:59:18 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py launchStreams.py 
+Log Message:
+handle empty file lists from datacatalog query; code to launch pgwave with frequency info for downstream drpMonitoring and timeinterval calculation
+    *
+------------------------------------------------------------
+User: jchiang  Sun Mar  2 07:03:18 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+strip output attempt to precompute diffresps
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 27 08:26:02 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+minor generalization of interface
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 26 22:24:16 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+insert frequency into pipeline arg list
+    *
+------------------------------------------------------------
+User: jchiang  Mon Feb 25 16:24:22 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+use default db connection; bump up downlink id
+    *
+------------------------------------------------------------
+User: jchiang  Sun Feb 24 16:47:38 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+start work on diffresp task; reset staging area
+    *
+------------------------------------------------------------
+User: jchiang  Sun Feb 24 16:47:38 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+start work on diffresp task; reset staging area
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 22 20:35:26 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py launchStreams.py 
+Log Message:
+use fileStager
+    *
+------------------------------------------------------------
+User: jchiang  Fri Feb 22 20:35:26 PST 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+use fileStager
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 23:21:55 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+remove output_dir arg
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 21:55:24 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+do not pass OUTPUTDIR
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 19:38:11 PST 2008
+ASP/AspLauncher/xml
+
+Added Files:
+	AspTestQuery.xml 
+Log Message:
+add diagnostic task; raise exception if empty FT2 file list is returned
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 19:38:11 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py 
+Added Files:
+	hello_world.py 
+Log Message:
+add diagnostic task; raise exception if empty FT2 file list is returned
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 15:36:18 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py 
+Log Message:
+check for empty ft2 file list
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 08:49:18 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+reset working directory
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 08:42:57 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	checkLevelOneFiles.py 
+Log Message:
+print debug information
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 08:10:06 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	launchStreams.py 
+Log Message:
+correct spelling of PGWAVEROOT
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 07:48:08 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+bump version number
+    *
+------------------------------------------------------------
+User: jchiang  Thu Feb 21 07:46:58 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+add OUTPUTDIR to argument list
+
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 20:58:33 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+propagate setting of OUTPUTDIR
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 20:58:33 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+propagate setting of OUTPUTDIR
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 20:48:39 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+set OUTPUTDIR before importing PipelineCommand
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 20:44:47 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+import PipelineCommand
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 20:42:08 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+uncomment launcher.run(); use string value to set downlink id
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 17:56:03 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+set grbroot_dir; clean up comments, scriptlet
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 17:56:03 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+set grbroot_dir; clean up comments, scriptlet
+    *
+------------------------------------------------------------
+User: jchiang  Wed Feb 20 17:15:32 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+add createSubDir in launchStreams; set folder and nDownlink by hand for OpsSim2
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 22:38:52 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+clean up formatting, rename some variables
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 21:25:01 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py launchStreams.py 
+Log Message:
+ compute next intervals rather than looking them up
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 13:20:49 PST 2008
+ASP/AspLauncher/xml
+
+Modified Files:
+	AspLauncher.xml 
+Log Message:
+add more arguments to task definition
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 13:20:49 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Log Message:
+add more arguments to task definition
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 12:54:43 PST 2008
+ASP/AspLauncher/xml
+
+Added Files:
+	AspLauncher.xml 
+Log Message:
+add xml task definition, python script to be run in L1Proc, python script to check for L1 data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 12:54:42 PST 2008
+ASP/AspLauncher/python
+
+Modified Files:
+	aspLauncher.py 
+Added Files:
+	checkLevelOneFiles.py launchStreams.py 
+Log Message:
+add xml task definition, python script to be run in L1Proc, python script to check for L1 data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 12:54:42 PST 2008
+ASP/AspLauncher/cmt
+
+Modified Files:
+	requirements 
+Log Message:
+add xml task definition, python script to be run in L1Proc, python script to check for L1 data
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 12:53:00 PST 2008
+ASP/AspLauncher/xml
+
+Log Message:
+Directory /nfs/slac/g/glast/ground/cvs/ASP/AspLauncher/xml added to the repository
+
+    *
+------------------------------------------------------------
+User: jchiang  Tue Feb 19 09:50:33 PST 2008
+ASP/AspLauncher
+
+Log Message:
+initial import
+
+Status:
+
+Vendor Tag:	ASP
+Release Tags:	v0
+		
+N ASP/AspLauncher/.cvsignore
+N ASP/AspLauncher/cmt/requirements
+N ASP/AspLauncher/python/aspLauncher.py
+
+No conflicts created by this import
+
+    *

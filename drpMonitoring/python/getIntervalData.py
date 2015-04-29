@@ -19,6 +19,7 @@ from parfile_parser import Parfile
 from PipelineCommand import resolve_nfs_path
 import drpDbAccess
 import databaseAccess as dbAccess
+from pass_version import EventClassSelection
 
 def create_parfile(tstart, parfilename='drp_pars.txt'):
     infile = os.path.join(resolve_nfs_path(os.environ['DRPMONITORINGROOT']), 
@@ -87,6 +88,8 @@ gtselect['tmax'] = stop_time
 gtselect['rad'] = 180.
 gtselect['zmax'] = pars['zenmax']
 gtselect['emax'] = 3e5
+evclass = EventClassSelection(ft1Merged)
+gtselect['evclass'] = evclass.source
 
 if debug:
     print gtselect.command()

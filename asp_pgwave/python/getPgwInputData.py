@@ -13,7 +13,7 @@ from ft1merge import ft2merge, ft1_filter_merge
 from FitsNTuple import FitsNTuple
 from FileStager import FileStager
 from PipelineCommand import pipelineServer
-from pass_version import pass_version
+from pass_version import EventClassSelection
 
 fcopy = GtApp('fcopy')
 gtmktime = GtApp('gtmktime')
@@ -75,25 +75,29 @@ if (pipelineServer() == 'DEV' and
     os.system('ln -s time_filtered_events.fits Filtered.fits')
 else:
     # Prod (flight) data.
-    #
-    # Perform CTBCLASSLEVEL cut when it is available.  @todo implement
-    # to use ft1_filter string from SourceMonitoringConfig table
-    #
-    #
-    foo = FitsNTuple('time_filtered_events.fits', 'EVENTS')
-    fcopy = GtApp('fcopy')
-    if 'CTBCLASSLEVEL' in foo.names:
-        fcopy.run(infile='time_filtered_events.fits[EVENTS][CTBCLASSLEVEL>1]',
-                  outfile='Filtered.fits')
-    elif 'EVENT_CLASS' in foo.names:
-        if pass_version('time_filtered_events.fits') != 'NONE':
-            fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
-                      outfile='Filtered.fits')
-        else:
-            # For Pass 7, apply Source class selection
-            gtselect.run(infile='time_filtered_events.fits',
-                         outfile='Filtered.fits',
-                         evclass=2)
+    infile = 'time_filtered_events.fits'
+    outfile = 'Filtered.fits'
+    evclass = EventClassSelection(infile)
+    gtselect.run(infile=infile, outfile=outfile, evclass=evclass.source)
+#    #
+#    # Perform CTBCLASSLEVEL cut when it is available.  @todo implement
+#    # to use ft1_filter string from SourceMonitoringConfig table
+#    #
+#    #
+#    foo = FitsNTuple('time_filtered_events.fits', 'EVENTS')
+#    fcopy = GtApp('fcopy')
+#    if 'CTBCLASSLEVEL' in foo.names:
+#        fcopy.run(infile='time_filtered_events.fits[EVENTS][CTBCLASSLEVEL>1]',
+#                  outfile='Filtered.fits')
+#    elif 'EVENT_CLASS' in foo.names:
+#        if pass_version('time_filtered_events.fits') != 'NONE':
+#            fcopy.run(infile='time_filtered_events.fits[EVENTS][EVENT_CLASS>1]',
+#                      outfile='Filtered.fits')
+#        else:
+#            # For Pass 7, apply Source class selection
+#            gtselect.run(infile='time_filtered_events.fits',
+#                         outfile='Filtered.fits',
+#                         evclass=2)
 
 #
 # apply zenith angle cut and energy cut

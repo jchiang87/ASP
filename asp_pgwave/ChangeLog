@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Wed Apr 29 14:42:20 PDT 2015
+ASP-scons/asp_pgwave/python
+
+Modified Files:
+	getPgwInputData.py 
+Log Message:
+use EventClassSelection to set evclass in gtselect
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-06-03-00, operation: add
 Package: asp_pgwave

@@ -332,11 +332,10 @@ if __name__ == '__main__':
 
     ft1file = grbName + '_for_plots.fits'
     gtselect = GtApp('gtselect')
-    if pass_version('FT1_merged.fits') != 'NONE':
-        gtselect['evclass'] = 0
+    evclass = EventClassSelection('FT1_merged.fits')
     gtselect.run(infile='FT1_merged.fits', outfile=ft1file,
                  ra=ra, dec=dec, rad=rad*1.5, tmin=tmin, tmax=tmax,
-                 emin=30, emax=3e5, zmax=100)
+                 emin=30, emax=3e5, zmax=100, evclass=evclass.transient)
     lightCurve(grb_id, tstart, ft1file, bb_lc_file=grbName + '_BB_lc.dat')
 
     #

@@ -12,7 +12,7 @@ from UnbinnedAnalysis import *
 from GrbAspConfig import grbAspConfig, irf_config
 import dbAccess
 import pyfits
-from pass_version import pass_version
+from pass_version import EventClassSelection
 
 def absFilePath(filename):
     abspath = os.path.abspath(filename)
@@ -111,11 +111,10 @@ from GtApp import GtApp
 # Compute a simple light curve
 #
 gtselect = GtApp('gtselect')
-if pass_version(pars['ft1File']) != 'NONE':
-    gtselect['evclass'] = 0
+evclass = EventClassSelection(pars['ft1File'])
 gtselect.run(evfile=pars['ft1File'], outfile='filtered_3deg.fits',
              ra=grbpars['ra'], dec=grbpars['dec'], rad=3, coordSys='CEL',
-             emin=100, emax=3e5)
+             emin=100, emax=3e5, evclass=evclass.transient)
 
 gtbin = GtApp('gtbin')
 gtbin.run(evfile=gtselect['outfile'], scfile=pars['ft2File'], 

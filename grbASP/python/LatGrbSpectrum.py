@@ -23,12 +23,12 @@ from parfile_parser import Parfile
 from FitsNTuple import FitsNTuple, FitsNTupleError
 from addNdifrsp import addNdifrsp
 import pipeline
-from pass_version import pass_version
+from pass_version import EventClassSelection
 
-gtselect = GtApp('gtselect', 'dataSubselector')
-gtlike = GtApp('gtlike', 'Likelihood')
-gtexpmap = GtApp('gtexpmap', 'Likelihood')
-gtdiffrsp = GtApp('gtdiffrsp', 'Likelihood')
+gtselect = GtApp('gtselect')
+gtlike = GtApp('gtlike')
+gtexpmap = GtApp('gtexpmap')
+gtdiffrsp = GtApp('gtdiffrsp')
 
 def pl_integral(emin, emax, gamma):
     if gamma == 1:
@@ -81,8 +81,8 @@ def LatGrbSpectrum(ra, dec, tmin, tmax, name, ft1File, ft2File, config):
     gtselect['emin'] = 100
     gtselect['emax'] = 3e5
     gtselect['zmax'] = 100
-    if pass_version(ft1File) != 'NONE':
-        gtselect['evclass'] = 0
+    evclass = EventClassSelection(ft1File)
+    gtselect['evclass'] = evclass.transient
     gtselect.run()
 
     events = pyfits.open(gtselect['outfile'])

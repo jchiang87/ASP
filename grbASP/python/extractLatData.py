@@ -11,7 +11,7 @@ import pyfits
 from FitsNTuple import FitsNTuple
 from BayesianBlocks import BayesianBlocks
 from GtApp import GtApp
-from pass_version import pass_version
+from pass_version import EventClassSelection
 import dbAccess
 from parfile_parser import Parfile
 import pipeline
@@ -34,8 +34,8 @@ def extractLatData(gcnNotice, ft1File, config):
     gtselect['tmax'] = gcnNotice.start_time + duration
     gtselect['zmax'] = 100 # need to retrieve this from db table
     gtselect['emax'] = 3e5
-    if pass_version(ft1File) != 'NONE': # Apply Pass 7 transient selection
-        gtselect['evclass'] = 0
+    evclass = EventClassSelection(ft1File)
+    gtselect['evclass'] = evclass.transient
     gtselect.run()
 
     ft1 = pyfits.open(gtselect['outfile'])

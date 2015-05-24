@@ -190,7 +190,8 @@ if __name__ == '__main__':
         #
         try:
             import subprocess
-            command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
+#            command = ("/nfs/farm/g/glast/u55/grb/BA_Tools/launch_BA_processes.sh %s" 
+            command = ("/nfs/farm/g/glast/g/grb/BA_Tools/launch_BA_processes.sh %s" 
                        % os.environ['GRB_ID'])
             subprocess.call(command, shell=True)
         except:

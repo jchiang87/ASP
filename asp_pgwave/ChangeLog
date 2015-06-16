@@ -1,5 +1,14 @@
 ------------------------------------------------------------
 User: jchiang  Tue Jun 16 09:09:15 PDT 2015
+ASP-scons/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+Pass 8 and rhel6-64 changes
+    *
+------------------------------------------------------------
+User: jchiang  Tue Jun 16 09:09:15 PDT 2015
 ASP-scons/asp_pgwave/python
 
 Modified Files:

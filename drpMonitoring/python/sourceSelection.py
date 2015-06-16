@@ -59,6 +59,7 @@ class PgwaveSource(object):
 def currentDailyInterval(time):
     sql = ("select INTERVAL_NUMBER from TIMEINTERVALS where " + 
            "TSTART<=%i and %i<=TSTOP and FREQUENCY='daily'" % (time, time))
+    print "currentDailyInterval:", sql
     def getIntervalNum(cursor):
         for entry in cursor:
             return entry[0]
@@ -67,6 +68,9 @@ def currentDailyInterval(time):
 def isMonitored(src, interval_time):
     "Return IS_MONITORED flag from the preceeding day."
     currentInterval = currentDailyInterval(interval_time - 8.64e4)
+    print "insided isMonitored:", src, interval_time, currentInterval, monitoringBand
+    if currentInterval is None:
+        return False
     sql = ("select IS_MONITORED from LIGHTCURVES where "
            + "FREQUENCY='daily' and " 
            + "INTERVAL_NUMBER=%i and " % currentInterval

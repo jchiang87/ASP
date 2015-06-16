@@ -1,5 +1,113 @@
 ------------------------------------------------------------
 TAG
+Tag name: ASP-07-00-00, operation: add
+Package: asp_pointlike
+User: jchiang  Tue Jun 16 14:58:40 2015
+Files:
+  asp_pointlike/.cvsignore  1.2
+  asp_pointlike/ChangeLog  1.1.1.49
+  asp_pointlike/pointlikeLib.py  1.1.1.1
+  asp_pointlike/asp_pointlikeLib.py  1.1
+  asp_pointlike/SConscript  1.10
+  asp_pointlike/cmt/.cvsignore  1.1.1.1
+  asp_pointlike/cmt/requirements  1.6
+  asp_pointlike/cmt/Makefile  1.1.1.1
+  asp_pointlike/doc/release.notes  1.7
+  asp_pointlike/doc/Doxyfile  1.1.1.1
+  asp_pointlike/pointlike/Alignment.h  1.1.1.1
+  asp_pointlike/pointlike/ExtendedSourcePDF.h  1.1.1.1
+  asp_pointlike/pointlike/CalData.h  1.1.1.1
+  asp_pointlike/pointlike/HypergeometricFunction.h  1.1.1.1
+  asp_pointlike/pointlike/PsfFunction.h  1.1.1.1
+  asp_pointlike/pointlike/HealpixDiffuseFunc.h  1.1.1.1
+  asp_pointlike/pointlike/SourceLikelihood.h  1.2
+  asp_pointlike/pointlike/RotationInfo.h  1.1.1.1
+  asp_pointlike/pointlike/PowerLawFilter.h  1.1.1.1
+  asp_pointlike/pointlike/AlignProc.h  1.1.1.1
+  asp_pointlike/pointlike/ParamOptimization.h  1.1.1.1
+  asp_pointlike/pointlike/ResultsFile.h  1.1.1.1
+  asp_pointlike/pointlike/FlexibleBinner.h  1.1.1.1
+  asp_pointlike/pointlike/SourceFinder.h  1.1.1.1
+  asp_pointlike/pointlike/Draw.h  1.1.1.1
+  asp_pointlike/pointlike/BandBackground.h  1.1.1.1
+  asp_pointlike/pointlike/SourceList.h  1.1.1.1
+  asp_pointlike/pointlike/Data.h  1.1.1.1
+  asp_pointlike/pointlike/DrawTS.h  1.1.1.1
+  asp_pointlike/pointlike/SimpleTSmap.h  1.1.1.1
+  asp_pointlike/pointlike/PointSourceLikelihood.h  1.2
+  asp_pointlike/pointlike/ExtendedLikelihood.h  1.2
+  asp_pointlike/pointlike/SimpleLikelihood.h  1.2
+  asp_pointlike/python/pointfit_setup.py  1.1.1.1
+  asp_pointlike/python/wrappers.py  1.1.1.1
+  asp_pointlike/python/fitstools.py  1.1.1.1
+  asp_pointlike/python/swig_setup.i  1.3
+  asp_pointlike/python/test_pointlike_setup.py  1.1.1.1
+  asp_pointlike/python/pointfind_setup.py  1.1.1.1
+  asp_pointlike/python/phasetools.py  1.1.1.1
+  asp_pointlike/python/image.py  1.1.1.1
+  asp_pointlike/python/Response.py  1.1.1.1
+  asp_pointlike/python/__init__.py  1.1.1.1
+  asp_pointlike/python/Models.py  1.1.1.1
+  asp_pointlike/python/swig_setup.in  1.1.1.1
+  asp_pointlike/python/confluence.py  1.1.1.1
+  asp_pointlike/python/psf.py  1.1.1.1
+  asp_pointlike/python/dataman.py  1.1.1.1
+  asp_pointlike/python/pointspec.py  1.1.1.1
+  asp_pointlike/python/SourcePlot.py  1.1.1.1
+  asp_pointlike/python/pointlike_defaults.py  1.1.1.1
+  asp_pointlike/python/diffuse.py  1.1.1.1
+  asp_pointlike/python/specfit.py  1.1.1.1
+  asp_pointlike/python/Fitters.py  1.1.1.1
+  asp_pointlike/python/sourcefit_setup.py  1.1.1.1
+  asp_pointlike/python/.cvsignore  1.1.1.1
+  asp_pointlike/python/pointfit.py  1.1.1.1
+  asp_pointlike/python/runfiles.py  1.1.1.1
+  asp_pointlike/python/pixeldata.py  1.1.1.1
+  asp_pointlike/python/alignment_setup.py  1.1.1.1
+  asp_pointlike/python/SourceLib.py  1.1.1.1
+  asp_pointlike/python/finder_setup.py  1.1.1.1
+  asp_pointlike/src/DrawTS.cxx  1.1.1.1
+  asp_pointlike/src/FlexibleBinner.cxx  1.1.1.1
+  asp_pointlike/src/BandBackground.cxx  1.1.1.1
+  asp_pointlike/src/ExtendedLikelihood.cxx  1.2
+  asp_pointlike/src/Alignment.cxx  1.1.1.1
+  asp_pointlike/src/ParamOptimization.cxx  1.1.1.1
+  asp_pointlike/src/SourceLikelihood.cxx  1.2
+  asp_pointlike/src/mainpage.h  1.1.1.1
+  asp_pointlike/src/EventList.cxx  1.2
+  asp_pointlike/src/SimpleTSmap.cxx  1.1.1.1
+  asp_pointlike/src/Draw.cxx  1.1.1.1
+  asp_pointlike/src/PowerLawFilter.h  1.1.1.1
+  asp_pointlike/src/SourceFinder.cxx  1.2
+  asp_pointlike/src/RotationInfo.cxx  1.1.1.1
+  asp_pointlike/src/Data.cxx  1.1.1.1
+  asp_pointlike/src/HealpixDiffuseFunc.cxx  1.1.1.1
+  asp_pointlike/src/ResultsFile.cxx  1.1.1.1
+  asp_pointlike/src/CalData.cxx  1.1.1.1
+  asp_pointlike/src/ExtendedSourcePDF.cxx  1.1.1.1
+  asp_pointlike/src/PowerLawFilter.cxx  1.1.1.1
+  asp_pointlike/src/SimpleLikelihood.cxx  1.2
+  asp_pointlike/src/PointSourceLikelihood.cxx  1.2
+  asp_pointlike/src/SourceList.cxx  1.1.1.1
+  asp_pointlike/src/EventList.h  1.2
+  asp_pointlike/src/AlignProc.cxx  1.1.1.1
+  asp_pointlike/src/alignment/alignment.txt  1.1.1.1
+  asp_pointlike/src/alignment/alignment_main.cxx  1.1.1.1
+  asp_pointlike/src/alignment/vela.txt  1.1.1.1
+  asp_pointlike/src/pointfind/finder_main.cxx  1.1.1.1
+  asp_pointlike/src/pointfit/pointfit_main.cxx  1.1.1.1
+  asp_pointlike/src/sourcefit/sourcefit_main.cxx  1.1.1.1
+  asp_pointlike/src/test/PhotonList.h  1.1.1.1
+  asp_pointlike/src/test/test_main.cxx  1.1.1.1
+  asp_pointlike/src/test/r0236198321_ft1.fit  1.1.1.1
+  asp_pointlike/src/test/pointlike_test.fits  1.1.1.1
+  asp_pointlike/src/test/PhotonList.cxx  1.1.1.1
+  asp_pointlike/src/test/test_events.root  1.1.1.1
+  asp_pointlike/src/tsmap/tsmap.cxx  1.1.1.1
+
+    *
+------------------------------------------------------------
+TAG
 Tag name: asp_pointlike-06-15-00, operation: add
 Package: asp_pointlike
 User: jchiang  Tue Jun 16 09:49:43 2015

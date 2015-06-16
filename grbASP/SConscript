@@ -1,0 +1,30 @@
+# -*- python -*-
+# @file SConscript
+# @brief scons build specifications for grbASP
+#
+# $Header$
+# Authors: J. Chiang <jchiang@slac.stanford.edu>
+# Version: grbASP-05-05-01
+
+import os
+Import('baseEnv')
+Import('listFiles')
+
+libEnv = baseEnv.Clone()
+swigEnv = baseEnv.Clone()
+
+libEnv.Tool('grbASPLib', depsOnly=1)
+swigEnv.Tool('grbASPLib')
+
+grbASPLib = libEnv.SharedLibrary('grpASP', listFiles(['src/*.cxx']))
+pygrbASPLib = swigEnv.SwigLibrary('_grbASP', 'src/grbASP.i')
+toWrap = listFiles(['python/*py']) + listFiles(['python/GCN/*.py'])
+
+swigEnv.Tool('registerTargets', package='grbASP',
+             includes = listFiles(['grbASP/*.h']),
+             libraryCxts = [[grbASPLib, libEnv]],
+             swigLibraryCxts = [[pygrbASPLib, swigEnv]],
+             data=listFiles(['data/*']),
+             python=['src/grbASP.py'],
+             wrappedPython = toWrap)
+             #wrappedPython=listFiles(['python/*.py'])+listFiles(['python/GCN/*.py']))

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline
+   xmlns="http://glast-ground.slac.stanford.edu/pipeline"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
+<!-- $Header$
+-->
+<task name="GRB_blind_search" version="6.1" type="Data">
+  <variables>
+    <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
+    <var name="datacatalog_imp">datacatalog</var>
+    <var name="outputFolder">/ASP/Results/GRB/BlindSearch</var>
+    <var name="xrootd_folder">/ASP/GRB/BlindSearch</var>
+    <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
+  </variables>
+  <prerequisites>
+     <prerequisite name="folder" type="string"/>
+     <prerequisite name="DownlinkId" type="integer"/>
+     <prerequisite name="ASP_PATH" type="string"/>
+     <prerequisite name="GRBROOTDIR" type="string"/>
+     <prerequisite name="GRBASPROOT" type="string"/>
+     <prerequisite name="PIPELINESERVER" type="string"/>
+  </prerequisites>
+  <process name="catalogQuery">
+    <script><![CDATA[
+      print "using datacatalog implementation: ", datacatalog_imp
+      datacat = eval(datacatalog_imp)
+      #
+      # Find the FT1 file,
+      #
+      query = 'DataType == \"EXTENDEDFT1\" && nDownlink == %i' % DownlinkId
+      print "dataCatalog query: ", query
+      datasetList = datacat.getDatasets(folder + "/*", query)
+      output = pipeline.createFile('Ft1FileList')
+      datasetList.writeToFile(output, 1)
+      pipeline.writeFile(output)
+      #
+      # and the FT2 file.
+      #
+      query = 'DataType == \"FT2\" && nDownlink == %i' % DownlinkId
+      print "dataCatalog query: ", query
+      datasetList = datacat.getDatasets(folder + "/*", query)
+      output = pipeline.createFile('Ft2FileList')
+      datasetList.writeToFile(output, 1)
+      pipeline.writeFile(output)
+    ]]></script>
+  </process>
+  <process name="blind_search" autoRetryMaxAttempts="2">
+    <job executable="${GRBASPROOT}/${BINDIR}/BlindSearch.sh"
+         batchOptions="-q glastdataq " allocationGroup="glastdata" >
+    </job>
+    <depends>
+      <after process="catalogQuery" status="SUCCESS"/>
+    </depends>
+  </process>
+  <process name="registerLogProbData">
+    <script><![CDATA[
+      print "using datacatalog implementation: ", datacatalog_imp
+      datacat = eval(datacatalog_imp)
+      blind_search = pipeline.getProcessInstance("blind_search")
+      nMetStart = blind_search.getVariable('nMetStart')
+      nMetStop = blind_search.getVariable('nMetStop')
+      filepath = blind_search.getVariable('filepath')
+      if filepath is not None:
+          # blind_search generated a log-probability file, so register it.
+          filename = filepath.split('/')[-1]
+          dataType = "HISTOGRAM"
+          logical_path = ('%s/%s:%s' % (outputFolder, dataType, filename))
+          attributes = ('nDownlink=%i:nMetStart=%s:nMetStop=%s' 
+                        % (DownlinkId, nMetStart, nMetStop))
+          print logical_path
+          if filepath.find('root') == 0:
+              filepath += "@SLAC_XROOT"
+          print filepath
+          print attributes
+          datacat.registerDataset(dataType, logical_path, filepath, attributes)
+    ]]></script>
+    <depends>
+      <after process="blind_search" status="SUCCESS"/>
+    </depends>
+  </process>
+</task>
+</pipeline>

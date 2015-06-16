@@ -21,9 +21,11 @@ def filter_versions(fitsfiles):
     prefixes = {}
     for item in fitsfiles:
         tokens = item.split('_v')
-        dirname = os.path.dirname(tokens[0])
-        basename = os.path.basename(tokens[0])
-        prefixes[basename] = dirname, tokens[1]
+        # rejoin any "_v" splits not associated with the file version number
+        foo = '_v'.join(tokens[:-1]) 
+        dirname = os.path.dirname(foo)
+        basename = os.path.basename(foo)
+        prefixes[basename] = dirname, tokens[-1]
     outfiles = []
     basenames = prefixes.keys()
     # sort by basename (with version info sliced off) to get time ordering

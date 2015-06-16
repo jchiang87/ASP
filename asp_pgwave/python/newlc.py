@@ -22,7 +22,8 @@ def getIrfs(ft1file):
 
 def createLC(lcpar,nbin,srcname,infile='Filtered_evt.fits',ft2file='FT2_merged.fits',irf=None):
         if irf is None:
-                irf = 'P6_V1_SOURCE'
+#                irf = 'P6_V1_SOURCE'
+                irf = 'P8R2_SOURCE_V6'
         else:
                 irf = getIrfs(infile)
 	outf='pgw_lc.dat'

@@ -5,14 +5,14 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="9.7" type="Data">
+<task name="PGWave" version="9.8" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
-    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
+    <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/pgwave</var>
     <var name="xrootd_folder">/ASP/pgwave</var>
-    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/ASP/GALPROP_MODEL/ring_2year_p76_v0_lowres.fits</var>
+    <var name="GALPROP_MODEL">/afs/slac/g/glast/ground/GLAST_EXT/diffuseModels/v5r0/gll_iem_v06.fits</var>
     <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
   </variables>
   <prerequisites>

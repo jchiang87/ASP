@@ -173,7 +173,8 @@ def plotLC(x,xerr,y,yerr,tit='Light curve',outplot='lc.png'):
 if __name__=='__main__':
 	infile='Filtered_evt.fits'
 	ft2file='FT2_merged.fits'
-	irf='P6_V1_SOURCE'
+#	irf='P6_V1_SOURCE'
+	irf='P8R2_SOURCE_V6'
 	#selpar=[ra,dec,rad,tmin,tmax,emin,emax,zmax,evclass]
 	tmin,tstop=gtutil.getFileTimeInfo(infile)
 	tmax=tmin+86400

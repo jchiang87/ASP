@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Tue Jun 16 09:11:19 PDT 2015
+ASP-scons/asp_pointlike/python
+
+Modified Files:
+	swig_setup.i 
+Log Message:
+handle implicit assumption that the EVENT_CLASS column is an integer instead of a 32X bit array in the new FT1 files
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-06-03-00, operation: add
 Package: asp_pointlike

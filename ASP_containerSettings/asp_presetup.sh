@@ -12,4 +12,5 @@ export PFILES=".;"
 source ${ftools_setup}
 
 #export GLAST_EXT=/afs/slac.stanford.edu/g/glast/ground/GLAST_EXT/redhat4-i686-32bit-gcc34
-export GLAST_EXT=/afs/slac.stanford.edu/g/glast/ground/GLAST_EXT/redhat5-x86_64-64bit-gcc41
+#export GLAST_EXT=/afs/slac.stanford.edu/g/glast/ground/GLAST_EXT/redhat5-x86_64-64bit-gcc41
+export GLAST_EXT=/afs/slac.stanford.edu/g/glast/ground/GLAST_EXT/redhat6-x86_64-64bit-gcc44

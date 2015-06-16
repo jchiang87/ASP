@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_afterglow_launcher" version="3.0" type="Data">
+<task name="GRB_afterglow_launcher" version="3.1" type="Data">
   <variables>
-    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
+    <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="logRoot">/nfs/farm/g/glast/u41/ASP/log_files</var>
   </variables>

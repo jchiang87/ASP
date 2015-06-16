@@ -5,9 +5,9 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="GRB_blind_search" version="6.0" type="Data">
+<task name="GRB_blind_search" version="6.1" type="Data">
   <variables>
-    <var name="BINDIR">bin/redhat5-x86_64-64bit-gcc41-Optimized</var>
+    <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
     <var name="datacatalog_imp">datacatalog</var>
     <var name="outputFolder">/ASP/Results/GRB/BlindSearch</var>
     <var name="xrootd_folder">/ASP/GRB/BlindSearch</var>

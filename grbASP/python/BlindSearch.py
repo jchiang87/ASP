@@ -14,7 +14,7 @@ import numpy as num
 import pyfits
 from GtApp import GtApp
     
-from grbASP import Event, EventClusters, PsfClusters, ScData, SkyDir
+from grbASP import Event, EventClusters, ScData, SkyDir
 from FitsNTuple import FitsNTuple, FitsNTupleError
 from ft1merge import ft2merge
 from FileStager import FileStager
@@ -35,7 +35,8 @@ def convert(events, imin=0, imax=None):
 #        my_events.append(Event(*evt_tuple))
         my_events.append(Event(float(evt_tuple[0]), float(evt_tuple[1]),
                                float(evt_tuple[2]), float(evt_tuple[3]),
-                               int(evt_tuple[4])))
+#                               int(evt_tuple[4])))
+                               0))
     if len(my_events) == 0:
         raise RuntimeError, "zero events in tuple"
     return my_events
@@ -91,8 +92,8 @@ class BlindSearch(object):
            to expire (for long bursts or Solar flares);
         threshold is the trigger threshold in terms of -log-likelihood for
            identifying a burst;
-        clusterAlg is the clustering algorithm, either EventClusters to use
-           JPN and JB's algorithm or PsfClusters to use the Psf.
+        clusterAlg is the clustering algorithm, in this case, 
+           EventClusters to use JPN and JB's algorithm.
         """
         self.clusterAlg = clusterAlg 
         self.events = events

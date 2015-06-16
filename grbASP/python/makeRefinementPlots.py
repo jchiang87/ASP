@@ -23,7 +23,7 @@ from FitsNTuple import FitsNTuple
 import pyASP
 from SkyCone import makeCone
 from read_data import read_data
-from pass_version import pass_version
+from pass_version import pass_version, EventClassSelection
 
 def getAxisRange(header):
     naxis1 = header['naxis1']

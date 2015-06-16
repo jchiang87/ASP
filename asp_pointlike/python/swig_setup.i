@@ -1,3 +1,4 @@
+#-*- mode: c++ -*-
 %module(docstring="Interface to pointlike") asp_pointlike
 // $Header$
 %{

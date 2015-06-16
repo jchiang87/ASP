@@ -155,7 +155,9 @@ Photon EventList::Iterator::operator*()const
 
     (*m_it)[*names++].get(energy);
     (*m_it)[*names++].get(time);
-    (*m_it)[*names++].get(event_class);
+//    (*m_it)[*names++].get(event_class);
+    names++;
+    event_class = 0;
     (*m_it)[*names++].get(zenith_angle);
     if( ! isFinite(zenith_angle) || zenith_angle<1e-10 ){ // latter seems to be what fits gives?
         zenith_angle=180.; // will be cut

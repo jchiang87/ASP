@@ -74,3 +74,4 @@
  drpMonitoring-02-00-01 21-Feb-2012 jchiang use 30A formatting for NAME column in monitored light curve FITS file
  drpMonitoring-02-00-02 08-May-2012 jchiang add more robust UL calculation in fitEnergyBand.py; split off part of makeDrpLcTables.py so that it can run FASTCopy.py that relies on old version of python (2.5) to avoid import conflicts with cx_Oracle for x86_64 platforms
  drpMonitoring-02-01-00 28-Apr-2015 jchiang updates to scripts for monitored sources
+ drpMonitoring-02-02-00 16-Jun-2015 jchiang Pass 8 and rhel6-64 changes

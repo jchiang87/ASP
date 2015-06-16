@@ -7,6 +7,7 @@
     @verbatim
     * EOH *
 
+ pyASP-05-00-00 16-Jun-2015 jchiang Pass 8 and rhel6-64 changes
  pyASP-04-00-04 28-Apr-2015 jchiang use single oracle connection for entire python session
  pyASP-04-00-03 23-Sep-2013 jchiang changes for pyfits 3.1
  pyASP-04-00-02 26-Jun-2012 jchiang leap second handling

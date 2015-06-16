@@ -6,6 +6,7 @@ $Id$
 @verbatim
  * EOH *
 
+ asp_pointlike-06-15-00 16-Jun-2015 jchiang Pass 8 change
  asp_pointlike-06-14-04 22-Jul-2011 jchiang add CLHEP namespace qualifications
  asp_pointlike-06-14-03 17-Jan-2011 jchiang add includes for gcc4.4
  asp_pointlike-06-14-02 12-Mar-2010 jchiang install python modules in SConscript

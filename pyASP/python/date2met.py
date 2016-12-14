@@ -13,9 +13,10 @@ import time
 
 _missionStart = datetime.datetime(2001, 1, 1, 0, 0, 0)
 _leap_seconds = (datetime.datetime(2006, 1, 1, 0, 0, 0),
-                 datetime.datetime(2008, 1, 1, 0, 0, 0),
-                 datetime.datetime(2012, 7, 1, 0, 0, 0))
-                 
+                 datetime.datetime(2009, 1, 1, 0, 0, 0),
+                 datetime.datetime(2012, 7, 1, 0, 0, 0),
+                 datetime.datetime(2015, 7, 1, 0, 0, 0),
+                 datetime.datetime(2017, 1, 1, 0, 0, 0),)
 
 def date2met(datestring=None):
     if datestring is None:
@@ -50,3 +51,7 @@ if __name__ == '__main__':
     print date2met("2009-01-01 00:00:01")
     print date2met("2012-07-01 00:00:00")
     print date2met("2012-07-01 00:00:01")
+    print date2met("2015-07-01 00:00:00")
+    print date2met("2015-07-01 00:00:01")
+    print date2met("2017-01-01 00:00:00")
+    print date2met("2017-01-01 00:00:01")

@@ -74,6 +74,15 @@ class Packet(object):
                 # form, so we have this ugly parsing code:
                 trig_value = line[12:].split()[0].split(',')[0]
                 self.trigger_num = int(trig_value)
+            elif line.find("INTEGRAL Wakeup") != -1:
+                # Reset these notice types (which have inconsistent
+                # Subject lines)"
+                self.notice_type = 'INTEGRAL_WAKEUP'
+            elif line.find("INTEGRAL Refined") != -1:
+                # Reset these notice types (which have inconsistent
+                # Subject lines)"
+                self.notice_type = 'INTEGRAL_REFINED'
+
     def _parseNoticeDate(self, line):
         tokens = line.split('DATE:')[-1].strip().split()
         day = int(tokens[1])

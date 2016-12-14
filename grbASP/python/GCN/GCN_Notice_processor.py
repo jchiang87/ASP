@@ -144,10 +144,19 @@ if __name__ == '__main__':
     queue_path = os.path.join(path, "NOTICE_QUEUE")
 
     try:
-        my_notice = GcnNoticeEmail(sys.stdin.readlines())
-        fd, queued_file = tempfile.mkstemp(dir=queue_path)
-        os.close(fd)
-        my_notice.writeFile(queued_file)
+        try:
+            my_notice = GcnNoticeEmail(sys.stdin.readlines())
+        except Exception, msg:
+            raise RuntimeError("Error in GcnNoticeEmail constructor: " + msg)
+        try:
+            fd, queued_file = tempfile.mkstemp(dir=queue_path)
+            os.close(fd)
+        except Exception, msg:
+            raise RuntimeError("Error in creating tmp file name: " + msg)
+        try:
+            my_notice.writeFile(queued_file)
+        except Exception, msg:
+            raise RuntimeError("Error writing to NOTICE_QUEUE: " + msg)
         os.chdir(queue_path)
         os.system('chmod 666 *')
     except Exception, msg:

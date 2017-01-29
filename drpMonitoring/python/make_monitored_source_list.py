@@ -191,12 +191,15 @@ class LightCurveFitsFile(object):
         #
         # Ad hoc source renaming
         #
-        columns[2] = rename_source(columns[2], 
+        columns[2] = rename_source(columns[2],
                                    'FERMI J1532-1321 (ATel #3579)',
                                    'TXS 1530-131')
-        columns[2] = rename_source(columns[2], 
+        columns[2] = rename_source(columns[2],
                                    'MG1 J050533+0415',
                                    'PKS 0502+049')
+        columns[2] = rename_source(columns[2],
+                                   'PKS 0716+714',
+                                   '0716+714')
         #
         # Ensure START, STOP columns are double precision
         #

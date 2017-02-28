@@ -71,7 +71,12 @@ class GcnNoticeEmail(object):
                 # sequence/segment number and does not have canonical
                 # form, so we have this ugly parsing code:
                 trig_value = line[12:].split()[0].split(',')[0]
-                self.trignum = int(trig_value)
+                try:
+                    self.trignum = int(trig_value)
+                except ValueError:
+                    # Omit leading non-numeric character from LVC notice
+                    # TRIGGER_NUM values
+                    self.trignum = int(trig_value[1:])
             if (line.find('GRB_DATE:') == 0 or
                 line.find('IMG_START_DATE:') == 0 or
                 line.find('POINT_DATE:') == 0):
@@ -163,9 +168,10 @@ if __name__ == '__main__':
         forwardErrorMessage(msg)
 
     try:
-        if (my_notice.mission_name.lower() != "fermi" or 
-            my_notice.trignum != 99999):
-            my_notice.resend(('jchiang@slac.stanford.edu', 
+        if ((my_notice.mission_name.lower() != "fermi" or
+             my_notice.trignum != 99999) and
+            my_notice.notice_type.find('LVC') == -1):
+            my_notice.resend(('jchiang@slac.stanford.edu',
                               'balist@glast.stanford.edu'))
     except Exception, msg:
         forwardErrorMessage(msg)

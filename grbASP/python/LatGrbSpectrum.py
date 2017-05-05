@@ -231,13 +231,13 @@ if __name__ == '__main__':
     print config
 
     ra, dec = grbCoords(gcnNotice)
-    tmin, tmax = grbTiming(gcnNotice)
-    ft1File, ft2File = grbFiles(gcnNotice)
-
     try:
+        tmin, tmax = grbTiming(gcnNotice)
+        ft1File, ft2File = grbFiles(gcnNotice)
+
         like = LatGrbSpectrum(ra, dec, tmin, tmax, gcnNotice.Name,
                               ft1File, ft2File, config)
-    except ZeroFt1EventsError:
+    except (ZeroFt1EventsError, FitsNTupleError):
         pipeline.setVariable("skipDataProducts", "affirmed")
-        
+
     os.system('chmod 777 *')

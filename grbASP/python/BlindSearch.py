@@ -520,7 +520,7 @@ if __name__ == '__main__':
                 notice.email_notification(logProb, grbConfig.THRESHOLD,
                                           recipients=['jchiang@slac.stanford.edu'],
                                           files=ft1_files, figures=figures)
-        notice.registerWithDatabase(isUpdate=isUpdate)
+#        notice.registerWithDatabase(isUpdate=isUpdate)
         grb_output = os.path.join(grbroot_dir, `notice.grb_id`)
         mkdir(grb_output)
         notice.setTriggerNum(tpeak)

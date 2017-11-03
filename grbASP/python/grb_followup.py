@@ -121,5 +121,5 @@ def purge_old_notices():
 
 def handle_unprocessed_events(output_dir):
     purge_old_notices()
-    launch_refinement_streams(output_dir)
-    launch_afterglow_streams(output_dir)
+#    launch_refinement_streams(output_dir)
+#    launch_afterglow_streams(output_dir)

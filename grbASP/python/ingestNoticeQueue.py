@@ -95,7 +95,7 @@ for notice in notices:
         else:
             my_notice = GcnNoticeEmail(open(notice).readlines())
             outfile = my_notice.writeArchive(archive_path)
-            registerWithDatabase(packet, resolve_nfs_path(outfile))
+#            registerWithDatabase(packet, resolve_nfs_path(outfile))
         #
         # clean-up tmp file if all is successful.
         #

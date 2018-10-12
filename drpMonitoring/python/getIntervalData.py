@@ -30,7 +30,7 @@ def create_parfile(tstart, parfilename='drp_pars.txt'):
         infile =os.path.join(resolve_nfs_path(os.environ['DRPMONITORINGROOT']), 
                              'data', 'drpMonitoring', parfilename)
         shutil.copy(infile, 'drp_pars.txt')
-        
+
     sql = "select startdate, enddate, irfs, ft1_filter from SOURCEMONITORINGCONFIG"
     def findConfig(cursor):
         for entry in cursor:
@@ -73,6 +73,14 @@ print "Using downlink files: ", ft1
 ft1Merged = 'FT1_merged.fits'
 
 #
+# Get emin, emax for all bands in GROUP_ID=0
+#
+ebands = dbAccess.apply('select emin, emax from ENERGYBANDS where GROUP_ID=0',
+                        lambda curs: [x for x in curs])
+emin = min([x[0] for x in ebands])
+emax = max([x[1] for x in ebands])
+
+#
 # Prefilter on zenith angle to get rid of most of albedo photons before
 # merging. Additional cuts will be applied downstream.
 #
@@ -87,7 +95,8 @@ gtselect['tmin'] = start_time
 gtselect['tmax'] = stop_time
 gtselect['rad'] = 180.
 gtselect['zmax'] = pars['zenmax']
-gtselect['emax'] = 3e5
+gtselect['emin'] = emin
+gtselect['emax'] = emax
 evclass = EventClassSelection(ft1Merged)
 gtselect['evclass'] = evclass.source
 

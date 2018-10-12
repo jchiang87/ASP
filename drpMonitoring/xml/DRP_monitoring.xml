@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="DRP_monitoring" version="9.6" type="Data">
+<task name="DRP_monitoring" version="9.7" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
@@ -71,7 +71,7 @@
 
   <process name="diffuseResponses" autoRetryMaxAttempts="2">
     <job executable="${DRPMONITORINGROOT}/${BINDIR}/diffuseResponses.sh"
-         batchOptions=" -q medium " allocationGroup="glastdata" />
+         batchOptions=" -q glastdataq " allocationGroup="glastdata" />
     <depends>
       <after process="getIntervalData" status="SUCCESS"/>
     </depends>
@@ -157,7 +157,7 @@
       <after process="registerArchive" status="SUCCESS"/>
     </depends>
   </process>
-    
+
   <task name="roiAnalysis" version="1.0" type="Data">
     <process name="getRoiData" autoRetryMaxAttempts="2">
       <variables>
@@ -193,7 +193,7 @@
         <var name="ROI_ID">${pipeline.stream}</var>
       </variables>
       <job executable="${DRPMONITORINGROOT}/${BINDIR}/combineDrpExpMaps.sh" 
-           batchOptions=" -q express " allocationGroup="glastdata" />
+           batchOptions=" -q glastdataq " allocationGroup="glastdata" />
       <depends>
         <after process="exposureSubMap.drpExpMap" status="SUCCESS"/>
       </depends>

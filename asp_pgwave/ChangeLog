@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Fri Jan  4 09:03:26 PST 2019
+ASP-scons/asp_pgwave/python
+
+Modified Files:
+	aperPhotLC.py newlc.py 
+Log Message:
+switch to P8R3_SOURCE_V2 irfs
+    *
+------------------------------------------------------------
 TAG
 Tag name: ASP-07-00-00, operation: add
 Package: asp_pgwave

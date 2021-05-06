@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="AspLauncher" version="3.1" type="Data">
+<task name="AspLauncher" version="3.2" type="Data">
   <variables>
     <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
     <var name="minimum_coverage">0.70</var>
@@ -45,7 +45,7 @@
   </process>
   <process name="launchStreams">
     <job executable="${ASPLAUNCHERROOT}/${BINDIR}/launchStreams.sh"
-         batchOptions="-q short"/>
+         batchOptions="-q short -R rhel60"/>
     <depends>
       <after process="catalogQueries" status="SUCCESS"/>
     </depends>

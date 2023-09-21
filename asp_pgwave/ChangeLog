@@ -1,4 +1,13 @@
 ------------------------------------------------------------
+User: jchiang  Thu Sep 21 07:33:46 PDT 2023
+ASP-scons/asp_pgwave/xml
+
+Modified Files:
+	PGWave.xml 
+Log Message:
+use -q glastdataq instead of -q short
+    *
+------------------------------------------------------------
 User: jchiang  Fri Jan  4 09:03:26 PST 2019
 ASP-scons/asp_pgwave/python
 

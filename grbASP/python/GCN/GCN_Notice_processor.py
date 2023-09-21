@@ -74,9 +74,10 @@ class GcnNoticeEmail(object):
                 try:
                     self.trignum = int(trig_value)
                 except ValueError:
-                    # Omit leading non-numeric character from LVC notice
-                    # TRIGGER_NUM values
-                    self.trignum = int(trig_value[1:])
+#                    # Omit leading non-numeric character from LVC notice
+#                    # TRIGGER_NUM values
+#                    self.trignum = int(trig_value[1:])
+                    self.trignum = trig_value
             if (line.find('GRB_DATE:') == 0 or
                 line.find('IMG_START_DATE:') == 0 or
                 line.find('POINT_DATE:') == 0):
@@ -169,9 +170,9 @@ if __name__ == '__main__':
 
     try:
         if ((my_notice.mission_name.lower() != "fermi" or
-             my_notice.trignum != 99999) and
-            my_notice.notice_type.find('LVC') == -1):
-            my_notice.resend(('jchiang@slac.stanford.edu',
-                              'balist@glast.stanford.edu'))
+             my_notice.trignum != 99999)):
+            pass
+#            my_notice.resend(('jchiang@slac.stanford.edu',
+#                              'balist@glast.stanford.edu'))
     except Exception, msg:
         forwardErrorMessage(msg)

@@ -207,7 +207,7 @@ def inviaMail(testo):
 	else:
 		_toaddress=['tosti@pg.infn.it']
         subject='LAT SkyMonitor report:'+(' %s'%dt.datetime.utcnow().isoformat())
-        smail.sendFAmail(_fromaddress,_toaddress,subject,testo)
+#        smail.sendFAmail(_fromaddress,_toaddress,subject,testo)
 
 def faMessage(source,sunpos,dateinfo):
         flag=num.array(source['FLARING_FLAG'])

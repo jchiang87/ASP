@@ -77,10 +77,13 @@ inserter.run(debug=debug)
 
 right_now = date2met()
 
+# Cutoff date for interval look-back processing 2019-08-05
+met_cutoff = 586656005
+
 unhandled = unhandledIntervals()
 for frequency in unhandled:
    for interval in unhandled[frequency]:
-      if interval.tstop > right_now:
+      if interval.tstop > right_now or interval.tstop < met_cutoff:
          # Skip this interval if the current time still precedes the stop time.
          continue
       args = {'folder' : os.environ['folder'],

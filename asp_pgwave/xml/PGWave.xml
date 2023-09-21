@@ -5,7 +5,7 @@
    xsi:schemaLocation="http://glast-ground.slac.stanford.edu/pipeline http://glast-ground.slac.stanford.edu/Pipeline-II/schemas/2.0/pipeline.xsd">
 <!-- $Header$
 -->
-<task name="PGWave" version="9.8" type="Data">
+<task name="PGWave" version="9.10" type="Data">
   <variables>
     <!-- Default values that can be overridden at the command line. -->
     <var name="BINDIR">bin/redhat6-x86_64-64bit-gcc44-Optimized</var>
@@ -178,7 +178,7 @@
     </prerequisites>
     <process name="launchDrpMonitoring" autoRetryMaxAttempts="1">
       <job executable="${ASP_PGWAVEROOT}/${BINDIR}/launchDrpMonitoring.sh"
-           batchOptions=" -q short"/>
+           batchOptions=" -q glastdataq "/>
     </process>
   </task><!--drpMonitoring-->
 

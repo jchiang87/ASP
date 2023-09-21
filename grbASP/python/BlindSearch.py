@@ -412,7 +412,10 @@ if __name__ == '__main__':
         events = package(imin, imax)
 
         if len(events.TIME) > 0:
-            grbConfig = grbAspConfig.find(min(events.TIME))
+            try:
+                grbConfig = grbAspConfig.find(min(events.TIME))
+            except RuntimeError:
+                grbConfig = grbAspConfig.find(618793145)
         if len(events.TIME) < 2:
             continue
 

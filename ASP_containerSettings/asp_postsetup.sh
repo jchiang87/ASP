@@ -20,3 +20,7 @@ export LD_LIBRARY_PATH=${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}:${asp_lib_path}
 export PYTHONPATH=${asp_python_path}:${GPLtools_path}:${PYTHONPATH}
 
 export PFILES=${PFILES}:${BASE_DIR}/syspfiles
+
+export CALDB=/afs/slac.stanford.edu/g/glast/ground/ASP/prod/fermitools_irfs/irfs/caldb/CALDB
+export CALDBCONFIG=${CALDB}/software/tools/caldb.config
+export CALDBALIAS=${CALDB}/software/tools/alias_config.fits
